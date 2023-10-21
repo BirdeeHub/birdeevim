@@ -1,8 +1,11 @@
 " place your custom init.vim here!
 colorscheme onedark
+" Get the directory containing this init.vim
+let s:vim_dir = expand('<sfile>:p:h')
 
-" Get the path of the init.vim file
-let s:script_path = expand('%:p:h')
+" Convert to string for use in Lua
+let s:vim_dir_str = string(s:vim_dir)
 
-" Set custom LUA_PATH relative to the init.vim file
-let &l:lua_path = s:script_path . '/nvimlua/?.lua'
+" Set the Lua path
+call luaeval('package.path = "' . new_path . '"')
+
