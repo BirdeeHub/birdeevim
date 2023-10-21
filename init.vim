@@ -5,4 +5,4 @@ colorscheme onedark
 let s:script_path = expand('%:p:h')
 
 " Set custom LUA_PATH relative to the init.vim file
-let &l:lua_path = s:script_path . '/nvimlua'
+let &l:lua_path = s:script_path . '/nvimlua/?.lua'
