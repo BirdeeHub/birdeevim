@@ -1,9 +1,12 @@
 {
   description = "Luca's simple Neovim flake for easy configuration";
 
-  inputs = {
+  inputs = rec {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils = {
+      # inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/flake-utils";
+    };
     
     # Theme
     "plugin_onedark-vim" = {
