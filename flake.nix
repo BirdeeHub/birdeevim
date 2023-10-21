@@ -137,7 +137,7 @@
                         };
       in
       let
-        luca-nvim = neovimBuilder {
+        birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           # customRC = ''luafile $HOME/.config/nvimflakes/init.lua'';
           customRC = ''colorscheme onedark'';
@@ -146,17 +146,15 @@
           start = with pkgs.neovimPlugins; [ onedark-vim ];
         };
 
-      in rec {
+      in {
         devShell = pkgs.mkShell {
-          name = "my-development-environment";
-          packages = [ luca-nvim pkgs.hello pkgs.fish ];
+          name = "birdeeVim";
+          packages = [ birdeeVim ];
           inputsFrom = [];
           shellHook = ''
-            export zzzzzzItWorked=true
-            fish
           '';
         };
-        packages.default = luca-nvim;
+        packages.default = birdeeVim;
       }
     );
 }
