@@ -147,14 +147,15 @@
         };
 
       in rec {
-        # defaultApp = apps.nvim;
-        # defaultPackage = packages.neovimLuca;
-        #
-        # apps.nvim = {
-        #     type = "app";
-        #     program = "${defaultPackage}/bin/nvim";
-        #   };
-
+        devShell = pkgs.mkShell {
+          name = "my-development-environment";
+          packages = [ luca-nvim pkgs.hello pkgs.fish ];
+          inputsFrom = [];
+          shellHook = ''
+            export zzzzzzItWorked=true
+            fish
+          '';
+        };
         packages.default = luca-nvim;
       }
     );
