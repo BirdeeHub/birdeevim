@@ -1,13 +1,13 @@
 {
   description = "Luca's simple Neovim flake for easy configuration";
 
-  inputs = rec {
+  inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
       # inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/flake-utils";
     };
-    
+
     # Theme
     "plugin_onedark-vim" = {
       url = "github:joshdick/onedark.vim";
@@ -25,6 +25,11 @@
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
+        plugin_birdeeLua = pkgs.stdenv.mkDerivation {
+          pname = "birdeeLua";
+          version = "1.0.0";
+          src = ./.;
+        };
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         # Each input in the format:
@@ -113,50 +118,61 @@
         #          | to your imports!
         # opt      | List of optional plugins to load only when 
         #          | explicitly loaded from inside neovim
-        neovimBuilder = { customRC ? ""
-                        , viAlias  ? true
-                        , vimAlias ? true
-                        , start    ? builtins.attrValues pkgs.neovimPlugins
-                        , opt      ? []
-                        , debug    ? false }:
-                        let
-                          myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-                            propagatedBuildInputs = with pkgs; [ pkgs.stdenv.cc.cc.lib ];
-                          });
-                        in
-                        pkgs.wrapNeovim myNeovimUnwrapped {
-                          inherit viAlias;
-                          inherit vimAlias;
-                          configure = {
-                            customRC = customRC;
-                            packages.myVimPackage = with pkgs.neovimPlugins; {
-                              start = start;
-                              opt = opt;
-                            };
-                          };
-                        };
+        neovimBuilder =
+          { customRC ? ""
+          , viAlias ? true
+          , vimAlias ? true
+          , start ? builtins.attrValues pkgs.neovimPlugins
+          , opt ? [ ]
+          , debug ? false
+          }:
+          let
+            myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib ];
+            });
+          in
+          pkgs.wrapNeovim myNeovimUnwrapped {
+            inherit viAlias;
+            inherit vimAlias;
+            configure = {
+              inherit customRC;
+              packages.myVimPackage = {
+                start = start;
+                opt = opt;
+              };
+            };
+          };
       in
       let
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
-          customRC = ''luafile $out/lib/init.lua'';
+          # customRC = ''luafile $out/lib/init.lua'';
           # customRC = ''colorscheme onedark'';
           # customRC = ''
           #   ${pkgs.lib.readFile ./init.vim}
-          #   '';
+          # '';
+          # customRC = ''
+          #   vim.opt.config = "/home/birdee/.config/nvimflakes"
+          # '';
+          customRC = ''
+            packadd birdeeLua
+          '';
           # if you wish to only load the onedark-vim colorscheme:
-          start = with pkgs.neovimPlugins; [ onedark-vim ];
+          start = with pkgs.neovimPlugins; [ onedark-vim plugin_birdeeLua ];
         };
-
-      in {
+      in
+      {
         devShell = pkgs.mkShell {
           name = "birdeeVim";
           packages = [ birdeeVim ];
-          inputsFrom = [];
+          inputsFrom = [ ];
           shellHook = ''
           '';
         };
-        packages.default = birdeeVim;
+        packages = {
+          default = birdeeVim;
+          inherit birdeeVim;
+        };
       }
     );
 }
