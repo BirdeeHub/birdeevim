@@ -141,7 +141,9 @@
           # the next line loads a trivial example of a init.vim:
           # customRC = ''luafile $HOME/.config/nvimflakes/init.lua'';
           # customRC = ''colorscheme onedark'';
-          customRC = pkgs.lib.readFile ./init.vim;
+          customRC = ''
+            ${pkgs.lib.readFile ./init.vim}
+            '';
           # if you wish to only load the onedark-vim colorscheme:
           start = with pkgs.neovimPlugins; [ onedark-vim ];
         };
