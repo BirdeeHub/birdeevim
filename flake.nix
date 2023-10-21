@@ -137,13 +137,14 @@
                         };
       in
       rec {
-        defaultApp = apps.nvim;
+        # defaultApp = apps.nvim;
         defaultPackage = packages.neovimLuca;
 
-        apps.nvim = {
-            type = "app";
-            program = "${defaultPackage}/bin/nvim";
-          };
+        # apps.nvim = {
+        #     type = "app";
+        #     program = "${defaultPackage}/bin/nvim";
+        #   };
+        packages.default = defaultPackage;
 
         packages.neovimLuca = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
