@@ -1,0 +1,95 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1697730408,
+        "narHash": "sha256-Ww//zzukdTrwTrCUkaJA/NsaLEfUfQpWZXBdXBYfhak=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ff0a5a776b56e0ca32d47a4a47695452ec7f7d80",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugin_gitsigns": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697546511,
+        "narHash": "sha256-9DIfUVcU5aZXPUGueBnUlv2IgUh69bDx4vGnGeNJ+u0=",
+        "owner": "lewis6991",
+        "repo": "gitsigns.nvim",
+        "rev": "5a9a6ac29a7805c4783cda21b80a1e361964b3f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lewis6991",
+        "repo": "gitsigns.nvim",
+        "type": "github"
+      }
+    },
+    "plugin_onedark-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1689744943,
+        "narHash": "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=",
+        "owner": "joshdick",
+        "repo": "onedark.vim",
+        "rev": "57b77747694ea5676c3ca0eeaf9567dc499730c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joshdick",
+        "repo": "onedark.vim",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "plugin_gitsigns": "plugin_gitsigns",
+        "plugin_onedark-vim": "plugin_onedark-vim"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
