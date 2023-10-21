@@ -1,6 +1,7 @@
 " place your custom init.vim here!
 colorscheme onedark
-" Get the directory containing this init.vim
-let new_path = expand('<sfile>:p:h')
-call luaeval('package.path = "' . new_path . '"')
 
+let lua_dir = stdpath('config') . '/lua'
+let lua_path = lua_dir . '/?.lua'
+
+call luaeval('package.path = package.path .. "' . lua_path . '"')
