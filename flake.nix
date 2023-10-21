@@ -136,17 +136,8 @@
                           };
                         };
       in
-      rec {
-        # defaultApp = apps.nvim;
-        defaultPackage = packages.neovimLuca;
-
-        # apps.nvim = {
-        #     type = "app";
-        #     program = "${defaultPackage}/bin/nvim";
-        #   };
-        packages.default = defaultPackage;
-
-        packages.neovimLuca = neovimBuilder {
+      let
+        luca-nvim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           # customRC = ''luafile $HOME/.config/nvimflakes/init.lua'';
           customRC = ''colorscheme onedark'';
@@ -154,6 +145,17 @@
           # if you wish to only load the onedark-vim colorscheme:
           start = with pkgs.neovimPlugins; [ onedark-vim ];
         };
+
+      in rec {
+        # defaultApp = apps.nvim;
+        # defaultPackage = packages.neovimLuca;
+        #
+        # apps.nvim = {
+        #     type = "app";
+        #     program = "${defaultPackage}/bin/nvim";
+        #   };
+
+        packages.default = luca-nvim;
       }
     );
 }
