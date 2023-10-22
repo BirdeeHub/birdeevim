@@ -45,3 +45,12 @@ then require('lspconfig') I think? not sure.
         I cannot require other lua files from my config from within my config 
         by using require('birdeeLua.anythingElse')
 
+    5. and lastly, why am I getting this error when I pull from github instead?
+        It works with the option it suggests it just cant write a lock file because of the way I imported the lua config.
+
+```
+error:
+       … while updating the lock file of flake 'github:BirdeeHub/birdeevim/e77fb93272c25b3ce72c4fbb8f7fbda841ea601e'
+
+       error: cannot write modified lock file of flake 'github:BirdeeHub/birdeevim' (use '--no-write-lock-file' to ignore)
+```
