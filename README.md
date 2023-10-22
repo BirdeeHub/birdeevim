@@ -11,7 +11,7 @@ Unfortunately, I did it incompletely. I can only include the 1 file in birdeeLua
 I could use some help.
 
 I am new to nix. 
-I have an okish neovim config. 
+I had an okish neovim config. 
 I want to make it in nix so I can use it anywhere and not worry about
 that computer not having cargo or something.
 
