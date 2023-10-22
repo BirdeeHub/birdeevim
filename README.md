@@ -30,11 +30,17 @@ I haven't added any LSP's yet, thats next.
 I should just be able to add them as inputs
 then require('lspconfig') I think? not sure.
 
-    1. I dont know how to build nvim plugins with a build step in nix. 
+    1. I dont know how to build nvim plugins with a build step in nix using the 
+        overlay in this config. Or in general really. I barely know what an Overlay is.
+        I have never programmed in a functional language before.
 
     2. I need to know why treesitter parsers cant install
 
-    3. how to make it so I can package and require more than just the 1 init.lua 
+    3. Why markdown preview isnt working.
+
+    4. How to include as input to flake something that isnt the main branch
+
+    4. how to make it so I can package and require more than just the 1 init.lua 
         file from within the lua files. squeezing it all into one file isn't fun.
         I cannot require other lua files from my config from within my config 
         by using require('birdeeLua.anythingElse')
