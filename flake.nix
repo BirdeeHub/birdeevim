@@ -28,7 +28,11 @@
         plugin_birdeeLua = pkgs.stdenv.mkDerivation {
           pname = "birdeeLua";
           version = "1.0.0";
-          src = ./.;
+          phases = [ "unpackPhase" "installPhase" ];
+          unpackPhase = "mkdir -p $out";
+          builder = "";
+          installPhase = "cp -r $src $out";
+          src = "${self}/birdeeLua";
         };
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
