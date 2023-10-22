@@ -34,16 +34,32 @@
         "type": "github"
       }
     },
+    "plugins-Comment": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691409559,
+        "narHash": "sha256-+dF1ZombrlO6nQggufSb0igXW5zwU++o0W/5ZA07cdc=",
+        "owner": "numToStr",
+        "repo": "Comment.nvim",
+        "rev": "0236521ea582747b58869cb72f70ccfa967d2e89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numToStr",
+        "repo": "Comment.nvim",
+        "type": "github"
+      }
+    },
     "plugins-birdeeLua": {
       "flake": false,
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-wD1OYpj1BJ6URjxUT+0EDzFhqdoRYeKe491AnYBBtQk=",
-        "path": "/nix/store/whz1i0lya65migw8m0xm0948f2n9vn7w-source",
+        "narHash": "sha256-Lq6qXoZwPr4k9/Iv8Y7fyqftwaPZAmN+Gr7N7Tb+7pc=",
+        "path": "/nix/store/3js2338vdvvkk2b6akx5pvxljym7m2pm-source",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/whz1i0lya65migw8m0xm0948f2n9vn7w-source",
+        "path": "/nix/store/3js2338vdvvkk2b6akx5pvxljym7m2pm-source",
         "type": "path"
       }
     },
@@ -79,13 +95,116 @@
         "type": "github"
       }
     },
+    "plugins-harpoon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696945578,
+        "narHash": "sha256-pSnFx5fg1llNlpTCV4hoo3Pf1KWnAJDRVSe+88N4HXM=",
+        "owner": "ThePrimeagen",
+        "repo": "harpoon",
+        "rev": "c1aebbad9e3d13f20bedb8f2ce8b3a94e39e424a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ThePrimeagen",
+        "repo": "harpoon",
+        "type": "github"
+      }
+    },
+    "plugins-hlargs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1694799735,
+        "narHash": "sha256-bH0OOf5T4Z96Td4ZBV1q8DI/bO1pV8DwqEWho6jeggg=",
+        "owner": "m-demare",
+        "repo": "hlargs.nvim",
+        "rev": "6218a401824c5733ac50b264991b62d064e85ab2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-demare",
+        "repo": "hlargs.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-lspconfig": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697781265,
+        "narHash": "sha256-QfR9dhS+lenwXGBmhqqjUpblXIqVNZiEtZi3tPkD3p0=",
+        "owner": "neovim",
+        "repo": "nvim-lspconfig",
+        "rev": "38da5bbe1eaab2394056109e48c7e195bdb8fdfe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neovim",
+        "repo": "nvim-lspconfig",
+        "type": "github"
+      }
+    },
+    "plugins-lualine": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697772980,
+        "narHash": "sha256-jV+6mV0dyuhiHGei1UqE2r2GoiKJLtdZI2AMNexbi7E=",
+        "owner": "nvim-lualine",
+        "repo": "lualine.nvim",
+        "rev": "2248ef254d0a1488a72041cfb45ca9caada6d994",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-lualine",
+        "repo": "lualine.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-neodev": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697954759,
+        "narHash": "sha256-UWJ6aVFQnyhYtOauj935qw5bKupyej4ttvG0+TWDo6E=",
+        "owner": "folke",
+        "repo": "neodev.nvim",
+        "rev": "d617d9eb27e73e701e446874c6ea2cb528719260",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "neodev.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-which-key": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697801635,
+        "narHash": "sha256-uvghPj/teWrRMm09Gh8iQ/LV2nYJw0lmoiZK6L4+1cY=",
+        "owner": "folke",
+        "repo": "which-key.nvim",
+        "rev": "4433e5ec9a507e5097571ed55c02ea9658fb268a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "which-key.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "plugins-Comment": "plugins-Comment",
         "plugins-birdeeLua": "plugins-birdeeLua",
         "plugins-catppuccin": "plugins-catppuccin",
-        "plugins-gitsigns": "plugins-gitsigns"
+        "plugins-gitsigns": "plugins-gitsigns",
+        "plugins-harpoon": "plugins-harpoon",
+        "plugins-hlargs": "plugins-hlargs",
+        "plugins-lspconfig": "plugins-lspconfig",
+        "plugins-lualine": "plugins-lualine",
+        "plugins-neodev": "plugins-neodev",
+        "plugins-which-key": "plugins-which-key"
       }
     },
     "systems": {

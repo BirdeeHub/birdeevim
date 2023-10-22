@@ -11,7 +11,6 @@
       url = "./."; 
       flake = false; 
     };
-
     # Theme
     # "plugins-onedark-vim" = {
     #   url = "github:joshdick/onedark.vim";
@@ -24,6 +23,42 @@
     # Git
     "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
+      flake = false;
+    };
+    "plugins-which-key" = {
+      url = "github:folke/which-key.nvim";
+      flake = false;
+    };
+    # "plugins-markdown-preview" = {
+    #   url = "github:iamcco/markdown-preview.nvim";
+    #   flake = false;
+    # };
+    # "plugins-fidget" = {
+    #   url = "https://github.com/j-hui/fidget.nvim/tree/legacy";
+    #   flake = false;
+    # };
+    "plugins-lualine" = {
+      url = "github:nvim-lualine/lualine.nvim";
+      flake = false;
+    };
+    "plugins-neodev" = {
+      url = "github:folke/neodev.nvim";
+      flake = false;
+    };
+    "plugins-lspconfig" = {
+      url = "github:neovim/nvim-lspconfig";
+      flake = false;
+    };
+    "plugins-Comment" = {
+      url = "github:numToStr/Comment.nvim";
+      flake = false;
+    };
+    "plugins-harpoon" = {
+      url = "github:ThePrimeagen/harpoon";
+      flake = false;
+    };
+    "plugins-hlargs" = {
+      url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
   };
@@ -158,13 +193,66 @@
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
           customRC = ''
-            lua require('birdeeLua')
+            let g:mapleader = ' '
+            let g:maplocalleader = ' '
+            colorscheme catppuccin
+            lua require('birdeeLua').plugins()
+            lua require('birdeeLua').opts()
+            lua require('birdeeLua').keymaps()
+            lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
+            lua require('birdeeLua').debug()
+            lua require('birdeeLua').autoformat()
           '';
-          # if you wish to only load the onedark-vim colorscheme:
+          # customRC = ''
+          #   let g:mapleader = ' '
+          #   let g:maplocalleader = ' '
+          #   lua require('birdeeLua')
+          # '';
+
+
+          # TO DO: 
+          # install lsps
+          # fix treesitter parser install
+          # install markdown-preview
+          # add cmp-tabnine, 
+          # install cody/sourcegraph
+          # install neo-tree
+          # install debuggers
+          # install formatter
+          # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
-            gitsigns
-            # onedark-vim
             catppuccin
+            # onedark-vim
+            # pkgs.vimPlugins.nvim-treesitter-textobjects
+            # pkgs.vimPlugins.nvim-treesitter
+            pkgs.vimPlugins.telescope-fzf-native-nvim
+            pkgs.vimPlugins.plenary-nvim
+            pkgs.vimPlugins.telescope-nvim
+            gitsigns
+            which-key
+            neodev
+            lspconfig
+            lualine
+            Comment
+            harpoon
+            hlargs
+            pkgs.vimPlugins.nvim-surround
+            pkgs.vimPlugins.indent-blankline-nvim
+            # pkgs.vimPlugins.markdown-preview-nvim
+
+            # fidget # once you figure out how to import from legacy tag
+            pkgs.vimPlugins.lualine-lsp-progress
+
+            pkgs.vimPlugins.nvim-cmp
+            pkgs.vimPlugins.luasnip
+            pkgs.vimPlugins.cmp_luasnip
+            pkgs.vimPlugins.cmp-buffer
+            pkgs.vimPlugins.cmp-path
+            pkgs.vimPlugins.cmp-nvim-lua
+            pkgs.vimPlugins.cmp-nvim-lsp
+            pkgs.vimPlugins.friendly-snippets
+            pkgs.vimPlugins.cmp-cmdline
+
             birdeeLua
           ];
           opt = with pkgs.neovimPlugins; [ ];
@@ -181,7 +269,7 @@
         packages = {
           default = birdeeVim;
           inherit birdeeVim;
-          birdeeLua = inputs.plugins-birdeeLua;
+          # birdeeLua = inputs.plugins-birdeeLua;
         };
       }
     );
