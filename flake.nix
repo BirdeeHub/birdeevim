@@ -8,7 +8,8 @@
       url = "github:numtide/flake-utils";
     };
     "plugins-birdeeLua" = { 
-      url = "github:BirdeeHub/birdeevim"; 
+      # url = "github:BirdeeHub/birdeevim"; 
+      url = ./.;
       flake = false; 
     };
     # Theme
