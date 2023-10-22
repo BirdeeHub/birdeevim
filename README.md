@@ -1,4 +1,4 @@
-My attempt at a Neovim Flake using 
+My attempt at a Neovim Flake
 
 inpiration taken HEAVILY from this repo as this was my first intro to nix.
 
