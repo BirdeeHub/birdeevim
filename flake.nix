@@ -9,7 +9,7 @@
     };
     "plugins-birdeeLua" = { 
       # url = "github:BirdeeHub/birdeevim"; 
-      url = ./.;
+      url = "./.";
       flake = false; 
     };
     # Theme

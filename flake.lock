@@ -53,17 +53,14 @@
     "plugins-birdeeLua": {
       "flake": false,
       "locked": {
-        "lastModified": 1698013635,
-        "narHash": "sha256-5oDaY+NHECGRmbzFfCRVIp3feZlFS4lZdfzZ0D7X5L4=",
-        "owner": "BirdeeHub",
-        "repo": "birdeevim",
-        "rev": "e77fb93272c25b3ce72c4fbb8f7fbda841ea601e",
-        "type": "github"
+        "lastModified": 0,
+        "narHash": "sha256-e0qfW6U3l8NDyeXaXkZKRVGKwqprjP5dRnzB6c+o9MY=",
+        "path": "/nix/store/parp5897hbx3bxfyj5dbn2zy8c8c6m7f-source",
+        "type": "path"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "repo": "birdeevim",
-        "type": "github"
+        "path": "/nix/store/parp5897hbx3bxfyj5dbn2zy8c8c6m7f-source",
+        "type": "path"
       }
     },
     "plugins-catppuccin": {
