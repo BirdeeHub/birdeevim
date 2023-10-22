@@ -34,7 +34,20 @@
         "type": "github"
       }
     },
-    "plugin_gitsigns": {
+    "plugin-birdeeLua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-AKA7X3nsgsSF9Buf/XtlTPCB0cHwGsw8Cs0bsm6jUQE=",
+        "path": "/nix/store/hnhdwwdy7p44n2l1mbmjdy3apac3dfda-source",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/hnhdwwdy7p44n2l1mbmjdy3apac3dfda-source",
+        "type": "path"
+      }
+    },
+    "plugin-gitsigns": {
       "flake": false,
       "locked": {
         "lastModified": 1697546511,
@@ -50,7 +63,7 @@
         "type": "github"
       }
     },
-    "plugin_onedark-vim": {
+    "plugin-onedark-vim": {
       "flake": false,
       "locked": {
         "lastModified": 1689744943,
@@ -70,8 +83,9 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "plugin_gitsigns": "plugin_gitsigns",
-        "plugin_onedark-vim": "plugin_onedark-vim"
+        "plugin-birdeeLua": "plugin-birdeeLua",
+        "plugin-gitsigns": "plugin-gitsigns",
+        "plugin-onedark-vim": "plugin-onedark-vim"
       }
     },
     "systems": {

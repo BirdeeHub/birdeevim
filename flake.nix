@@ -9,15 +9,16 @@
     };
 
     # Theme
-    "plugin_onedark-vim" = {
+    "plugin-onedark-vim" = {
       url = "github:joshdick/onedark.vim";
       flake = false;
     };
     # Git
-    "plugin_gitsigns" = {
+    "plugin-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
       flake = false;
     };
+    plugin-birdeeLua = { url = "./."; flake = false; };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -25,15 +26,6 @@
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
-        plugin_birdeeLua = pkgs.stdenv.mkDerivation {
-          pname = "birdeeLua";
-          version = "1.0.0";
-          phases = [ "unpackPhase" "installPhase" ];
-          unpackPhase = "mkdir -p $out";
-          builder = "";
-          installPhase = "cp -r $src $out";
-          src = "${self}/birdeeLua";
-        };
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         # Each input in the format:
@@ -53,7 +45,7 @@
             inherit (prev.vimUtils) buildVimPlugin;
             treesitterGrammars = prev.tree-sitter.withPlugins (_: prev.tree-sitter.allGrammars);
             plugins = builtins.filter
-              (s: (builtins.match "plugin_.*" s) != null)
+              (s: (builtins.match "plugin-.*" s) != null)
               (builtins.attrNames inputs);
             plugName = input:
               builtins.substring
@@ -89,8 +81,8 @@
           overlays = [
             pluginOverlay
           ];
+          config.allowUnfree = true;
         };
-
         # neovimBuilder is a function that takes your prefered
         # configuration as input and just returns a version of
         # neovim where the default config was overwritten with your
@@ -158,11 +150,12 @@
           # customRC = ''
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
-          customRC = ''
-            packadd birdeeLua
-          '';
+          # customRC = ''
+          #   lua require('birdeeLua')
+          # '';
           # if you wish to only load the onedark-vim colorscheme:
-          start = with pkgs.neovimPlugins; [ onedark-vim plugin_birdeeLua ];
+          start = with pkgs.neovimPlugins; [ onedark-vim birdeeLua ];
+          opt = with pkgs.neovimPlugins; [ ];
         };
       in
       {

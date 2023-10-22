@@ -1,3 +1,4 @@
+local birdeeLua = {}
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -67,3 +68,5 @@ vim.o.expandtab = true
 vim.wo.relativenumber = true
 
 vim.cmd([[hi LineNr guifg=#bb9af7]])
+
+return birdeeLua
