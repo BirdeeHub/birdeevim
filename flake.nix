@@ -7,18 +7,25 @@
       # inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/flake-utils";
     };
+    "plugins-birdeeLua" = { 
+      url = "./."; 
+      flake = false; 
+    };
 
     # Theme
-    "plugin-onedark-vim" = {
-      url = "github:joshdick/onedark.vim";
+    # "plugins-onedark-vim" = {
+    #   url = "github:joshdick/onedark.vim";
+    #   flake = false;
+    # };
+    "plugins-catppuccin" = {
+      url = "github:catppuccin/nvim";
       flake = false;
     };
     # Git
-    "plugin-gitsigns" = {
+    "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
       flake = false;
     };
-    plugin-birdeeLua = { url = "./."; flake = false; };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -45,11 +52,11 @@
             inherit (prev.vimUtils) buildVimPlugin;
             treesitterGrammars = prev.tree-sitter.withPlugins (_: prev.tree-sitter.allGrammars);
             plugins = builtins.filter
-              (s: (builtins.match "plugin-.*" s) != null)
+              (s: (builtins.match "plugins-.*" s) != null)
               (builtins.attrNames inputs);
             plugName = input:
               builtins.substring
-                (builtins.stringLength "plugin_")
+                (builtins.stringLength "plugins-")
                 (builtins.stringLength input)
                 input;
             buildPlug = name: buildVimPlugin {
@@ -150,11 +157,16 @@
           # customRC = ''
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
-          # customRC = ''
-          #   lua require('birdeeLua')
-          # '';
+          customRC = ''
+            lua require('birdeeLua')
+          '';
           # if you wish to only load the onedark-vim colorscheme:
-          start = with pkgs.neovimPlugins; [ onedark-vim birdeeLua ];
+          start = with pkgs.neovimPlugins; [ 
+            gitsigns
+            # onedark-vim
+            catppuccin
+            birdeeLua
+          ];
           opt = with pkgs.neovimPlugins; [ ];
         };
       in
@@ -169,6 +181,7 @@
         packages = {
           default = birdeeVim;
           inherit birdeeVim;
+          birdeeLua = inputs.plugins-birdeeLua;
         };
       }
     );

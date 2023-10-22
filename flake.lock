@@ -34,20 +34,36 @@
         "type": "github"
       }
     },
-    "plugin-birdeeLua": {
+    "plugins-birdeeLua": {
       "flake": false,
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-AKA7X3nsgsSF9Buf/XtlTPCB0cHwGsw8Cs0bsm6jUQE=",
-        "path": "/nix/store/hnhdwwdy7p44n2l1mbmjdy3apac3dfda-source",
+        "narHash": "sha256-wD1OYpj1BJ6URjxUT+0EDzFhqdoRYeKe491AnYBBtQk=",
+        "path": "/nix/store/whz1i0lya65migw8m0xm0948f2n9vn7w-source",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/hnhdwwdy7p44n2l1mbmjdy3apac3dfda-source",
+        "path": "/nix/store/whz1i0lya65migw8m0xm0948f2n9vn7w-source",
         "type": "path"
       }
     },
-    "plugin-gitsigns": {
+    "plugins-catppuccin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697463324,
+        "narHash": "sha256-kWbWPbsXJlXgsorUIe6wcHBcEKK4NDh+TsiPZaCIDLA=",
+        "owner": "catppuccin",
+        "repo": "nvim",
+        "rev": "dcef0a062de380885193fb0f919217d58b979753",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "nvim",
+        "type": "github"
+      }
+    },
+    "plugins-gitsigns": {
       "flake": false,
       "locked": {
         "lastModified": 1697546511,
@@ -63,29 +79,13 @@
         "type": "github"
       }
     },
-    "plugin-onedark-vim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689744943,
-        "narHash": "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=",
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "rev": "57b77747694ea5676c3ca0eeaf9567dc499730c0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "plugin-birdeeLua": "plugin-birdeeLua",
-        "plugin-gitsigns": "plugin-gitsigns",
-        "plugin-onedark-vim": "plugin-onedark-vim"
+        "plugins-birdeeLua": "plugins-birdeeLua",
+        "plugins-catppuccin": "plugins-catppuccin",
+        "plugins-gitsigns": "plugins-gitsigns"
       }
     },
     "systems": {
