@@ -8,8 +8,9 @@
       url = "github:numtide/flake-utils";
     };
     "plugins-birdeeLua" = { 
+      type = "path";
       # url = "github:BirdeeHub/birdeevim"; 
-      url = "./.";
+      url = ./.;
       flake = false; 
     };
     # Theme
@@ -254,7 +255,6 @@
             pkgs.vimPlugins.friendly-snippets
             pkgs.vimPlugins.cmp-cmdline
 
-            birdeeLua
           ];
           opt = with pkgs.neovimPlugins; [ ];
         };
