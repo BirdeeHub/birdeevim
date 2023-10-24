@@ -43,3 +43,5 @@ then require('lspconfig') I think? not sure.
     4. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.
 
+    5. How to include dependencies like cargo or node that plugins require.
+        in a way that they can actually use them.
