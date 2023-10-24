@@ -33,8 +33,10 @@ then require('lspconfig') I think? not sure.
 ## Questions:
 
     1. I dont know how to build nvim plugins with a build step in nix using the 
-        overlay in this config. Or in general really. I barely know what an Overlay is.
-        I have never programmed in a functional language before.
+        overlay in this config. Or in general really.
+        I have never programmed in a functional language before. 
+        That stuff all comes from the repo I cited. All I did was add some plugins,
+        and import my config as a plugin.
 
     2. I need to know why treesitter parsers cant install
 
