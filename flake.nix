@@ -7,12 +7,10 @@
       # inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/flake-utils";
     };
-    "plugins-birdeeLua" = { 
-      # type = "path";
-      # url = "github:BirdeeHub/birdeevim"; 
-      url = "./.";
-      flake = false; 
-    };
+    # "plugins-birdeeLua" = { 
+    #   url = "./.";
+    #   flake = false; 
+    # };
     # Theme
     # "plugins-onedark-vim" = {
     #   url = "github:joshdick/onedark.vim";
@@ -167,11 +165,13 @@
           , debug ? false
           }:
           let
+          birdeeLua = pkgs.stdenv.mkDerivation { name = "birdeeLua"; src = ./.; };
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib ];
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake birdeeLua ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
+            extraMakeWrapperArgs = "-u ${birdeeLua.outPath}";
             inherit viAlias;
             inherit vimAlias;
             configure = {
@@ -194,17 +194,17 @@
           # customRC = ''
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
-          customRC = ''
-            let g:mapleader = ' '
-            let g:maplocalleader = ' '
-            colorscheme catppuccin
-            lua require('birdeeLua').plugins()
-            lua require('birdeeLua').opts()
-            lua require('birdeeLua').keymaps()
-            lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
-            lua require('birdeeLua').debug()
-            lua require('birdeeLua').autoformat()
-          '';
+          # customRC = ''
+          #   let g:mapleader = ' '
+          #   let g:maplocalleader = ' '
+          #   colorscheme catppuccin
+          #   lua require('birdeeLua').plugins()
+          #   lua require('birdeeLua').opts()
+          #   lua require('birdeeLua').keymaps()
+          #   lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
+          #   lua require('birdeeLua').debug()
+          #   lua require('birdeeLua').autoformat()
+          # '';
           # customRC = ''
           #   let g:mapleader = ' '
           #   let g:maplocalleader = ' '
