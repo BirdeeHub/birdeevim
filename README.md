@@ -27,7 +27,8 @@ I can just put it in opt section and call packadd
 from an autocommand if I want to only load it when needed.
 
 I haven't added any LSP's yet, thats next.
-I should just be able to add them as inputs
+I should just be able to add them as inputs in the flake and then 
+As inputs into something else?
 then require('lspconfig') I think? not sure.
 
 ## Questions:
