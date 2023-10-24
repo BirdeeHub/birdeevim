@@ -162,23 +162,14 @@
           , vimAlias ? true
           , start ? builtins.attrValues pkgs.neovimPlugins
           , opt ? [ ]
-          , debug ? false
+          , debug ? true
           }:
           let
-          birdeeLua = pkgs.stdenv.mkDerivation { 
-              name = "birdeeLua";
-              src = ./.;
-              installPhase = ''
-                mkdir -p $out
-                cp -r $src $out
-              '';
-            };
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake birdeeLua ];
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
-            extraMakeWrapperArgs = "--config ${birdeeLua.outPath}";
             inherit viAlias;
             inherit vimAlias;
             configure = {
@@ -191,6 +182,14 @@
           };
       in
       let
+        birdeeLua = pkgs.stdenv.mkDerivation { 
+            name = "birdeeLua";
+            src = ./.;
+            installPhase = ''
+              mkdir -p $out
+              cp -r $src $out
+            '';
+          };
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           # customRC = ''luafile $out/lib/init.lua'';
@@ -201,17 +200,17 @@
           # customRC = ''
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
-          # customRC = ''
-          #   let g:mapleader = ' '
-          #   let g:maplocalleader = ' '
-          #   colorscheme catppuccin
-          #   lua require('birdeeLua').plugins()
-          #   lua require('birdeeLua').opts()
-          #   lua require('birdeeLua').keymaps()
-          #   lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
-          #   lua require('birdeeLua').debug()
-          #   lua require('birdeeLua').autoformat()
-          # '';
+          customRC = ''
+            let g:mapleader = ' '
+            let g:maplocalleader = ' '
+            colorscheme catppuccin
+            lua require('birdeeLua').plugins()
+            lua require('birdeeLua').opts()
+            lua require('birdeeLua').keymaps()
+            lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
+            lua require('birdeeLua').debug()
+            lua require('birdeeLua').autoformat()
+          '';
           # customRC = ''
           #   let g:mapleader = ' '
           #   let g:maplocalleader = ' '
@@ -231,6 +230,7 @@
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
             catppuccin
+            birdeeLua
             # onedark-vim
             # pkgs.vimPlugins.nvim-treesitter-textobjects
             # pkgs.vimPlugins.nvim-treesitter
