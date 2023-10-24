@@ -50,27 +50,14 @@
         "type": "github"
       }
     },
-    "plugins-birdeeLua": {
-      "flake": false,
-      "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-NXpdl6+AOXWKBeM1b6+KPMZdaiJzyDvmbXA4P34sDGw=",
-        "path": "/nix/store/gxakhpjs223dmqsmlsp3wi9av0jlpwwa-source",
-        "type": "path"
-      },
-      "original": {
-        "path": "/nix/store/gxakhpjs223dmqsmlsp3wi9av0jlpwwa-source",
-        "type": "path"
-      }
-    },
     "plugins-catppuccin": {
       "flake": false,
       "locked": {
-        "lastModified": 1697463324,
-        "narHash": "sha256-kWbWPbsXJlXgsorUIe6wcHBcEKK4NDh+TsiPZaCIDLA=",
+        "lastModified": 1698119279,
+        "narHash": "sha256-bf7e7dbnD3YNmhFhNUCQJo3X4en+9GX4UGHdyU6+uIs=",
         "owner": "catppuccin",
         "repo": "nvim",
-        "rev": "dcef0a062de380885193fb0f919217d58b979753",
+        "rev": "ea52fe8a0b1e4a820df0d0cf9a6a5a0e18c3eaa0",
         "type": "github"
       },
       "original": {
@@ -130,11 +117,11 @@
     "plugins-lspconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1697781265,
-        "narHash": "sha256-QfR9dhS+lenwXGBmhqqjUpblXIqVNZiEtZi3tPkD3p0=",
+        "lastModified": 1698055249,
+        "narHash": "sha256-Ohckvu+Vt5CE5uZt2TJcUmG4QM97d1F67n2YmCaVGwo=",
         "owner": "neovim",
         "repo": "nvim-lspconfig",
-        "rev": "38da5bbe1eaab2394056109e48c7e195bdb8fdfe",
+        "rev": "6428fcab6f3c09e934bc016c329806314384a41e",
         "type": "github"
       },
       "original": {
@@ -196,7 +183,6 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "plugins-Comment": "plugins-Comment",
-        "plugins-birdeeLua": "plugins-birdeeLua",
         "plugins-catppuccin": "plugins-catppuccin",
         "plugins-gitsigns": "plugins-gitsigns",
         "plugins-harpoon": "plugins-harpoon",
