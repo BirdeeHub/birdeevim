@@ -33,7 +33,8 @@ then require('lspconfig') I think? not sure.
 
 ## Questions:
 
-    1. I dont know how to build nvim plugins with a build step in nix using the 
+    1. I dont know how to build nvim plugins with a build step 
+        like build = ./install.sh included by a plugin in nix using the 
         overlay in this config. Or in general really.
         I have never programmed in a functional language before. 
         That stuff all comes from the repo I cited. All I did was add some plugins,
