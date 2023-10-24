@@ -490,7 +490,7 @@ end
                    
 
 function birdeeLua.autoformat()
-require('nixee')
+require('birdeeLua.nixee')
 end
 
   -- require('birdeeLua.nixee')
