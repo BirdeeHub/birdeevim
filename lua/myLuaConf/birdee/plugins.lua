@@ -178,7 +178,6 @@
     sources = {
       -- { name = "cody" },
       -- { name = 'cmp_tabnine' },
-      -- { name = "codeium" },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },

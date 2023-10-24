@@ -82,6 +82,8 @@
               version = "master";
               src = builtins.getAttr name inputs;
 
+              # I DIDNT WRITE THIS AND I HAVE NO IDEA WHAT IT MEANS,
+              # AND I ALSO DONT KNOW WHAT PATH `parser` POINTS TO!!
               # Tree-sitter fails for a variety of lang grammars unless using :TSUpdate
               # For now install imperatively
               #postPatch =
@@ -161,9 +163,9 @@
           # install markdown-preview
           # add cmp-tabnine, 
           # install cody/sourcegraph
-          # install neo-tree
           # install debuggers
           # install formatters
+          # install neo-tree because no one added the icons to netrw yet for when they are nice
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
             catppuccin
