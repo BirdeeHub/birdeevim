@@ -40,10 +40,10 @@ then require('lspconfig') I think? not sure.
 
     2. I need to know why treesitter parsers cant install
 
-    3. Why markdown preview isnt working.
+    3. Why markdown preview isnt working. although that one is probably due to dependencies on node I think?
 
-    4. How to include as input to flake something that isnt the main branch, 
-        i.e. legacy tags and branch names.
-
-    5. How to include dependencies like cargo or node that plugins require.
+    4. How to include dependencies like cargo or node that plugins require.
         in a way that they can actually use them.
+
+    5. How to include as input to flake something that isnt the main branch, 
+        i.e. legacy tags and branch names.
