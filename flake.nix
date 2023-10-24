@@ -125,7 +125,7 @@
               # I am not sure if doing this allows plugins to use them or not.
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
               # I did add cargo and cmake incase it lets plugins use them to build.
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake ];
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib ];# cargo cmake ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
