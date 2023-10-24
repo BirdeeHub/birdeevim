@@ -187,7 +187,7 @@
             src = ./.;
             installPhase = ''
               mkdir -p $out
-              cp -r $src $out
+              cp -r $src/* $out
             '';
           };
         birdeeVim = neovimBuilder {
