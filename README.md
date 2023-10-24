@@ -37,6 +37,8 @@ then require('lspconfig') I think? not sure.
         I have never programmed in a functional language before. 
         That stuff all comes from the repo I cited. All I did was add some plugins,
         and import my config as a plugin.
+        I feel like my main issue here is not knowing where 
+        those $src and $out variables come from
 
     2. I need to know why treesitter parsers cant install
 
