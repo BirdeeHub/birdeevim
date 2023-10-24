@@ -169,8 +169,8 @@
               name = "birdeeLua";
               src = ./.;
               installPhase = ''
-                mkdir -p $out/LUAconfig
-                cp -r $src $out/LUAconfig
+                mkdir -p $out
+                cp -r $src $out
               '';
             };
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
@@ -178,7 +178,7 @@
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
-            extraMakeWrapperArgs = "-u ${birdeeLua.outPath}";
+            extraMakeWrapperArgs = "--config ${birdeeLua.outPath}";
             inherit viAlias;
             inherit vimAlias;
             configure = {
