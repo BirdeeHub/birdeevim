@@ -165,7 +165,14 @@
           , debug ? false
           }:
           let
-          birdeeLua = pkgs.stdenv.mkDerivation { name = "birdeeLua"; src = ./.; };
+          birdeeLua = pkgs.stdenv.mkDerivation { 
+              name = "birdeeLua";
+              src = ./.;
+              installPhase = ''
+                mkdir -p $out/LUAconfig
+                cp $src $out/LUAconfig
+              '';
+            };
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
               propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake birdeeLua ];
             });
