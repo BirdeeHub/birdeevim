@@ -170,7 +170,7 @@
               src = ./.;
               installPhase = ''
                 mkdir -p $out/LUAconfig
-                cp $src $out/LUAconfig
+                cp -r $src $out/LUAconfig
               '';
             };
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
