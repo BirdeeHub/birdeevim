@@ -1,10 +1,9 @@
 {
-  description = "Luca's simple Neovim flake for easy configuration";
+  description = "Birdee's Neovim flake with mostly regular Lua config.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
-      # inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/flake-utils";
     };
     # Theme
@@ -66,18 +65,6 @@
       let
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
-        # Each input in the format:
-        # ```
-        # "plugin_yourPluginName" = {
-        #   url   = "github:exampleAuthor/examplePlugin";
-        #   flake = false;
-        # };
-        # ```
-        # included in the `inputs` section is packaged to a (neo-)vim
-        # plugin and can then be used via
-        # ```
-        # pkgs.neovimPlugins.yourPluginName
-        # ```
         pluginOverlay = final: prev:
           let
             inherit (prev.vimUtils) buildVimPlugin;
@@ -121,37 +108,8 @@
           ];
           config.allowUnfree = true;
         };
-        # neovimBuilder is a function that takes your prefered
-        # configuration as input and just returns a version of
-        # neovim where the default config was overwritten with your
-        # config.
-        # 
-        # Parameters:
-        # customRC | your init.vim as string
-        # viAlias  | allow calling neovim using `vi`
-        # vimAlias | allow calling neovim using `vim`
-        # start    | The set of plugins to load on every startup
-        #          | The list is in the form ["yourPluginName" "anotherPluginYouLike"];
-        #          |
-        #          | Important: The default is to load all plugins, if
-        #          |            `start = [ "blabla" "blablabla" ]` is
-        #          |            not passed as an argument to neovimBuilder!
-        #          |
-        #          | Make sure to add:
-        #          | ```
-        #          | "plugin_yourPluginName" = {
-        #          |   url   = "github:exampleAuthor/examplePlugin";
-        #          |   flake = false;
-        #          | };
-        #          | 
-        #          | "plugin_anotherPluginYouLike" = {
-        #          |   url   = "github:exampleAuthor/examplePlugin";
-        #          |   flake = false;
-        #          | };
-        #          | ```
-        #          | to your imports!
-        # opt      | List of optional plugins to load only when 
-        #          | explicitly loaded from inside neovim
+        # we will put our stuff into here when we call it below, 
+        # and it will wrap it for us.
         neovimBuilder =
           { customRC ? ""
           , viAlias ? true
@@ -162,6 +120,9 @@
           }:
           let
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
+              # I am not sure if doing this allows plugins to use them or not.
+              # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
+              # I did add cargo and cmake incase it lets plugins use them to build.
               propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib cargo cmake ];
             });
           in
@@ -178,6 +139,7 @@
           };
       in
       let
+        # This is where we package this directory as if it was a plugin.
         myLuaConf = pkgs.stdenv.mkDerivation { 
             name = "myLuaConf";
             src = ./.;
@@ -186,25 +148,12 @@
               cp -r $src/* $out
             '';
           };
+        # now to put the pieces into our custom neovim!
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
-          # customRC = ''luafile $out/lib/init.lua'';
-          # customRC = ''colorscheme onedark'';
-          # customRC = ''
-          #   ${pkgs.lib.readFile ./init.vim}
-          # '';
-          # customRC = ''
-          #   vim.opt.config = "/home/birdee/.config/nvimflakes"
-          # '';
           customRC = ''
             lua require('myLuaConf')
           '';
-          # customRC = ''
-          #   let g:mapleader = ' '
-          #   let g:maplocalleader = ' '
-          #   lua require('birdeeLua')
-          # '';
-
 
           # TO DO: 
           # install lsps
@@ -214,7 +163,7 @@
           # install cody/sourcegraph
           # install neo-tree
           # install debuggers
-          # install formatter
+          # install formatters
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
             catppuccin
@@ -239,7 +188,6 @@
 
             # fidget # once you figure out how to import from legacy tag
             pkgs.vimPlugins.lualine-lsp-progress
-
             pkgs.vimPlugins.nvim-cmp
             pkgs.vimPlugins.luasnip
             pkgs.vimPlugins.cmp_luasnip
@@ -265,7 +213,6 @@
         packages = {
           default = birdeeVim;
           inherit birdeeVim;
-          # birdeeLua = inputs.plugins-birdeeLua;
         };
       }
     );
