@@ -4,12 +4,12 @@ inpiration taken HEAVILY from this repo as this was my first intro to nix.
 
 https://github.com/Quoteme/neovim-flake/tree/master
 
-Unfortunately, customRC only takes vimscript.
-The solution? Include my Lua as a plugin. 
-Unfortunately, I did it incompletely. I can only include the 1 file in birdeeLua.
+## Attention: This repo is unfinished
+
+customRC only takes vimscript.
+The solution? Include my Lua config as a plugin. 
 
 I could use some help.
-
 I am new to nix. 
 I had an okish neovim config. 
 I want to make it in nix so I can use it anywhere and not worry about
@@ -30,6 +30,8 @@ I haven't added any LSP's yet, thats next.
 I should just be able to add them as inputs
 then require('lspconfig') I think? not sure.
 
+## Questions:
+
     1. I dont know how to build nvim plugins with a build step in nix using the 
         overlay in this config. Or in general really. I barely know what an Overlay is.
         I have never programmed in a functional language before.
@@ -38,19 +40,6 @@ then require('lspconfig') I think? not sure.
 
     3. Why markdown preview isnt working.
 
-    4. How to include as input to flake something that isnt the main branch
+    4. How to include as input to flake something that isnt the main branch, 
+        i.e. legacy tags and branch names.
 
-    4. how to make it so I can package and require more than just the 1 init.lua 
-        file from within the lua files. squeezing it all into one file isn't fun.
-        I cannot require other lua files from my config from within my config 
-        by using require('birdeeLua.anythingElse')
-
-    5. and lastly, why am I getting this error when I pull from github instead?
-        It works with the option it suggests it just cant write a lock file because of the way I imported the lua config.
-
-```
-error:
-       … while updating the lock file of flake 'github:BirdeeHub/birdeevim/e77fb93272c25b3ce72c4fbb8f7fbda841ea601e'
-
-       error: cannot write modified lock file of flake 'github:BirdeeHub/birdeevim' (use '--no-write-lock-file' to ignore)
-```
