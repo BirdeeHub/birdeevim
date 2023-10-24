@@ -7,10 +7,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/flake-utils";
     };
-    # "plugins-birdeeLua" = { 
-    #   url = "./.";
-    #   flake = false; 
-    # };
     # Theme
     # "plugins-onedark-vim" = {
     #   url = "github:joshdick/onedark.vim";
@@ -182,8 +178,8 @@
           };
       in
       let
-        birdeeLua = pkgs.stdenv.mkDerivation { 
-            name = "birdeeLua";
+        myLuaConf = pkgs.stdenv.mkDerivation { 
+            name = "myLuaConf";
             src = ./.;
             installPhase = ''
               mkdir -p $out
@@ -201,15 +197,7 @@
           #   vim.opt.config = "/home/birdee/.config/nvimflakes"
           # '';
           customRC = ''
-            let g:mapleader = ' '
-            let g:maplocalleader = ' '
-            colorscheme catppuccin
-            lua require('birdeeLua').plugins()
-            lua require('birdeeLua').opts()
-            lua require('birdeeLua').keymaps()
-            lua require('birdeeLua').LSPs(require('birdeeLua').on_attach, require('birdeeLua').get_capabilities())
-            lua require('birdeeLua').debug()
-            lua require('birdeeLua').autoformat()
+            lua require('myLuaConf')
           '';
           # customRC = ''
           #   let g:mapleader = ' '
@@ -230,7 +218,7 @@
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
             catppuccin
-            birdeeLua
+            myLuaConf
             # onedark-vim
             # pkgs.vimPlugins.nvim-treesitter-textobjects
             # pkgs.vimPlugins.nvim-treesitter
