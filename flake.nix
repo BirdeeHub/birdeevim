@@ -162,6 +162,7 @@
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           customRC = ''
+            packadd myLuaConf
             lua require('myLuaConf').setup()
           '';
 
@@ -214,9 +215,8 @@
             pkgs.vimPlugins.friendly-snippets
             pkgs.vimPlugins.cmp-cmdline
 
-            myLuaConf
           ];
-          opt = with pkgs.neovimPlugins; [ ];
+          opt = with pkgs.neovimPlugins; [ myLuaConf ];
         };
       in
       {

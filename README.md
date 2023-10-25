@@ -53,3 +53,11 @@ then require('lspconfig') I think? not sure.
         i.e. legacy tags and branch names.
 
     6. why lspconfig.lua_ls runs but neodev does not.
+
+
+
+
+
+this error in LspLogs seems to be from lua-lsp though
+
+[ERROR][2023-10-25 08:19:08] .../vim/lsp/rpc.lua:734	"rpc"	"/nix/store/kaizklhznir24y7l706hjnqvndw55kj9-luajit2.1-lua-lsp-0.1.0-2/bin/lua-lsp"	"stderr"	"Error: ...jit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/methods.lua:521: attempt to index local 'top_value' (a nil value)\nstack traceback:\n\t...jit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/methods.lua:521: in function 'definition_of'\n\t...jit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/methods.lua:624: in function <...jit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/methods.lua:614>\n\t...luajit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/loop.lua:57: in function <...luajit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/loop.lua:56>\n\t[C]: in function 'xpcall'\n\t...luajit2.1-lua-lsp-0.1.0-2/share/lua/5.1/lua-lsp/loop.lua:56: in function 'main'\n\t....1.0-2/lua-lsp-0.1.0-2-rocks/lua-lsp/0.1.0-2/bin/lua-lsp:3: in main chunk\n\t[C]: at 0x004062d0\n"

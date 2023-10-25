@@ -1,6 +1,6 @@
 vim.lsp.set_log_level("debug")
 -- require('fidget').setup()
-require('neodev').setup(--[[{ override = function(root_dir, options) end, }]])
+require('neodev').setup({ lspconfig = false, })
 -- vim.lsp.start({
 --   name = "lua_ls",
 --   cmd = { "lua-lsp" },
@@ -14,7 +14,7 @@ require'lspconfig'.lua_ls.setup {
   on_attach = require("myLuaConf.cap-onattach").on_attach,
   filetypes = { "lua" },
   cmd = { "lua-lsp" },
-  -- before_init = require("neodev.lsp").before_init,
+  before_init = require("neodev.lsp").before_init,
   settings = {
     Lua = {
       formatters = {
