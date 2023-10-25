@@ -5,7 +5,14 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
       url = "github:numtide/flake-utils";
+      # inputs.nixpkgs.follows = "nixpkgs"; 
+            #why does this throw a warning now that warning: 
+            #input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
+    # rnix-lsp.url = "github:nix-community/rnix-lsp";
+    # nil.url = "github:oxalica/nil";
+    # lua_ls.url = "github:LuaLS/lua-language-server";
+    # lua_ls.flake = false;
     # Theme
     # "plugins-onedark-vim" = {
     #   url = "github:joshdick/onedark.vim";
@@ -84,7 +91,8 @@
 
               # I DIDNT WRITE THIS AND I HAVE NO IDEA WHAT IT MEANS,
               # AND I ALSO DONT KNOW WHAT PATH `parser` POINTS TO!!
-              # Tree-sitter fails for a variety of lang grammars unless using :TSUpdate
+              # Tree-sitter fails for a variety of lang grammars 
+              # unless using `:TSUpdate`
               # For now install imperatively
               #postPatch =
               #  if (name == "nvim-treesitter") then ''
@@ -207,7 +215,7 @@
       {
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ birdeeVim ];
+          packages = [ birdeeVim pkgs.luajitPackages.lua-lsp ];
           inputsFrom = [ ];
           shellHook = ''
           '';
