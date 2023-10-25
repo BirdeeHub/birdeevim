@@ -1,6 +1,6 @@
 vim.lsp.set_log_level("debug")
 -- require('fidget').setup()
-require('neodev').setup({})
+require('neodev').setup(--[[{ override = function(root_dir, options) end, }]])
 -- vim.lsp.start({
 --   name = "lua_ls",
 --   cmd = { "lua-lsp" },
