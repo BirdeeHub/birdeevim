@@ -177,7 +177,14 @@
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
             catppuccin
-            myLuaConf
+            pkgs.vimPlugins.nvim-treesitter-textobjects
+            pkgs.vimPlugins.nvim-treesitter
+            (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+              plugins: with plugins; [
+                nix
+                lua
+              ]
+            ))
             # onedark-vim
             # pkgs.vimPlugins.nvim-treesitter-textobjects
             # pkgs.vimPlugins.nvim-treesitter
@@ -208,6 +215,7 @@
             pkgs.vimPlugins.friendly-snippets
             pkgs.vimPlugins.cmp-cmdline
 
+            myLuaConf
           ];
           opt = with pkgs.neovimPlugins; [ ];
         };
