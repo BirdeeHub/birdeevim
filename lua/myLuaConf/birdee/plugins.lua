@@ -115,7 +115,8 @@
     options = {
       icons_enabled = false,
       -- theme = 'tokyonight',
-      theme = 'catppuccin',
+      -- theme = 'catppuccin',
+      theme = 'onedark',
       component_separators = '|',
       section_separators = '',
     },
