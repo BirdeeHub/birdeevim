@@ -1,13 +1,13 @@
 vim.lsp.set_log_level("debug")
 -- require('fidget').setup()
-require('neodev').setup({})
--- vim.lsp.start({
---   name = "lua-language-server",
---   cmd = { "lua-language-server" },
---   before_init = require("neodev.lsp").before_init,
---   root_dir = vim.fn.getcwd(),
---   settings = { Lua = {} },
--- })
+-- require('neodev').setup({})
+vim.lsp.start({
+  name = "lua-language-server",
+  cmd = { "lua-language-server" },
+  before_init = require("neodev.lsp").before_init,
+  root_dir = vim.fn.getcwd(),
+  settings = { Lua = {} },
+})
 
 require'lspconfig'.lua_ls.setup {
   capabilities = require("myLuaConf.cap-onattach").get_capabilities(),
