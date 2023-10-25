@@ -26,8 +26,8 @@ vim.lsp.set_log_level("debug")
 --   -- },
 -- }
 require'lspconfig'.nil_ls.setup {
-  capabilities = require("birdee.lsp.birdeelspconfigs").get_capabilities(),
-  on_attach = require("birdee.lsp.birdeelspconfigs").on_attach,
+  capabilities = require("myLuaConf.cap-onattach").get_capabilities(),
+  on_attach = require("myLuaConf.cap-onattach").on_attach,
   filetypes = { "nix" },
   settings = {
     nix = {
