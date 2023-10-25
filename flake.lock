@@ -130,22 +130,6 @@
         "type": "github"
       }
     },
-    "plugins-neodev": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1697954759,
-        "narHash": "sha256-UWJ6aVFQnyhYtOauj935qw5bKupyej4ttvG0+TWDo6E=",
-        "owner": "folke",
-        "repo": "neodev.nvim",
-        "rev": "d617d9eb27e73e701e446874c6ea2cb528719260",
-        "type": "github"
-      },
-      "original": {
-        "owner": "folke",
-        "repo": "neodev.nvim",
-        "type": "github"
-      }
-    },
     "plugins-onedark-vim": {
       "flake": false,
       "locked": {
@@ -188,7 +172,6 @@
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lspconfig": "plugins-lspconfig",
         "plugins-lualine": "plugins-lualine",
-        "plugins-neodev": "plugins-neodev",
         "plugins-onedark-vim": "plugins-onedark-vim",
         "plugins-which-key": "plugins-which-key"
       }

@@ -51,3 +51,5 @@ then require('lspconfig') I think? not sure.
 
     5. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.
+
+    6. why lspconfig.lua_ls runs but neodev does not.

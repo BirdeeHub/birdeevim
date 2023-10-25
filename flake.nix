@@ -43,10 +43,10 @@
       url = "github:nvim-lualine/lualine.nvim";
       flake = false;
     };
-    "plugins-neodev" = {
-      url = "github:folke/neodev.nvim";
-      flake = false;
-    };
+    # "plugins-neodev" = {
+    #   url = "github:folke/neodev.nvim";
+    #   flake = false;
+    # };
     "plugins-lspconfig" = {
       url = "github:neovim/nvim-lspconfig";
       flake = false;
@@ -133,7 +133,7 @@
               # I am not sure if doing this allows plugins to use them or not.
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
               # I did add cargo and cmake incase it lets plugins use them to build.
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil ];# cargo cmake ];
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil pkgs.luajitPackages.lua-lsp ];# cargo cmake ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
@@ -186,12 +186,13 @@
             #     lua
             #   ]
             # ))
+            pkgs.vimPlugins.neodev-nvim
             pkgs.vimPlugins.telescope-fzf-native-nvim
             pkgs.vimPlugins.plenary-nvim
             pkgs.vimPlugins.telescope-nvim
             gitsigns
             which-key
-            neodev
+            # neodev
             lspconfig
             lualine
             Comment
@@ -221,7 +222,7 @@
       {
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ birdeeVim pkgs.luajitPackages.lua-lsp ];
+          packages = [ birdeeVim ];
           inputsFrom = [ ];
           shellHook = ''
           '';
