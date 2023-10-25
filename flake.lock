@@ -50,22 +50,6 @@
         "type": "github"
       }
     },
-    "plugins-catppuccin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1698119279,
-        "narHash": "sha256-bf7e7dbnD3YNmhFhNUCQJo3X4en+9GX4UGHdyU6+uIs=",
-        "owner": "catppuccin",
-        "repo": "nvim",
-        "rev": "ea52fe8a0b1e4a820df0d0cf9a6a5a0e18c3eaa0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "nvim",
-        "type": "github"
-      }
-    },
     "plugins-gitsigns": {
       "flake": false,
       "locked": {
@@ -162,6 +146,22 @@
         "type": "github"
       }
     },
+    "plugins-onedark-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1689744943,
+        "narHash": "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=",
+        "owner": "joshdick",
+        "repo": "onedark.vim",
+        "rev": "57b77747694ea5676c3ca0eeaf9567dc499730c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joshdick",
+        "repo": "onedark.vim",
+        "type": "github"
+      }
+    },
     "plugins-which-key": {
       "flake": false,
       "locked": {
@@ -183,13 +183,13 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "plugins-Comment": "plugins-Comment",
-        "plugins-catppuccin": "plugins-catppuccin",
         "plugins-gitsigns": "plugins-gitsigns",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lspconfig": "plugins-lspconfig",
         "plugins-lualine": "plugins-lualine",
         "plugins-neodev": "plugins-neodev",
+        "plugins-onedark-vim": "plugins-onedark-vim",
         "plugins-which-key": "plugins-which-key"
       }
     },

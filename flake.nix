@@ -14,14 +14,14 @@
     # lua_ls.url = "github:LuaLS/lua-language-server";
     # lua_ls.flake = false;
     # Theme
-    # "plugins-onedark-vim" = {
-    #   url = "github:joshdick/onedark.vim";
-    #   flake = false;
-    # };
-    "plugins-catppuccin" = {
-      url = "github:catppuccin/nvim";
+    "plugins-onedark-vim" = {
+      url = "github:joshdick/onedark.vim";
       flake = false;
     };
+    # "plugins-catppuccin" = {
+    #   url = "github:catppuccin/nvim";
+    #   flake = false;
+    # };
     # Git
     "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
@@ -162,7 +162,7 @@
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           customRC = ''
-            lua require('myLuaConf')
+            lua require('myLuaConf').setup()
           '';
 
           # TO DO: 
@@ -176,18 +176,16 @@
           # install neo-tree because no one added the icons to netrw yet for when they are nice
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
-            catppuccin
-            pkgs.vimPlugins.nvim-treesitter-textobjects
-            pkgs.vimPlugins.nvim-treesitter
-            (pkgs.vimPlugins.nvim-treesitter.withPlugins (
-              plugins: with plugins; [
-                nix
-                lua
-              ]
-            ))
-            # onedark-vim
+            # catppuccin
+            onedark-vim
             # pkgs.vimPlugins.nvim-treesitter-textobjects
             # pkgs.vimPlugins.nvim-treesitter
+            # (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+            #   plugins: with plugins; [
+            #     nix
+            #     lua
+            #   ]
+            # ))
             pkgs.vimPlugins.telescope-fzf-native-nvim
             pkgs.vimPlugins.plenary-nvim
             pkgs.vimPlugins.telescope-nvim
