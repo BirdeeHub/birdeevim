@@ -41,37 +41,61 @@ function completion.setup()
         end
       end, { 'i', 's' }),
     },
-    sources = {
-      -- { name = "cody" },
+    sources = cmp.config.sources {
+      -- The insertion order influences the priority of the sources
+      { name = 'nvim_lsp'--[[ , keyword_length = 3 ]] },
+      { name = 'nvim_lsp_signature_help'--[[ , keyword_length = 3  ]]},
       -- { name = 'cmp_tabnine' },
-      { name = 'nvim_lsp' },
-      { name = 'nvim_lua' },
-      { name = 'luasnip' },
-      { name = 'path' },
       { name = 'buffer' },
-      { name = 'nvim_lsp_signature_help' },
+      { name = 'path' },
+    },
+    enabled = function()
+      return vim.bo[0].buftype ~= 'prompt'
+    end,
+    experimental = {
+      native_menu = false,
+      ghost_text = true,
     },
   }
-  cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' },
-    },
-  })
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
+
+  cmp.setup.filetype('lua', {
+    sources = cmp.config.sources {
+      { name = 'nvim_lua' },
+      { name = 'nvim_lsp'--[[ , keyword_length = 3  ]]},
       { name = 'path' },
-    }, {
+      { name = 'luasnip' },
+    },{
       {
         name = 'cmdline',
         option = {
           ignore_cmds = { 'Man', '!' },
         },
       },
-    })
+    },
   })
 
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'nvim_lsp_document_symbol'--[[ , keyword_length = 3  ]]},
+      { name = 'buffer' },
+      { name = 'cmdline_history' },
+    },
+    view = {
+      entries = { name = 'wildmenu', separator = '|' },
+    },
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources {
+      { name = 'cmdline' },
+      -- { name = 'cmdline_history' },
+      { name = 'path' },
+    },
+  })
 end
 
 return completion

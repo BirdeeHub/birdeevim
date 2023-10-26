@@ -121,6 +121,7 @@
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
               propagatedBuildInputs = with pkgs; [ 
                 stdenv.cc.cc.lib
+                # apparently you can put dependencies and language servers here
                 pkgs.nil
                 pkgs.lua-language-server
                 # cargo
@@ -167,16 +168,16 @@
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = let
             gitPlugins = with pkgs.neovimPlugins; [ 
-            # catppuccin
-            onedark-vim
-            gitsigns
-            which-key
-            lspconfig
-            lualine
-            Comment
-            harpoon
-            hlargs
-            # fidget # once you figure out how to import from legacy tag
+              # catppuccin
+              onedark-vim
+              gitsigns
+              which-key
+              lspconfig
+              lualine
+              Comment
+              harpoon
+              hlargs
+              # fidget # once you figure out how to import from legacy tag
             ];
             nixvimplugins = with pkgs.vimPlugins; [ 
               nvim-treesitter-textobjects
