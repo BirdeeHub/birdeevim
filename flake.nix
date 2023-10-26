@@ -4,6 +4,7 @@
         # install vim-markdown-composer
         # add cmp-tabnine, 
         # install cody/sourcegraph
+        # separate out langauge server sets into packages.
         # install jdtls and kotlin-language-server
         # install debuggers
         # install formatters
@@ -83,7 +84,8 @@
         # also if you do that, dont name the input "plugins-something"
         # because that would be loaded by the overlay
 
-        birdeeVim = import ./nix/NeovimBuilder.nix {
+        birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
+          # TODO use servers list to make different packages for different languages
           inherit self;
           inherit pkgs;
           propagatedBuildInputs = with pkgs; [ 
@@ -156,7 +158,8 @@
             nixOptPlugins = with pkgs.vimPlugins; [ ];
           in
           gitOptPlugins ++ nixOptPlugins;
-        };
+        });
+        birdeeVim = birdeeVimBuild { "neodev" = true; };
       in
       {
         devShell = pkgs.mkShell {
