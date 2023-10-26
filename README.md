@@ -26,11 +26,6 @@ for new plugins are all in Lua, and if I want to not load it on startup,
 I can just put it in opt section and call packadd 
 from an autocommand if I want to only load it when needed.
 
-I haven't added any LSP's yet, thats next.
-I should just be able to add them as inputs in the flake and then 
-As inputs into something else?
-then require('lspconfig') I think? not sure.
-
 ## Questions:
 
     1. I dont know how to build nvim plugins with a build step 
@@ -42,14 +37,7 @@ then require('lspconfig') I think? not sure.
         I feel like my main issue here is not knowing where 
         those $src and $out variables come from
 
-    2. I need to know why treesitter parsers cant install
+    2. Why markdown preview isnt working. although that one is probably due to dependencies on node I think?
 
-    3. Why markdown preview isnt working. although that one is probably due to dependencies on node I think?
-
-    4. How to include dependencies like cargo or node that plugins require.
-        in a way that they can actually use them.
-
-    5. How to include as input to flake something that isnt the main branch, 
+    3. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.
-
-    6. why lspconfig.lua_ls runs but neodev does not.

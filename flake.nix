@@ -159,6 +159,7 @@
 
           # TO DO: 
           # install markdown-preview
+          # install fugitive
           # add cmp-tabnine, 
           # install cody/sourcegraph
           # install jdtls and kotlin-language-server
@@ -189,6 +190,9 @@
               #   ]
               # ))
               nvim-web-devicons
+              vim-sleuth
+              vim-fugitive
+              vim-rhubarb
               neodev-nvim
               telescope-fzf-native-nvim
               plenary-nvim
