@@ -99,6 +99,7 @@
             # unzip
           ];
           start = let
+            # add desired plugins to pre load from overlay here
             gitPlugins = with pkgs.neovimPlugins; [ 
               # catppuccin
               onedark-vim
@@ -111,6 +112,7 @@
               hlargs
               # fidget # once you figure out how to import from legacy tag
             ];
+            # and add here for regular pkgs.vimPlugin and also self derived plugins
             nixvimplugins = with pkgs.vimPlugins; [ 
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
@@ -146,6 +148,8 @@
             ];
           in
           gitPlugins ++ nixvimplugins;
+          # same as above, but not loaded at startup.
+          # use this with packadd to achieve something like lazy loading
           opt = let
             gitOptPlugins = with pkgs.neovimPlugins; [ ];
             nixOptPlugins = with pkgs.vimPlugins; [ ];
