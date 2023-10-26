@@ -110,7 +110,7 @@
             #TODO make this an intersection with servers set or something
             resultInputs = InputsList.neodev;
           in
-            resultInputs + generic;
+            resultInputs ++ generic;
           start = let
             # add desired plugins to pre load from overlay here
             gitPlugins = with pkgs.neovimPlugins; [ 
