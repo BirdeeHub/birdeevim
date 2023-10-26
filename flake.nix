@@ -10,9 +10,6 @@
             #input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
     # rnix-lsp.url = "github:nix-community/rnix-lsp";
-    # nil.url = "github:oxalica/nil";
-    # lua_ls.url = "github:LuaLS/lua-language-server";
-    # lua_ls.flake = false;
     # Theme
     "plugins-onedark-vim" = {
       url = "github:joshdick/onedark.vim";
@@ -125,6 +122,8 @@
                 pkgs.nil
                 pkgs.lua-language-server
                 # cargo
+                # curl and unzip needed for tabnine
+                # nodejs possibly needed for markdown-preview
               ];
             });
           in
