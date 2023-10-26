@@ -32,26 +32,34 @@
 !_TAG_PARSER_VERSION!Lua	0.0	/current.age/
 !_TAG_PARSER_VERSION!Markdown	0.0	/current.age/
 !_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
-!_TAG_PROC_CWD	/home/birdee/Projects/nixshared/birdeevim/	//
+!_TAG_PROC_CWD	/home/birdee/Projects/nvimflakes/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	6.0.0	/p6.0.20221218.0/
-0	lua/.luarc.json	/^        "\/nix\/store\/pp3r7vvi50fcizwz5issqgdhbzjw72c5-vimplugin-neodev.nvim-2023-10-16\/types\//;"	s	array:workspace.library
-1	lua/.luarc.json	/^        "\/nix\/store\/68wl551rmd6p71s37h0svh0dq0ih0i9b-neovim-unwrapped-0.9.4\/share\/nvim\/run/;"	s	array:workspace.library
-2	lua/.luarc.json	/^        "\/home\/birdee\/Downloads\/birdeevim\/lua",$/;"	s	array:workspace.library
+0	lua/.luarc.json	/^        "\/nix\/store\/9d3zsgn86naadgmqw8ydia27vq2cabh2-vimplugin-neodev.nvim-2023-10-22\/types\//;"	s	array:workspace.library
+1	lua/.luarc.json	/^        "\/nix\/store\/bl081wsprvdchqxyw2k2ci1zmcj1wjz7-neovim-unwrapped-0.9.4\/share\/nvim\/run/;"	s	array:workspace.library
+2	lua/.luarc.json	/^        "\/home\/birdee\/Projects\/nvimflakes\/lua",$/;"	s	array:workspace.library
 3	lua/.luarc.json	/^        "${3rd}\/luv\/library"$/;"	s	array:workspace.library
 Attention: This repo is unfinished	README.md	/^## Attention: This repo is unfinished$/;"	s
 Questions:	README.md	/^## Questions:$/;"	s
-['<S-Tab>']	lua/myLuaConf/birdee/plugins.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
-['<Tab>']	lua/myLuaConf/birdee/plugins.lua	/^      ['<Tab>'] = cmp.mapping(function(fallback)$/;"	f
+['<S-Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
+['<Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<Tab>'] = cmp.mapping(function(fallback)$/;"	f
+['[M']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['[M'] = '@function.outer',$/;"	f
+['[m']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['[m'] = '@function.outer',$/;"	f
+[']M']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']M'] = '@function.outer',$/;"	f
+[']m']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']m'] = '@function.outer',$/;"	f
+['af']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['af'] = '@function.outer',$/;"	f
+['if']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['if'] = '@function.inner',$/;"	f
 callback	lua/myLuaConf/birdee/opts.lua	/^    callback = function()$/;"	f
-expand	lua/myLuaConf/birdee/plugins.lua	/^      expand = function(args)$/;"	f
-get_capabilities	lua/myLuaConf/cap-onattach/birdee.lua	/^function M.get_capabilities()$/;"	f	unknown:M
-get_capabilities	lua/myLuaConf/cap-onattach/vscody.lua	/^function M.get_capabilities()$/;"	f	unknown:M
-nmap	lua/myLuaConf/cap-onattach/birdee.lua	/^  local nmap = function(keys, func, desc)$/;"	f
-on_attach	lua/myLuaConf/birdee/plugins.lua	/^    on_attach = function(bufnr)$/;"	f
-on_attach	lua/myLuaConf/cap-onattach/birdee.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
-on_attach	lua/myLuaConf/cap-onattach/vscody.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
+enabled	lua/myLuaConf/birdee/completion.lua	/^    enabled = function()$/;"	f
+expand	lua/myLuaConf/birdee/completion.lua	/^      expand = function(args)$/;"	f
+get_capabilities	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.get_capabilities()$/;"	f	unknown:M
+get_capabilities	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.get_capabilities()$/;"	f	unknown:M
+nmap	lua/myLuaConf/birdee/caps-onattach.lua	/^  local nmap = function(keys, func, desc)$/;"	f
+on_attach	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
+on_attach	lua/myLuaConf/birdee/plugins.lua	/^  on_attach = function(bufnr)$/;"	f
+on_attach	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/completion.lua	/^function completion.setup()$/;"	f	unknown:completion
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup()$/;"	f	unknown:myLuaConf
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a

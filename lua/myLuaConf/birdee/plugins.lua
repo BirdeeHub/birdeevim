@@ -66,15 +66,10 @@ require('lualine').setup({
   },
 })
 require('hlargs').setup({
-color = '#32a88f',
+  color = '#32a88f',
 })
 require('nvim-surround').setup()
 require('harpoon').setup()
 require("ibl").setup()
 require('myLuaConf.birdee.completion').setup()
--- require('markdown-preview-nvim').config = function()
---   vim.fn['mkdp#util#install']()
---   vim.g.mkdp_auto_close = 0
---   vim.api.nvim_set_keymap('n', '<leader>mp', '<Plug>MarkdownPreviewToggle', {})
--- end
 
