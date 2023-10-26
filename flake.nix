@@ -75,7 +75,6 @@
         pluginOverlay = final: prev:
           let
             inherit (prev.vimUtils) buildVimPlugin;
-            treesitterGrammars = prev.tree-sitter.withPlugins (_: prev.tree-sitter.allGrammars);
             plugins = builtins.filter
               (s: (builtins.match "plugins-.*" s) != null)
               (builtins.attrNames inputs);
@@ -88,17 +87,6 @@
               pname = plugName name;
               version = "master";
               src = builtins.getAttr name inputs;
-
-              # I DIDNT WRITE THIS AND I HAVE NO IDEA WHAT IT MEANS,
-              # AND I ALSO DONT KNOW WHAT PATH `parser` POINTS TO!!
-              # Tree-sitter fails for a variety of lang grammars 
-              # unless using `:TSUpdate`
-              # For now install imperatively
-              #postPatch =
-              #  if (name == "nvim-treesitter") then ''
-              #    rm -r parser
-              #    ln -s ${treesitterGrammars} parser
-              #  '' else "";
             };
           in
           {
@@ -166,11 +154,10 @@
           '';
 
           # TO DO: 
-          # install lsps
-          # fix treesitter parser install
           # install markdown-preview
           # add cmp-tabnine, 
           # install cody/sourcegraph
+          # install jdtls and kotlin-language-server
           # install debuggers
           # install formatters
           # install neo-tree because no one added the icons to netrw yet for when they are nice
@@ -179,7 +166,6 @@
             # catppuccin
             onedark-vim
             pkgs.vimPlugins.nvim-treesitter-textobjects
-            pkgs.vimPlugins.nvim-treesitter
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             # (pkgs.vimPlugins.nvim-treesitter.withPlugins (
             #   plugins: with plugins; [
@@ -193,7 +179,6 @@
             pkgs.vimPlugins.telescope-nvim
             gitsigns
             which-key
-            # neodev
             lspconfig
             lualine
             Comment
