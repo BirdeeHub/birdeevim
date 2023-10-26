@@ -133,7 +133,7 @@
               # I am not sure if doing this allows plugins to use them or not.
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
               # I did add cargo and cmake incase it lets plugins use them to build.
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil pkgs.luajitPackages.lua-lsp ];# cargo cmake ];
+              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil pkgs.lua-language-server pkgs.vimPlugins.neodev-nvim ];# cargo cmake ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
@@ -162,7 +162,6 @@
         birdeeVim = neovimBuilder {
           # the next line loads a trivial example of a init.vim:
           customRC = ''
-            packadd myLuaConf
             lua require('myLuaConf').setup()
           '';
 
@@ -179,8 +178,9 @@
           start = with pkgs.neovimPlugins; [ 
             # catppuccin
             onedark-vim
-            # pkgs.vimPlugins.nvim-treesitter-textobjects
-            # pkgs.vimPlugins.nvim-treesitter
+            pkgs.vimPlugins.nvim-treesitter-textobjects
+            pkgs.vimPlugins.nvim-treesitter
+            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             # (pkgs.vimPlugins.nvim-treesitter.withPlugins (
             #   plugins: with plugins; [
             #     nix
@@ -215,8 +215,9 @@
             pkgs.vimPlugins.friendly-snippets
             pkgs.vimPlugins.cmp-cmdline
 
+            myLuaConf
           ];
-          opt = with pkgs.neovimPlugins; [ myLuaConf ];
+          opt = with pkgs.neovimPlugins; [ ];
         };
       in
       {

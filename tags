@@ -10,6 +10,12 @@
 !_TAG_FIELD_DESCRIPTION	typeref	/Type and name of a variable or typedef/
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_KIND_DESCRIPTION!JSON	a,array	/arrays/
+!_TAG_KIND_DESCRIPTION!JSON	b,boolean	/booleans/
+!_TAG_KIND_DESCRIPTION!JSON	n,number	/numbers/
+!_TAG_KIND_DESCRIPTION!JSON	o,object	/objects/
+!_TAG_KIND_DESCRIPTION!JSON	s,string	/strings/
+!_TAG_KIND_DESCRIPTION!JSON	z,null	/nulls/
 !_TAG_KIND_DESCRIPTION!Lua	f,function	/functions/
 !_TAG_KIND_DESCRIPTION!Markdown	S,subsection	/level 2 sections/
 !_TAG_KIND_DESCRIPTION!Markdown	T,l4subsection	/level 4 sections/
@@ -22,14 +28,19 @@
 !_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
 !_TAG_OUTPUT_VERSION	0.0	/current.age/
+!_TAG_PARSER_VERSION!JSON	0.0	/current.age/
 !_TAG_PARSER_VERSION!Lua	0.0	/current.age/
 !_TAG_PARSER_VERSION!Markdown	0.0	/current.age/
 !_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
-!_TAG_PROC_CWD	/home/birdee/Projects/nvimflakes/	//
+!_TAG_PROC_CWD	/home/birdee/Projects/nixshared/birdeevim/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	6.0.0	/p6.0.20221218.0/
+0	lua/.luarc.json	/^        "\/nix\/store\/pp3r7vvi50fcizwz5issqgdhbzjw72c5-vimplugin-neodev.nvim-2023-10-16\/types\//;"	s	array:workspace.library
+1	lua/.luarc.json	/^        "\/nix\/store\/68wl551rmd6p71s37h0svh0dq0ih0i9b-neovim-unwrapped-0.9.4\/share\/nvim\/run/;"	s	array:workspace.library
+2	lua/.luarc.json	/^        "\/home\/birdee\/Downloads\/birdeevim\/lua",$/;"	s	array:workspace.library
+3	lua/.luarc.json	/^        "${3rd}\/luv\/library"$/;"	s	array:workspace.library
 Attention: This repo is unfinished	README.md	/^## Attention: This repo is unfinished$/;"	s
 Questions:	README.md	/^## Questions:$/;"	s
 ['<S-Tab>']	lua/myLuaConf/birdee/plugins.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
@@ -42,3 +53,5 @@ nmap	lua/myLuaConf/cap-onattach/birdee.lua	/^  local nmap = function(keys, func,
 on_attach	lua/myLuaConf/birdee/plugins.lua	/^    on_attach = function(bufnr)$/;"	f
 on_attach	lua/myLuaConf/cap-onattach/birdee.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
 on_attach	lua/myLuaConf/cap-onattach/vscody.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
+setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup()$/;"	f	unknown:myLuaConf
+workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a

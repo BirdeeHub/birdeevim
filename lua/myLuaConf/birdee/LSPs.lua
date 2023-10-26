@@ -1,6 +1,17 @@
 vim.lsp.set_log_level("debug")
 -- require('fidget').setup()
-require('neodev').setup({ lspconfig = false, })
+require('neodev').setup({
+
+})
+-- require('neodev').setup({ lspconfig = false, })
+-- require("neodev").setup({
+--   override = function(root_dir, library)
+--     if root_dir:find("/home/birdee/Downloads/birdeevim", 1, true) == 1 then
+--       library.enabled = true
+--       library.plugins = true
+--     end
+--   end,
+-- })
 -- vim.lsp.start({
 --   name = "lua_ls",
 --   cmd = { "lua-lsp" },
@@ -13,8 +24,7 @@ require'lspconfig'.lua_ls.setup {
   capabilities = require("myLuaConf.cap-onattach").get_capabilities(),
   on_attach = require("myLuaConf.cap-onattach").on_attach,
   filetypes = { "lua" },
-  cmd = { "lua-lsp" },
-  before_init = require("neodev.lsp").before_init,
+  -- before_init = require("neodev.lsp").before_init,
   settings = {
     Lua = {
       formatters = {
@@ -41,12 +51,3 @@ require'lspconfig'.nil_ls.setup {
     telemetry = { enabled = false },
   },
 }
--- local autocmd = vim.api.nvim_create_autocmd
--- autocmd("FileType", {
---    pattern = "lua",
---    callback = function()
---       print("autocommand for lua ran")
---       -- vim.highlight.priorities.semantic_tokens = 150
---       -- vim.highlight.priorities.syntax = 100
---    end
--- })

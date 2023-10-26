@@ -124,8 +124,8 @@
       lualine_c = {
         {
           'filename', path = 1, status = true,
-          'lsp_progress',
         },
+        'lsp_progress',
       },
     },
   })
