@@ -19,6 +19,8 @@
             #input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
     # rnix-lsp.url = "github:nix-community/rnix-lsp";
+    # If you want your plugin to be loaded by the standard overlay,
+    # Then you should name it "plugins-something"
     # Theme
     "plugins-onedark-vim" = {
       url = "github:joshdick/onedark.vim";
@@ -77,6 +79,10 @@
           overlays = [ standardPluginOverlay ];
           config.allowUnfree = true;
         };
+        # If you cant import them with that overlay, define a derivation here
+        # also if you do that, dont name the input "plugins-something"
+        # because that would be loaded by the overlay
+
         birdeeVim = import ./nix/NeovimBuilder.nix {
           inherit self;
           inherit pkgs;
