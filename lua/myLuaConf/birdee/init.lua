@@ -1,6 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.cmd.colorscheme "onedark"
+-- vim.cmd.colorscheme "onedark"
+vim.cmd.colorscheme "catppuccin"
 require("myLuaConf.birdee.plugins")
 require("myLuaConf.birdee.LSPs")
 require("myLuaConf.birdee.debug")

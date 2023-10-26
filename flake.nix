@@ -14,14 +14,14 @@
     # lua_ls.url = "github:LuaLS/lua-language-server";
     # lua_ls.flake = false;
     # Theme
-    "plugins-onedark-vim" = {
-      url = "github:joshdick/onedark.vim";
-      flake = false;
-    };
-    # "plugins-catppuccin" = {
-    #   url = "github:catppuccin/nvim";
+    # "plugins-onedark-vim" = {
+    #   url = "github:joshdick/onedark.vim";
     #   flake = false;
     # };
+    "plugins-catppuccin" = {
+      url = "github:catppuccin/nvim";
+      flake = false;
+    };
     # Git
     "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
@@ -118,9 +118,7 @@
           }:
           let
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-              # I am not sure if doing this allows plugins to use them or not.
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-              # I did add cargo and cmake incase it lets plugins use them to build.
               propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil pkgs.lua-language-server pkgs.vimPlugins.neodev-nvim ];# cargo cmake ];
             });
           in
@@ -163,8 +161,8 @@
           # install neo-tree because no one added the icons to netrw yet for when they are nice
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
           start = with pkgs.neovimPlugins; [ 
-            # catppuccin
-            onedark-vim
+            catppuccin
+            # onedark-vim
             pkgs.vimPlugins.nvim-treesitter-textobjects
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             # (pkgs.vimPlugins.nvim-treesitter.withPlugins (
