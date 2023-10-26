@@ -25,19 +25,15 @@ The reason I want to do it this way is the setup instructions
 for new plugins are all in Lua, and if I want to not load it on startup, 
 I can just put it in opt section and call packadd 
 from an autocommand if I want to only load it when needed.
+even though it is supposed to be loaded as a plugin and thus should work, 
+I am unsure if including an ftplugin folder works or not as I have not checked.
 
 ## Questions:
 
     1. I dont know how to build nvim plugins with a build step 
-        like build = ./install.sh included by a plugin in nix using the 
-        overlay in this config. Or in general really.
-        I have never programmed in a functional language before. 
-        That stuff all comes from the repo I cited. All I did was add some plugins,
-        and import my config as a plugin.
-        I feel like my main issue here is not knowing where 
-        those $src and $out variables come from
+        like build = ./install.sh included by a plugin in nix?
+        Do I just define a custom derivation for those and pass 
+        them in like I did my config?
 
-    2. Why markdown preview isnt working. although that one is probably due to dependencies on node I think?
-
-    3. How to include as input to flake something that isnt the main branch, 
+    2. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.

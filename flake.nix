@@ -2,7 +2,6 @@
   description = "Birdee's Neovim flake with mostly regular Lua config.";
         # TO DO: 
         # install vim-markdown-composer
-        # install fugitive
         # add cmp-tabnine, 
         # install cody/sourcegraph
         # install jdtls and kotlin-language-server
@@ -15,8 +14,9 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
       # inputs.nixpkgs.follows = "nixpkgs"; 
-            #why does this throw a warning now that warning: 
-            #input 'flake-utils' has an override for a non-existent input 'nixpkgs'
+        # ^^ why does this throw a warning now that 
+            # warning: 
+            # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
     # rnix-lsp.url = "github:nix-community/rnix-lsp";
     # If you want your plugin to be loaded by the standard overlay,

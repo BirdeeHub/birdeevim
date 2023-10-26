@@ -1,10 +1,12 @@
-{ self,
-  pkgs,
-  customRC ? "lua require('myLuaConf').setup()"
+{ 
+  self
+  , pkgs
+  , customRC ? "lua require('myLuaConf').setup()"
   , viAlias ? true
   , vimAlias ? true
   , start ? builtins.attrValues pkgs.neovimPlugins
   , opt ? [ ]
+  # todo: swap to new wrapper maybe, and add debug
   , debug ? true
   , propagatedBuildInputs ? []
   }:
