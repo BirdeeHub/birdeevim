@@ -7,8 +7,27 @@ function completion.setup()
   local luasnip = require 'luasnip'
   require('luasnip.loaders.from_vscode').lazy_load()
   luasnip.config.setup {}
+  local lspkind = require('lspkind')
 
   cmp.setup {
+    formatting = {
+      format = lspkind.cmp_format {
+        mode = 'symbol_text',
+        with_text = true,
+        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+        menu = {
+          buffer = '[BUF]',
+          nvim_lsp = '[LSP]',
+          nvim_lsp_signature_help = '[LSP]',
+          nvim_lsp_document_symbol = '[LSP]',
+          nvim_lua = '[API]',
+          path = '[PATH]',
+          luasnip = '[SNIP]',
+        },
+      },
+    },
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)

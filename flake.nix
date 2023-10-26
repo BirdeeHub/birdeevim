@@ -122,6 +122,7 @@
               #     lua
               #   ]
               # ))
+              lspkind-nvim
               nvim-web-devicons
               vim-sleuth
               vim-fugitive
