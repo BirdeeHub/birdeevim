@@ -2,8 +2,8 @@ vim.lsp.set_log_level("debug")
 -- require('fidget').setup()
 require('neodev').setup({})
 require'lspconfig'.lua_ls.setup {
-  capabilities = require("myLuaConf.cap-onattach").get_capabilities(),
-  on_attach = require("myLuaConf.cap-onattach").on_attach,
+  capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
+  on_attach = require("myLuaConf.caps-onattach").on_attach,
   filetypes = { "lua" },
   settings = {
     Lua = {
@@ -17,8 +17,8 @@ require'lspconfig'.lua_ls.setup {
   },
 }
 require'lspconfig'.nil_ls.setup {
-  capabilities = require("myLuaConf.cap-onattach").get_capabilities(),
-  on_attach = require("myLuaConf.cap-onattach").on_attach,
+  capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
+  on_attach = require("myLuaConf.caps-onattach").on_attach,
   filetypes = { "nix" },
   settings = {
     nix = {

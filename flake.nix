@@ -14,14 +14,14 @@
     # lua_ls.url = "github:LuaLS/lua-language-server";
     # lua_ls.flake = false;
     # Theme
-    # "plugins-onedark-vim" = {
-    #   url = "github:joshdick/onedark.vim";
-    #   flake = false;
-    # };
-    "plugins-catppuccin" = {
-      url = "github:catppuccin/nvim";
+    "plugins-onedark-vim" = {
+      url = "github:joshdick/onedark.vim";
       flake = false;
     };
+    # "plugins-catppuccin" = {
+    #   url = "github:catppuccin/nvim";
+    #   flake = false;
+    # };
     # Git
     "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
@@ -119,7 +119,12 @@
           let
             myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
               # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-              propagatedBuildInputs = with pkgs; [ stdenv.cc.cc.lib pkgs.nil pkgs.lua-language-server pkgs.vimPlugins.neodev-nvim ];# cargo cmake ];
+              propagatedBuildInputs = with pkgs; [ 
+                stdenv.cc.cc.lib
+                pkgs.nil
+                pkgs.lua-language-server
+                # cargo
+              ];
             });
           in
           pkgs.wrapNeovim myNeovimUnwrapped {
@@ -160,21 +165,10 @@
           # install formatters
           # install neo-tree because no one added the icons to netrw yet for when they are nice
           # if you want, install fidget from legacy tag, but lualine-lsp-progress should be fine
-          start = with pkgs.neovimPlugins; [ 
-            catppuccin
-            # onedark-vim
-            pkgs.vimPlugins.nvim-treesitter-textobjects
-            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-            # (pkgs.vimPlugins.nvim-treesitter.withPlugins (
-            #   plugins: with plugins; [
-            #     nix
-            #     lua
-            #   ]
-            # ))
-            pkgs.vimPlugins.neodev-nvim
-            pkgs.vimPlugins.telescope-fzf-native-nvim
-            pkgs.vimPlugins.plenary-nvim
-            pkgs.vimPlugins.telescope-nvim
+          start = let
+            gitPlugins = with pkgs.neovimPlugins; [ 
+            # catppuccin
+            onedark-vim
             gitsigns
             which-key
             lspconfig
@@ -182,25 +176,45 @@
             Comment
             harpoon
             hlargs
-            pkgs.vimPlugins.nvim-surround
-            pkgs.vimPlugins.indent-blankline-nvim
-            # pkgs.vimPlugins.markdown-preview-nvim
-
             # fidget # once you figure out how to import from legacy tag
-            pkgs.vimPlugins.lualine-lsp-progress
-            pkgs.vimPlugins.nvim-cmp
-            pkgs.vimPlugins.luasnip
-            pkgs.vimPlugins.cmp_luasnip
-            pkgs.vimPlugins.cmp-buffer
-            pkgs.vimPlugins.cmp-path
-            pkgs.vimPlugins.cmp-nvim-lua
-            pkgs.vimPlugins.cmp-nvim-lsp
-            pkgs.vimPlugins.friendly-snippets
-            pkgs.vimPlugins.cmp-cmdline
-
-            myLuaConf
-          ];
-          opt = with pkgs.neovimPlugins; [ ];
+            ];
+            nixvimplugins = with pkgs.vimPlugins; [ 
+              nvim-treesitter-textobjects
+              nvim-treesitter.withAllGrammars
+              # (nvim-treesitter.withPlugins (
+              #   plugins: with plugins; [
+              #     nix
+              #     lua
+              #   ]
+              # ))
+              nvim-web-devicons
+              neodev-nvim
+              telescope-fzf-native-nvim
+              plenary-nvim
+              telescope-nvim
+              nvim-surround
+              indent-blankline-nvim
+              # markdown-preview-nvim
+              lualine-lsp-progress
+              nvim-cmp
+              luasnip
+              cmp_luasnip
+              cmp-buffer
+              cmp-path
+              cmp-nvim-lua
+              cmp-nvim-lsp
+              friendly-snippets
+              cmp-cmdline
+              cmp-nvim-lsp-signature-help
+              cmp-cmdline-history
+            ];
+          in
+          gitPlugins ++ nixvimplugins ++ [ myLuaConf ];
+          opt = let
+            gitOptPlugins = with pkgs.neovimPlugins; [ ];
+            nixOptPlugins = with pkgs.vimPlugins; [ ];
+          in
+          gitOptPlugins ++ nixOptPlugins;
         };
       in
       {
