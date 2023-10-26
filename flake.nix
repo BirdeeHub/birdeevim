@@ -85,21 +85,32 @@
         # because that would be loaded by the overlay
 
         birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
-          # TODO use servers list to make different packages for different languages
+          # TODO use servers list passed in and customRC
+          # and pass a table to myLuaConf.setup()
+          # and install only necessary servers to make
+          # different packages for different languages
           inherit self;
           inherit pkgs;
-          propagatedBuildInputs = with pkgs; [ 
-            # you can put dependencies and language servers here
-            nil
-            lua-language-server
+          propagatedBuildInputs = let
+            InputsList = {
+              neodev = with pkgs; [ 
+              # you can put dependencies and language servers here
+                nil
+                lua-language-server
+              ];
+            };
+            generic = [
+              # cody and markdown composer deps
+              # cargo
 
-            # cody and markdown composer deps
-            # cargo
-
-            # tab9 deps
-            # curl
-            # unzip
-          ];
+              # tab9 deps
+              # curl
+              # unzip
+            ];
+            #TODO make this an intersection with servers set or something
+            resultInputs = InputsList.neodev;
+          in
+            resultInputs + generic;
           start = let
             # add desired plugins to pre load from overlay here
             gitPlugins = with pkgs.neovimPlugins; [ 
@@ -159,7 +170,7 @@
           in
           gitOptPlugins ++ nixOptPlugins;
         });
-        birdeeVim = birdeeVimBuild { "neodev" = true; };
+         birdeeVim = birdeeVimBuild { "neodev" = true; };
       in
       {
         devShell = pkgs.mkShell {
