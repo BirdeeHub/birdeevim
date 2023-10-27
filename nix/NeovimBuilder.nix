@@ -1,7 +1,7 @@
 { 
   self
   , pkgs
-  , customRC ? "lua require('myLuaConf').setup()"
+  # , customRC ? "lua require('myLuaConf').setup()"
   , viAlias ? true
   , vimAlias ? true
   , start ? builtins.attrValues pkgs.neovimPlugins
@@ -32,7 +32,7 @@
     # currently hardcoded because TODO basically just print servers to 1 line
     langSetupRC = "neonixdev = true, lua = false, nix = false,";
     endRC = " })"; 
-    createdRC = startRC + langSetupRC + endRC;
+    customRC = startRC + langSetupRC + endRC;
 
     # end of TODO section
 

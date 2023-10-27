@@ -49,6 +49,7 @@ vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
 
 require('which-key').setup()
 require('Comment').setup()
+  -- require('fidget').setup()
 require('lualine').setup({
   options = {
     icons_enabled = false,

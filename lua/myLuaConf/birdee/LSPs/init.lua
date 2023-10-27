@@ -1,7 +1,12 @@
 local M = {}
 function M.setup(serverlist)
   vim.lsp.set_log_level("debug")
-  -- require('fidget').setup()
-  require("myLuaConf.birdee.LSPs.neonixdev")
+  if (serverlist.neonixdev) then
+    require("myLuaConf.birdee.LSPs.neonixdev")
+  elseif (serverlist.nix) then
+    require("myLuaConf.birdee.LSPs.nix")
+  elseif (serverlist.lua) then
+    require("myLuaConf.birdee.LSPs.lua")
+  end
 end
 return M
