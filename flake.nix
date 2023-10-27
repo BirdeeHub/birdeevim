@@ -81,36 +81,21 @@
           config.allowUnfree = true;
         };
         # If you cant import them with that overlay, define a derivation here
-        # also if you do that, dont name the input "plugins-something"
+        # also if you do that, dont name the flake input "plugins-something"
         # because that would be loaded by the overlay
 
         birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
-          # TODO use servers list passed in and customRC
-          # and pass a table to myLuaConf.setup()
-          # and install only necessary servers to make
-          # different packages for different languages
           inherit self;
           inherit pkgs;
-          propagatedBuildInputs = let
-            InputsList = {
-              neodev = with pkgs; [ 
-              # you can put dependencies and language servers here
-                nil
-                lua-language-server
-              ];
-            };
-            generic = [
-              # cody and markdown composer deps
-              # cargo
+          # add dependencies you always want here
+          genDeps = [
+            # cody and markdown composer deps
+            # cargo
 
-              # tab9 deps
-              # curl
-              # unzip
-            ];
-            #TODO make this an intersection with servers set or something
-            resultInputs = InputsList.neodev;
-          in
-            resultInputs ++ generic;
+            # tab9 deps
+            # curl
+            # unzip
+          ];
           start = let
             # add desired plugins to pre load from overlay here
             gitPlugins = with pkgs.neovimPlugins; [ 
@@ -169,10 +154,23 @@
             nixOptPlugins = with pkgs.vimPlugins; [ ];
           in
           gitOptPlugins ++ nixOptPlugins;
+
+          # lsp stuff
+          inherit servers;
+          lspLists = {
+            # you can put lsps and lang specific dependencies here
+            neonixdev = with pkgs; [ 
+              nil
+              lua-language-server
+            ];
+          };
         });
-         birdeeVim = birdeeVimBuild { "neodev" = true; };
+        # and then build a package with specific ones here
+         birdeeVim = birdeeVimBuild { neonixdev = true; };
+         # you will need to go to myLuaConf.birdee.LSPs to set up 
+         # new categories and servers in lua.
       in
-      {
+      { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
           packages = [ birdeeVim ];
