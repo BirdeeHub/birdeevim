@@ -178,7 +178,6 @@
               telescope-nvim
               nvim-surround
               indent-blankline-nvim
-              # vim-markdown-composer
               lualine-lsp-progress
               nvim-cmp
               luasnip
@@ -197,7 +196,7 @@
           # same as above, but not loaded at startup.
           # use this with packadd in config to achieve something like lazy loading
           opt = let
-            customOptPlugins = /* with pkgs.customNVIMplugins; */ [ ];
+            customOptPlugins = [ ];
             gitOptPlugins = with pkgs.neovimPlugins; [ ];
             nixOptPlugins = with pkgs.vimPlugins; [ ];
           in
