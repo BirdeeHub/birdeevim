@@ -1,3 +1,4 @@
+vim.lsp.set_log_level("debug")
 require('neodev').setup({})
 require'lspconfig'.lua_ls.setup {
   capabilities = require("myLuaConf.caps-onattach").get_capabilities(),

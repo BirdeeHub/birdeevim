@@ -13,10 +13,6 @@
     servers ? {}
   }:
   let
-          # TODO use servers list passed in and customRC
-          # and pass a table to myLuaConf.setup()
-          # and install only necessary servers to make
-          # different packages for different languages
     propInputs = let
       inputsToCheck = builtins.intersectAttrs lspLists servers;
       langDepsIncluded = builtins.mapAttrs (name: value:
@@ -24,18 +20,26 @@
         ) inputsToCheck;
       listOfLists = builtins.attrValues langDepsIncluded;
       flattenedDeps = builtins.concatLists listOfLists;
-      langDepsList = flattenedDeps;
-      resultDeps = langDepsList;
+      resultDeps = flattenedDeps;
     in
       resultDeps ++ genDeps;
-    startRC = "lua require('myLuaConf').setup({ ";
-    # currently hardcoded because TODO basically just print servers to 1 line
-    langSetupRC = "neonixdev = true, lua = false, nix = false,";
-    endRC = " })"; 
-    customRC = startRC + langSetupRC + endRC;
-
-    # end of TODO section
-
+    # generate lua table entries from servers attribute set.
+    luatableprinter = serverSet: (let
+      nameandstringmap = builtins.mapAttrs (name: value:
+        if value == true then
+          "${name} = true"
+        else
+          "${name} = false"
+      ) serverSet;
+      resultList = builtins.attrValues nameandstringmap;
+      resultString = builtins.concatStringsSep ", " resultList;
+    in
+      resultString
+      # values for devShell = "neonixdev = true, lua = false, nix = false,"
+      # note: false entries can be omitted because lua says its not true.
+    );
+    langSetupRC = luatableprinter servers;
+    customRC = "lua require('myLuaConf').setup({ " + langSetupRC + "})";
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
       # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
       propagatedBuildInputs = propInputs ++ [ pkgs.stdenv.cc.cc.lib ];

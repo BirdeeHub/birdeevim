@@ -173,7 +173,8 @@
         "plugins-lspconfig": "plugins-lspconfig",
         "plugins-lualine": "plugins-lualine",
         "plugins-onedark-vim": "plugins-onedark-vim",
-        "plugins-which-key": "plugins-which-key"
+        "plugins-which-key": "plugins-which-key",
+        "vim-markdown-composer": "vim-markdown-composer"
       }
     },
     "systems": {
@@ -188,6 +189,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vim-markdown-composer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1655250029,
+        "narHash": "sha256-A4oc/sSmIv8f+yvJxcMiwCsd0I3f1mNeSNMixTZDW1I=",
+        "owner": "euclio",
+        "repo": "vim-markdown-composer",
+        "rev": "e6f99bc20cfcb277c63041b1f766e6d5940bcc76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "euclio",
+        "repo": "vim-markdown-composer",
         "type": "github"
       }
     }

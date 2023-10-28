@@ -64,6 +64,10 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
+    "vim-markdown-composer" = {
+      url = "github:euclio/vim-markdown-composer";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -71,24 +75,64 @@
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # Apply the overlay and load nixpkgs as `pkgs`
+        # If you cant import them with the standard overlay, define a derivation here
+        # and then put them in customPlugins or customOptPlugins
+        # because that would be loaded by the other overlay
+        customPluginOverlay = final: prev: { 
+          customNVIMplugins = {
+
+            # vim-markdown-composer = prev.vimUtils.buildVimPlugin {
+            #   pname = "vim-markdown-composer";
+            #   version = "master";
+            #   src = inputs.markdown-composer;
+            #   buildInputs = [ prev.rustup ];
+            #   installPhase = ''
+            #     cd $src
+            #     cargo build --release
+            #     mkdir -p $out
+            #     cp -r $src/* $out
+            #   '';
+            # };
+
+            vim-markdown-composer = prev.rustPlatform.buildRustPackage {
+                name = "vim-markdown-composer";
+                src = inputs.vim-markdown-composer;
+                cargoLock = {
+                  lockFile = "${inputs.vim-markdown-composer}/Cargo.lock";
+                };
+                buildType = "release";
+                installPhase = ''
+                  mkdir -p $out
+                  currdir="$(pwd)"
+                  cd target
+                  rm -r release
+                  readarray -t subdirs <<< "$(ls -1 ./*)"
+                  for entry in "$''+''{subdirs[@]}"; do
+                    [[ $entry =~ :$ ]] && subdir="$''+''{entry%?}"
+                    [[ "$entry" == "release" ]] && ln -s "$subdir/release" .
+                  done
+                  cd "$currdir"
+                  cp -r ./* $out
+                '';
+              };
+          };
+        };
+        # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ standardPluginOverlay ];
+          overlays = [ standardPluginOverlay customPluginOverlay ];
           config.allowUnfree = true;
         };
-        # If you cant import them with that overlay, define a derivation here
-        # also if you do that, dont name the flake input "plugins-something"
-        # because that would be loaded by the overlay
-
         birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
+          viAlias = true;
+          vimAlias = true;
           inherit self;
           inherit pkgs;
           # add dependencies you always want here
-          genDeps = [
+          genDeps = with pkgs; [
             # cody and markdown composer deps
             # cargo
 
@@ -97,6 +141,9 @@
             # unzip
           ];
           start = let
+            customPlugins = with pkgs.customNVIMplugins; [
+              vim-markdown-composer
+            ];
             # add desired plugins to pre load from overlay here
             gitPlugins = with pkgs.neovimPlugins; [ 
               # catppuccin
@@ -146,14 +193,15 @@
               cmp-cmdline-history
             ];
           in
-          gitPlugins ++ nixvimplugins;
+          gitPlugins ++ nixvimplugins ++ customPlugins;
           # same as above, but not loaded at startup.
-          # use this with packadd to achieve something like lazy loading
+          # use this with packadd in config to achieve something like lazy loading
           opt = let
+            customOptPlugins = /* with pkgs.customNVIMplugins; */ [ ];
             gitOptPlugins = with pkgs.neovimPlugins; [ ];
             nixOptPlugins = with pkgs.vimPlugins; [ ];
           in
-          gitOptPlugins ++ nixOptPlugins;
+          gitOptPlugins ++ nixOptPlugins ++ customOptPlugins;
 
           # lsp stuff
           inherit servers;

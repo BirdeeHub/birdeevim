@@ -1,6 +1,5 @@
 local M = {}
 function M.setup(serverlist)
-  vim.lsp.set_log_level("debug")
   if (serverlist.neonixdev) then
     require("myLuaConf.birdee.LSPs.neonixdev")
   elseif (serverlist.nix) then
