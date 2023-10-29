@@ -24,9 +24,7 @@
     propInputs = filterAndFlatten lspsAndDeps categories;
     startupPlugs = filterAndFlatten startup categories;
     optionalPlugs = filterAndFlatten optional categories;
-    # generate lua table entries from servers attribute set.
-    # values for devShell = "neonixdev = true, lua = false, nix = false, AI = false, "
-    # note: false entries can be omitted because lua says its not true.
+
     luatableprinter = categorySet: let
       nameandstringmap = builtins.mapAttrs (name: value:
         if value == true then

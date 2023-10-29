@@ -1,5 +1,5 @@
 local M = {}
-  function M.setup(serverlist)
+  function M.setup(categories)
     -- local colorschemer = "catppuccin"
     local colorschemer = 'onedark'
     vim.cmd.colorscheme(colorschemer)
@@ -74,7 +74,7 @@ local M = {}
     require('nvim-surround').setup()
     require('harpoon').setup()
     require("ibl").setup()
-    if(serverlist.AI == true) then
+    if(categories.AI) then
       require("sg").setup({
         on_attach = require('myLuaConf.caps-onattach').on_attach,
       })
@@ -82,6 +82,6 @@ local M = {}
       vim.keymap.set('n', '<leader>sc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
       vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
     end
-    require('myLuaConf.birdee.completion').setup(serverlist)
+    require('myLuaConf.birdee.completion').setup(categories)
   end
 return M

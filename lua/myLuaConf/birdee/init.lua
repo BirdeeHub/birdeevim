@@ -1,9 +1,9 @@
 local M = {}
-function M.setup(serverList)
+function M.setup(categories)
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
-  require("myLuaConf.birdee.plugins").setup(serverList)
-  require("myLuaConf.birdee.LSPs").setup(serverList)
+  require("myLuaConf.birdee.plugins").setup(categories)
+  require("myLuaConf.birdee.LSPs").setup(categories)
   require("myLuaConf.birdee.debug")
   require("myLuaConf.birdee.format")
   require("myLuaConf.birdee.opts")

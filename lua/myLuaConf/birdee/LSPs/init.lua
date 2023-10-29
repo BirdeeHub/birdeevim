@@ -1,10 +1,10 @@
 local M = {}
-function M.setup(serverlist)
-  if (serverlist.neonixdev) then
+function M.setup(categories)
+  if (categories.neonixdev) then
     require("myLuaConf.birdee.LSPs.neonixdev")
-  elseif (serverlist.nix) then
+  elseif (categories.nix) then
     require("myLuaConf.birdee.LSPs.nix")
-  elseif (serverlist.lua) then
+  elseif (categories.lua) then
     require("myLuaConf.birdee.LSPs.lua")
   end
 end
