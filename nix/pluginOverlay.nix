@@ -16,11 +16,6 @@ let
     pname = plugName name;
     version = "master";
     src = builtins.getAttr name inputs;
-    #postInstall =
-    #  if (name == "nvim-treesitter") then ''
-    #    rm -r parser
-    #    ln -s ${treesitterGrammars} parser
-    #  '' else "";
   };
 in
 {

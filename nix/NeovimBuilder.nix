@@ -35,8 +35,8 @@
       resultList = builtins.attrValues nameandstringmap;
       resultString = builtins.concatStringsSep ", " resultList;
     in
-      resultString
-    ;
+      resultString;
+
     setupTableRC = luatableprinter categories;
     customRC = "lua require('myLuaConf').setup({ " + setupTableRC + "})";
     myLuaConf = pkgs.stdenv.mkDerivation { 
