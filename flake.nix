@@ -139,6 +139,9 @@
           # startup plugins:
           # This is for plugins that will load at startup without using packadd:
           startup = {
+            neonixdev = [ 
+              pkgs.vimPlugins.neodev-nvim 
+            ];
             AI = [
               pkgs.vimPlugins.codeium-nvim
               inputs.sg-nvim.packages.${system}.sg-nvim
@@ -175,7 +178,6 @@
               vim-sleuth
               vim-fugitive
               vim-rhubarb
-              neodev-nvim
               telescope-fzf-native-nvim
               plenary-nvim
               telescope-nvim

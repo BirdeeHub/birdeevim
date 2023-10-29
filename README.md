@@ -1,6 +1,6 @@
 ### Another Neovim flake
 
-## Attention: This repo is unfinished
+## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has no debuggers or formatters. This is my first time using nix.
 
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
