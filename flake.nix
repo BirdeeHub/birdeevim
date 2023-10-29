@@ -243,7 +243,7 @@
         };
         packages = {
           default = noAIneodev;
-          inherit birdeeVim;
+          birdeeVim = birdeeVim;
         };
       }
     );

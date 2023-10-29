@@ -1,11 +1,11 @@
 { 
   self
   , pkgs
-  , viAlias ? true
-  , vimAlias ? true
+  , viAlias ? false
+  , vimAlias ? false
   , startup ? {}
   , optional ? {}
-  , debug ? true
+  , debug ? false
   , lspsAndDeps ? {}
   , categories ? {}
   }:
