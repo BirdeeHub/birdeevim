@@ -3,44 +3,28 @@
   , pkgs
   , viAlias ? true
   , vimAlias ? true
-  , startup ? { }
-  , optional ? { }
-  # todo: swap to new wrapper maybe, and add debug
+  , startup ? {}
+  , optional ? {}
   , debug ? true
-  , lspsAndDeps ? {},
-    categories ? {}
+  , lspsAndDeps ? {}
+  , categories ? {}
   }:
+  # todo: swap to new wrapper maybe and add debug
   let
-    propInputs = let
-      inputsToCheck = builtins.intersectAttrs lspsAndDeps categories;
-      langDepsIncluded = builtins.mapAttrs (name: value:
-          if value == true then builtins.getAttr name lspsAndDeps else []
+    filterAndFlatten = SetOfCategoryLists: categories: let
+      inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
+      thingsIncluded = builtins.mapAttrs (name: value:
+          if value == true then builtins.getAttr name SetOfCategoryLists else []
         ) inputsToCheck;
-      listOfLists = builtins.attrValues langDepsIncluded;
+      listOfLists = builtins.attrValues thingsIncluded;
       flattenedDeps = builtins.concatLists listOfLists;
       resultDeps = flattenedDeps;
     in
-      resultDeps;
-    startupPlugs = let
-      inputsToCheck = builtins.intersectAttrs startup categories;
-      plugsIncluded = builtins.mapAttrs (name: value:
-          if value == true then builtins.getAttr name startup else []
-        ) inputsToCheck;
-      listOfLists = builtins.attrValues plugsIncluded;
-      flattenedPlugs = builtins.concatLists listOfLists;
-      resultPlugs = flattenedPlugs;
-    in
-      resultPlugs;
-    optionalPlugs = let
-      inputsToCheck = builtins.intersectAttrs optional categories;
-      plugsIncluded = builtins.mapAttrs (name: value:
-          if value == true then builtins.getAttr name optional else []
-        ) inputsToCheck;
-      listOfLists = builtins.attrValues plugsIncluded;
-      flattenedPlugs = builtins.concatLists listOfLists;
-      resultPlugs = flattenedPlugs;
-    in
-      resultPlugs;
+    resultDeps;
+
+    propInputs = filterAndFlatten lspsAndDeps categories;
+    startupPlugs = filterAndFlatten lspsAndDeps categories;
+    optionalPlugs = filterAndFlatten lspsAndDeps categories;
     # generate lua table entries from servers attribute set.
     # values for devShell = "neonixdev = true, lua = false, nix = false, AI = false, "
     # note: false entries can be omitted because lua says its not true.
