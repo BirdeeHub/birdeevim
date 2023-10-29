@@ -1,10 +1,6 @@
 {
   description = "Birdee's Neovim flake with mostly regular Lua config.";
         # TO DO: 
-        # install vim-markdown-composer
-        # add cmp-tabnine, 
-        # install cody/sourcegraph
-        # separate out langauge server sets into packages.
         # install jdtls and kotlin-language-server
         # install debuggers
         # install formatters
@@ -68,6 +64,21 @@
       url = "github:euclio/vim-markdown-composer";
       flake = false;
     };
+    # "cmp-tabnine" = { #binaries too OP
+    #   url = "github:tzachar/cmp-tabnine";
+    #   flake = false;
+    # };
+    # I use this for autocomplete filler especially for comments. 
+    # tab9 slightly better but meh
+    "codeium" = {
+      url = "github:Exafunction/codeium.nvim";
+    };
+    # I ask this questions I couldnt google the answer too and/or
+    # need things I havent heard of. Its better than gpt and has context.
+    # It also occasionally helps with goto definition.
+    sg-nvim = {
+      url = "github:sourcegraph/sg.nvim";
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -75,55 +86,20 @@
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # If you cant import them with the standard overlay, define a derivation here
+        # If you cant import them with the standard overlay, 
+        # define a derivation in customPluginOverlay
         # and then put them in customPlugins or customOptPlugins
         # because that would be loaded by the other overlay
-        customPluginOverlay = final: prev: { 
-          customNVIMplugins = {
-
-            # vim-markdown-composer = prev.vimUtils.buildVimPlugin {
-            #   pname = "vim-markdown-composer";
-            #   version = "master";
-            #   src = inputs.markdown-composer;
-            #   buildInputs = [ prev.rustup ];
-            #   installPhase = ''
-            #     cd $src
-            #     cargo build --release
-            #     mkdir -p $out
-            #     cp -r $src/* $out
-            #   '';
-            # };
-
-            vim-markdown-composer = prev.rustPlatform.buildRustPackage {
-                name = "vim-markdown-composer";
-                src = inputs.vim-markdown-composer;
-                cargoLock = {
-                  lockFile = "${inputs.vim-markdown-composer}/Cargo.lock";
-                };
-                buildType = "release";
-                installPhase = ''
-                  mkdir -p $out
-                  currdir="$(pwd)"
-                  cd target
-                  rm -r release
-                  readarray -t subdirs <<< "$(ls -1 ./*)"
-                  for entry in "$''+''{subdirs[@]}"; do
-                    [[ $entry =~ :$ ]] && subdir="$''+''{entry%?}"
-                    [[ "$entry" == "release" ]] && ln -s "$subdir/release" .
-                  done
-                  cd "$currdir"
-                  cp -r ./* $out
-                '';
-              };
-          };
-        };
+        # if it has a build step, do that there.
+        customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
+        codeium = inputs.codeium.outputs.overlays.${system}.default;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ standardPluginOverlay customPluginOverlay ];
+          overlays = [ standardPluginOverlay customPluginOverlay codeium ];
           config.allowUnfree = true;
         };
         birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
@@ -131,16 +107,16 @@
           vimAlias = true;
           inherit self;
           inherit pkgs;
-          # add dependencies you always want here
           genDeps = with pkgs; [
-            # cody and markdown composer deps
-            # cargo
-
-            # tab9 deps
-            # curl
-            # unzip
+            # add dependencies you always want at runtime here
+            # will not be available to shell, only plugins.
           ];
           start = let
+            AIplugins = [
+              pkgs.vimPlugins.codeium-nvim
+              inputs.sg-nvim.packages.${system}.sg-nvim
+              # cmp-tabnine
+            ];
             customPlugins = with pkgs.customNVIMplugins; [
               vim-markdown-composer
             ];
@@ -191,8 +167,16 @@
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
             ];
+            switcher = servers: let
+              result = 
+              if(servers ? AI && servers.AI == true ) then 
+                gitPlugins ++ nixvimplugins ++ customPlugins ++ AIplugins
+              else
+                gitPlugins ++ nixvimplugins ++ customPlugins;
+              in
+              result;
           in
-          gitPlugins ++ nixvimplugins ++ customPlugins;
+            switcher servers;
           # same as above, but not loaded at startup.
           # use this with packadd in config to achieve something like lazy loading
           opt = let
@@ -205,7 +189,13 @@
           # lsp stuff
           inherit servers;
           lspLists = {
+            AI = [
+              inputs.codeium.outputs.packages.${system}.codeium-lsp
+              inputs.sg-nvim.packages.${system}.default
+            ];
             # you can put lsps and lang specific dependencies here
+            lua = with pkgs; [ lua-language-server ];
+            nix = with pkgs; [ nil ];
             neonixdev = with pkgs; [ 
               nil
               lua-language-server
@@ -213,14 +203,15 @@
           };
         });
         # and then build a package with specific ones here
-         birdeeVim = birdeeVimBuild { neonixdev = true; };
+         birdeeVim = birdeeVimBuild { neonixdev = true; AI = true; };
+         noAIneodev = birdeeVimBuild { neonixdev = true; AI = false; };
          # you will need to go to myLuaConf.birdee.LSPs to set up 
          # new categories and servers in lua.
       in
       { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ birdeeVim ];
+          packages = [ noAIneodev ];
           inputsFrom = [ ];
           shellHook = ''
           '';

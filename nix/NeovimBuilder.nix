@@ -1,10 +1,10 @@
 { 
   self
   , pkgs
-  # , customRC ? "lua require('myLuaConf').setup()"
+  # , customRC ? "lua require('myLuaConf').setup({})"
   , viAlias ? true
   , vimAlias ? true
-  , start ? builtins.attrValues pkgs.neovimPlugins
+  , start ? [ ]
   , opt ? [ ]
   # todo: swap to new wrapper maybe, and add debug
   , debug ? true
@@ -35,7 +35,7 @@
       resultString = builtins.concatStringsSep ", " resultList;
     in
       resultString
-      # values for devShell = "neonixdev = true, lua = false, nix = false,"
+      # values for devShell = "neonixdev = true, lua = false, nix = false, AI = false, "
       # note: false entries can be omitted because lua says its not true.
     );
     langSetupRC = luatableprinter servers;

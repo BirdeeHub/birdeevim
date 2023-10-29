@@ -1,8 +1,8 @@
 local completion = {}
   -- [[ Configure nvim-cmp ]]
   -- See `:help cmp`
-function completion.setup()
-
+function completion.setup(serverlist)
+  if (serverlist.AI == true) then require("codeium").setup({}) end
   local cmp = require 'cmp'
   local luasnip = require 'luasnip'
   require('luasnip.loaders.from_vscode').lazy_load()
@@ -12,12 +12,13 @@ function completion.setup()
   cmp.setup {
     formatting = {
       format = lspkind.cmp_format {
-        mode = 'symbol_text',
+        mode = 'text',
         with_text = true,
         maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
         ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
         menu = {
+          codeium = '[AI]',
           buffer = '[BUF]',
           nvim_lsp = '[LSP]',
           nvim_lsp_signature_help = '[LSP]',
@@ -60,13 +61,15 @@ function completion.setup()
         end
       end, { 'i', 's' }),
     },
+
     sources = cmp.config.sources {
       -- The insertion order influences the priority of the sources
       { name = 'nvim_lsp'--[[ , keyword_length = 3 ]] },
       { name = 'nvim_lsp_signature_help'--[[ , keyword_length = 3  ]]},
       -- { name = 'cmp_tabnine' },
-      { name = 'buffer' },
       { name = 'path' },
+      { name = 'codeium' },
+      { name = 'buffer' },
     },
     enabled = function()
       return vim.bo[0].buftype ~= 'prompt'
