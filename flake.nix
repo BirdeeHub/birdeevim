@@ -112,7 +112,7 @@
           inherit pkgs;
           inherit categories;
 
-          # for the following items lspsAndDeps, startup, and optional, 
+          # for the following items: lspsAndDeps, startup, and optional, 
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
