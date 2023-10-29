@@ -87,11 +87,14 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         # If you cant import them with the standard overlay, 
-        # define a derivation in customPluginOverlay
+        # define a derivation in ./nix/customPluginOverlay.nix
         # and then put them in customPlugins or customOptPlugins
-        # because that would be loaded by the other overlay
         # if it has a build step, do that there.
+        # afterwards, you can add as pkgs.customNVIMplugins.pluginname
+        # If you do that, don't name the flake input "plugins-something",
+        # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
+
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
@@ -102,17 +105,41 @@
           overlays = [ standardPluginOverlay customPluginOverlay codeium ];
           config.allowUnfree = true;
         };
-        birdeeVimBuild = { ... }@servers: (import ./nix/NeovimBuilder.nix {
+        birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
           viAlias = true;
           vimAlias = true;
           inherit self;
           inherit pkgs;
-          genDeps = with pkgs; [
-            # add dependencies you always want at runtime here
-            # will not be available to shell, only plugins.
-          ];
-          start = let
-            AIplugins = [
+          inherit categories;
+
+          # for the following items lspsAndDeps, startup, and optional, 
+          # you define lists within the set with a particular name.
+          # Then, you include that name in the categories set,
+          # which you provide when you call this function to build a package.
+          # to define and use a new category, simply add a new list to the set, 
+          # and include categoryname = true; in the set when you build the package.
+
+          # lspsAndDeps:
+          # this section is for dependencies that should be available
+          # at runtime for plugins. Will not be available to PATH
+          # this includes LSPs
+          lspsAndDeps= {
+            AI = [
+              inputs.codeium.outputs.packages.${system}.codeium-lsp
+              inputs.sg-nvim.packages.${system}.default
+            ];
+            lua = with pkgs; [ lua-language-server ];
+            nix = with pkgs; [ nil ];
+            neonixdev = with pkgs; [ 
+              nil
+              lua-language-server
+            ];
+          };
+
+          # startup plugins:
+          # This is for plugins that will load at startup without using packadd:
+          startup = {
+            AI = [
               pkgs.vimPlugins.codeium-nvim
               inputs.sg-nvim.packages.${system}.sg-nvim
               # cmp-tabnine
@@ -167,46 +194,42 @@
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
             ];
-            switcher = servers: let
-              result = 
-              if(servers ? AI && servers.AI == true ) then 
-                gitPlugins ++ nixvimplugins ++ customPlugins ++ AIplugins
-              else
-                gitPlugins ++ nixvimplugins ++ customPlugins;
-              in
-              result;
-          in
-            switcher servers;
-          # same as above, but not loaded at startup.
-          # use this with packadd in config to achieve something like lazy loading
-          opt = let
-            customOptPlugins = [ ];
-            gitOptPlugins = with pkgs.neovimPlugins; [ ];
-            nixOptPlugins = with pkgs.vimPlugins; [ ];
-          in
-          gitOptPlugins ++ nixOptPlugins ++ customOptPlugins;
-
-          # lsp stuff
-          inherit servers;
-          lspLists = {
-            AI = [
-              inputs.codeium.outputs.packages.${system}.codeium-lsp
-              inputs.sg-nvim.packages.${system}.default
-            ];
-            # you can put lsps and lang specific dependencies here
-            lua = with pkgs; [ lua-language-server ];
-            nix = with pkgs; [ nil ];
-            neonixdev = with pkgs; [ 
-              nil
-              lua-language-server
-            ];
+          };
+          # optional plugins:
+          # not loaded automatically at startup.
+          # use with packadd in config to achieve something like lazy loading
+          optional = {
+            customPlugins = with pkgs.customNVIMplugins; [ ];
+            gitPlugins = with pkgs.neovimPlugins; [ ];
+            nixvimplugins = with pkgs.vimPlugins; [ ];
           };
         });
-        # and then build a package with specific ones here
-         birdeeVim = birdeeVimBuild { neonixdev = true; AI = true; };
-         noAIneodev = birdeeVimBuild { neonixdev = true; AI = false; };
-         # you will need to go to myLuaConf.birdee.LSPs to set up 
-         # new categories and servers in lua.
+
+
+        # And then build a package with specific categories from above here
+        # all categories you wish to include must be marked true, 
+        # but false may be omitted.
+        # This table is also passed to the setup function for our config.
+        # It is passed as a Lua table.
+        # if you have categories with the same name in 
+        # startup, lspsAndDeps and/or optional, all will be
+        # included when you set "thatname = true;" here
+        # hence, AI = true; will include the AI lspsAndDeps category,
+        # as well as the AI startup category
+        birdeeVim = birdeeVimBuild {
+          customPlugins = true;
+          gitPlugins = true;
+          nixvimplugins = true;
+          neonixdev = true;
+          AI = true;
+        };
+        noAIneodev = birdeeVimBuild {
+          customPlugins = true;
+          gitPlugins = true;
+          nixvimplugins = true;
+          neonixdev = true;
+          AI = false;
+        };
       in
       { # choose your package
         devShell = pkgs.mkShell {
