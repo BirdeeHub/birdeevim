@@ -17,10 +17,9 @@
           if value == true then builtins.getAttr name SetOfCategoryLists else []
         ) inputsToCheck;
       listOfLists = builtins.attrValues thingsIncluded;
-      flattenedDeps = builtins.concatLists listOfLists;
-      resultDeps = flattenedDeps;
+      flattenedList = builtins.concatLists listOfLists;
     in
-    resultDeps;
+    flattenedList;
 
     propInputs = filterAndFlatten lspsAndDeps categories;
     startupPlugs = filterAndFlatten startup categories;

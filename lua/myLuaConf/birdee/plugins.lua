@@ -74,10 +74,13 @@ local M = {}
     require('nvim-surround').setup()
     require('harpoon').setup()
     require("ibl").setup()
-    if(serverlist.AI) then
+    if(serverlist.AI == true) then
       require("sg").setup({
         on_attach = require('myLuaConf.caps-onattach').on_attach,
       })
+      vim.keymap.set('n', '<leader>ss', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'sourcegraph search' })
+      vim.keymap.set('n', '<leader>sc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
+      vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
     end
     require('myLuaConf.birdee.completion').setup(serverlist)
   end
