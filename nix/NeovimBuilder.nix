@@ -27,10 +27,8 @@
 
     luatableprinter = categorySet: let
       nameandstringmap = builtins.mapAttrs (name: value:
-        if value == true then
-          "${name} = true"
-        else
-          "${name} = false"
+        if value == true then "${name} = true"
+        else "${name} = false"
       ) categorySet;
       resultList = builtins.attrValues nameandstringmap;
       resultString = builtins.concatStringsSep ", " resultList;
@@ -38,8 +36,8 @@
       resultString;
 
     setupTableRC = luatableprinter categories;
-    customRC = "lua require('myLuaConf').setup({ " + setupTableRC + "})";
-    myLuaConf = pkgs.stdenv.mkDerivation { 
+    customRC = "lua require('myLuaConf').setup({ " + setupTableRC + " })";
+    myLuaConf = pkgs.stdenv.mkDerivation {
       name = "myLuaConf";
       src = self;
       installPhase = ''

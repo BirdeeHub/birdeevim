@@ -6,6 +6,10 @@ function M.setup(categories)
     require("myLuaConf.birdee.LSPs.nix")
   elseif (categories.lua) then
     require("myLuaConf.birdee.LSPs.lua")
+  elseif (categories.java) then
+    require("myLuaConf.birdee.LSPs.java")
+  elseif (categories.kotlin) then
+    require("myLuaConf.birdee.LSPs.kotlin")
   end
 end
 return M

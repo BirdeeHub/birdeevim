@@ -49,6 +49,11 @@ local M = {}
     vim.cmd([[hi GitSignsChange guifg=#83fce6]])
     vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
 
+    -- Highlights unique characters for f/F and t/T motions
+    require('eyeliner').setup {
+      highlight_on_key = true, -- show highlights only after key press
+      dim = true, -- dim all other characters
+    }
     require('which-key').setup()
     require('Comment').setup()
       -- require('fidget').setup()
@@ -83,5 +88,32 @@ local M = {}
       vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
     end
     require('myLuaConf.birdee.completion').setup(categories)
+    require('neo-tree').setup({
+    close_if_last_window = true,
+    window = {
+      position = "float",
+      mappings = {
+        ["<space>"] = {
+          nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+          noremap = false,
+        },
+      },
+    },
+    filesystem = {
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = true,
+        hide_gitignored = true,
+        hide_hidden = true,
+      },
+      hijack_netrw_behavior = "disabled",
+    },
+    buffers = {
+      follow_current_file = {
+        enabled = true,
+      },
+    },
+  })
+  vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
   end
 return M

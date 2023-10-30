@@ -21,6 +21,7 @@
           };
           buildType = "release";
           # it builds it to the wrong directory.......
+          # So we symlink it to the correct one
           installPhase = ''
             mkdir -p $out
             currdir="$(pwd)"

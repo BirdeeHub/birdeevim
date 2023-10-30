@@ -1,11 +1,8 @@
 {
   description = "Birdee's Neovim flake with mostly regular Lua config.";
         # TO DO: 
-        # install jdtls and kotlin-language-server
         # install debuggers
         # install formatters
-        # install neo-tree because no one added the icons to netrw yet for when they are nice
-        # if you want, install fidget from legacy tag, but lualine-lsp-progress is fine
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
@@ -73,7 +70,7 @@
     "codeium" = {
       url = "github:Exafunction/codeium.nvim";
     };
-    # I ask this questions I couldnt google the answer too and/or
+    # I ask this questions I couldnt google the answer to and/or
     # need things I havent heard of. Its better than gpt and has context.
     # It also occasionally helps with goto definition.
     sg-nvim = {
@@ -117,7 +114,8 @@
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
           # to define and use a new category, simply add a new list to the set, 
-          # and include categoryname = true; in the set when you build the package.
+          # and include categoryname = true; 
+          # in the set you provide when you build the package.
 
           # lspsAndDeps:
           # this section is for dependencies that should be available
@@ -128,9 +126,20 @@
               inputs.codeium.outputs.packages.${system}.codeium-lsp
               inputs.sg-nvim.packages.${system}.default
             ];
-            lua = with pkgs; [ lua-language-server ];
-            nix = with pkgs; [ nil ];
-            neonixdev = with pkgs; [ 
+            java = with pkgs; [
+              jdt-language-server
+            ];
+            kotlin = with pkgs; [
+              jdt-language-server
+              kotlin-language-server
+            ];
+            lua = with pkgs; [
+              lua-language-server
+            ];
+            nix = with pkgs; [
+              nil
+            ];
+            neonixdev = with pkgs; [
               nil
               lua-language-server
             ];
@@ -139,19 +148,20 @@
           # startup plugins:
           # This is for plugins that will load at startup without using packadd:
           startup = {
-            neonixdev = [ 
-              pkgs.vimPlugins.neodev-nvim 
+            neonixdev = [
+              pkgs.vimPlugins.neodev-nvim
             ];
             AI = [
               pkgs.vimPlugins.codeium-nvim
               inputs.sg-nvim.packages.${system}.sg-nvim
               # cmp-tabnine
             ];
+            # this is from the customPluginOverlay
             customPlugins = with pkgs.customNVIMplugins; [
               vim-markdown-composer
             ];
             # add desired plugins to pre load from overlay here
-            gitPlugins = with pkgs.neovimPlugins; [ 
+            gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
               gitsigns
@@ -163,8 +173,8 @@
               hlargs
               # fidget # once you figure out how to import from legacy tag
             ];
-            # and add here for regular pkgs.vimPlugin and also self derived plugins
-            nixvimplugins = with pkgs.vimPlugins; [ 
+            # and add here for regular pkgs.vimPlugin
+            nixvimplugins = with pkgs.vimPlugins; [
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
               # (nvim-treesitter.withPlugins (
@@ -195,8 +205,12 @@
               cmp-cmdline
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
+              nui-nvim
+              neo-tree-nvim
+              eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
             ];
           };
+
           # optional plugins:
           # not loaded automatically at startup.
           # use with packadd in config to achieve something like lazy loading
@@ -209,7 +223,7 @@
 
 
         # And then build a package with specific categories from above here:
-        # All categories you wish to include must be marked true, 
+        # All categories you wish to include must be marked true,
         # but false may be omitted.
         # This entire set is also passed to the setup function for our config.
         # It is passed as a Lua table with values name = boolean. same as here.
@@ -224,6 +238,8 @@
           nixvimplugins = true;
           neonixdev = true;
           AI = true;
+          kotlin = true;
+          java = true;
         };
         noAIneodev = birdeeVimBuild {
           customPlugins = true;
@@ -231,6 +247,20 @@
           nixvimplugins = true;
           neonixdev = true;
           AI = false;
+        };
+        coffeeVim = birdeeVimBuild {
+          customPlugins = true;
+          gitPlugins = true;
+          nixvimplugins = true;
+          AI = true;
+          java = true;
+        };
+        kotlinVim = birdeeVimBuild {
+          customPlugins = true;
+          gitPlugins = true;
+          nixvimplugins = true;
+          AI = true;
+          kotlin = true;
         };
       in
       { # choose your package
@@ -242,8 +272,10 @@
           '';
         };
         packages = {
-          default = noAIneodev;
-          birdeeVim = birdeeVim;
+          default = birdeeVim;
+          inherit noAIneodev;
+          inherit coffeeVim;
+          inherit kotlinVim;
         };
       }
     );
