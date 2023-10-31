@@ -4,6 +4,9 @@ local M = {}
     local colorschemer = 'onedark'
     vim.cmd.colorscheme(colorschemer)
 
+    if(categories.ghmarkdown or categories.markdown) then
+      require('myLuaConf.birdee.markdown').setup(categories)
+    end
     -- Enable telescope fzf native, if installed
     pcall(require('telescope').load_extension, 'fzf')
     -- [[ Configure Telescope ]]
@@ -18,7 +21,6 @@ local M = {}
         },
       },
     }
-
     require('myLuaConf.birdee.nestsitter')
     require('gitsigns').setup({
         -- See `:help gitsigns.txt`
@@ -49,9 +51,6 @@ local M = {}
     vim.cmd([[hi GitSignsAdd guifg=#04de21]])
     vim.cmd([[hi GitSignsChange guifg=#83fce6]])
     vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
-    vim.g.mkdp_auto_close = 0
-    -- vim.g.mkdp_browser = 'firefox'
-    vim.api.nvim_set_keymap('n', '<leader>mp', '<Plug>MarkdownPreviewToggle', {})
     -- Highlights unique characters for f/F and t/T motions
     require('eyeliner').setup {
       highlight_on_key = true, -- show highlights only after key press

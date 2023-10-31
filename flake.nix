@@ -3,6 +3,7 @@
         # TO DO: 
         # install debuggers
         # install formatters
+        # go back to messing with building markdown-preview-nvim
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
@@ -120,8 +121,8 @@
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
-          # to define and use a new category, simply add a new list to the set, 
-          # and include categoryname = true; 
+          # to define and use a new category, simply add a new list to the set,
+          # and include categoryname = true;
           # in the set you provide when you build the package.
 
           # lspsAndDeps:
@@ -129,6 +130,14 @@
           # at runtime for plugins. Will not be available to PATH
           # this includes LSPs
           lspsAndDeps= {
+            ghmarkdown = [ 
+              # I ended up just writing some keybinds to interface with this
+              # I use it when I want to just view, the other when I want to edit
+              # The reason being that it can have multiple open,
+              # and also I didnt have to figure out importing custom css for darkmode
+              # Its pretty decent though, drawback is you need to save for it to update
+              pkgs.gh-markdown-preview
+            ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
               inputs.sg-nvim.packages.${system}.default
@@ -165,7 +174,18 @@
             ];
             # this is from the customPluginOverlay
             customPlugins = with pkgs.customNVIMplugins; [
+            ];
+            # This one is also from customPluginOverlay but I wanted it in markdown list
+            markdown = with pkgs.customNVIMplugins; [
+              # You might want to use this one, its pretty good, it updates in realtime
+              # I did get it working. However, you cant have multiple open. 
+              # Its rust so... building takes forever
               vim-markdown-composer
+              
+              # this one I never got to work because yarn build step
+              # It puts the bin directory in the wrong place for the plugin
+              # and everything I try with mkYarnPackage the permissions cause issues.
+              # Otherwise, this would be my only markdown plugin
               # markdown-preview
             ];
             # this is from the pluginOverlay for when you name the input plugins-name
@@ -191,7 +211,6 @@
               #     lua
               #   ]
               # ))
-              # markdown-preview-nvim
               lspkind-nvim
               nvim-web-devicons
               vim-sleuth
@@ -242,15 +261,19 @@
         # hence, AI = true; will include the AI lspsAndDeps category,
         # as well as the AI startup category
         birdeeVim = birdeeVimBuild {
+          markdown = true;
+          ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
           neonixdev = true;
           AI = true;
           kotlin = true;
-          java = true;
+          java = false;
         };
         noAIneodev = birdeeVimBuild {
+          markdown = false;
+          ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
@@ -258,6 +281,7 @@
           AI = false;
         };
         coffeeVim = birdeeVimBuild {
+          ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
@@ -265,6 +289,7 @@
           java = true;
         };
         kotlinVim = birdeeVimBuild {
+          ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;

@@ -5,10 +5,14 @@
       # markdown-preview = prev.stdenv.mkDerivation {
       #   name = "markdown-preview";
       #   src = inputs.markdown-preview-nvim;
-      #   buildInputs = [ prev.nodejs prev.yarn ];
+      #   buildInputs = [ prev.nodejs ];
+      #   nativeBuildInputs = [ prev.yarn  ];
       #   buildPhase = ''
-      #     npx --yes yarn install
-      #     npx --yes yarn build
+      #     export HOME=$(pwd)
+      #     # Perform yarn install
+      #     yarn install --offline
+      #     # Perform yarn build
+      #     yarn build
       #   '';
       #   installPhase = ''
       #     mkdir -p $out
@@ -22,8 +26,7 @@
       #   # installPhase = ''
       #   #   mkdir -p $out
       #   #   cp -r $src/* $out
-      #   #   # cd $out
-      #   #   # cd app
+      #   #   # cd $out/app
       #   #   # $out/app/install.sh
       #   # '';
       #   # yarnPostBuild = ''
@@ -33,9 +36,27 @@
       #   # doDist = false;
       #   distPhase = ''
       #     mkdir -p $out
-      #     cp -rf $src/* $out
+      #     cp -r $src/* $out
       #   '';
       # };
+# inherit (prev.yarn2nix-moretea)
+#     yarn2nix
+#     mkYarnPackage
+#     mkYarnModules
+#     fixup_yarn_lock;
+
+      # markdown-preview = prev.yarn2nix-moretea.mkYarnPackage {
+      #   name = "markdown-preview";
+      #   src = inputs.markdown-preview-nvim;
+      #   # yarnPostBuild = ''
+      #   #   mkdir -p $out
+      #   #   cp -r $src/* $out
+      #   # '';
+      #   doDist = true;
+      # };
+
+
+      
       vim-markdown-composer = prev.rustPlatform.buildRustPackage {
         name = "vim-markdown-composer";
         src = inputs.vim-markdown-composer;
