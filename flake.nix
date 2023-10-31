@@ -12,7 +12,6 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
-    # rnix-lsp.url = "github:nix-community/rnix-lsp";
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     # Theme
@@ -57,6 +56,14 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
+    # I want this one:
+    # "markdown-preview-nvim" = {
+    #   url = "github:iamcco/markdown-preview.nvim";
+    #   flake = false;
+    # };
+    # but for now, I have this one working
+    # Its faster and more responsive, but you can only have 1 open
+    # at a time, which doesnt work for me
     "vim-markdown-composer" = {
       url = "github:euclio/vim-markdown-composer";
       flake = false;
@@ -109,7 +116,7 @@
           inherit pkgs;
           inherit categories;
 
-          # for the following items: lspsAndDeps, startup, and optional, 
+          # for the following items: lspsAndDeps, startup, and optional,
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
@@ -159,8 +166,9 @@
             # this is from the customPluginOverlay
             customPlugins = with pkgs.customNVIMplugins; [
               vim-markdown-composer
+              # markdown-preview
             ];
-            # add desired plugins to pre load from overlay here
+            # this is from the pluginOverlay for when you name the input plugins-name
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
@@ -183,6 +191,7 @@
               #     lua
               #   ]
               # ))
+              # markdown-preview-nvim
               lspkind-nvim
               nvim-web-devicons
               vim-sleuth

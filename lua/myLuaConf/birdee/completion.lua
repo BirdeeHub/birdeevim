@@ -84,8 +84,11 @@ function completion.setup(categories)
     sources = cmp.config.sources {
       { name = 'nvim_lua' },
       { name = 'nvim_lsp'--[[ , keyword_length = 3  ]]},
+      { name = 'nvim_lsp_signature_help'--[[ , keyword_length = 3  ]]},
       { name = 'path' },
       { name = 'luasnip' },
+      { name = 'buffer' },
+      { name = 'codeium' },
     },{
       {
         name = 'cmdline',

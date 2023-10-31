@@ -18,6 +18,7 @@ local M = {}
         },
       },
     }
+
     require('myLuaConf.birdee.nestsitter')
     require('gitsigns').setup({
         -- See `:help gitsigns.txt`
@@ -48,7 +49,9 @@ local M = {}
     vim.cmd([[hi GitSignsAdd guifg=#04de21]])
     vim.cmd([[hi GitSignsChange guifg=#83fce6]])
     vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
-
+    vim.g.mkdp_auto_close = 0
+    -- vim.g.mkdp_browser = 'firefox'
+    vim.api.nvim_set_keymap('n', '<leader>mp', '<Plug>MarkdownPreviewToggle', {})
     -- Highlights unique characters for f/F and t/T motions
     require('eyeliner').setup {
       highlight_on_key = true, -- show highlights only after key press
@@ -77,7 +80,13 @@ local M = {}
       color = '#32a88f',
     })
     require('nvim-surround').setup()
+
     require('harpoon').setup()
+    vim.keymap.set('n', '<leader>hh', [[:lua require("harpoon.ui").toggle_quick_menu()<CR>]], { noremap = true, silent = true, desc = 'open harpoon menu' })
+    vim.keymap.set('n', '<leader>hm', [[:lua require("harpoon.mark").add_file()<CR>]], { noremap = true, silent = true, desc = 'add file to harpoon' })
+    vim.keymap.set('n', '<leader>hb', [[:lua require("harpoon.ui").nav_prev()<CR>]], { noremap = true, silent = true, desc = 'open prev harpoon' })
+    vim.keymap.set('n', '<leader>hn', [[:lua require("harpoon.ui").nav_next()<CR>]], { noremap = true, silent = true, desc = 'open next harpoon' })
+
     require("ibl").setup()
     if(categories.AI) then
       require("sg").setup({
@@ -88,6 +97,7 @@ local M = {}
       vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
     end
     require('myLuaConf.birdee.completion').setup(categories)
+
     require('neo-tree').setup({
     close_if_last_window = true,
     window = {
