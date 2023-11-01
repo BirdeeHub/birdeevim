@@ -178,7 +178,7 @@
             ];
             AI = [
               pkgs.vimPlugins.codeium-nvim
-              inputs.sg-nvim.packages.${system}.default
+              inputs.sg-nvim.packages.${system}.sg-nvim
               # cmp-tabnine
             ];
             # this is from the customPluginOverlay
