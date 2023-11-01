@@ -147,6 +147,7 @@
             ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
+
               inputs.sg-nvim.packages.${system}.default
               pkgs.nodejs
             ];

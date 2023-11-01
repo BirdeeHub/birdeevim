@@ -16,6 +16,7 @@ vim.cmd([[command! W w]])
 vim.cmd([[command! Wq wq]])
 vim.cmd([[command! WQ wq]])
 vim.cmd([[command! Q q]])
+vim.keymap.set('n','B','^i', { noremap = true, silent = true, desc = 'edit at beginning of line' })
 
 vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
 vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
