@@ -55,6 +55,7 @@ The 2 main files you would need to use if you used this:	README.md	/^#### The 2 
 [']m']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']m'] = '@function.outer',$/;"	f
 ['af']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['af'] = '@function.outer',$/;"	f
 ['if']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['if'] = '@function.inner',$/;"	f
+callback	lua/myLuaConf/birdee/markdown.lua	/^       callback = function()$/;"	f
 callback	lua/myLuaConf/birdee/opts.lua	/^    callback = function()$/;"	f
 enabled	lua/myLuaConf/birdee/completion.lua	/^    enabled = function()$/;"	f
 expand	lua/myLuaConf/birdee/completion.lua	/^      expand = function(args)$/;"	f
@@ -67,6 +68,7 @@ on_attach	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.on_attach(_, bufnr
 setup	lua/myLuaConf/birdee/LSPs/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/completion.lua	/^function completion.setup(categories)$/;"	f	unknown:completion
 setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^  function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup(categories)$/;"	f	unknown:myLuaConf
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a
