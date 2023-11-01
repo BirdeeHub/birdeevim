@@ -145,8 +145,10 @@
             ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
-              # inputs.sg-nvim.packages.${system}.default
-              pkgs.rustup
+              # apparently im still working on sourcegraph/cody
+              # because it doesnt work on my vm.
+              inputs.sg-nvim.packages.${system}.default
+              # pkgs.rustup
               pkgs.nodejs
             ];
             java = with pkgs; [
@@ -177,7 +179,6 @@
             AI = [
               pkgs.vimPlugins.codeium-nvim
               inputs.sg-nvim.packages.${system}.default
-              # sg
               # cmp-tabnine
             ];
             # this is from the customPluginOverlay
@@ -312,7 +313,7 @@
       { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ birdeeVim ];
+          packages = [ noAIneodev ];
           inputsFrom = [ ];
           shellHook = ''
           '';
