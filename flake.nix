@@ -129,7 +129,7 @@
           # this section is for dependencies that should be available
           # at runtime for plugins. Will not be available to PATH
           # this includes LSPs
-          lspsAndDeps= {
+          lspsAndDeps = {
             general = with pkgs; [
               ripgrep
               fd
@@ -180,10 +180,8 @@
               inputs.sg-nvim.packages.${system}.sg-nvim
               # cmp-tabnine
             ];
-            # this is from the customPluginOverlay
             customPlugins = with pkgs.customNVIMplugins; [
             ];
-            # This one is also from customPluginOverlay but I wanted it in markdown list
             markdown = with pkgs.customNVIMplugins; [
               # You might want to use this one, its pretty good, it updates in realtime
               # I did get it working. However, you cant have multiple open. 
@@ -194,9 +192,8 @@
               # It puts the bin directory in the wrong place for the plugin
               # and everything I try with mkYarnPackage the permissions cause issues.
               # Otherwise, this would be my only markdown plugin
-              # markdown-preview
+              # markdown-preview-nvim
             ];
-            # this is from the pluginOverlay for when you name the input plugins-name
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
@@ -209,7 +206,6 @@
               hlargs
               # fidget # once you figure out how to import from legacy tag
             ];
-            # and add here for regular pkgs.vimPlugin
             nixvimplugins = with pkgs.vimPlugins; [
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
@@ -243,7 +239,7 @@
               cmp-cmdline-history
               nui-nvim
               neo-tree-nvim
-              eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
+              eyeliner-nvim
             ];
           };
 
