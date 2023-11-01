@@ -130,17 +130,23 @@
           # at runtime for plugins. Will not be available to PATH
           # this includes LSPs
           lspsAndDeps= {
+            general = with pkgs; [
+              ripgrep
+            ];
             ghmarkdown = [ 
               # I ended up just writing some keybinds to interface with this
               # I use it when I want to just view, the other when I want to edit
               # The reason being that it can have multiple open,
               # and also I didnt have to figure out importing custom css for darkmode
               # Its pretty decent though, drawback is you need to save for it to update
+              pkgs.gh
               pkgs.gh-markdown-preview
             ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
               inputs.sg-nvim.packages.${system}.default
+              pkgs.rustup
+              pkgs.nodejs
             ];
             java = with pkgs; [
               jdt-language-server
@@ -261,6 +267,7 @@
         # hence, AI = true; will include the AI lspsAndDeps category,
         # as well as the AI startup category
         birdeeVim = birdeeVimBuild {
+          general = true;
           markdown = true;
           ghmarkdown = true;
           customPlugins = true;
@@ -272,6 +279,7 @@
           java = false;
         };
         noAIneodev = birdeeVimBuild {
+          general = true;
           markdown = false;
           ghmarkdown = true;
           customPlugins = true;
@@ -281,6 +289,7 @@
           AI = false;
         };
         coffeeVim = birdeeVimBuild {
+          general = true;
           ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -289,6 +298,7 @@
           java = true;
         };
         kotlinVim = birdeeVimBuild {
+          general = true;
           ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
