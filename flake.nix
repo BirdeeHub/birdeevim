@@ -146,7 +146,7 @@
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
               # apparently im still working on sourcegraph/cody
-              # because it doesnt work on my vm.
+              # because it doesnt work on my fresh vm.
               inputs.sg-nvim.packages.${system}.default
               # pkgs.rustup
               pkgs.nodejs
