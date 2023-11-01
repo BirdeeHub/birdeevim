@@ -99,20 +99,22 @@
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
-sg = let
-  system = "x86_64-linux";
-  package = inputs.sg-nvim.packages.${system}.default;
-in {
-  inherit package;
-  init = pkgs.writeTextFile {
-    name = "sg.lua";
-    text = ''
-      return function()
-        package.cpath = package.cpath .. ";" .. "${package}/lib/?.so"
-      end
-    '';
-  };
-};
+        # sourcegraph said do this??
+        # no idea what to do with it though.
+        # sg = let
+        #   system = "x86_64-linux";
+        #   package = inputs.sg-nvim.packages.${system}.default;
+        # in {
+        #   inherit package;
+        #   init = pkgs.writeTextFile {
+        #     name = "sg.lua";
+        #     text = ''
+        #       return function()
+        #         package.cpath = package.cpath .. ";" .. "${package}/lib/?.so"
+        #       end
+        #     '';
+        #   };
+        # };
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
@@ -160,8 +162,8 @@ in {
               inputs.codeium.outputs.packages.${system}.codeium-lsp
               # apparently im still working on sourcegraph/cody
               # because it doesnt work on my fresh vm.
-              # inputs.sg-nvim.packages.${system}.default
-              sg
+              inputs.sg-nvim.packages.${system}.default
+              # sg
               # pkgs.rustup
               # pkgs.nodejs
             ];
