@@ -132,6 +132,7 @@
           lspsAndDeps= {
             general = with pkgs; [
               ripgrep
+              fd
             ];
             ghmarkdown = [ 
               # I ended up just writing some keybinds to interface with this
