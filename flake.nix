@@ -99,7 +99,20 @@
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
-
+        sg = let
+          system = "${system}";
+          package = inputs.sg-nvim.packages.${system}.default;
+        in {
+          inherit package;
+          init = pkgs.writeTextFile {
+            name = "sg.lua";
+            text = ''
+              return function()
+                package.cpath = package.cpath .. ";" .. "${package}/lib/?.so"
+              end
+            '';
+          };
+        };
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
@@ -145,8 +158,9 @@
             ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
-              inputs.sg-nvim.packages.${system}.default
-              pkgs.rustup
+              # inputs.sg-nvim.packages.${system}.default
+              # sg
+              # pkgs.rustup
               pkgs.nodejs
             ];
             java = with pkgs; [
@@ -176,7 +190,8 @@
             ];
             AI = [
               pkgs.vimPlugins.codeium-nvim
-              inputs.sg-nvim.packages.${system}.sg-nvim
+              # inputs.sg-nvim.packages.${system}.sg-nvim
+              sg
               # cmp-tabnine
             ];
             # this is from the customPluginOverlay
