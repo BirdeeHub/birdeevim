@@ -2,8 +2,8 @@
   customPluginOverlay = final: prev: { 
     customNVIMplugins = {
 
-      # markdown-preview = prev.stdenv.mkDerivation {
-      #   name = "markdown-preview";
+      # markdown-preview-nvim = prev.stdenv.mkDerivation {
+      #   name = "markdown-preview-nvim";
       #   src = inputs.markdown-preview-nvim;
       #   buildInputs = [ prev.nodejs ];
       #   nativeBuildInputs = [ prev.yarn  ];
@@ -19,8 +19,8 @@
       #     cp -r ./* $out
       #   '';
       # };
-      # markdown-preview = prev.mkYarnPackage {
-      #   name = "markdown-preview";
+      # markdown-preview-nvim = prev.mkYarnPackage {
+      #   name = "markdown-preview-nvim";
       #   src = inputs.markdown-preview-nvim;
       #   yarnLock = "${inputs.markdown-preview-nvim}/yarn.lock";
       #   # installPhase = ''
@@ -45,8 +45,8 @@
 #     mkYarnModules
 #     fixup_yarn_lock;
 
-      # markdown-preview = prev.yarn2nix-moretea.mkYarnPackage {
-      #   name = "markdown-preview";
+      # markdown-preview-nvim = prev.yarn2nix-moretea.mkYarnPackage {
+      #   name = "markdown-preview-nvim";
       #   src = inputs.markdown-preview-nvim;
       #   # yarnPostBuild = ''
       #   #   mkdir -p $out

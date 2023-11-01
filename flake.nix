@@ -99,27 +99,12 @@
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
-        # sourcegraph said do this??
-        # no idea what to do with it though.
-        # sg = let
-        #   system = "x86_64-linux";
-        #   package = inputs.sg-nvim.packages.${system}.default;
-        # in {
-        #   inherit package;
-        #   init = pkgs.writeTextFile {
-        #     name = "sg.lua";
-        #     text = ''
-        #       return function()
-        #         package.cpath = package.cpath .. ";" .. "${package}/lib/?.so"
-        #       end
-        #     '';
-        #   };
-        # };
+        codeium = inputs.codeium.outputs.overlays.${system}.default;
+
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
-        codeium = inputs.codeium.outputs.overlays.${system}.default;
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ standardPluginOverlay customPluginOverlay codeium ];
@@ -155,17 +140,15 @@
               # The reason being that it can have multiple open,
               # and also I didnt have to figure out importing custom css for darkmode
               # Its pretty decent though, drawback is you need to save for it to update
+              # also you need to log into github for a markdown preview......
+              # if anyone can get markdown-preview-nvim working please tell me
               pkgs.gh
               pkgs.gh-markdown-preview
             ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
-              # apparently im still working on sourcegraph/cody
-              # because it doesnt work on my fresh vm.
               inputs.sg-nvim.packages.${system}.default
-              # sg
-              # pkgs.rustup
-              # pkgs.nodejs
+              pkgs.nodejs
             ];
             java = with pkgs; [
               jdt-language-server
@@ -299,8 +282,8 @@
         };
         noAIneodev = birdeeVimBuild {
           general = true;
-          markdown = false;
-          ghmarkdown = true;
+          markdown = true;
+          ghmarkdown = false;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
