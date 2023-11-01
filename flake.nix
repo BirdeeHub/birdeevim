@@ -104,6 +104,7 @@ sg = let
   system = "${system}";
   package = inputs.sg-nvim.packages.${system}.default;
 in {
+  name = "sg.lua";
   inherit package;
   init = pkgs.writeTextFile {
     name = "sg.lua";
