@@ -3,7 +3,6 @@
         # TO DO: 
         # install debuggers
         # install formatters
-        # go back to messing with building markdown-preview-nvim
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
@@ -57,19 +56,7 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
-    # I want this one:
-    # "markdown-preview-nvim" = {
-    #   url = "github:iamcco/markdown-preview.nvim";
-    #   flake = false;
-    # };
-    # but for now, I have this one working
-    # Its faster and more responsive, but you can only have 1 open
-    # at a time, which doesnt work for me
-    "vim-markdown-composer" = {
-      url = "github:euclio/vim-markdown-composer";
-      flake = false;
-    };
-    # "cmp-tabnine" = { #binaries too OP
+    # "cmp-tabnine" = { # download binaries too OP
     #   url = "github:tzachar/cmp-tabnine";
     #   flake = false;
     # };
@@ -134,17 +121,6 @@
               ripgrep
               fd
             ];
-            ghmarkdown = [ 
-              # I ended up just writing some keybinds to interface with this
-              # I use it when I want to just view, the other when I want to edit
-              # The reason being that it can have multiple open,
-              # and also I didnt have to figure out importing custom css for darkmode
-              # Its pretty decent though, drawback is you need to save for it to update
-              # also you need to log into github for a markdown preview......
-              # if anyone can get markdown-preview-nvim working please tell me
-              pkgs.gh
-              pkgs.gh-markdown-preview
-            ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
 
@@ -184,16 +160,7 @@
             customPlugins = with pkgs.customNVIMplugins; [
             ];
             markdown = with pkgs.customNVIMplugins; [
-              # You might want to use this one, its pretty good, it updates in realtime
-              # I did get it working. However, you cant have multiple open. 
-              # Its rust so... building takes forever
-              vim-markdown-composer
-              
-              # this one I never got to work because yarn build step
-              # It puts the bin directory in the wrong place for the plugin
-              # and everything I try with mkYarnPackage the permissions cause issues.
-              # Otherwise, this would be my only markdown plugin
-              # markdown-preview-nvim
+              markdown-preview-nvim
             ];
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
@@ -268,7 +235,6 @@
         birdeeVim = birdeeVimBuild {
           general = true;
           markdown = true;
-          ghmarkdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
@@ -280,7 +246,6 @@
         noAIneodev = birdeeVimBuild {
           general = true;
           markdown = true;
-          ghmarkdown = false;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
@@ -289,7 +254,7 @@
         };
         coffeeVim = birdeeVimBuild {
           general = true;
-          ghmarkdown = true;
+          markdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
@@ -298,7 +263,7 @@
         };
         kotlinVim = birdeeVimBuild {
           general = true;
-          ghmarkdown = true;
+          markdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;

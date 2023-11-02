@@ -55,7 +55,6 @@ The 2 main files you would need to use if you used this:	README.md	/^#### The 2 
 [']m']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']m'] = '@function.outer',$/;"	f
 ['af']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['af'] = '@function.outer',$/;"	f
 ['if']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['if'] = '@function.inner',$/;"	f
-callback	lua/myLuaConf/birdee/markdown.lua	/^       callback = function()$/;"	f
 callback	lua/myLuaConf/birdee/opts.lua	/^    callback = function()$/;"	f
 enabled	lua/myLuaConf/birdee/completion.lua	/^    enabled = function()$/;"	f
 expand	lua/myLuaConf/birdee/completion.lua	/^      expand = function(args)$/;"	f

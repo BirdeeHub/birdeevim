@@ -1,85 +1,40 @@
 { ... }@inputs: let
-  customPluginOverlay = final: prev: { 
+  customPluginOverlay = self: super: { 
     customNVIMplugins = {
 
-      # markdown-preview-nvim = prev.stdenv.mkDerivation {
-      #   name = "markdown-preview-nvim";
-      #   src = inputs.markdown-preview-nvim;
-      #   buildInputs = [ prev.nodejs ];
-      #   nativeBuildInputs = [ prev.yarn  ];
-      #   buildPhase = ''
-      #     export HOME=$(pwd)
-      #     # Perform yarn install
-      #     yarn install --offline
-      #     # Perform yarn build
-      #     yarn build
-      #   '';
-      #   installPhase = ''
-      #     mkdir -p $out
-      #     cp -r ./* $out
-      #   '';
-      # };
-      # markdown-preview-nvim = prev.mkYarnPackage {
-      #   name = "markdown-preview-nvim";
-      #   src = inputs.markdown-preview-nvim;
-      #   yarnLock = "${inputs.markdown-preview-nvim}/yarn.lock";
-      #   # installPhase = ''
-      #   #   mkdir -p $out
-      #   #   cp -r $src/* $out
-      #   #   # cd $out/app
-      #   #   # $out/app/install.sh
-      #   # '';
-      #   # yarnPostBuild = ''
-      #   #   mkdir -p $out
-      #   #   cp -r $src/* $out
-      #   # '';
-      #   # doDist = false;
-      #   distPhase = ''
-      #     mkdir -p $out
-      #     cp -r $src/* $out
-      #   '';
-      # };
-# inherit (prev.yarn2nix-moretea)
-#     yarn2nix
-#     mkYarnPackage
-#     mkYarnModules
-#     fixup_yarn_lock;
-
-      # markdown-preview-nvim = prev.yarn2nix-moretea.mkYarnPackage {
-      #   name = "markdown-preview-nvim";
-      #   src = inputs.markdown-preview-nvim;
-      #   # yarnPostBuild = ''
-      #   #   mkdir -p $out
-      #   #   cp -r $src/* $out
-      #   # '';
-      #   doDist = true;
-      # };
-
-
-      
-      vim-markdown-composer = prev.rustPlatform.buildRustPackage {
-        name = "vim-markdown-composer";
-        src = inputs.vim-markdown-composer;
-        cargoLock = {
-          lockFile = "${inputs.vim-markdown-composer}/Cargo.lock";
+      # reddit user bin-c found this link for me, 
+      # and I adapted the funtion to my overlay
+      # https://github.com/NixOS/nixpkgs/blob/44a691ec0cdcd229bffdea17455c833f409d274a/pkgs/applications/editors/vim/plugins/overrides.nix#L746
+      markdown-preview-nvim =  let
+        nodeDep = super.yarn2nix-moretea.mkYarnModules rec {
+          inherit (super.vimPlugins.markdown-preview-nvim) pname version;
+          packageJSON = "${super.vimPlugins.markdown-preview-nvim.src}/package.json";
+          yarnLock = "${super.vimPlugins.markdown-preview-nvim.src}/yarn.lock";
+          offlineCache = super.fetchYarnDeps {
+            inherit yarnLock;
+            hash = "sha256-kzc9jm6d9PJ07yiWfIOwqxOTAAydTpaLXVK6sEWM8gg=";
+          };
         };
-        buildType = "release";
-        # it builds it to the wrong directory.......
-        # So we symlink it to the correct one
-        installPhase = ''
-          mkdir -p $out
-          currdir="$(pwd)"
-          cd target
-          rm -r release
-          readarray -t subdirs <<< "$(ls -1 ./*)"
-          for entry in "$''+''{subdirs[@]}"; do
-            [[ $entry =~ :$ ]] && subdir="$''+''{entry%?}"
-            [[ "$entry" == "release" ]] && ln -s "$subdir/release" .
-          done
-          cd "$currdir"
-          cp -r ./* $out
+      in super.vimPlugins.markdown-preview-nvim.overrideAttrs {
+        # apparently I dont need this?
+        # patches = [
+        #   (super.substituteAll {
+        #     src = "${super.vimPlugins.markdown-preview-nvim.src}/fix-node-paths.patch";
+        #     node = "${super.nodejs}/bin/node";
+        #   })
+        # ];
+        postInstall = ''
+          ln -s ${nodeDep}/node_modules $out/app
+        '';
+
+        nativeBuildInputs = [ super.nodejs ];
+        doInstallCheck = true;
+        installCheckPhase = ''
+          node $out/app/index.js --version
         '';
       };
+
+
     };
   };
 in
