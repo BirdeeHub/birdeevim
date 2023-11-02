@@ -166,19 +166,6 @@
             markdown = with pkgs.customNVIMplugins; [
               markdown-preview-nvim
             ];
-            gitPlugins = with pkgs.neovimPlugins; [
-              # catppuccin
-              onedark-vim
-              gitsigns
-              which-key
-              lspconfig
-              lualine
-              Comment
-              harpoon
-              hlargs
-              marks
-              # fidget # once you figure out how to import from legacy tag
-            ];
             telescope = with pkgs.vimPlugins; [
               telescope-fzf-native-nvim
               plenary-nvim
@@ -196,6 +183,19 @@
               cmp-cmdline
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
+            ];
+            gitPlugins = with pkgs.neovimPlugins; [
+              # catppuccin
+              onedark-vim
+              gitsigns
+              which-key
+              lspconfig
+              lualine
+              Comment
+              harpoon
+              hlargs
+              marks
+              # fidget # once you figure out how to import from legacy tag
             ];
             nixvimplugins = with pkgs.vimPlugins; [
               nvim-treesitter-textobjects

@@ -69,32 +69,32 @@ local M = {}
     require('myLuaConf.birdee.completion').setup(categories)
 
     require('neo-tree').setup({
-    close_if_last_window = true,
-    window = {
-      position = "float",
-      mappings = {
-        ["<space>"] = {
-          nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
-          noremap = false,
+      close_if_last_window = true,
+      window = {
+        position = "float",
+        mappings = {
+          ["<space>"] = {
+            nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+            noremap = false,
+          },
         },
       },
-    },
-    filesystem = {
-      filtered_items = {
-        visible = true,
-        hide_dotfiles = true,
-        hide_gitignored = true,
-        hide_hidden = true,
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = true,
+          hide_gitignored = true,
+          hide_hidden = true,
+        },
+        hijack_netrw_behavior = "disabled",
       },
-      hijack_netrw_behavior = "disabled",
-    },
-    buffers = {
-      follow_current_file = {
-        enabled = true,
+      buffers = {
+        follow_current_file = {
+          enabled = true,
+        },
       },
-    },
-  })
-  vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
+    })
+    vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
 
     require'marks'.setup {
@@ -142,7 +142,7 @@ local M = {}
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
