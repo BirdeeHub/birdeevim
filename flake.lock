@@ -491,6 +491,22 @@
         "type": "github"
       }
     },
+    "plugins-marks": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677346446,
+        "narHash": "sha256-hwLIUqyKlFs2EXAeEjJTNHUH4n/D7YASbBq2RHVQQNQ=",
+        "owner": "chentoast",
+        "repo": "marks.nvim",
+        "rev": "76aca5069c5ce5c0099e30168649e6393e494f26",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chentoast",
+        "repo": "marks.nvim",
+        "type": "github"
+      }
+    },
     "plugins-onedark-vim": {
       "flake": false,
       "locked": {
@@ -556,6 +572,7 @@
         "plugins-hlargs": "plugins-hlargs",
         "plugins-lspconfig": "plugins-lspconfig",
         "plugins-lualine": "plugins-lualine",
+        "plugins-marks": "plugins-marks",
         "plugins-onedark-vim": "plugins-onedark-vim",
         "plugins-which-key": "plugins-which-key",
         "sg-nvim": "sg-nvim"

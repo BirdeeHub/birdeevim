@@ -56,6 +56,10 @@
       url = "github:m-demare/hlargs.nvim";
       flake = false;
     };
+    "plugins-marks" = {
+      url = "github:chentoast/marks.nvim";
+      flake = false;
+    };
     # "cmp-tabnine" = { # download binaries too OP
     #   url = "github:tzachar/cmp-tabnine";
     #   flake = false;
@@ -172,6 +176,7 @@
               Comment
               harpoon
               hlargs
+              marks
               # fidget # once you figure out how to import from legacy tag
             ];
             nixvimplugins = with pkgs.vimPlugins; [
@@ -274,7 +279,7 @@
       { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ noAIneodev ];
+          packages = [ birdeeVim ];
           inputsFrom = [ ];
           shellHook = ''
           '';
