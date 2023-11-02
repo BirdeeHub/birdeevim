@@ -121,7 +121,7 @@
           # at runtime for plugins. Will not be available to PATH
           # this includes LSPs
           lspsAndDeps = {
-            general = with pkgs; [
+            telescope = with pkgs; [
               ripgrep
               fd
             ];
@@ -179,26 +179,12 @@
               marks
               # fidget # once you figure out how to import from legacy tag
             ];
-            nixvimplugins = with pkgs.vimPlugins; [
-              nvim-treesitter-textobjects
-              nvim-treesitter.withAllGrammars
-              # (nvim-treesitter.withPlugins (
-              #   plugins: with plugins; [
-              #     nix
-              #     lua
-              #   ]
-              # ))
-              lspkind-nvim
-              nvim-web-devicons
-              vim-sleuth
-              vim-fugitive
-              vim-rhubarb
+            telescope = with pkgs.vimPlugins; [
               telescope-fzf-native-nvim
               plenary-nvim
               telescope-nvim
-              nvim-surround
-              indent-blankline-nvim
-              lualine-lsp-progress
+            ];
+            cmp = with pkgs.vimPlugins; [
               nvim-cmp
               luasnip
               cmp_luasnip
@@ -210,6 +196,24 @@
               cmp-cmdline
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
+            ];
+            nixvimplugins = with pkgs.vimPlugins; [
+              nvim-treesitter-textobjects
+              nvim-treesitter.withAllGrammars
+              # (nvim-treesitter.withPlugins (
+              #   plugins: with plugins; [
+              #     nix
+              #     lua
+              #   ]
+              # ))
+              lspkind-nvim
+              vim-sleuth
+              vim-fugitive
+              vim-rhubarb
+              nvim-surround
+              indent-blankline-nvim
+              lualine-lsp-progress
+              nvim-web-devicons
               nui-nvim
               neo-tree-nvim
               eyeliner-nvim
@@ -238,7 +242,8 @@
         # hence, AI = true; will include the AI lspsAndDeps category,
         # as well as the AI startup category
         birdeeVim = birdeeVimBuild {
-          general = true;
+          cmp = true;
+          telescope = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -246,10 +251,11 @@
           neonixdev = true;
           AI = true;
           kotlin = true;
-          java = false;
+          java = false; #is included in kotlin
         };
         noAIneodev = birdeeVimBuild {
-          general = true;
+          cmp = true;
+          telescope = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -258,7 +264,8 @@
           AI = false;
         };
         coffeeVim = birdeeVimBuild {
-          general = true;
+          cmp = true;
+          telescope = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -267,13 +274,15 @@
           java = true;
         };
         kotlinVim = birdeeVimBuild {
-          general = true;
+          cmp = true;
+          telescope = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
           AI = true;
           kotlin = true;
+          java = false; #is included in kotlin
         };
       in
       { # choose your package
