@@ -279,7 +279,7 @@
       { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
-          packages = [ birdeeVim ];
+          packages = [ noAIneodev ];
           inputsFrom = [ ];
           shellHook = ''
           '';
