@@ -318,6 +318,7 @@
         };
         packages = {
           default = birdeeVim;
+          inherit birdeeVim;
           inherit noAIneodev;
           inherit coffeeVim;
           inherit kotlinVim;
