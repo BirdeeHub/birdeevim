@@ -43,18 +43,20 @@
 3	lua/.luarc.json	/^        "${3rd}\/luv\/library"$/;"	s	array:workspace.library
 And 2 files you shouldn't need to mess with much:	README.md	/^### And 2 files you shouldn't need to mess with much:$/;"	S	section:Overview:
 Another Neovim flake	README.md	/^### Another Neovim flake$/;"	S
-Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but no debuggers and no auto formatters.	README.md	/^## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but /;"	s
+Attention: This repo is unfinished.	README.md	/^## Attention: This repo is unfinished. $/;"	s
+It has dap and dap-ui but no debuggers for languages	README.md	/^#### It has dap and dap-ui but no debuggers for languages$/;"	t	section:Attention: This repo is unfinished.
 Overview:	README.md	/^## Overview:$/;"	s
 Questions:	README.md	/^## Questions:$/;"	s
-The 2 main files you would need to use if you used this:	README.md	/^### The 2 main files you would need to use if you used this:$/;"	S	section:Overview:
+The 3 main files you would need to use if you used this:	README.md	/^### The 3 main files you would need to use if you used this:$/;"	S	section:Overview:
 ['<S-Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
 ['<Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<Tab>'] = cmp.mapping(function(fallback)$/;"	f
-['[M']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['[M'] = '@function.outer',$/;"	f
-['[m']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['[m'] = '@function.outer',$/;"	f
-[']M']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']M'] = '@function.outer',$/;"	f
-[']m']	lua/myLuaConf/birdee/nestsitter.lua	/^        [']m'] = '@function.outer',$/;"	f
-['af']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['af'] = '@function.outer',$/;"	f
-['if']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['if'] = '@function.inner',$/;"	f
+['[M']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['[M'] = '@function.outer',$/;"	f
+['[m']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['[m'] = '@function.outer',$/;"	f
+[']M']	lua/myLuaConf/birdee/nestsitter.lua	/^          [']M'] = '@function.outer',$/;"	f
+[']m']	lua/myLuaConf/birdee/nestsitter.lua	/^          [']m'] = '@function.outer',$/;"	f
+['af']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['af'] = '@function.outer',$/;"	f
+['if']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['if'] = '@function.inner',$/;"	f
+and no auto formatters.	README.md	/^#### and no auto formatters. $/;"	t	section:Attention: This repo is unfinished.
 callback	lua/myLuaConf/birdee/opts.lua	/^    callback = function()$/;"	f
 enabled	lua/myLuaConf/birdee/completion.lua	/^    enabled = function()$/;"	f
 expand	lua/myLuaConf/birdee/completion.lua	/^      expand = function(args)$/;"	f
@@ -62,15 +64,19 @@ get_capabilities	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.get_capabil
 get_capabilities	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.get_capabilities()$/;"	f	unknown:M
 nmap	lua/myLuaConf/birdee/caps-onattach.lua	/^  local nmap = function(keys, func, desc)$/;"	f
 on_attach	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
-on_attach	lua/myLuaConf/birdee/plugins.lua	/^    on_attach = function(bufnr)$/;"	f
+on_attach	lua/myLuaConf/birdee/gutter.lua	/^    on_attach = function(bufnr)$/;"	f
 on_attach	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/LSPs/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/completion.lua	/^function completion.setup(categories)$/;"	f	unknown:completion
 setup	lua/myLuaConf/birdee/debug/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/format/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/gutter.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/keymaps.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/nestsitter.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/opts.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup(categories)$/;"	f	unknown:myLuaConf
-the flake itself is mostly just a couple big lists of what you want to add.	README.md	/^##### the flake itself is mostly just a couple big lists of what you want to add.$/;"	T	subsection:Overview:""The 2 main files you would need to use if you used this:
+the flake itself is mostly just a couple big lists of what you want to add.	README.md	/^##### the flake itself is mostly just a couple big lists of what you want to add.$/;"	T	subsection:Overview:""The 3 main files you would need to use if you used this:
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a

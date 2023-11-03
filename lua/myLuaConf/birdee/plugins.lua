@@ -4,9 +4,6 @@ function M.setup(categories)
   local colorschemer = 'onedark'
   vim.cmd.colorscheme(colorschemer)
 
-  if(categories.markdown) then
-    require('myLuaConf.birdee.markdown').setup(categories)
-  end
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
   -- [[ Configure Telescope ]]
@@ -21,7 +18,23 @@ function M.setup(categories)
       },
     },
   }
-  require('myLuaConf.birdee.nestsitter')
+  require('myLuaConf.birdee.nestsitter').setup(categories)
+  require('myLuaConf.birdee.gutter').setup(categories)
+  if(categories.AI) then
+    require("sg").setup({
+      on_attach = require('myLuaConf.caps-onattach').on_attach,
+    })
+    vim.keymap.set('n', '<leader>ss', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'sourcegraph search' })
+    vim.keymap.set('n', '<leader>sc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
+    vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
+  end
+  require('myLuaConf.birdee.completion').setup(categories)
+  if(categories.markdown) then
+    require('myLuaConf.birdee.markdown').setup(categories)
+  end
+
+
+
   -- Highlights unique characters for f/F and t/T motions
   require('eyeliner').setup {
     highlight_on_key = true, -- show highlights only after key press
@@ -58,15 +71,6 @@ function M.setup(categories)
   vim.keymap.set('n', '<leader>hn', [[:lua require("harpoon.ui").nav_next()<CR>]], { noremap = true, silent = true, desc = 'open next harpoon' })
 
   require("ibl").setup()
-  if(categories.AI) then
-    require("sg").setup({
-      on_attach = require('myLuaConf.caps-onattach').on_attach,
-    })
-    vim.keymap.set('n', '<leader>ss', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'sourcegraph search' })
-    vim.keymap.set('n', '<leader>sc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
-    vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
-  end
-  require('myLuaConf.birdee.completion').setup(categories)
 
   require('neo-tree').setup({
     close_if_last_window = true,
@@ -96,7 +100,6 @@ function M.setup(categories)
   })
   vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
-  require('myLuaConf.birdee.gutter').setup(categories)
 
 end
 return M

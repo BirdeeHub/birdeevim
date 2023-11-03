@@ -6,10 +6,13 @@ function myLuaConf.setup(categories)
     -- Make sure categories is passed to where you want to use it
     -- It contains the table of name = boolean values 
     -- you created when choosing categories of packages and plugins
+    -- nothing happens if you dont pass it in but you wont be able to use it.
+    -- I just passed it in everywhere because why not.
 
     -- use lspconfig and dap and setup functions. 
     -- no package manager or mason
     -- (they honestly might still work though I dont actually know)
+    -- (It would kinda defeat the purpose though)
 
     -- other than that, its just a normal config now.
     require("myLuaConf.birdee").setup(categories)

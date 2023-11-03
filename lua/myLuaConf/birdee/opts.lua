@@ -1,3 +1,5 @@
+local M = {}
+function M.setup(categories)
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -68,4 +70,5 @@
 
   -- vim.cmd.colorscheme "onedark"
   vim.cmd([[hi LineNr guifg=#bb9af7]])
-
+end
+return M

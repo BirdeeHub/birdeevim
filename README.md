@@ -1,14 +1,16 @@
 ### Another Neovim flake
 
 ## Attention: This repo is unfinished. 
-#### The lua hasnt been cleaned up enough, it has dap and dap-ui 
-#### but no debuggers for languages and no auto formatters. 
+#### It has dap and dap-ui but no debuggers for languages
+#### and no auto formatters. 
+
 
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
 and will be managing debuggers with regular dap stuff when I get to it.
 Fully reproducble package management, reasonably non-painful config.
-This is my first time using nix. So I wanted my scheme to be simple.
+This is my first time using nix. I'm also semi new to neovim but I like it a lot.
+So I wanted my scheme to be simple.
 I also wanted to be able to copy paste setup functions for new plugins
 right into my lua rather than adding hooks for a DSL.
 
@@ -35,80 +37,91 @@ Plugins and config files are the same thing.
 Make sure new lua files are added to your git staging or committed
 before testing it or it wont update and find the new file.
 
-inpiration taken HEAVILY from this repo as this was my first intro to nix.
+inpiration taken heavily on core sections from this repo as this was my first intro to nix.
 
-https://github.com/Quoteme/neovim-flake/tree/master
+[Luca's super simple neovim flake configuration](https://github.com/Quoteme/neovim-flake/tree/master)
+
+[pluginOverlay is directly from there](./nix/pluginOverlay.nix)
+
+It taught me how to use an overlay. Thank you.
+
+---
+Also I have 5 questions and I list them at the end
 
 ---
 
 ## Overview:
 
-### The 2 main files you would need to use if you used this:
+### The 3 main files you would need to use if you used this:
 
 ---
 
 ##### the flake itself is mostly just a couple big lists of what you want to add.
 -- [flake.nix](./flake.nix) structure:
 
-```
-A set of inputs:
-name the plugins you import "plugins-somepluginname" if they dont have a build step.
-Then add them to the desired category in the builder function.
-Access them to add them to builder with pkgs.neovimPlugins.somepluginname
-If they have a build step or are not a plugin, i.e. an lsp, dont name them in that format.
+    A set of inputs:
+    name the plugins you import "plugins-somepluginname" if they dont have a build step.
+    Then add them to the desired category in the builder function.
+    Access them to add them to builder with pkgs.neovimPlugins.somepluginname
+    If they have a build step or are not a plugin, i.e. an lsp, dont name them in that format.
 
-outputs function:
+    outputs function:
 
-a few overlay imports, including the custom plugin overlay 
-(used for defining plugins with build steps. 
-Access them later to add with pkgs.customNVIMplugins)
+    a few overlay imports, including the custom plugin overlay 
+    (used for defining plugins with build steps. 
+    Access them later to add with pkgs.customNVIMplugins)
 
-the generation of pkgs object with applied overlays and system variable.
+    the generation of pkgs object with applied overlays and system variable.
 
-a builder function created by importing nix/NeovimBuilder containing the following:
-- a flexible set of categories containing lists of startup plugins,
-- a flexible set of categories containing lists of optional plugins,
-- a flexible set of categories containing lists of LSP's or internal *runtime* dependencies
+    a builder function created by importing nix/NeovimBuilder containing the following:
+    - a flexible set of categories containing lists of startup plugins,
+    - a flexible set of categories containing lists of optional plugins,
+    - a flexible set of categories containing lists of LSP's or internal *runtime* dependencies
 
-generate packages by calling that builder function,
-passing it a set of categories to include.
+    generate packages by calling that builder function,
+    passing it a set of categories to include.
 
-output packages and devshell definition
-```
+    output packages and devshell definition
+
 -- [customPluginOverlay](./nix/customPluginOverlay.nix)
-```
-I have a separate file in which I do all the custom derivations for plugins with build steps.
 
-That separate file is located at ./nix/customPluginOverlay.nix
+    I have this separate overlay file in which I do all the 
+    custom derivations for plugins with build steps.
+    That separate file is located at ./nix/customPluginOverlay.nix
+    Access the plugins defined there with pkgs.customNVIMplugins
+    they were the only thing that isnt just a big list 
+    in the main flake file so I moved them to their own place.
 
-Access the plugins defined there with pkgs.customNVIMplugins
+-- [lua config](./lua/myLuaConf/init.lua)
 
-they were the only thing that isnt just a big list in the main file so I moved them to their own place.
-```
-
-### And 2 files you shouldn't need to mess with much:
-
--- [pluginOverlay](./nix/pluginOverlay.nix)
+    its the start of your lua config, if you skipped the first init.lua at root.
+    it gets called with setup(categories) which is a table of 
+    booleans passed from when you add categories to packages in the flake.nix file
+    if you wish to change the name to something other than myLuaConf you can go to ./nix/NeovimBuilder.nix
+    if you want to add ftplugin folder and stuff, add that at root, same level as lua folder.
+    the whole flake is a config folder, minus the inital init.lua, which is in ./nix/NeovimBuilder.nix
 
 ---
 
-    an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
+### And 2 files you shouldn't need to mess with much:
 
+---
+
+-- [pluginOverlay](./nix/pluginOverlay.nix)
+
+    an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
     Used by naming the flake input "plugins-pluginName"
 
 -- [NeovimBuilder](./nix/NeovimBuilder.nix)
 
----
-
-    A file where all the lists of plugins and lsps are combined, filtered appropriately based on categories included,
-
+    A file where all the lists of plugins and lsps are combined, 
+    filtered appropriately based on categories included,
     The init.vim is generated in that file as mentioned above in the introduction.
-
     The flake directory is included as a plugin there.
-
     The neovim package itself is also built there.
 
 ---
+
 
 ## Questions:
 
@@ -121,3 +134,5 @@ they were the only thing that isnt just a big list in the main file so I moved t
         (current wrapper in ./nix/NeovimBuilder.nix)
 
     4. examples of people setting up language debuggers for dap and dap-ui without mason.
+
+    5. how to actually install a specific flake package to a user on a non NixOs system
