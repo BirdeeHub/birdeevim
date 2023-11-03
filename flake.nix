@@ -84,7 +84,6 @@
       let
         # If you cant import them with the standard overlay, 
         # define a derivation in ./nix/customPluginOverlay.nix
-        # and then put them in customPlugins or customOptPlugins
         # if it has a build step, do that there.
         # afterwards, you can add as pkgs.customNVIMplugins.pluginname
         # If you do that, don't name the flake input "plugins-something",
@@ -94,18 +93,22 @@
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
+        # or use `pkgs.customNVIMplugins`, which is a map of our custom built plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
-        codeium = inputs.codeium.outputs.overlays.${system}.default;
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
             standardPluginOverlay
             customPluginOverlay
-            codeium 
+            inputs.codeium.outputs.overlays.${system}.default
           ];
           config.allowUnfree = true;
         };
-        # Now that our plugins and pkgs have been defined,
+
+
+
+
+        # Now that our plugin inputs/overlays and pkgs have been defined,
         # We define a function to facilitate package building for particular categories
         # it intakes a set of categories with a true false value for each
         birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
@@ -245,6 +248,9 @@
         });
 
 
+
+
+
         # And then build a package with specific categories from above here:
         # All categories you wish to include must be marked true,
         # but false may be omitted.
@@ -269,7 +275,7 @@
           AI = true;
           kotlin = true;
           java = false; #is included in kotlin
-          # this does not have an associated category, but lua can still check it
+          # this does not have an associated category of plugins, but lua can still check for it
           lspDebugMode = false;
         };
         noAIneodev = birdeeVimBuild {
@@ -308,6 +314,11 @@
           java = false; #is included in kotlin category
         };
       in
+
+
+
+
+
       { # choose your package
         devShell = pkgs.mkShell {
           name = "birdeeVim";
@@ -324,5 +335,8 @@
           inherit kotlinVim;
         };
       }
-    );
+
+
+
+    ); # end of flake utils, which returns the value of outputs
 }
