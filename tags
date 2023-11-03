@@ -41,13 +41,13 @@
 1	lua/.luarc.json	/^        "\/nix\/store\/f1qgs3f5gb382j4hd1sfpf3yw9mlk24m-neovim-unwrapped-0.9.4\/share\/nvim\/run/;"	s	array:workspace.library
 2	lua/.luarc.json	/^        "\/home\/birdee\/Projects\/nvimflakes\/lua",$/;"	s	array:workspace.library
 3	lua/.luarc.json	/^        "${3rd}\/luv\/library"$/;"	s	array:workspace.library
-And 2 files you shouldn't need to mess with much:	README.md	/^### And 2 files you shouldn't need to mess with much:$/;"	S	section:Overview:
-Another Neovim flake	README.md	/^### Another Neovim flake$/;"	S
-Attention: This repo is unfinished.	README.md	/^## Attention: This repo is unfinished. $/;"	s
-It has dap and dap-ui but no debuggers for languages	README.md	/^#### It has dap and dap-ui but no debuggers for languages$/;"	t	section:Attention: This repo is unfinished.
-Overview:	README.md	/^## Overview:$/;"	s
-Questions:	README.md	/^## Questions:$/;"	s
-The 3 main files you would need to use if you used this:	README.md	/^### The 3 main files you would need to use if you used this:$/;"	S	section:Overview:
+And 2 files you shouldn't need to mess with much:	README.md	/^### And 2 files you shouldn't need to mess with much:$/;"	S	section:Another Neovim flake""Overview:
+Another Neovim flake	README.md	/^# Another Neovim flake$/;"	c
+Attention: This repo is unfinished.	README.md	/^### Attention: This repo is unfinished. $/;"	S	chapter:Another Neovim flake
+It has dap and dap-ui but no debuggers for languages	README.md	/^#### It has dap and dap-ui but no debuggers for languages$/;"	t	subsection:Another Neovim flake""Attention: This repo is unfinished.
+Overview:	README.md	/^## Overview:$/;"	s	chapter:Another Neovim flake
+Questions:	README.md	/^## Questions:$/;"	s	chapter:Another Neovim flake
+The 3 main files you would need to use if you used this:	README.md	/^### The 3 main files you would need to use if you used this:$/;"	S	section:Another Neovim flake""Overview:
 ['<S-Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
 ['<Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<Tab>'] = cmp.mapping(function(fallback)$/;"	f
 ['[M']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['[M'] = '@function.outer',$/;"	f
@@ -56,7 +56,7 @@ The 3 main files you would need to use if you used this:	README.md	/^### The 3 m
 [']m']	lua/myLuaConf/birdee/nestsitter.lua	/^          [']m'] = '@function.outer',$/;"	f
 ['af']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['af'] = '@function.outer',$/;"	f
 ['if']	lua/myLuaConf/birdee/nestsitter.lua	/^          ['if'] = '@function.inner',$/;"	f
-and no auto formatters.	README.md	/^#### and no auto formatters. $/;"	t	section:Attention: This repo is unfinished.
+and no auto formatters.	README.md	/^#### and no auto formatters. $/;"	t	subsection:Another Neovim flake""Attention: This repo is unfinished.
 callback	lua/myLuaConf/birdee/opts.lua	/^    callback = function()$/;"	f
 enabled	lua/myLuaConf/birdee/completion.lua	/^    enabled = function()$/;"	f
 expand	lua/myLuaConf/birdee/completion.lua	/^      expand = function(args)$/;"	f
@@ -78,5 +78,5 @@ setup	lua/myLuaConf/birdee/nestsitter.lua	/^function M.setup(categories)$/;"	f	u
 setup	lua/myLuaConf/birdee/opts.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup(categories)$/;"	f	unknown:myLuaConf
-the flake itself is mostly just a couple big lists of what you want to add.	README.md	/^##### the flake itself is mostly just a couple big lists of what you want to add.$/;"	T	subsection:Overview:""The 3 main files you would need to use if you used this:
+the flake itself is mostly just a couple big lists of what you want to add.	README.md	/^##### the flake itself is mostly just a couple big lists of what you want to add.$/;"	T	subsection:Another Neovim flake""Overview:""The 3 main files you would need to use if you used this:
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a

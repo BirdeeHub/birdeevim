@@ -8,11 +8,13 @@ function M.setup(categories)
     require("myLuaConf.birdee.LSPs.nix")
   elseif (categories.lua) then
     require("myLuaConf.birdee.LSPs.lua")
+  end
+  if (categories.kotlin) then
+    require("myLuaConf.birdee.LSPs.kotlin")
   elseif (categories.java) then
     require("myLuaConf.birdee.LSPs.java")
-  elseif (categories.kotlin) then
-    require("myLuaConf.birdee.LSPs.kotlin")
-  elseif (categories.lspDebugMode) then
+  end
+  if (categories.lspDebugMode) then
     vim.lsp.set_log_level("debug")
   end
 end

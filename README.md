@@ -1,6 +1,6 @@
-### Another Neovim flake
+# Another Neovim flake
 
-## Attention: This repo is unfinished. 
+### Attention: This repo is unfinished. 
 #### It has dap and dap-ui but no debuggers for languages
 #### and no auto formatters. 
 
