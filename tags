@@ -62,7 +62,7 @@ get_capabilities	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.get_capabil
 get_capabilities	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.get_capabilities()$/;"	f	unknown:M
 nmap	lua/myLuaConf/birdee/caps-onattach.lua	/^  local nmap = function(keys, func, desc)$/;"	f
 on_attach	lua/myLuaConf/birdee/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
-on_attach	lua/myLuaConf/birdee/plugins.lua	/^      on_attach = function(bufnr)$/;"	f
+on_attach	lua/myLuaConf/birdee/plugins.lua	/^    on_attach = function(bufnr)$/;"	f
 on_attach	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/LSPs/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/completion.lua	/^function completion.setup(categories)$/;"	f	unknown:completion
@@ -70,6 +70,6 @@ setup	lua/myLuaConf/birdee/debug/init.lua	/^function M.setup(categories)$/;"	f	u
 setup	lua/myLuaConf/birdee/format/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
-setup	lua/myLuaConf/birdee/plugins.lua	/^  function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/plugins.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup(categories)$/;"	f	unknown:myLuaConf
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a
