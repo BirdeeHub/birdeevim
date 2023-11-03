@@ -1,7 +1,7 @@
 {
   description = "Birdee's Neovim flake with mostly regular Lua config.";
         # TO DO: 
-        # install debuggers
+        # install debuggers for languages (dap & dapui installed)
         # install formatters
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -98,7 +98,11 @@
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ standardPluginOverlay customPluginOverlay codeium ];
+          overlays = [
+            standardPluginOverlay
+            customPluginOverlay
+            codeium 
+          ];
           config.allowUnfree = true;
         };
         birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
@@ -184,6 +188,10 @@
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
             ];
+            debug = with pkgs.vimPlugins; [
+              nvim-dap
+              nvim-dap-ui
+            ];
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
@@ -243,6 +251,7 @@
         # as well as the AI startup category
         birdeeVim = birdeeVimBuild {
           cmp = true;
+          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -255,6 +264,7 @@
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
+          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -265,6 +275,7 @@
         };
         coffeeVim = birdeeVimBuild {
           cmp = true;
+          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -275,6 +286,7 @@
         };
         kotlinVim = birdeeVimBuild {
           cmp = true;
+          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
