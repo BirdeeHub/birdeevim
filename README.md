@@ -1,11 +1,14 @@
 ### Another Neovim flake
 
-## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has no debuggers or formatters. This is my first time using nix.
+## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but no debuggers and no auto formatters. 
 
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
 and will be managing debuggers with regular dap stuff when I get to it.
 Fully reproducble package management, reasonably non-painful config.
+This is my first time using nix. So I wanted my scheme to be simple.
+I also wanted to be able to copy paste setup functions for new plugins
+right into my lua rather than adding hooks for a DSL.
 
 But I wanted to also manage and download the lua with the flake.
 I wanted to also be able to easily specifically package for projects.
@@ -25,9 +28,10 @@ If I want to not load it on startup,
 I can just put it in opt section and call packadd 
 from an autocommand if I want to do lazy loading.
 
-Even though it is supposed to be loaded as a plugin and thus should work, 
-I am unsure if including an ftplugin folder works or not as I have not checked.
-Make sure it is added to your git staging or committed or it wont update and find the new file.
+ftplugin folder works. The others all should as well. 
+Plugins and config files are the same thing.
+Make sure new lua files are added to your git staging or committed
+before testing it or it wont update and find the new file.
 
 inpiration taken HEAVILY from this repo as this was my first intro to nix.
 
@@ -37,15 +41,14 @@ https://github.com/Quoteme/neovim-flake/tree/master
 
 ## Overview:
 
-#### The 2 main files you would need to use if you used this:
+### The 2 main files you would need to use if you used this:
 
 ---
 
-the flake itself is mostly just a couple big lists of what you want to add.
+##### the flake itself is mostly just a couple big lists of what you want to add.
+-- [flake.nix](./flake.nix) structure:
 
 ```
-flake.nix structure:
-
 A set of inputs:
 name the plugins you import "plugins-somepluginname" if they dont have a build step.
 Then add them to the desired category in the builder function.
@@ -70,7 +73,7 @@ passing it a set of categories to include.
 
 output packages and devshell definition
 ```
-nix/customPluginOverlay.nix
+-- [customPluginOverlay](./nix/customPluginOverlay.nix)
 ```
 I have a separate file in which I do all the custom derivations for plugins with build steps.
 
@@ -83,21 +86,25 @@ they were the only thing that isnt just a big list in the main file so I moved t
 
 ### And 2 files you shouldn't need to mess with much:
 
----
-
-an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
-
-Used by naming the flake input "plugins-pluginName"
+-- [pluginOverlay](./nix/pluginOverlay.nix)
 
 ---
 
-A file where all the lists of plugins and lsps are combined, filtered appropriately based on categories included,
+    an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
 
-The init.vim is generated in that file as mentioned above in the introduction.
+    Used by naming the flake input "plugins-pluginName"
 
-The flake directory is included as a plugin there.
+-- [NeovimBuilder](./nix/NeovimBuilder.nix)
 
-The neovim package itself is also built there.
+---
+
+    A file where all the lists of plugins and lsps are combined, filtered appropriately based on categories included,
+
+    The init.vim is generated in that file as mentioned above in the introduction.
+
+    The flake directory is included as a plugin there.
+
+    The neovim package itself is also built there.
 
 ---
 
@@ -107,3 +114,8 @@ The neovim package itself is also built there.
         i.e. legacy tags and branch names.
 
     2. How to give the option to compile nvim for debug mode.
+
+    3. How to swap to new wrapper and still have exactly this same format
+        (current wrapper in ./nix/NeovimBuilder.nix)
+
+    4. examples of people setting up language debuggers for dap and dap-ui without mason.

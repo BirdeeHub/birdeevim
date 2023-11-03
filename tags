@@ -43,10 +43,10 @@
 3	lua/.luarc.json	/^        "${3rd}\/luv\/library"$/;"	s	array:workspace.library
 And 2 files you shouldn't need to mess with much:	README.md	/^### And 2 files you shouldn't need to mess with much:$/;"	S	section:Overview:
 Another Neovim flake	README.md	/^### Another Neovim flake$/;"	S
-Attention: This repo is unfinished. The lua hasnt been cleaned up, it has no debuggers or formatters. This is my first time using nix.	README.md	/^## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has no debuggers or for/;"	s
+Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but no debuggers and no auto formatters.	README.md	/^## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but /;"	s
 Overview:	README.md	/^## Overview:$/;"	s
 Questions:	README.md	/^## Questions:$/;"	s
-The 2 main files you would need to use if you used this:	README.md	/^#### The 2 main files you would need to use if you used this:$/;"	t	section:Overview:
+The 2 main files you would need to use if you used this:	README.md	/^### The 2 main files you would need to use if you used this:$/;"	S	section:Overview:
 ['<S-Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<S-Tab>'] = cmp.mapping(function(fallback)$/;"	f
 ['<Tab>']	lua/myLuaConf/birdee/completion.lua	/^      ['<Tab>'] = cmp.mapping(function(fallback)$/;"	f
 ['[M']	lua/myLuaConf/birdee/nestsitter.lua	/^        ['[M'] = '@function.outer',$/;"	f
@@ -72,4 +72,5 @@ setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown
 setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/init.lua	/^function myLuaConf.setup(categories)$/;"	f	unknown:myLuaConf
+the flake itself is mostly just a couple big lists of what you want to add.	README.md	/^##### the flake itself is mostly just a couple big lists of what you want to add.$/;"	T	subsection:Overview:""The 2 main files you would need to use if you used this:
 workspace.library	lua/.luarc.json	/^    "workspace.library": [$/;"	a
