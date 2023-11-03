@@ -46,8 +46,8 @@ function M.setup(categories)
   -- Include that config in separate files per language in this folder
   -- require('dap-go').setup()
   -- require('bash-debug-adapter').setup() --??
-  -- require('kotlin-debug-adapter').setup()
-  -- require('jdtls').setup_dap({hotcodereplace = 'auto'})
+  -- require('kotlin-debug-adapter').setup() --??
+  -- require('jdtls').setup_dap({hotcodereplace = 'auto'}) --??
 
 end
 return M

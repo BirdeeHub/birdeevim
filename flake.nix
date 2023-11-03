@@ -90,12 +90,12 @@
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
-        codeium = inputs.codeium.outputs.overlays.${system}.default;
 
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add this overlay to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
+        codeium = inputs.codeium.outputs.overlays.${system}.default;
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
@@ -105,20 +105,26 @@
           ];
           config.allowUnfree = true;
         };
+        # Now that our plugins and pkgs have been defined,
+        # We define a function to facilitate package building for particular categories
+        # it intakes a set of categories with a true false value for each
         birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
-          viAlias = true;
-          vimAlias = true;
+          # It will need these
           inherit self;
           inherit pkgs;
           inherit categories;
+          # you can set these
+          viAlias = true;
+          vimAlias = true;
 
           # for the following items: lspsAndDeps, startup, and optional,
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
+
           # to define and use a new category, simply add a new list to the set,
           # and include categoryname = true;
-          # in the set you provide when you build the package.
+          # in the set you provide when you build the package using this function
 
           # lspsAndDeps:
           # this section is for dependencies that should be available
@@ -188,6 +194,16 @@
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
             ];
+            treesitter = with pkgs.vimPlugins; [
+              nvim-treesitter-textobjects
+              nvim-treesitter.withAllGrammars
+              # (nvim-treesitter.withPlugins (
+              #   plugins: with plugins; [
+              #     nix
+              #     lua
+              #   ]
+              # ))
+            ];
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
@@ -202,27 +218,19 @@
               # fidget # once you figure out how to import from legacy tag
             ];
             nixvimplugins = with pkgs.vimPlugins; [
-              nvim-treesitter-textobjects
-              nvim-treesitter.withAllGrammars
-              # (nvim-treesitter.withPlugins (
-              #   plugins: with plugins; [
-              #     nix
-              #     lua
-              #   ]
-              # ))
               lspkind-nvim
               vim-sleuth
               vim-fugitive
               vim-rhubarb
               nvim-surround
+              eyeliner-nvim
               indent-blankline-nvim
               lualine-lsp-progress
               nvim-web-devicons
               nui-nvim
+              neo-tree-nvim
               nvim-dap
               nvim-dap-ui
-              neo-tree-nvim
-              eyeliner-nvim
             ];
           };
 
@@ -252,6 +260,7 @@
         birdeeVim = birdeeVimBuild {
           cmp = true;
           telescope = true;
+          treesitter = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -260,20 +269,25 @@
           AI = true;
           kotlin = true;
           java = false; #is included in kotlin
+          # this does not have an associated category, but lua can still check it
+          lspDebugMode = false;
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
           telescope = true;
+          treesitter = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           nixvimplugins = true;
           neonixdev = true;
           AI = false;
+          lspDebugMode = true;
         };
         coffeeVim = birdeeVimBuild {
           cmp = true;
           telescope = true;
+          treesitter = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -284,6 +298,7 @@
         kotlinVim = birdeeVimBuild {
           cmp = true;
           telescope = true;
+          treesitter = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
