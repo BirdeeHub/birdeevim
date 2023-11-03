@@ -4,7 +4,7 @@ local M = {}
     local colorschemer = 'onedark'
     vim.cmd.colorscheme(colorschemer)
 
-    if(categories.ghmarkdown or categories.markdown) then
+    if(categories.markdown) then
       require('myLuaConf.birdee.markdown').setup(categories)
     end
     -- Enable telescope fzf native, if installed

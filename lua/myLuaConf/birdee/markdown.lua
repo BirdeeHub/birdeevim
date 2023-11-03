@@ -1,8 +1,14 @@
 local M = {}
 function M.setup(categories)
-  -- well I guess now that I have this I dont need the other stuff but
-  -- Im going to keep it here for notes purposes
+  -- vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
+
+
+
+  -- well I guess now that I have that I dont need the other stuff but
+  -- Im going to keep it here for notes purposes
+
+
   -- if(categories.ghmarkdown) then
   --   vim.keymap.set('n', '<leader>mp', [[:execute 'silent !gh-markdown-preview ' . expand('%:p') . ' &> /dev/null &' <CR> ]], { noremap = true, desc = "gh-markdown-preview" })
   --
