@@ -188,10 +188,6 @@
               cmp-nvim-lsp-signature-help
               cmp-cmdline-history
             ];
-            debug = with pkgs.vimPlugins; [
-              nvim-dap
-              nvim-dap-ui
-            ];
             gitPlugins = with pkgs.neovimPlugins; [
               # catppuccin
               onedark-vim
@@ -223,6 +219,8 @@
               lualine-lsp-progress
               nvim-web-devicons
               nui-nvim
+              nvim-dap
+              nvim-dap-ui
               neo-tree-nvim
               eyeliner-nvim
             ];
@@ -249,9 +247,10 @@
         # included when you set "thatname = true;" here.
         # hence, AI = true; will include the AI lspsAndDeps category,
         # as well as the AI startup category
+        # you can also add extra entries that dont have associated
+        # categories if you wish to pass an extra boolean into the lua.
         birdeeVim = birdeeVimBuild {
           cmp = true;
-          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -264,7 +263,6 @@
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
-          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -275,7 +273,6 @@
         };
         coffeeVim = birdeeVimBuild {
           cmp = true;
-          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;
@@ -286,7 +283,6 @@
         };
         kotlinVim = birdeeVimBuild {
           cmp = true;
-          debug = true;
           telescope = true;
           markdown = true;
           customPlugins = true;

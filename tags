@@ -66,8 +66,8 @@ on_attach	lua/myLuaConf/birdee/plugins.lua	/^      on_attach = function(bufnr)$/
 on_attach	lua/myLuaConf/vscody/caps-onattach.lua	/^function M.on_attach(_, bufnr)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/LSPs/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/completion.lua	/^function completion.setup(categories)$/;"	f	unknown:completion
-setup	lua/myLuaConf/birdee/debug.lua	/^function M.setup(categories)$/;"	f	unknown:M
-setup	lua/myLuaConf/birdee/format.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/debug/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
+setup	lua/myLuaConf/birdee/format/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^  function M.setup(categories)$/;"	f	unknown:M
