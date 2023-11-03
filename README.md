@@ -1,6 +1,8 @@
 ### Another Neovim flake
 
-## Attention: This repo is unfinished. The lua hasnt been cleaned up, it has dap and dap-ui but no debuggers and no auto formatters. 
+## Attention: This repo is unfinished. 
+#### The lua hasnt been cleaned up enough, it has dap and dap-ui 
+#### but no debuggers for languages and no auto formatters. 
 
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
@@ -63,10 +65,10 @@ Access them later to add with pkgs.customNVIMplugins)
 
 the generation of pkgs object with applied overlays and system variable.
 
-a builder function containing the following:
-a flexible set of categories containing lists of startup plugins,
-a flexible set of categories containing lists of optional plugins,
-a flexible set of categories containing lists of LSP's or internal *runtime* dependencies
+a builder function created by importing nix/NeovimBuilder containing the following:
+- a flexible set of categories containing lists of startup plugins,
+- a flexible set of categories containing lists of optional plugins,
+- a flexible set of categories containing lists of LSP's or internal *runtime* dependencies
 
 generate packages by calling that builder function,
 passing it a set of categories to include.
