@@ -11,6 +11,7 @@
   }:
   # todo: swap to new wrapper maybe and add debug
   let
+    # this is what allows for dynamic packaging in flake.nix
     filterAndFlatten = SetOfCategoryLists: categories: let
       inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
       thingsIncluded = builtins.mapAttrs (name: value:
@@ -25,6 +26,7 @@
     startupPlugs = filterAndFlatten startup categories;
     optionalPlugs = filterAndFlatten optional categories;
 
+    # and this just sends whatever booleans we had in the caregories we packaged
     luatableprinter = categorySet: let
       nameandstringmap = builtins.mapAttrs (name: value:
         if value == true then "${name} = true"
@@ -37,6 +39,7 @@
 
     setupTableRC = luatableprinter categories;
     customRC = "lua require('myLuaConf').setup({ " + setupTableRC + " })";
+    # package the entire flake as plugin
     myLuaConf = pkgs.stdenv.mkDerivation {
       name = "myLuaConf";
       src = self;
@@ -45,11 +48,13 @@
         cp -r $src/* $out
       '';
     };
+    # add our lsps and propagated dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
       # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
       propagatedBuildInputs = propInputs ++ [ pkgs.stdenv.cc.cc.lib ];
     });
   in
+  # add our plugins and our config, and wrap it all up!
 pkgs.wrapNeovim myNeovimUnwrapped {
   inherit viAlias;
   inherit vimAlias;

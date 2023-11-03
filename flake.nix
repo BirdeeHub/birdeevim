@@ -305,7 +305,7 @@
           nixvimplugins = true;
           AI = true;
           kotlin = true;
-          java = false; #is included in kotlin
+          java = false; #is included in kotlin category
         };
       in
       { # choose your package
