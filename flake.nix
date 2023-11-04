@@ -134,7 +134,8 @@
           # at BUILD TIME for plugins. WILL NOT be available to PATH
           # However, they WILL be available to PATH when using nix develop
           propagatedBuildInputs = {
-
+            generalBuildInputs = with pkgs; [
+            ];
           };
 
           # lspsAndDeps:
