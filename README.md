@@ -1,20 +1,15 @@
 # Another Neovim flake
 
-#### To Do:
-It has dap and dap-ui but no debuggers for languages
-and no auto formatters. If you add a debugger to it please let me know.
-I didnt really have time to understand configuring dap yet before I heard about nix.
-I was only using neovim for about 3 months before making this flake.
-
-It might remain incomplete for a little while as I work on
-getting the rest of my stuff working on nixOS like nvidia and whatnot so I can swap.
 
 ## Introduction
 
 The idea is, replace lazy and mason with nix, 
-keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
+keep everything else in lua. 
+
+I am managing LSP's with nvim-lspconfig, 
 and will be managing debuggers with regular dap stuff when I get to it.
 Fully reproducble package management, reasonably non-painful config.
+
 This is my first time using nix. I'm also semi new to neovim but I like it a lot.
 So I wanted my scheme to be simple.
 I also wanted to be able to copy paste setup functions for new plugins
@@ -29,10 +24,17 @@ I decided to also pass in a table of categories to the config to
 aid in creating packages specific to languages or projects.
 thus, the automatically generated init.vim calls:
 ```
-lua require('myLuaConfig').setup({<table of categories with values true or false (or not included)>})
+lua require('myLuaConfig').setup({<table of categories with boolean values>})
 ```
 The reason I want to do it this way is the setup instructions 
-for new plugins are all in Lua.
+for new plugins are all in Lua so translating them is effort, 
+I didnt want to be forced into creating a new lua file for every plugin,
+I wanted my neovim config to be neovim flavored so I can take advantage of all the neovim tools
+
+and the table of categories allows me to react to 
+dynamic packaging within the lua config.
+also lua throws no errors if the index wasnt there, 
+it just returns nil which allows you check if and not worry.
 
 If I want to not load it on startup, 
 I can just put it in opt section and call packadd 
@@ -58,7 +60,7 @@ inpiration taken heavily on core sections from this repo as this was my first in
 It taught me how to use an overlay. Thank you.
 
 ---
-Also I have 5 non-debugger related questions and I list them at the end because I really am new to nix
+Also I have questions and to do's and I list them at the end to ask for guidance because I really am very new to nix
 
 ---
 
@@ -99,13 +101,13 @@ Also I have 5 non-debugger related questions and I list them at the end because 
 -- [customPluginOverlay](./nix/customPluginOverlay.nix)
 
     I have this separate overlay file in which I do all the 
-    custom derivations for plugins with build steps.
+    custom derivations for plugins with build steps not handled by nixpkgs.
     That separate file is located at ./nix/customPluginOverlay.nix
     Access the plugins defined there with pkgs.customNVIMplugins
     they were the only thing that isnt just a big list 
     in the main flake file so I moved them to their own place.
 
--- [lua config](./lua/myLuaConf/init.lua)
+-- [require('myLuaConf')](./lua/myLuaConf/init.lua)
 
     its the start of your lua config, if you skipped the first init.lua at root.
     it gets called with setup(categories) which is a table of 
@@ -135,20 +137,23 @@ Also I have 5 non-debugger related questions and I list them at the end because 
 
 ---
 
+## To Do:
+It has dap and dap-ui but no debuggers for languages
+and no auto formatters. If you add a debugger to it please let me know.
+I didnt really have time to understand configuring dap yet before I heard about nix.
+I was only using neovim for about 3 months before making this flake, and hadn't tried to do that yet.
+
+It might remain incomplete for a little while as I work on
+getting the rest of my stuff working on nixOS like nvidia and whatnot so I can swap.
 
 ## Questions:
 
     1. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.
 
-    2. How to give the option to compile nvim for debug mode.
+    2. examples of people setting up language debuggers for dap and dap-ui without mason.
 
-    3. How to swap to new wrapper and still have exactly this same format
-        (current wrapper in ./nix/NeovimBuilder.nix)
-
-    4. examples of people setting up language debuggers for dap and dap-ui without mason.
-
-    5. how to actually target a specific flake package from cli commands
+    3. how to actually target a specific flake package from cli commands
         note, I have tried every variation of .#packagename and ./.#packagename 
         and .#<something>.packagename and ./.#<something>.packagename
-        that I could find in the repl.
+        that I could find in the repl. I even tried it straight from github!
