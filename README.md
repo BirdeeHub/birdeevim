@@ -1,11 +1,13 @@
 # Another Neovim flake
 
-### Attention: This repo is unfinished. 
+#### To Do:
 It has dap and dap-ui but no debuggers for languages
 and no auto formatters. If you add a debugger to it please let me know.
+I didnt really have time to understand configuring dap yet before I heard about nix.
+I was only using neovim for about 3 months before making this flake.
 
 It might remain incomplete for a little while as I work on
-getting the rest of my stuff working on nixOS like nvidia and whatnot.
+getting the rest of my stuff working on nixOS like nvidia and whatnot so I can swap.
 
 ## Introduction
 
@@ -56,7 +58,7 @@ inpiration taken heavily on core sections from this repo as this was my first in
 It taught me how to use an overlay. Thank you.
 
 ---
-Also I have 5 questions and I list them at the end
+Also I have 5 non-debugger related questions and I list them at the end because I really am new to nix
 
 ---
 
