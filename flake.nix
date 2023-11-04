@@ -294,8 +294,8 @@
           general = true;
           neonixdev = true;
           AI = true;
+          java = false; # is included in kotlin category
           kotlin = true;
-          java = false; #is included in kotlin
           # this does not have an associated category of plugins, but lua can still check for it
           lspDebugMode = false;
         };
