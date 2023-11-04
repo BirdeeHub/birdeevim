@@ -120,7 +120,7 @@
           viAlias = true;
           vimAlias = true;
 
-          # for the following items: lspsAndDeps, startup, and optional,
+          # for the following items: lspsAndDeps, propagatedBuildInputs, startup, and optional,
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
@@ -265,7 +265,8 @@
         # This entire set is also passed to the setup function for our config.
         # It is passed as a Lua table with values name = boolean. same as here.
         # if you have categories with the same name in 
-        # startup, lspsAndDeps and/or optional, all plugins will be
+        # startup, lspsAndDeps, propagatedBuildInputs, and/or optional, 
+        # all plugins in those categories will be
         # included when you set "thatname = true;" here.
         # hence, AI = true; will include the AI lspsAndDeps category,
         # as well as the AI startup category

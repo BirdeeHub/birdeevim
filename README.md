@@ -76,6 +76,7 @@ Also I have 5 questions and I list them at the end
     - a flexible set of categories containing lists of startup plugins,
     - a flexible set of categories containing lists of optional plugins,
     - a flexible set of categories containing lists of LSP's or internal *runtime* dependencies
+    - a flexible set of categories containing lists of internal *build time* dependencies
 
     generate packages by calling that builder function,
     passing it a set of categories to include.
