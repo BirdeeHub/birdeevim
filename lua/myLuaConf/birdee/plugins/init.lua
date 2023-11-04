@@ -5,23 +5,10 @@ function M.setup(categories)
   vim.cmd.colorscheme(colorschemer)
 
   if(categories.telescope) then
-    -- Enable telescope fzf native, if installed
-    pcall(require('telescope').load_extension, 'fzf')
-    -- [[ Configure Telescope ]]
-    -- See `:help telescope` and `:help telescope.setup()`
-    require('telescope').setup {
-      defaults = {
-        mappings = {
-          i = {
-            ['<C-u>'] = false,
-            ['<C-d>'] = false,
-          },
-        },
-      },
-    }
+    require('myLuaConf.birdee.plugins.telescope').setup(categories)
   end
   if(categories.treesitter) then
-    require('myLuaConf.birdee.nestsitter').setup(categories)
+    require('myLuaConf.birdee.plugins.nestsitter').setup(categories)
   end
   if(categories.AI) then
     require("sg").setup({
@@ -32,7 +19,7 @@ function M.setup(categories)
     vim.keymap.set('v', '<leader>cc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
   end
   if(categories.cmp) then
-    require('myLuaConf.birdee.completion').setup(categories)
+    require('myLuaConf.birdee.plugins.completion').setup(categories)
   end
   if(categories.markdown) then
     vim.g.mkdp_auto_close = 0
@@ -41,9 +28,10 @@ function M.setup(categories)
     vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
   end
 
-  require('myLuaConf.birdee.gutter').setup(categories)
+  require('myLuaConf.birdee.plugins.gutter').setup(categories)
 
 
+  vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
   -- Highlights unique characters for f/F and t/T motions
   require('eyeliner').setup {
     highlight_on_key = true, -- show highlights only after key press
@@ -109,7 +97,6 @@ function M.setup(categories)
   })
   vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
-  vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
 
 end
 return M
