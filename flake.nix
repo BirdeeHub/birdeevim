@@ -132,7 +132,7 @@
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
           # at BUILD TIME for plugins. WILL NOT be available to PATH
-          # However, they WILL be available to PATH when using nix develop
+          # However, they WILL be available to the shell and neovim path when using nix develop
           propagatedBuildInputs = {
             generalBuildInputs = with pkgs; [
             ];
@@ -140,11 +140,11 @@
 
           # lspsAndDeps:
           # this section is for dependencies that should be available
-          # at RUN TIME for plugins. WILL be available to PATH
+          # at RUN TIME for plugins. Will be available to path within neovim terminal
           # this includes LSPs
           lspsAndDeps = {
             general = with pkgs; [
-              universal-ctags
+              ctags
             ];
             telescope = with pkgs; [
               ripgrep

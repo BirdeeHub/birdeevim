@@ -29,7 +29,7 @@
     startupPlugs = filterAndFlatten startup categories;
     optionalPlugs = filterAndFlatten optional categories;
 
-    # and this just sends whatever booleans we had in the caregories we packaged
+    # and this just sends whatever booleans we had in the categories we packaged
     luatableprinter = categorySet: let
       nameandstringmap = builtins.mapAttrs (name: value:
         if value == true then "${name} = true"
