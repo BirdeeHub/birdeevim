@@ -144,7 +144,7 @@
           # this includes LSPs
           lspsAndDeps = {
             general = with pkgs; [
-              ctags
+              universal-ctags
             ];
             telescope = with pkgs; [
               ripgrep
@@ -167,13 +167,16 @@
               lua-language-server
             ];
             nix = with pkgs; [
+              nix-doc
               nil
             ];
             neonixdev = with pkgs; [
+              nix-doc
               nil
               lua-language-server
             ];
             bash = with pkgs; [
+              # bashdb
             ];
           };
 

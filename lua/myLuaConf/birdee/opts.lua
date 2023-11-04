@@ -16,9 +16,14 @@ function M.setup(categories)
 
   -- Indent
   vim.o.smarttab = true
-  vim.o.smartindent = true
+  -- vim.o.smartindent = true
+  -- vim.o.indentexpr = true
   vim.o.autoindent = true
   vim.o.cpoptions = 'I'
+  vim.o.tabstop = 4
+  vim.o.softtabstop = 4
+  vim.o.shiftwidth = 4
+  vim.o.expandtab = true
 
   -- Save undo history
   vim.o.undofile = true
@@ -29,6 +34,8 @@ function M.setup(categories)
 
   -- Keep signcolumn on by default
   vim.wo.signcolumn = 'yes'
+  vim.wo.relativenumber = true
+  vim.cmd([[hi LineNr guifg=#bb9af7]])
 
   -- Decrease update time
   vim.o.updatetime = 250
@@ -62,13 +69,6 @@ function M.setup(categories)
 
   vim.g.netrw_liststyle=0
   vim.g.netrw_banner=0
-  vim.o.tabstop = 4
-  vim.o.softtabstop = 4
-  vim.o.shiftwidth = 4
-  vim.o.expandtab = true
-  vim.wo.relativenumber = true
 
-  -- vim.cmd.colorscheme "onedark"
-  vim.cmd([[hi LineNr guifg=#bb9af7]])
 end
 return M

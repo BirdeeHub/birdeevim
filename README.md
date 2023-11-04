@@ -1,8 +1,13 @@
 # Another Neovim flake
 
 ### Attention: This repo is unfinished. 
-#### It has dap and dap-ui but no debuggers for languages
-#### and no auto formatters. 
+It has dap and dap-ui but no debuggers for languages
+and no auto formatters. If you add a debugger to it please let me know.
+
+It might remain incomplete for a little while as I work on
+getting the rest of my stuff working on nixOS like nvidia and whatnot.
+
+## Introduction
 
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
@@ -35,6 +40,12 @@ ftplugin folder works. The others all should as well.
 Plugins and config files are the same thing.
 Make sure new lua files are added to your git staging or committed
 before testing it or it wont update and find the new file.
+
+It runs correctly on a fresh nixOs install 
+with only i3, xfce.xfce4-terminal, xclip, xsel, git, and flakes enabled.
+Any terminal that supports bracketed paste will work, I just like that one's defaults.
+It runs correctly with less as well but you wont be able to copy paste without a clipboard and you might want that anyway...
+I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
 inpiration taken heavily on core sections from this repo as this was my first intro to nix.
 
@@ -135,4 +146,7 @@ Also I have 5 questions and I list them at the end
 
     4. examples of people setting up language debuggers for dap and dap-ui without mason.
 
-    5. how to actually install a specific flake package to a user on a non NixOs system
+    5. how to actually target a specific flake package from cli commands
+        note, I have tried every variation of .#packagename and ./.#packagename 
+        and .#<something>.packagename and ./.#<something>.packagename
+        that I could find in the repl.
