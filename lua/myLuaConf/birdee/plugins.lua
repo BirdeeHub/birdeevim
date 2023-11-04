@@ -4,22 +4,25 @@ function M.setup(categories)
   local colorschemer = 'onedark'
   vim.cmd.colorscheme(colorschemer)
 
-  -- Enable telescope fzf native, if installed
-  pcall(require('telescope').load_extension, 'fzf')
-  -- [[ Configure Telescope ]]
-  -- See `:help telescope` and `:help telescope.setup()`
-  require('telescope').setup {
-    defaults = {
-      mappings = {
-        i = {
-          ['<C-u>'] = false,
-          ['<C-d>'] = false,
+  if(categories.telescope) then
+    -- Enable telescope fzf native, if installed
+    pcall(require('telescope').load_extension, 'fzf')
+    -- [[ Configure Telescope ]]
+    -- See `:help telescope` and `:help telescope.setup()`
+    require('telescope').setup {
+      defaults = {
+        mappings = {
+          i = {
+            ['<C-u>'] = false,
+            ['<C-d>'] = false,
+          },
         },
       },
-    },
-  }
-  require('myLuaConf.birdee.nestsitter').setup(categories)
-  require('myLuaConf.birdee.gutter').setup(categories)
+    }
+  end
+  if(categories.treesitter) then
+    require('myLuaConf.birdee.nestsitter').setup(categories)
+  end
   if(categories.AI) then
     require("sg").setup({
       on_attach = require('myLuaConf.caps-onattach').on_attach,
@@ -28,7 +31,9 @@ function M.setup(categories)
     vim.keymap.set('n', '<leader>sc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
     vim.keymap.set('v', '<leader>sc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
   end
-  require('myLuaConf.birdee.completion').setup(categories)
+  if(categories.cmp) then
+    require('myLuaConf.birdee.completion').setup(categories)
+  end
   if(categories.markdown) then
     vim.g.mkdp_auto_close = 0
     vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
@@ -36,6 +41,7 @@ function M.setup(categories)
     vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
   end
 
+  require('myLuaConf.birdee.gutter').setup(categories)
 
 
   -- Highlights unique characters for f/F and t/T motions

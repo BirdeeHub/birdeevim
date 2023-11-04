@@ -234,6 +234,7 @@
               vim-sleuth
               vim-fugitive
               vim-rhubarb
+              vim-repeat
               nvim-surround
               eyeliner-nvim
               indent-blankline-nvim
