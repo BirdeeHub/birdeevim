@@ -247,6 +247,7 @@
               eyeliner-nvim
               indent-blankline-nvim
               lualine-lsp-progress
+              undotree
               nvim-web-devicons
               nui-nvim
               neo-tree-nvim
