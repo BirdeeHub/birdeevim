@@ -2,7 +2,8 @@ local M = {}
 function M.setup(categories)
   -- local colorschemer = "catppuccin"
   local colorschemer = 'onedark'
-  vim.cmd.colorscheme(colorschemer)
+  vim.cmd.colorscheme(colorschemer) -- also schemes lualine
+  local hlargsColor =  '#32a88f'
 
   if(categories.telescope) then
     require('myLuaConf.birdee.plugins.telescope').setup(categories)
@@ -37,13 +38,16 @@ function M.setup(categories)
     highlight_on_key = true, -- show highlights only after key press
     dim = true, -- dim all other characters
   }
+  require('hlargs').setup({
+    color = hlargsColor,
+  })
   require('which-key').setup()
   require('Comment').setup()
     -- require('fidget').setup()
   require('lualine').setup({
     options = {
       icons_enabled = false,
-      theme = tostring(colorschemer),
+      theme = colorschemer,
       component_separators = '|',
       section_separators = '',
     },
@@ -56,9 +60,6 @@ function M.setup(categories)
       },
     },
   })
-  require('hlargs').setup({
-    color = '#32a88f',
-  })
   require('nvim-surround').setup()
 
   require('harpoon').setup()
@@ -69,6 +70,8 @@ function M.setup(categories)
 
   require("ibl").setup()
 
+  -- I honestly only use this to see the little git icons. 
+  -- I wanna figure out how to add them to netrw instead and ditch this
   require('neo-tree').setup({
     close_if_last_window = true,
     window = {
