@@ -1,3 +1,4 @@
+# Source: https://github.com/Quoteme/neovim-flake/tree/master
 inputs:
   # Once we add this overlay to our nixpkgs, we are able to
   # use `pkgs.neovimPlugins`, which is a map of our plugins.

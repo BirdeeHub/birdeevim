@@ -59,13 +59,6 @@ Any terminal that supports bracketed paste will work, I just like that one's def
 It runs correctly with less as well but you wont be able to copy paste without a clipboard and you might want that anyway...
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
-inpiration taken heavily on core sections from this repo as this was my first intro to nix.
-
-[Luca's super simple neovim flake configuration](https://github.com/Quoteme/neovim-flake/tree/master)
-
-[pluginOverlay is directly from there](./nix/pluginOverlay.nix)
-
-It taught me how to use an overlay. Thank you.
 
 ---
 Also I have questions and to do's and I list them at the end to ask for guidance because I really am very new to nix
@@ -131,6 +124,10 @@ Also I have questions and to do's and I list them at the end to ask for guidance
 ---
 
 -- [pluginOverlay](./nix/pluginOverlay.nix)
+
+[A file copy pasted from a section of Quoteme's repo.](https://github.com/Quoteme/neovim-flake/tree/master)
+
+Thank you!!! It taught me both about an overlay and how it works.
 
     an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
     Used by naming the flake input "plugins-pluginName"
