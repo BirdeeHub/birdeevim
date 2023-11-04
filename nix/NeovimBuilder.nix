@@ -5,10 +5,10 @@
   , vimAlias ? false
   , startup ? {}
   , optional ? {}
-  , debug ? false
   , lspsAndDeps ? {}
   , propagatedBuildInputs ? {}
   , categories ? {}
+  , debug ? false
   }:
   # todo: swap to new wrapper maybe and add debug
   let

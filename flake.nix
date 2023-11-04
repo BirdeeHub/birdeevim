@@ -173,6 +173,8 @@
               nil
               lua-language-server
             ];
+            bash = with pkgs; [
+            ];
           };
 
           # startup plugins:
@@ -278,6 +280,7 @@
         # you can also add extra entries that dont have associated
         # categories if you wish to pass an extra boolean into the lua.
         birdeeVim = birdeeVimBuild {
+          bash = true;
           cmp = true;
           telescope = true;
           treesitter = true;

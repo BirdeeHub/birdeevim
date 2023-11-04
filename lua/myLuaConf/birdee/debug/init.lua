@@ -49,5 +49,22 @@ function M.setup(categories)
   -- require('kotlin-debug-adapter').setup() --??
   -- require('jdtls').setup_dap({hotcodereplace = 'auto'}) --??
 
+  if (categories.neonixdev) then
+    require('neodev').setup({})
+    require("myLuaConf.birdee.debug.nix")
+    require("myLuaConf.birdee.debug.lua")
+  elseif (categories.nix) then
+    require("myLuaConf.birdee.debug.nix")
+  elseif (categories.lua) then
+    require("myLuaConf.birdee.debug.lua")
+  end
+  if (categories.kotlin) then
+    require("myLuaConf.birdee.debug.kotlin")
+  elseif (categories.java) then
+    require("myLuaConf.birdee.debug.java")
+  end
+  if (categories.bash) then
+    require("myLuaConf.birdee.debug.bash")
+  end
 end
 return M
