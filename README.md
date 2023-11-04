@@ -21,18 +21,27 @@ Also the wrapper I have figured out how to use only does init.vim
 The solution? Include my flake itself as a plugin. 
 I decided to also pass in a table of categories to the config to
 aid in creating packages specific to languages or projects.
-thus, the automatically generated init.vim calls:
+
+To add new categories, simply add a new list, and enable the category
+
+#### thus, the automatically generated init.vim calls:
 ```
 lua require('myLuaConfig').setup({<table of categories with boolean values>})
 ```
-The reason I want to do it this way is the setup instructions 
-for new plugins are all in Lua so translating them is effort, 
-I didnt want to be forced into creating a new lua file for every plugin,
-I wanted my neovim config to be neovim flavored so I can take advantage of all the neovim tools
+This is generated in [NeovimBuilder](./nix/NeovimBuilder.nix) 
+based on the categories enabled, and the categories of plugins or dependencies present
 
-and the table of categories allows me to react to 
+#### These are the reasons I wanted to do it this way: 
+
+    The setup instructions for new plugins are all in Lua so translating them is effort, 
+    I didnt want to be forced into creating a new lua file for every plugin,
+    I wanted my neovim config to be neovim flavored 
+        (so that I can take advantage of all the neovim dev tools with minimal fuss)
+
+The table of categories allows me to react to 
 dynamic packaging within the lua config.
-also lua throws no errors if the index wasnt there, 
+
+Lua doesn't throw errors if the index wasnt included, 
 it just returns nil which allows you check if and not worry.
 
 If I want to not load it on startup, 
@@ -129,10 +138,14 @@ Also I have questions and to do's and I list them at the end to ask for guidance
 -- [NeovimBuilder](./nix/NeovimBuilder.nix)
 
     A file where all the lists of plugins and lsps are combined, 
-    filtered appropriately based on categories included,
+    filtered appropriately based on categories included.
+
     The init.vim is generated in that file as mentioned above in the introduction.
     The flake directory is included as a plugin there.
     The neovim package itself is also built there.
+
+    To change the name of myLuaConf folder, you must also change the name
+    in the 3 places this file mentions it
 
 ---
 
@@ -150,7 +163,9 @@ getting the rest of my stuff working on nixOS like nvidia and whatnot so I can s
     1. How to include as input to flake something that isnt the main branch, 
         i.e. legacy tags and branch names.
 
-    2. examples of people setting up language debuggers for dap and dap-ui without mason.
+    2. Can someone provide links showing people setting up 
+        language debuggers for dap and dap-ui without mason in Lua?
+        Regular or Nix it doesnt matter, just no non-nix package managers for the debugger itself.
 
     3. how to actually target a specific flake package from cli commands
         note, I have tried every variation of .#packagename and ./.#packagename 
