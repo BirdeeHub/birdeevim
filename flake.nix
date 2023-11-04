@@ -91,7 +91,7 @@
         customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
 
         # Apply the overlays and load nixpkgs as `pkgs`
-        # Once we add this overlay to our nixpkgs, we are able to
+        # Once we add these overlays to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
         # or use `pkgs.customNVIMplugins`, which is a map of our custom built plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;

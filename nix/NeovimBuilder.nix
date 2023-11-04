@@ -52,12 +52,12 @@
       '';
     };
 
-    # add our lsps and propagated dependencies
+    # add our propagated dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
       propagatedBuildInputs = propInputs;
     });
   in
-  # add our plugins and our config, and wrap it all up!
+  # add our lsps and plugins and our config, and wrap it all up!
 pkgs.wrapNeovim myNeovimUnwrapped {
   extraMakeWrapperArgs = builtins.concatStringsSep " " (
     (pkgs.lib.optional (runtimedeps != [])
