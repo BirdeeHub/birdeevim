@@ -3,7 +3,7 @@ function M.setup(categories)
   -- local colorschemer = "catppuccin"
   local colorschemer = 'onedark'
   vim.cmd.colorscheme(colorschemer) -- also schemes lualine
-  local hlargsColor =  '#32a88f'
+  local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
 
   if(categories.telescope) then
     require('myLuaConf.birdee.plugins.telescope').setup(categories)
