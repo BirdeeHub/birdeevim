@@ -129,9 +129,17 @@
           # and include categoryname = true;
           # in the set you provide when you build the package using this function
 
+          # propagatedBuildInputs:
+          # this section is for dependencies that should be available
+          # at BUILD TIME for plugins. WILL NOT be available to PATH
+          # However, they WILL be available to PATH when using nix develop
+          propagatedBuildInputs = {
+
+          };
+
           # lspsAndDeps:
           # this section is for dependencies that should be available
-          # at runtime for plugins. Will not be available to PATH
+          # at RUN TIME for plugins. WILL be available to PATH
           # this includes LSPs
           lspsAndDeps = {
             telescope = with pkgs; [

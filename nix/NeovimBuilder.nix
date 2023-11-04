@@ -7,6 +7,7 @@
   , optional ? {}
   , debug ? false
   , lspsAndDeps ? {}
+  , propagatedBuildInputs ? {}
   , categories ? {}
   }:
   # todo: swap to new wrapper maybe and add debug
@@ -22,7 +23,9 @@
     in
     flattenedList;
 
-    propInputs = filterAndFlatten lspsAndDeps categories;
+    # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
+    propInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
+    runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
     startupPlugs = filterAndFlatten startup categories;
     optionalPlugs = filterAndFlatten optional categories;
 
@@ -48,14 +51,18 @@
         cp -r $src/* $out
       '';
     };
+
     # add our lsps and propagated dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-      # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-      propagatedBuildInputs = propInputs ++ [ pkgs.stdenv.cc.cc.lib ];
+      propagatedBuildInputs = propInputs;
     });
   in
   # add our plugins and our config, and wrap it all up!
 pkgs.wrapNeovim myNeovimUnwrapped {
+  extraMakeWrapperArgs = builtins.concatStringsSep " " (
+    (pkgs.lib.optional (runtimedeps != [])
+      ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
+  );
   inherit viAlias;
   inherit vimAlias;
   configure = {

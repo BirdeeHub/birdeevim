@@ -4,7 +4,6 @@
 #### It has dap and dap-ui but no debuggers for languages
 #### and no auto formatters. 
 
-
 The idea is, replace lazy and mason with nix, 
 keep everything else in lua. I am managing LSP's with nvim-lspconfig, 
 and will be managing debuggers with regular dap stuff when I get to it.
