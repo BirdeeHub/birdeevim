@@ -30,7 +30,10 @@ function M.setup(categories)
   end
   require('myLuaConf.birdee.completion').setup(categories)
   if(categories.markdown) then
-    require('myLuaConf.birdee.markdown').setup(categories)
+    vim.g.mkdp_auto_close = 0
+    vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
+    vim.keymap.set('n','<leader>ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })
+    vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
   end
 
 

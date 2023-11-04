@@ -26,11 +26,6 @@ function M.setup(categories)
   -- opposite of A
   vim.keymap.set('n','B','^i', { noremap = true, silent = true, desc = 'edit at beginning of line' })
 
-  -- these 3 jankily fix which-key related errors for some reason
-  vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
-  vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
-  vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
   -- Remap for dealing with word wrap
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -39,8 +34,20 @@ function M.setup(categories)
   vim.keymap.set("n", "<leader>FF", "<cmd>Explore<CR>", { noremap = true, desc = '[F]ile[F]inder' })
   vim.keymap.set("n", "<leader>Fh", "<cmd>e .<CR>", { noremap = true, desc = '[F]ile[h]ome' })
 
+
+
+
+
+  -- these 3 jankily fix which-key related errors for some reason
+  vim.keymap.set('n', '<C-W>', '<c-w>', { desc = '+window'})
+  vim.keymap.set({"n", "v", "x"}, '"', '"', { desc = '+registers'})
+  vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
   -- dont worry about it.... it saved me some time in the end
   vim.keymap.set({'v', 'x'}, '<leader>Fp', [["ad:let @a = substitute(@a, '\\(favicon-.\\{-}\\)\\(\\.com\\|\\.org\\|\\.net\\|\\.edu\\|\\.gov\\|\\.mil\\|\\.int\\|\\.io\\|\\.co\\|\\.ai\\|\\.ly\\|\\.me\\|\\.tv\\|\\.info\\|\\.co\\.uk\\|\\.de\\|\\.jp\\|\\.cn\\|\\.au\\|\\.fr\\|\\.it\\|\\.es\\|\\.br\\|\\.gay\\)', 'https:\/\/', 'g')<CR>dd:while substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') != @a | let @a = substitute(@a, '\\(https:\\/\\/.\\{-}\\) > ', '\\1\/', 'g') | endwhile<CR>"ap]], { desc = 'fix the links in copies from phind' })
+
+
+
 
 
 
@@ -59,11 +66,8 @@ function M.setup(categories)
 
 
 
-  if(categories.telescope or true) then
+  if(categories.telescope) then
     -- See `:help telescope.builtin`
-    -- also will throw an error if you dont include telescope category
-    -- I have it this way because I always want that category 
-    -- included and this will remind me when I forgot.
     vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles,
         { desc = '[?] Find recently opened files' })
     vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers,

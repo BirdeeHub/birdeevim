@@ -8172,7 +8172,6 @@ setup	lua/myLuaConf/birdee/format/init.lua	/^function M.setup(categories)$/;"	f	
 setup	lua/myLuaConf/birdee/gutter.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/init.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/keymaps.lua	/^function M.setup(categories)$/;"	f	unknown:M
-setup	lua/myLuaConf/birdee/markdown.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/nestsitter.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/opts.lua	/^function M.setup(categories)$/;"	f	unknown:M
 setup	lua/myLuaConf/birdee/plugins.lua	/^function M.setup(categories)$/;"	f	unknown:M
