@@ -143,6 +143,9 @@
           # at RUN TIME for plugins. WILL be available to PATH
           # this includes LSPs
           lspsAndDeps = {
+            general = with pkgs; [
+              universal-ctags
+            ];
             telescope = with pkgs; [
               ripgrep
               fd
@@ -229,7 +232,7 @@
               marks
               # fidget # once you figure out how to import from legacy tag
             ];
-            nixvimplugins = with pkgs.vimPlugins; [
+            general = with pkgs.vimPlugins; [
               lspkind-nvim
               vim-sleuth
               vim-fugitive
@@ -253,7 +256,7 @@
           optional = {
             customPlugins = with pkgs.customNVIMplugins; [ ];
             gitPlugins = with pkgs.neovimPlugins; [ ];
-            nixvimplugins = with pkgs.vimPlugins; [ ];
+            general = with pkgs.vimPlugins; [ ];
           };
         });
 
@@ -281,7 +284,7 @@
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
-          nixvimplugins = true;
+          general = true;
           neonixdev = true;
           AI = true;
           kotlin = true;
@@ -296,7 +299,7 @@
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
-          nixvimplugins = true;
+          general = true;
           neonixdev = true;
           AI = false;
           lspDebugMode = true;
@@ -308,7 +311,7 @@
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
-          nixvimplugins = true;
+          general = true;
           AI = true;
           java = true;
         };
@@ -319,7 +322,7 @@
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
-          nixvimplugins = true;
+          general = true;
           AI = true;
           kotlin = true;
           java = false; #is included in kotlin category
