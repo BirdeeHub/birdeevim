@@ -1,5 +1,4 @@
-# Another Neovim flake
-
+# A Lua-natic's nvim flake: birdeeVim
 
 ## Introduction
 
