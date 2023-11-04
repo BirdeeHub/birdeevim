@@ -33,7 +33,8 @@ function M.setup(categories)
 
 
   vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
-  vim.g.undotree_WindowLayout = 4
+  vim.g.undotree_WindowLayout = 1
+  vim.g.undotree_SplitWidth = 40
   -- Highlights unique characters for f/F and t/T motions
   require('eyeliner').setup {
     highlight_on_key = true, -- show highlights only after key press
