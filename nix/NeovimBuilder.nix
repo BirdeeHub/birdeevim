@@ -53,18 +53,6 @@
       '';
     };
 
-    # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-    buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
-    runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
-    startupPlugs = [ nixCats ] ++ filterAndFlatten startup categories;
-    optionalPlugs = filterAndFlatten optional categories;
-
-    # add any dependencies/lsps/whatever we need available at runtime
-    extraMakeWrapperArgs = builtins.concatStringsSep " " (
-      (pkgs.lib.optional (runtimedeps != [])
-        ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
-    );
-
     # package the entire flake as plugin
     # and create our customRC to call it
     vimRC = "lua require('" + RCName + "')";
@@ -77,10 +65,20 @@
         cp -r $src/* $out
       '';
     };
-    onStart = startupPlugs ++ [ LuaConfig ];
 
+    # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
+    runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
+    startupPlugs = [ nixCats LuaConfig ] ++ filterAndFlatten startup categories;
+    optionalPlugs = filterAndFlatten optional categories;
 
-    # add our propagated dependencies
+    # add any dependencies/lsps/whatever we need available at runtime
+    extraMakeWrapperArgs = builtins.concatStringsSep " " (
+      (pkgs.lib.optional (runtimedeps != [])
+        ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
+    );
+
+    # add our propagated build dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
       propagatedBuildInputs = buildInputs;
     });
@@ -93,7 +91,7 @@ pkgs.wrapNeovim myNeovimUnwrapped {
   configure = {
     inherit customRC;
     packages.myVimPackage = {
-      start = onStart;
+      start = startupPlugs;
       opt = optionalPlugs;
     };
   };
