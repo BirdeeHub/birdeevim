@@ -120,9 +120,9 @@
           viAlias = true;
           vimAlias = true;
 
-          # This is required:
+          # This is a required field:
           # to use a different lua folder other than myLuaConf, change this value:
-          RCName = "myLuaConf"; # <-- the default value
+          RCName = "myLuaConf";
 
           # for the following items: lspsAndDeps, propagatedBuildInputs, startup, and optional,
           # you define lists within the set with a particular name.
@@ -180,15 +180,15 @@
               lua-language-server
             ];
             bash = with pkgs; [
-              # bashdb
+              # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
             ];
           };
 
           # startup plugins:
           # This is for plugins that will load at startup without using packadd:
           startup = {
-            neonixdev = [
-              pkgs.vimPlugins.neodev-nvim
+            neonixdev = with pkgs.vimPlugins; [
+              neodev-nvim
             ];
             AI = [
               pkgs.vimPlugins.codeium-nvim

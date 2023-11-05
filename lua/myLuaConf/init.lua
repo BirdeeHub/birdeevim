@@ -1,10 +1,10 @@
 --[[ Lua config Intro: meet nixCats!
 
 if you have your own lua config, it starts here.
-when you want to query if a category is enabled do:
+Or you can keep this config around without deleting
+but use a different one by changing RCName in the flake.nix file.
 
-Or you can keep this config around but use a different one 
-by changing RCName in the flake.nix file
+when you want to query if a category is enabled do:
 
 local categories = require('nixCats')
 if(categories.categoryname) then

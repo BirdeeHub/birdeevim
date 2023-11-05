@@ -1,9 +1,9 @@
 { 
   self
   , pkgs
+  , RCName
   , viAlias ? false
   , vimAlias ? false
-  , RCName
   , startup ? {}
   , optional ? {}
   , lspsAndDeps ? {}

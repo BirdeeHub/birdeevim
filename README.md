@@ -31,7 +31,7 @@ to aid in creating packages specific to languages or projects.
     end
 ```
     you can find out what cats you have whenever you require nixCats, 
-    and you may do this as much as you want.
+    and you may do this as much as you want, even in ftplugin and autoload folders!
 
 you can also use this to view the contents from neovim terminal
 ```lua
@@ -43,23 +43,30 @@ To add new categories, simply add a new list in flake.nix in the desired section
 Currently the automatically generated init.vim calls: lua require('myLuaConf')
 
 If you want to change the name of the folder used from lua directory, 
-you must provide a different name to RCName attribute in [flake.nix](./flake.nix).
+for example, if you wanted to copy your folder in and then 
+change mason for lspconfig and package manager for setup functions,
+you must provide a different name to RCName attribute in [flake.nix](./flake.nix) so that it uses the new folder.
+
 That attribute is provided to [NeovimBuilder](./nix/NeovimBuilder.nix), and
-you do this in the same place you add plugins to categories.
+you change it in the same place you add plugins to categories in flake.nix.
 It will change myLuaConf to your new folder name in the generated init.vim and require it instead.
 
 #### These are the reasons I wanted to do it this way: 
 
-    The setup instructions for new plugins are all in Lua so translating them is effort, 
-    I didnt want to be forced into creating a new lua file for every plugin,
+    The setup instructions for new plugins are all in Lua so translating them is effort.
+    
+    I didnt want to be forced into creating a new lua file for every plugin.
+    
     I wanted my neovim config to be neovim flavored 
         (so that I can take advantage of all the neovim dev tools with minimal fuss)
+
+    I still wanted my config to know what plugins and LSPs I included in the package
 
 The table of categories allows me to react to 
 dynamic packaging within the lua config.
 
-Lua doesn't throw errors if the index wasnt included, 
-it just returns nil which allows you check if and not worry.
+Lua doesn't throw errors if the index wasnt included, it just returns nil
+which allows you check if it is true and not worry about index out of range.
 
 If I want to not load it on startup, 
 I can just put it in opt section and call packadd 
@@ -131,7 +138,8 @@ this is usually the only nix file I need to interact with.
     and you may do this as much as you want.
 
     if you want to add ftplugin folder and stuff, add that at root level of the flake, 
-    at the same level as lua folder. The whole flake is a plugin, which works the same as a config.
+    at the same level as lua folder. You can ask about your nixCats there as well.
+    The whole flake is a plugin, which works the same as a config.
 
 -- [customPluginOverlay](./nix/customPluginOverlay.nix)
 
@@ -140,7 +148,7 @@ this is usually the only nix file I need to interact with.
     That separate file is located at ./nix/customPluginOverlay.nix
     Access the plugins defined there with pkgs.customNVIMplugins
 
-    they were the only thing that isnt just a big list in the main flake
+    It was the only thing that isn't just a big list in the main flake
     file so I moved them to their own place. Plus, they can be messy occasionally
 
 ---
