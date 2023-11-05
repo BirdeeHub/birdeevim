@@ -112,15 +112,16 @@
         # We define a function to facilitate package building for particular categories
         # it intakes a set of categories with a true false value for each
         birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
-          # It will need these
+          # these are required
           inherit self;
           inherit pkgs;
           inherit categories;
-          # you can set these
+          # you can set these or omit them for false
           viAlias = true;
           vimAlias = true;
 
-          # to use a different folder other than myLuaConf, change this value:
+          # This is required:
+          # to use a different lua folder other than myLuaConf, change this value:
           RCName = "myLuaConf"; # <-- the default value
 
           # for the following items: lspsAndDeps, propagatedBuildInputs, startup, and optional,
