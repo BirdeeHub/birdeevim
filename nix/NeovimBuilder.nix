@@ -9,7 +9,6 @@
   , lspsAndDeps ? {}
   , propagatedBuildInputs ? {}
   , categories ? {}
-  , debug ? false
   }:
   # todo: swap to new wrapper maybe
   let
