@@ -45,10 +45,54 @@
       name = "nixCats";
       builder = let
         cats = builtins.toFile "nixCats.lua" "return ${RCTable}";
+        helptags = builtins.toFile "tags" "nixCats	nixCats.txt	/*nixCats*";
+        helpCats = builtins.toFile "nixCats.txt" ''
+          =======================================================================================
+          NIX CATEGORIES                                                       *nixCats*
+          nixCats: returns category names included by nix for this package 
+
+          Use this to check if this neovim was packaged with 
+          a particular category included:
+
+              local cats = require('nixCats')
+              if(cats.nix) then
+                  -- some stuff here
+              end
+
+          The nixCats "plugin" is just a table.
+
+              :lua print(vim.inspect(require('nixCats')))
+
+          will return something like this:
+              {
+                  AI = true,
+                  bash = true,
+                  cmp = true,
+                  customPlugins = true,
+                  general = true,
+                  gitPlugins = true,
+                  java = false,
+                  kotlin = true,
+                  lspDebugMode = false,
+                  markdown = true,
+                  neonixdev = true,
+                  telescope = true,
+                  treesitter = true
+              }
+
+          You will notice it is the same table of booleans we were passed from the
+          flake.nix file where we choose categories for different packages.
+
+          ----------------------------------------------------------------------------------------
+          vim:tw=78:ts=8:ft=help:norl:
+        '';
       in builtins.toFile "builder.sh" ''
         source $stdenv/setup
         mkdir -p $out/lua
+        mkdir -p $out/doc
         cp ${cats} $out/lua/nixCats.lua
+        cp ${helpCats} $out/doc/nixCats.txt
+        cp ${helptags} $out/doc/tags
       '';
     };
 
