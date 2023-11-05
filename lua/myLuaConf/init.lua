@@ -3,6 +3,9 @@
 if you have your own lua config, it starts here.
 when you want to query if a category is enabled do:
 
+Or you can keep this config around but use a different one 
+by changing RCName in the flake.nix file
+
 local categories = require('nixCats')
 if(categories.categoryname) then
   do stuff
