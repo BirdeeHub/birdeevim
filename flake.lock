@@ -507,6 +507,22 @@
         "type": "github"
       }
     },
+    "plugins-nvim-luaref": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1645064202,
+        "narHash": "sha256-nmsKg1Ah67fhGzevTFMlncwLX9gN0JkR7Woi0T5On34=",
+        "owner": "milisims",
+        "repo": "nvim-luaref",
+        "rev": "9cd3ed50d5752ffd56d88dd9e395ddd3dc2c7127",
+        "type": "github"
+      },
+      "original": {
+        "owner": "milisims",
+        "repo": "nvim-luaref",
+        "type": "github"
+      }
+    },
     "plugins-onedark-vim": {
       "flake": false,
       "locked": {
@@ -573,6 +589,7 @@
         "plugins-lspconfig": "plugins-lspconfig",
         "plugins-lualine": "plugins-lualine",
         "plugins-marks": "plugins-marks",
+        "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-onedark-vim": "plugins-onedark-vim",
         "plugins-which-key": "plugins-which-key",
         "sg-nvim": "sg-nvim"

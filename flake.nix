@@ -48,6 +48,10 @@
       url = "github:numToStr/Comment.nvim";
       flake = false;
     };
+    "plugins-nvim-luaref" = {
+      url = "github:milisims/nvim-luaref";
+      flake = false;
+    };
     "plugins-harpoon" = {
       url = "github:ThePrimeagen/harpoon";
       flake = false;
@@ -187,8 +191,9 @@
           # startup plugins:
           # This is for plugins that will load at startup without using packadd:
           startup = {
-            neonixdev = with pkgs.vimPlugins; [
-              neodev-nvim
+            neonixdev = [
+              pkgs.vimPlugins.neodev-nvim
+              pkgs.neovimPlugins.nvim-luaref
             ];
             AI = [
               pkgs.vimPlugins.codeium-nvim
