@@ -10,7 +10,7 @@
   , categories ? {}
   , debug ? false
   }:
-  # todo: swap to new wrapper maybe and add debug
+  # todo: swap to new wrapper maybe
   let
     # this is what allows for dynamic packaging in flake.nix
     filterAndFlatten = SetOfCategoryLists: categories: let
@@ -23,26 +23,49 @@
     in
     flattenedList;
 
+    luaTablePrinter = cats: let
+      luatableformatter = categorySet: let
+        nameandstringmap = builtins.mapAttrs (name: value:
+          if value == true then "${name} = true"
+          else "${name} = false"
+        ) categorySet;
+        resultList = builtins.attrValues nameandstringmap;
+        resultString = builtins.concatStringsSep ", " resultList;
+      in
+      resultString;
+      catset = luatableformatter cats;
+      LuaTable = "{ " + catset + " }";
+    in
+    LuaTable;
+
+    # create nixCats plugin
+    RCTable = luaTablePrinter categories;
+    nixCats = pkgs.stdenv.mkDerivation {
+      name = "nixCats";
+      builder = let
+        cats = builtins.toFile "nixCats.lua" "return ${RCTable}";
+      in builtins.toFile "builder.sh" ''
+        source $stdenv/setup
+        mkdir -p $out/lua
+        cp ${cats} $out/lua/nixCats.lua
+      '';
+    };
+
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-    propInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
     runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
-    startupPlugs = filterAndFlatten startup categories;
+    startupPlugs = [ nixCats ] ++ filterAndFlatten startup categories;
     optionalPlugs = filterAndFlatten optional categories;
 
-    # and this just sends whatever booleans we had in the categories we packaged
-    luatableprinter = categorySet: let
-      nameandstringmap = builtins.mapAttrs (name: value:
-        if value == true then "${name} = true"
-        else "${name} = false"
-      ) categorySet;
-      resultList = builtins.attrValues nameandstringmap;
-      resultString = builtins.concatStringsSep ", " resultList;
-    in
-    resultString;
+    # add any dependencies/lsps/whatever we need available at runtime
+    extraMakeWrapperArgs = builtins.concatStringsSep " " (
+      (pkgs.lib.optional (runtimedeps != [])
+        ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
+    );
 
-    setupTableRC = luatableprinter categories;
-    customRC = "lua require('myLuaConf').setup({ " + setupTableRC + " })";
     # package the entire flake as plugin
+    # and create our customRC to call it
+    customRC = "lua require('myLuaConf')";
     myLuaConf = pkgs.stdenv.mkDerivation {
       name = "myLuaConf";
       src = self;
@@ -51,24 +74,23 @@
         cp -r $src/* $out
       '';
     };
+    onStart = startupPlugs ++ [ myLuaConf ];
+
 
     # add our propagated dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
-      propagatedBuildInputs = propInputs;
+      propagatedBuildInputs = buildInputs;
     });
   in
   # add our lsps and plugins and our config, and wrap it all up!
 pkgs.wrapNeovim myNeovimUnwrapped {
-  extraMakeWrapperArgs = builtins.concatStringsSep " " (
-    (pkgs.lib.optional (runtimedeps != [])
-      ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
-  );
+  inherit extraMakeWrapperArgs;
   inherit viAlias;
   inherit vimAlias;
   configure = {
     inherit customRC;
     packages.myVimPackage = {
-      start = startupPlugs ++ [ myLuaConf ];
+      start = onStart;
       opt = optionalPlugs;
     };
   };
