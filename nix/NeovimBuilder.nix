@@ -21,8 +21,9 @@
         ) inputsToCheck;
       listOfLists = builtins.attrValues thingsIncluded;
       flattenedList = builtins.concatLists listOfLists;
+      deDupedFlatList = pkgs.lib.unique flattenedList;
     in
-    flattenedList;
+    deDupedFlatList;
 
     luaTablePrinter = cats: let
       luatableformatter = categorySet: let
