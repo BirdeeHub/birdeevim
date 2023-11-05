@@ -35,11 +35,11 @@ to aid in creating packages specific to languages or projects.
 
 To add new categories, simply add a new list in flake.nix in the desired section, and enable the category
 
-By default the automatically generated init.vim calls:
+Currently the automatically generated init.vim calls:
 ```
-lua require('myLuaConfig')
+lua require('myLuaConf')
 ```
-If you want to change the name of that folder, 
+If you want to change the name of the folder used from lua directory, 
 you must provide a different name to RCName attribute in [flake.nix](./flake.nix).
 That attribute is provided to [NeovimBuilder](./nix/NeovimBuilder.nix), and
 you do this in the same place you add plugins to categories.
