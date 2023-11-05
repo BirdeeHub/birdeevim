@@ -4,7 +4,7 @@ Birdee's Neovim Flake                                      *birdee-nvim-flake*
 Uh oh! I have not figured out how to actually 
 add this into neovim's help system.
 For now, simply read the readme. 
-Currently, help is only available for nixCats
+Currently, integrated editor help is only available for nixCats
 see :help nixCats
 
 ---------------------------------------------------------------------------------------
