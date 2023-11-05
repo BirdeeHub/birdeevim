@@ -1,69 +1,67 @@
-local M = {}
-function M.setup(categories)
-  require'marks'.setup {
-    -- whether to map keybinds or not. default true
-    -- default_mappings = true,
-    -- which builtin marks to show. default {}
-    builtin_marks = {},
-    -- whether movements cycle back to the beginning/end of buffer. default true
-    cyclic = true,
-    -- whether the shada file is updated after modifying uppercase marks. default false
-    force_write_shada = false,
-    -- how often (in ms) to redraw signs/recompute mark positions. 
-    -- higher values will have better performance but may cause visual lag, 
-    -- while lower values may cause performance penalties. default 150.
-    refresh_interval = 250,
-    -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
-    -- marks, and bookmarks.
-    -- can be either a table with all/none of the keys, or a single number, in which case
-    -- the priority applies to all marks.
-    -- default 10.
-    sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-    -- disables mark tracking for specific filetypes. default {}
-    excluded_filetypes = {},
-    -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
-    -- sign/virttext. Bookmarks can be used to group together positions and quickly move
-    -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
-    -- default virt_text is "".
-    bookmark_0 = {
-      sign = "⚑",
-      virt_text = "hello world",
-      -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
-      -- defaults to false.
-      annotate = false,
-    },
-    mappings = {}
-  }
 
-  require('gitsigns').setup({
-      -- See `:help gitsigns.txt`
-    signs = {
-      add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
-    },
-    on_attach = function(bufnr)
-      vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk,
-          { buffer = bufnr, desc = 'Preview git hunk' })
+local categories = require('nixCats')
+require'marks'.setup {
+  -- whether to map keybinds or not. default true
+  -- default_mappings = true,
+  -- which builtin marks to show. default {}
+  builtin_marks = {},
+  -- whether movements cycle back to the beginning/end of buffer. default true
+  cyclic = true,
+  -- whether the shada file is updated after modifying uppercase marks. default false
+  force_write_shada = false,
+  -- how often (in ms) to redraw signs/recompute mark positions. 
+  -- higher values will have better performance but may cause visual lag, 
+  -- while lower values may cause performance penalties. default 150.
+  refresh_interval = 250,
+  -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+  -- marks, and bookmarks.
+  -- can be either a table with all/none of the keys, or a single number, in which case
+  -- the priority applies to all marks.
+  -- default 10.
+  sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+  -- disables mark tracking for specific filetypes. default {}
+  excluded_filetypes = {},
+  -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+  -- sign/virttext. Bookmarks can be used to group together positions and quickly move
+  -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+  -- default virt_text is "".
+  bookmark_0 = {
+    sign = "⚑",
+    virt_text = "hello world",
+    -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
+    -- defaults to false.
+    annotate = false,
+  },
+  mappings = {}
+}
 
-      -- don't override the built-in and fugitive keymaps
-      local gs = package.loaded.gitsigns
-      vim.keymap.set({ 'n', 'v' }, ']c', function()
-        if vim.wo.diff then return ']c' end
-        vim.schedule(function() gs.next_hunk() end)
-        return '<Ignore>'
-      end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
-      vim.keymap.set({ 'n', 'v' }, '[c', function()
-        if vim.wo.diff then return '[c' end
-        vim.schedule(function() gs.prev_hunk() end)
-        return '<Ignore>'
-      end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
-    end,
-  })
-  vim.cmd([[hi GitSignsAdd guifg=#04de21]])
-  vim.cmd([[hi GitSignsChange guifg=#83fce6]])
-  vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
-end
-return M
+require('gitsigns').setup({
+    -- See `:help gitsigns.txt`
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
+  },
+  on_attach = function(bufnr)
+    vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk,
+        { buffer = bufnr, desc = 'Preview git hunk' })
+
+    -- don't override the built-in and fugitive keymaps
+    local gs = package.loaded.gitsigns
+    vim.keymap.set({ 'n', 'v' }, ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+    vim.keymap.set({ 'n', 'v' }, '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
+  end,
+})
+vim.cmd([[hi GitSignsAdd guifg=#04de21]])
+vim.cmd([[hi GitSignsChange guifg=#83fce6]])
+vim.cmd([[hi GitSignsDelete guifg=#fa2525]])

@@ -20,10 +20,7 @@ other than that, its just a normal config now.
 ]]
 
 if vim.g.vscode == nil then
-  -- I made nixCats recently so I still just pass it around everywhere
-  -- will check it where relevant instead soon rather than here
-  local categories = require('nixCats')
-  require("myLuaConf.birdee").setup(categories)
+  require("myLuaConf.birdee")
 else
   -- currently not implemented
   -- its basically to be just a stripped down version for embedding
