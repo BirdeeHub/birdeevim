@@ -3,6 +3,7 @@
   , pkgs
   , viAlias ? false
   , vimAlias ? false
+  , RCName
   , startup ? {}
   , optional ? {}
   , lspsAndDeps ? {}
@@ -65,16 +66,16 @@
 
     # package the entire flake as plugin
     # and create our customRC to call it
-    customRC = "lua require('myLuaConf')";
-    myLuaConf = pkgs.stdenv.mkDerivation {
-      name = "myLuaConf";
+    customRC = "lua require('" + RCName + "')";
+    LuaConfig = pkgs.stdenv.mkDerivation {
+      name = RCName;
       src = self;
       installPhase = ''
         mkdir -p $out
         cp -r $src/* $out
       '';
     };
-    onStart = startupPlugs ++ [ myLuaConf ];
+    onStart = startupPlugs ++ [ LuaConfig ];
 
 
     # add our propagated dependencies

@@ -120,6 +120,9 @@
           viAlias = true;
           vimAlias = true;
 
+          # to use a different folder other than myLuaConf, change this value:
+          RCName = "myLuaConf"; # <-- the default value
+
           # for the following items: lspsAndDeps, propagatedBuildInputs, startup, and optional,
           # you define lists within the set with a particular name.
           # Then, you include that name in the categories set,
