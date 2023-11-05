@@ -143,7 +143,7 @@ this is usually the only nix file I need to interact with.
 
 ---
 
-### And 2 files you shouldn't need to mess with much:
+### And 3 files you shouldn't need to mess with much:
 
 ---
 
@@ -156,15 +156,21 @@ Thank you!!! It taught me both about an overlay and how it works.
     an overlay for convenience that autoadds non-flake github plugins that dont need build steps.
     Used by naming the flake input "plugins-pluginName"
 
+
+-- [nixCats](./nix/nixCats.nix)
+
+    Called by NeovimBuilder to create nixCats plugin from categories set.
+    Most of this file is the help page.
+
 -- [NeovimBuilder](./nix/NeovimBuilder.nix)
 
     A file where all the lists of plugins and lsps are combined, 
     filtered appropriately based on categories included.
 
-    The init.vim is generated in that file.
-    nixCats is generated in that file.
-    The flake directory is included as a plugin there.
-    The neovim package itself is also built there.
+    The init.vim is generated in this file.
+    nixCats is called from this file.
+    The flake directory is included as a plugin here.
+    The neovim package itself is also built here.
 
 ---
 
