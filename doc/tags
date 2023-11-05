@@ -1,0 +1,9 @@
+nixCats	nixCats.txt	/*nixCats*
+nixCats.txt	nixCats.txt	/*nixCats.txt*
+this-nvim-flake	this-nvim-flake.txt	/*this-nvim-flake*
+this-nvim-flake.birdeeVimBuild	this-nvim-flake.txt	/*this-nvim-flake.birdeeVimBuild*
+this-nvim-flake.customPluginOverlay	this-nvim-flake.txt	/*this-nvim-flake.customPluginOverlay*
+this-nvim-flake.inputs	this-nvim-flake.txt	/*this-nvim-flake.inputs*
+this-nvim-flake.overlays	this-nvim-flake.txt	/*this-nvim-flake.overlays*
+this-nvim-flake.specificPackaging	this-nvim-flake.txt	/*this-nvim-flake.specificPackaging*
+this-nvim-flake.txt	this-nvim-flake.txt	/*this-nvim-flake.txt*
