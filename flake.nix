@@ -1,5 +1,5 @@
 {
-  description = "Birdee's Neovim flake with mostly regular Lua config.";
+  description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
         # TO DO: 
         # install debuggers for languages (dap & dapui installed)
         # install formatters
@@ -345,7 +345,7 @@
 
       { # choose your package
         devShell = pkgs.mkShell {
-          name = "birdeeVim";
+          name = "neodevshell";
           packages = [ noAIneodev ];
           inputsFrom = [ ];
           shellHook = ''

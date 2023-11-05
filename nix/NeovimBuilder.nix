@@ -66,7 +66,8 @@
 
     # package the entire flake as plugin
     # and create our customRC to call it
-    customRC = "lua require('" + RCName + "')";
+    vimRC = "lua require('" + RCName + "')";
+    customRC = if RCName != "" then vimRC else "";
     LuaConfig = pkgs.stdenv.mkDerivation {
       name = RCName;
       src = self;
