@@ -33,12 +33,15 @@ to aid in creating packages specific to languages or projects.
     you can find out what cats you have whenever you require nixCats, 
     and you may do this as much as you want.
 
+you can also use this to view the contents from neovim terminal
+```lua
+lua print(vim.inspect(require('nixCats')))
+```
+
 To add new categories, simply add a new list in flake.nix in the desired section, and enable the category
 
-Currently the automatically generated init.vim calls:
-```
-lua require('myLuaConf')
-```
+Currently the automatically generated init.vim calls: lua require('myLuaConf')
+
 If you want to change the name of the folder used from lua directory, 
 you must provide a different name to RCName attribute in [flake.nix](./flake.nix).
 That attribute is provided to [NeovimBuilder](./nix/NeovimBuilder.nix), and
