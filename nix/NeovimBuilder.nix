@@ -4,8 +4,8 @@
   , RCName
   , viAlias ? false
   , vimAlias ? false
-  , startup ? {}
-  , optional ? {}
+  , startupPlugins ? {}
+  , optionalPlugins ? {}
   , lspsAndDeps ? {}
   , propagatedBuildInputs ? {}
   , categories ? {}
@@ -114,8 +114,8 @@
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
     runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
-    startupPlugs = [ nixCats LuaConfig ] ++ filterAndFlatten startup categories;
-    optionalPlugs = filterAndFlatten optional categories;
+    startup = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins categories;
+    optional = filterAndFlatten optionalPlugins categories;
 
     # add any dependencies/lsps/whatever we need available at runtime
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
@@ -136,8 +136,8 @@ pkgs.wrapNeovim myNeovimUnwrapped {
   configure = {
     inherit customRC;
     packages.myVimPackage = {
-      start = startupPlugs;
-      opt = optionalPlugs;
+      start = startup;
+      opt = optional;
     };
   };
 }

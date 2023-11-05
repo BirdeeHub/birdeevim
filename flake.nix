@@ -188,9 +188,8 @@
             ];
           };
 
-          # startup plugins:
           # This is for plugins that will load at startup without using packadd:
-          startup = {
+          startupPlugins = {
             neonixdev = [
               pkgs.vimPlugins.neodev-nvim
               pkgs.neovimPlugins.nvim-luaref
@@ -265,10 +264,9 @@
             ];
           };
 
-          # optional plugins:
           # not loaded automatically at startup.
           # use with packadd in config to achieve something like lazy loading
-          optional = {
+          optionalPlugins = {
             customPlugins = with pkgs.customNVIMplugins; [ ];
             gitPlugins = with pkgs.neovimPlugins; [ ];
             general = with pkgs.vimPlugins; [ ];

@@ -24,19 +24,11 @@ It also creates a new plugin called nixCats
 
 require('nixCats') returns a table of booleans stating if that category is enabled in the flake
 to aid in creating packages specific to languages or projects.
-```lua
-    local cats = require('nixCats')
-    if(cats.nix) then
-        -- some stuff here
-    end
-```
-    you can find out what cats you have whenever you require nixCats, 
-    and you may do this as much as you want, even in ftplugin and autoload folders!
 
-you can also use this to view the contents from neovim terminal
-```lua
-lua print(vim.inspect(require('nixCats')))
-```
+You can find out what cats you have whenever you require nixCats, 
+and you may do this as much as you want, even in ftplugin and autoload folders!
+
+for more info, see :help nixCats
 
 To add new categories, simply add a new list in flake.nix in the desired section, and enable the category
 
@@ -46,9 +38,6 @@ If you want to change the name of the folder used from lua directory,
 for example, if you wanted to copy your folder in and then 
 change mason for lspconfig and package manager for setup functions,
 you must provide a different name to RCName attribute in [flake.nix](./flake.nix) so that it uses the new folder.
-
-That attribute is provided to [NeovimBuilder](./nix/NeovimBuilder.nix), and
-you change it in the same place you add plugins to categories in flake.nix.
 It will change myLuaConf to your new folder name in the generated init.vim and require it instead.
 
 #### These are the reasons I wanted to do it this way: 
@@ -136,6 +125,7 @@ this is usually the only nix file I need to interact with.
 
     you can ask what cats you have whenever you require nixCats
     and you may do this as much as you want.
+    for more info, see :help nixCats
 
     if you want to add ftplugin folder and stuff, add that at root level of the flake, 
     at the same level as lua folder. You can ask about your nixCats there as well.
