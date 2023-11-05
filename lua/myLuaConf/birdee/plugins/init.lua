@@ -4,12 +4,15 @@ local colorschemer = 'onedark' -- also schemes lualine
 local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
 
 vim.cmd.colorscheme(colorschemer)
+
 if(categories.telescope) then
   require('myLuaConf.birdee.plugins.telescope')
 end
+
 if(categories.treesitter) then
   require('myLuaConf.birdee.plugins.nestsitter')
 end
+
 if(categories.AI) then
   require("sg").setup({
     on_attach = require('myLuaConf.caps-onattach').on_attach,
@@ -18,9 +21,11 @@ if(categories.AI) then
   vim.keymap.set('n', '<leader>cc', [[<cmd>CodyToggle<CR>]], { noremap = true, desc = 'CodyChat' })
   vim.keymap.set('v', '<leader>cc', [[:CodyAsk ]], { noremap = true, desc = 'CodyAsk' })
 end
+
 if(categories.cmp) then
   require('myLuaConf.birdee.plugins.completion')
 end
+
 if(categories.markdown) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
@@ -34,6 +39,7 @@ require('myLuaConf.birdee.plugins.gutter')
 vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
 vim.g.undotree_WindowLayout = 1
 vim.g.undotree_SplitWidth = 40
+
 -- Highlights unique characters for f/F and t/T motions
 require('eyeliner').setup {
   highlight_on_key = true, -- show highlights only after key press

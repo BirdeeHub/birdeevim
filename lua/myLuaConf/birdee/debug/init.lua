@@ -1,4 +1,3 @@
-local categories = require('nixCats')
 local dap = require 'dap'
 local dapui = require 'dapui'
 
@@ -42,14 +41,8 @@ dap.listeners.before.event_terminated['dapui_config'] = dapui.close
 dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
 -- Install lang specific config
--- Include that config in separate files per language in this folder
--- require('dap-go').setup()
--- require('bash-debug-adapter').setup() --??
--- require('kotlin-debug-adapter').setup() --??
--- require('jdtls').setup_dap({hotcodereplace = 'auto'}) --??
-
+local categories = require('nixCats')
 if (categories.neonixdev) then
-  require('neodev').setup({})
   require("myLuaConf.birdee.debug.nix")
   require("myLuaConf.birdee.debug.lua")
 elseif (categories.nix) then

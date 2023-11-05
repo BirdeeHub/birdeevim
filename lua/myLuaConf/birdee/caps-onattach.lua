@@ -1,9 +1,6 @@
 local M = {}
 function M.on_attach(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  -- In this case, we create a function that lets us more easily define mappings specific
+  -- we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
 
   local nmap = function(keys, func, desc)
@@ -47,8 +44,11 @@ end
 
 function M.get_capabilities()
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+  local categories = require('nixCats')
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  if categories.cmp then
+    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  end
   --vim.tbl_extend('keep', capabilities, require'coq'.lsp_ensure_capabilities())
   --vim.api.nvim_out_write(vim.inspect(capabilities))
   return capabilities
