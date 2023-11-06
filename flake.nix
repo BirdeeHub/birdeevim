@@ -23,7 +23,7 @@
     #   url = "github:catppuccin/nvim";
     #   flake = false;
     # };
-    # Git
+
     "plugins-gitsigns" = {
       url = "github:lewis6991/gitsigns.nvim";
       flake = false;
@@ -33,6 +33,7 @@
       flake = false;
     };
     # "plugins-fidget" = {
+    # how do I do this????!!!!
     #   url = "https://github.com/j-hui/fidget.nvim/tree/legacy";
     #   flake = false;
     # };
@@ -64,12 +65,7 @@
       url = "github:chentoast/marks.nvim";
       flake = false;
     };
-    # "cmp-tabnine" = { # download binaries too OP
-    #   url = "github:tzachar/cmp-tabnine";
-    #   flake = false;
-    # };
     # I use this for autocomplete filler especially for comments. 
-    # tab9 slightly better but meh
     "codeium" = {
       url = "github:Exafunction/codeium.nvim";
     };
