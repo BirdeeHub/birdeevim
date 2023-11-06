@@ -42,8 +42,8 @@
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
     runtimedeps = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten lspsAndDeps categories;
-    startup = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins categories;
-    optional = filterAndFlatten optionalPlugins categories;
+    start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins categories;
+    opt = filterAndFlatten optionalPlugins categories;
 
     # add any dependencies/lsps/whatever we need available at runtime
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
@@ -64,8 +64,8 @@ pkgs.wrapNeovim myNeovimUnwrapped {
   configure = {
     inherit customRC;
     packages.myVimPackage = {
-      start = startup;
-      opt = optional;
+      inherit start;
+      inherit opt;
     };
   };
 }
