@@ -325,6 +325,8 @@
           # you could :lua print(require('nixCats').theBestCat)
           # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
           # see :help nixCats
+          # I honestly dont know what you would need a table like this for,
+          # but I got carried away and it worked FIRST TRY.
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
