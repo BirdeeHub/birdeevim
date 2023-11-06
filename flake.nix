@@ -280,7 +280,7 @@
         # And then build a package with specific categories from above here:
         # All categories you wish to include must be marked true,
         # but false may be omitted.
-        # This entire set is also passed to the setup function for our config.
+        # This entire set is also passed to nixCats for querying within the lua.
         # It is passed as a Lua table with values name = boolean. same as here.
         # if you have categories with the same name in 
         # startup, lspsAndDeps, propagatedBuildInputs, and/or optional, 
