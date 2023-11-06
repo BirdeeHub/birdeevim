@@ -12,13 +12,6 @@
   }:
   # todo: swap to new wrapper maybe
   let
-    utils = import ./utils.nix;
-    # this is what allows for dynamic packaging in flake.nix
-    # includes categories marked as true
-    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
-
-    nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
-
     # package the entire flake as plugin
     # and create our customRC to call it
     vimRC = "lua require('" + RCName + "')";
@@ -31,6 +24,13 @@
         cp -r ${self}/* $out
       '';
     };
+
+    utils = import ./utils.nix;
+    # this is what allows for dynamic packaging in flake.nix
+    # includes categories marked as true
+    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
+
+    nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
 
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs categories;
