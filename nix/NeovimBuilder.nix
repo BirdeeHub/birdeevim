@@ -12,8 +12,9 @@
   }:
   # todo: swap to new wrapper maybe
   let
-    # this is what allows for dynamic packaging in flake.nix
     utils = import ./utils.nix;
+    # this is what allows for dynamic packaging in flake.nix
+    # includes categories marked as true
     filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
 
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
