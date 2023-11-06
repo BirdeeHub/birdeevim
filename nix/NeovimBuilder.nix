@@ -14,8 +14,9 @@
   let
     # package the entire flake as plugin
     # and create our customRC to call it
-    vimRC = "lua require('" + RCName + "')";
-    customRC = if RCName != "" then vimRC else "";
+    customRC = if RCName != "" then 
+        "lua require('" + RCName + "')" 
+      else "";
     LuaConfig = pkgs.stdenv.mkDerivation {
       name = RCName;
       builder = builtins.toFile "builder.sh" ''
@@ -28,7 +29,8 @@
     utils = import ./utils.nix;
     # this is what allows for dynamic packaging in flake.nix
     # includes categories marked as true
-    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
+    filterAndFlatten = SetOfCategoryLists: categories: 
+      pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
 
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
 
@@ -39,6 +41,7 @@
     opt = filterAndFlatten optionalPlugins categories;
 
     # add any dependencies/lsps/whatever we need available at runtime
+    # learned this from kickstarter-nix
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
       (pkgs.lib.optional (runtimedeps != [])
         ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
