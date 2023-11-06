@@ -21,10 +21,10 @@
       builder = let
         # This is the entire code of nixCats. it returns a table generated above.
         cats = builtins.toFile "nixCats.lua" "return ${RCTable}";
-        # This is where the help files are generated.
+        # This is where the help file is generated.
         # First, here are the help tags.
         helptags = builtins.toFile "tags" "nixCats	nixCats.txt	/*nixCats*";
-        # and the text for the help files.
+        # and the text for the help file.
         helpCats = builtins.toFile "nixCats.txt" ''
           =======================================================================================
           NIX CATEGORIES                                                       *nixCats*
