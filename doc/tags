@@ -1,0 +1,8 @@
+birdee.flake	birdeeVimDoc.txt	/*birdee.flake*
+birdee.flake.inputs	birdeeVimDoc.txt	/*birdee.flake.inputs*
+birdee.flake.outputs	birdeeVimDoc.txt	/*birdee.flake.outputs*
+birdee.flake.outputs.RCName	birdeeVimDoc.txt	/*birdee.flake.outputs.RCName*
+birdee.flake.outputs.builder	birdeeVimDoc.txt	/*birdee.flake.outputs.builder*
+birdee.flake.outputs.overlays	birdeeVimDoc.txt	/*birdee.flake.outputs.overlays*
+birdee.flake.outputs.packages	birdeeVimDoc.txt	/*birdee.flake.outputs.packages*
+birdee.flake.outputs.packaging	birdeeVimDoc.txt	/*birdee.flake.outputs.packaging*

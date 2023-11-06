@@ -32,10 +32,10 @@
     customRC = if RCName != "" then vimRC else "";
     LuaConfig = pkgs.stdenv.mkDerivation {
       name = RCName;
-      src = self;
-      installPhase = ''
+      builder = builtins.toFile "builder.sh" ''
+        source $stdenv/setup
         mkdir -p $out
-        cp -r $src/* $out
+        cp -r ${self}/* $out
       '';
     };
 
