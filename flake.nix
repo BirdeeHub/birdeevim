@@ -306,8 +306,15 @@
           AI = true;
           java = false; # is included in kotlin category
           kotlin = true;
-          # this does not have an associated category of plugins, but lua can still check for it
+          # this does not have an associated category of plugins, 
+          # but lua can still check for it
           lspDebugMode = false;
+          # you could also pass something else and it calls 
+          # builtins.toString on it and passes it in as a string
+          theBestCat = "says meow!!!";
+          # maybe you need to pass a port or path in or something idk.
+          # you could :lua print(require('nixCats').theBestCat)
+          # see :help nixCats
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;

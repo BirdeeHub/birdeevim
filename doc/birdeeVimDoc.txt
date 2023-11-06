@@ -127,6 +127,28 @@ by placing named lists of plugins in the flexible sets provided.
 The category names are the names of those lists. 
 Add a new list, then enable the category here.
 
+an example package definition:
+
+        birdeeVim = birdeeVimBuild {
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          AI = false;
+          general = true;
+          neonixdev = true;
+          kotlin = true;
+
+          # this does not have an associated category of plugins, 
+          # but lua can still check for it
+          lspDebugMode = false;
+
+          # you could also pass something else and it calls 
+          # builtins.toString on it and passes it in as a string
+          theBestCat = "says meow!!!";
+          # maybe you need to pass a port or path in or something idk.
+          # you could :lua print(require('nixCats').theBestCat)
+        };
+
 You can require('nixCats') for the set you define here in your lua
 It returns a lua table of the same format.
 

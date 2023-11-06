@@ -3,7 +3,8 @@
     luatableformatter = categorySet: let
       nameandstringmap = builtins.mapAttrs (name: value:
         if value == true then "${name} = true"
-        else "${name} = false"
+        else if value == false then "${name} = false"
+        else "${name} = [[${builtins.toString value}]]"
       ) categorySet;
       resultList = builtins.attrValues nameandstringmap;
       resultString = builtins.concatStringsSep ", " resultList;
@@ -56,21 +57,45 @@
             :lua print(vim.inspect(require('nixCats')))
 
         will return something like this:
-            {
-                AI = true,
-                bash = true,
-                cmp = true,
-                customPlugins = true,
-                general = true,
-                gitPlugins = true,
-                java = false,
-                kotlin = true,
-                lspDebugMode = false,
-                markdown = true,
-                neonixdev = true,
-                telescope = true,
-                treesitter = true
-            }
+        {
+            AI = true,
+            bash = true,
+            cmp = true,
+            customPlugins = true,
+            general = true,
+            gitPlugins = true,
+            java = false,
+            kotlin = true,
+            lspDebugMode = false,
+            markdown = true,
+            neonixdev = true,
+            telescope = true,
+            theBestCat = "says meow!!!",
+            treesitter = true
+        }
+
+        Note: it also accepts strings.
+
+        If you use this syntax,
+            local cats = require('nixCats')
+            if(cats.theBestCat) then
+              print("true")
+            end
+        theBestCat will evaluate as true if it contains a string.
+            local cats = require('nixCats')
+            if(cats.theBestCat == true) then
+              print("true")
+            else
+              print("false")
+            end
+        However, this will print false.
+
+        Use this fact as you wish.
+        You could use it by including only true and making your categories list fun and unintelligible
+        You could use it to pass information like port numbers or paths
+
+        It gets this string in nix by calling builtins.toString on the thing you provided
+        and then surrounding it in [[]]
 
         ----------------------------------------------------------------------------------------
         vim:tw=78:ts=8:ft=help:norl:
