@@ -90,12 +90,16 @@
             end
         However, this will print false.
 
-        Use this fact as you wish.
-        You could use it by including only true and making your categories list fun and unintelligible
-        You could use it to pass information like port numbers or paths
+        Either way, dependencies included under vocal cats 
+        will not be included. So don't go changing all true 
+        values to "meow" it wont work.
 
-        It gets this string in nix by calling builtins.toString on the thing you provided
-        and then surrounding it in [[]]
+        Use this fact as you wish.
+        You could use it to pass information like port numbers or paths
+        Or whatever else you want.
+
+        It gets this string in nix by calling builtins.toString 
+        on the thing you provided and then surrounding it in [[]]
 
         ----------------------------------------------------------------------------------------
         vim:tw=78:ts=8:ft=help:norl:
