@@ -36,13 +36,11 @@
   in
   LuaList;
 
-  RCTable = luaTablePrinter categories;
-
   nixCats = pkgs.stdenv.mkDerivation {
     name = "nixCats";
     builder = let
       # This is the entire code of nixCats. it returns a table generated above.
-      cats = builtins.toFile "nixCats.lua" "return ${RCTable}";
+      cats = builtins.toFile "nixCats.lua" "return ${luaTablePrinter categories}";
       # This is where the help file is generated.
       # First, here are the help tags.
       helptags = builtins.toFile "tags" "nixCats	nixCats.txt	/*nixCats*";
