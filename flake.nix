@@ -81,11 +81,14 @@
     };
   };
 
+  # see :help birdee.flake.outputs
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     # This line makes this package availeable for all systems
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
+        # see :help birdee.flake.outputs.overlays
+
         # If you cant import them with the standard overlay, 
         # define a derivation in ./nix/customPluginOverlay.nix
         # if it has a build step, do that there.
@@ -111,6 +114,7 @@
 
 
 
+        # see :help birdee.flake.outputs.builder
 
         # Now that our plugin inputs/overlays and pkgs have been defined,
         # We define a function to facilitate package building for particular categories
@@ -290,6 +294,9 @@
         # as well as the AI startup category
         # you can also add extra entries that dont have associated
         # categories if you wish to pass an extra boolean into the lua.
+
+
+        # see :help birdee.flake.outputs.packaging
         birdeeVim = birdeeVimBuild {
           bash = true;
           cmp = true;
@@ -345,7 +352,7 @@
 
 
 
-
+      # see :help birdee.flake.outputs.packages
 
       { # choose your package
         devShell = pkgs.mkShell {
