@@ -51,7 +51,7 @@ First, we call flake utils to get system variable for all default systems.
 
 Then, we define our overlays. We have 2 main ones to discuss.
 
-The first is pluginOverlay:
+-- The first is ./nix/pluginOverlay:
 
 It takes all the inputs named in the format
 'plugins-somepluginname' and makes them into plugins. 
@@ -60,12 +60,13 @@ and it wasnt on nixpkgs, then use this method.
 Access them to add them to a category of the builder function 
 with 'pkgs.neovimPlugins.somepluginname'
 
-The second is customPluginOverlay:
+-- The second is ./customPluginOverlay:
+If you need to interact with one of these overlays, it will be this one.
 
 It is used for defining plugins with build steps that 
 were not well handled by nixpkgs.
 It is passed flake inputs, and super is pkgs.
-Define them within the file. 
+Define the things within the file. 
 Then, access plugins defined there later 
 with 'pkgs.customNVIMplugins.somepluginname'
 
