@@ -13,16 +13,8 @@
   # todo: swap to new wrapper maybe
   let
     # this is what allows for dynamic packaging in flake.nix
-    filterAndFlatten = SetOfCategoryLists: categories: let
-      inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
-      thingsIncluded = builtins.mapAttrs (name: value:
-          if value == true then builtins.getAttr name SetOfCategoryLists else []
-        ) inputsToCheck;
-      listOfLists = builtins.attrValues thingsIncluded;
-      flattenedList = builtins.concatLists listOfLists;
-      deDupedFlatList = pkgs.lib.unique flattenedList;
-    in
-    deDupedFlatList;
+    utils = import ./utils.nix;
+    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlatten SetOfCategoryLists categories);
 
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
 

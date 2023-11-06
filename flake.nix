@@ -86,12 +86,12 @@
         # see :help birdee.flake.outputs.overlays
 
         # If you cant import them with the standard overlay, 
-        # define a derivation in ./nix/customPluginOverlay.nix
+        # define a derivation in ./customPluginOverlay.nix
         # if it has a build step, do that there.
         # afterwards, you can add as pkgs.customNVIMplugins.pluginname
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
-        customPluginOverlay = import ./nix/customPluginOverlay.nix inputs;
+        customPluginOverlay = import ./customPluginOverlay.nix inputs;
 
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add these overlays to our nixpkgs, we are able to

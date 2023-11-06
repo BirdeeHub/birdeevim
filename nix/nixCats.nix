@@ -1,46 +1,10 @@
 { pkgs, categories }:let
-  luaTablePrinter = cats: let
-    luatableformatter = categorySet: let
-      nameandstringmap = builtins.mapAttrs (name: value:
-        if value == true then "${name} = true"
-        else if value == false then "${name} = false"
-        else if value == null then "${name} = nil"
-        else if builtins.isList value then "${name} = ${luaListPrinter value}"
-        else if builtins.isAttrs value then "${name} = ${luaTablePrinter value}"
-        else "${name} = [[${builtins.toString value}]]"
-      ) categorySet;
-      resultList = builtins.attrValues nameandstringmap;
-      resultString = builtins.concatStringsSep ", " resultList;
-    in
-    resultString;
-    catset = luatableformatter cats;
-    LuaTable = "{ " + catset + " }";
-  in
-  LuaTable;
-
-  luaListPrinter = listCats: let
-    lualistformatter = categoryList: let
-      stringlist = builtins.map (value:
-        if value == true then "true"
-        else if value == false then "false"
-        else if value == null then "nil"
-        else if builtins.isList value then "${luaListPrinter value}"
-        else if builtins.isAttrs value then "${luaTablePrinter value}"
-        else "[[${builtins.toString value}]]"
-      ) categoryList;
-      resultString = builtins.concatStringsSep ", " stringlist;
-    in
-    resultString;
-    catlist = lualistformatter listCats;
-    LuaList = "{ " + catlist + " }";
-  in
-  LuaList;
-
+  utils = import ./utils.nix;
   nixCats = pkgs.stdenv.mkDerivation {
     name = "nixCats";
     builder = let
-      # This is the entire code of nixCats. it returns a table generated above.
-      cats = builtins.toFile "nixCats.lua" "return ${luaTablePrinter categories}";
+      # This is the entire code of nixCats. it returns a table generated here.
+      cats = builtins.toFile "nixCats.lua" "return ${utils.luaTablePrinter categories}";
       # This is where the help file is generated.
       # First, here are the help tags.
       helptags = builtins.toFile "tags" "nixCats	nixCats.txt	/*nixCats*";
