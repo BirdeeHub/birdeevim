@@ -327,6 +327,10 @@
           # see :help nixCats
           # I honestly dont know what you would need a table like this for,
           # but I got carried away and it worked FIRST TRY.
+          # everything that isnt true, false, null, 
+          # a list, or a set becomes a lua string.
+          # it uses "[[${builtins.toString value}]]"
+          # in order to achieve this.
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
