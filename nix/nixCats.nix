@@ -19,7 +19,10 @@
     nixCats = pkgs.stdenv.mkDerivation {
       name = "nixCats";
       builder = let
+        # This is the entire code of nixCats. it returns a table generated above.
         cats = builtins.toFile "nixCats.lua" "return ${RCTable}";
+        # This is where the help files are generated.
+        # First, here are the help tags.
         helptags = builtins.toFile "tags" ''
           nixCats	nixCats.txt	/*nixCats*
           birdee.flake	birdeeVimDoc.txt	/*birdee.flake*
@@ -31,6 +34,7 @@
           birdee.flake.outputs.packages	birdeeVimDoc.txt	/*birdee.flake.outputs.packages*
           birdee.flake.outputs.packaging	birdeeVimDoc.txt	/*birdee.flake.outputs.packaging*
         '';
+        # and the text for the help files.
         helpCats = builtins.toFile "nixCats.txt" ''
           =======================================================================================
           NIX CATEGORIES                                                       *nixCats*
