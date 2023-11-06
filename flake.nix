@@ -263,6 +263,7 @@
               neo-tree-nvim
               nvim-dap
               nvim-dap-ui
+              nvim-dap-virtual-text
             ];
           };
 
