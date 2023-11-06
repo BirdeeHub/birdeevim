@@ -116,8 +116,8 @@
 
         # Now that our plugin inputs/overlays and pkgs have been defined,
         # We define a function to facilitate package building for particular categories
-        # it intakes a set of categories with a true false value for each
-        birdeeVimBuild = { ... }@categories: (import ./nix/NeovimBuilder.nix {
+        # it intakes a set of categories with a boolean value for each
+        birdeeVimBuild = categories: (import ./nix/NeovimBuilder.nix {
           # these are required
           inherit self;
           inherit pkgs;

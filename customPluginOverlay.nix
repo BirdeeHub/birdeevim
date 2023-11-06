@@ -1,4 +1,4 @@
-{ ... }@inputs: let
+inputs: let
   customPluginOverlay = self: super: { 
     customPlugins = {
 
