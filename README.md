@@ -13,6 +13,9 @@ I am managing LSP's with nvim-lspconfig,
 and will be managing debuggers with regular dap stuff when I get to it.
 Fully reproducble package management, reasonably non-painful config.
 
+You should only need to interact with flake.nix, and occasionally customPluginOverlay.nix.
+And the help. Other than that, it is all lua.
+
 To learn to use this flake and get an overview of how it works,
 
 see :help birdee.flake
@@ -42,10 +45,13 @@ To add new categories, simply add a new list in flake.nix in the desired section
 
 Currently the automatically generated init.vim calls: lua require('myLuaConf').
 If you want to change the name of the folder used from lua directory, 
-for example, if you wanted to copy your own folder in and then 
-change mason for lspconfig and package manager for setup functions,
 you must provide a different name to RCName attribute in [flake.nix](./flake.nix) so that it uses the new folder.
 It will change myLuaConf to your new folder name in the generated init.vim and require it instead.
+
+This would be a good idea, for example, if you wanted to copy your own folder in and then 
+change mason for lspconfig and package manager for setup functions.
+
+That way you dont have to change all your internal require calls.
 
 see :help birdee.flake.outputs.RCName
 
@@ -77,8 +83,14 @@ before testing it or it wont update and find the new file.
 
 It runs correctly on a fresh nixOs install 
 with only i3, xfce.xfce4-terminal, xclip, xsel, git, and flakes enabled.
-Any terminal that supports bracketed paste will work, I just like that one's defaults.
-It runs correctly with less as well but you wont be able to copy paste without a clipboard and you might want that anyway...
+Any terminal that supports bracketed paste will work, I just like that one's default font.
+
+It also runs correctly on a manjaro system with random stuff installed including other versions of all of it's dependencies.
+Also I am not sure I even have nix package manager installed correctly on it because I can only import specific packages on the nixOS vm....
+
+It runs correctly with less as well but you wont be able to copy paste into the terminal 
+section of nvim without bracketed paste and without a clipboard at all you cant copy paste into or out of it at all. Or, well, into or out of anything.
+
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
 ## To Do:
@@ -87,7 +99,7 @@ and no auto formatters.
 
 If you add a debugger to it please let me know.
 
-I didnt really have time to understand configuring dap yet before I heard about nix.
+I didn't really have time to understand configuring dap yet before I heard about nix.
 I was only using neovim for about 3 months before making this flake, and hadn't tried to do that yet.
 You just put the debugger in lspAndDeps and then configure in lua, but I don't know how to do the lua part?
 
