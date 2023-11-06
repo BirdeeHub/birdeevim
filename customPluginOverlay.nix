@@ -1,6 +1,6 @@
 { ... }@inputs: let
   customPluginOverlay = self: super: { 
-    customNVIMplugins = {
+    customPlugins = {
 
       # reddit user bin-c found this link for me,
       # and I adapted the funtion to my overlay

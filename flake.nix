@@ -3,6 +3,8 @@
         # TO DO: 
         # install debuggers for languages (dap & dapui installed)
         # install formatters
+
+    # see :help birdee.flake.inputs
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
@@ -88,7 +90,7 @@
         # If you cant import them with the standard overlay, 
         # define a derivation in ./customPluginOverlay.nix
         # if it has a build step, do that there.
-        # afterwards, you can add as pkgs.customNVIMplugins.pluginname
+        # afterwards, you can add as pkgs.customPlugins.pluginname
         # If you do that, don't name the flake input "plugins-something",
         # because that would be loaded by the standard overlay.
         customPluginOverlay = import ./customPluginOverlay.nix inputs;
@@ -96,7 +98,7 @@
         # Apply the overlays and load nixpkgs as `pkgs`
         # Once we add these overlays to our nixpkgs, we are able to
         # use `pkgs.neovimPlugins`, which is a map of our plugins.
-        # or use `pkgs.customNVIMplugins`, which is a map of our custom built plugins.
+        # or use `pkgs.customPlugins`, which is a map of our custom built plugins.
         standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
         pkgs = import nixpkgs {
           inherit system;
@@ -199,9 +201,9 @@
               inputs.sg-nvim.packages.${system}.sg-nvim
               # cmp-tabnine
             ];
-            customPlugins = with pkgs.customNVIMplugins; [
+            customPlugins = with pkgs.customPlugins; [
             ];
-            markdown = with pkgs.customNVIMplugins; [
+            markdown = with pkgs.customPlugins; [
               markdown-preview-nvim
             ];
             telescope = with pkgs.vimPlugins; [
@@ -267,7 +269,7 @@
           # not loaded automatically at startup.
           # use with packadd in config to achieve something like lazy loading
           optionalPlugins = {
-            customPlugins = with pkgs.customNVIMplugins; [ ];
+            customPlugins = with pkgs.customPlugins; [ ];
             gitPlugins = with pkgs.neovimPlugins; [ ];
             general = with pkgs.vimPlugins; [ ];
           };
@@ -282,16 +284,6 @@
         # but false may be omitted.
         # This entire set is also passed to nixCats for querying within the lua.
         # It is passed as a Lua table with values name = boolean. same as here.
-        # if you have categories with the same name in 
-        # startup, lspsAndDeps, propagatedBuildInputs, and/or optional, 
-        # all plugins in those categories will be
-        # included when you set "thatname = true;" here.
-        # hence, AI = true; will include the AI lspsAndDeps category,
-        # as well as the AI startup category
-        # you can also add extra entries that dont have associated
-        # categories if you wish to pass an extra boolean into the lua.
-
-
         # see :help birdee.flake.outputs.packaging
         birdeeVim = birdeeVimBuild {
           bash = true;
@@ -324,13 +316,9 @@
           # maybe you need to pass a port or path in or something idk.
           # you could :lua print(require('nixCats').theBestCat)
           # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
-          # see :help nixCats
           # I honestly dont know what you would need a table like this for,
           # but I got carried away and it worked FIRST TRY.
-          # everything that isnt true, false, null, 
-          # a list, or a set becomes a lua string.
-          # it uses "[[${builtins.toString value}]]"
-          # in order to achieve this.
+          # see :help nixCats
         };
         noAIneodev = birdeeVimBuild {
           cmp = true;
