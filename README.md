@@ -14,6 +14,7 @@ and will be managing debuggers with regular dap stuff when I get to it.
 Fully reproducble package management, reasonably non-painful config.
 
 You should only need to interact with flake.nix, and occasionally customPluginOverlay.nix.
+Both are in the root directory of this repo.
 And the help. Other than that, it is all lua.
 
 To learn to use this flake and get an overview of how it works,
