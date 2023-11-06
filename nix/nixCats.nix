@@ -124,8 +124,9 @@
 
           It is used for defining plugins with build steps that 
           were not well handled by nixpkgs.
-          Define them within the file. Then,
-          access plugins defined there later 
+          It is passed flake inputs, and super is pkgs.
+          Define them within the file. 
+          Then, access plugins defined there later 
           with 'pkgs.customNVIMplugins.somepluginname'
 
           After the overlays we wish to include are all defined:
