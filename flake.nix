@@ -337,6 +337,17 @@
           neonixdev = true;
           AI = false;
           lspDebugMode = true;
+          theBestCat = "says meow!!!";
+          theWorstCat = {
+            thing1 = [ "MEOW" "HISSS" ];
+            thing2 = [
+              {
+              thing3 = [ "give" "treat" ];
+              }
+              "I LOVE KEYBOARDS"
+            ];
+            thing4 = "couch is for scratching";
+          };
         };
         coffeeVim = birdeeVimBuild {
           cmp = true;
