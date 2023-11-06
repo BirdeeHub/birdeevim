@@ -35,6 +35,44 @@
         and is the same as the table you provided to choose what 
         categories are included in each package in the flake.nix file.
 
+        If in your flake, your package definition looked like this:
+
+        # see :help birdee.flake.outputs.packaging
+        birdeeVim = birdeeVimBuild {
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = true;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          # this does not have an associated category of plugins, 
+          # but lua can still check for it
+          lspDebugMode = false;
+          # you could also pass something else:
+          theBestCat = "says meow!!!";
+          theWorstCat = {
+            thing1 = [ "MEOW" "HISSS" ];
+            thing2 = [
+              {
+              thing3 = [ "give" "treat" ];
+              }
+              "I LOVE KEYBOARDS"
+            ];
+            thing4 = "couch is for scratching";
+          };
+          # maybe you need to pass a port or path in or something idk.
+          # you could :lua print(require('nixCats').theBestCat)
+          # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
+          # I honestly dont know what you would need a table like this for,
+          # but I got carried away and it worked FIRST TRY.
+        };
+
         Using:
 
             :lua print(vim.inspect(require('nixCats')))
@@ -69,12 +107,16 @@
         lists will become arrays
         sets will become tables
         null will become nil
-        everything else becomes a string.
         also the orders of nested things can be unpredictable 
         so arrays are bad if you care about order of them.
         How did treesitter end up last?
 
-        If you use this syntax,
+        everything that isnt true, false, null, 
+        a list, or a set becomes a lua string.
+        it uses "[[''${builtins.toString value}]]"
+        in order to achieve this.
+
+        If theBestCat says meow, and you use this syntax,
         
             local cats = require('nixCats')
             if(cats.theBestCat) then
@@ -91,11 +133,14 @@
               print("false")
             end
 
-        However, this will print false.
+        However, this one will print false.
 
         Regardless, dependencies included under vocal cats 
         will not be included. So don't go changing all true 
-        values to "meow" it wont work.
+        values to "meow" it wont work. 
+
+        Only categories with the boolean value true are included
+        from the flake.
 
         Use this fact as you wish.
         You could use it to pass information like port numbers or paths
