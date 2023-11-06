@@ -4,6 +4,9 @@
       nameandstringmap = builtins.mapAttrs (name: value:
         if value == true then "${name} = true"
         else if value == false then "${name} = false"
+        else if value == null then "${name} = nil"
+        else if builtins.isList value then "${name} = ${luaListPrinter value}"
+        else if builtins.isAttrs value then "${name} = ${luaTablePrinter value}"
         else "${name} = [[${builtins.toString value}]]"
       ) categorySet;
       resultList = builtins.attrValues nameandstringmap;
@@ -14,6 +17,24 @@
     LuaTable = "{ " + catset + " }";
   in
   LuaTable;
+
+  luaListPrinter = listCats: let
+    lualistformatter = categoryList: let
+      stringlist = builtins.map (value:
+        if value == true then "true"
+        else if value == false then "false"
+        else if value == null then "nil"
+        else if builtins.isList value then "${luaListPrinter value}"
+        else if builtins.isAttrs value then "${luaTablePrinter value}"
+        else "[[${builtins.toString value}]]"
+      ) categoryList;
+      resultString = builtins.concatStringsSep ", " stringlist;
+    in
+    resultString;
+    catlist = lualistformatter listCats;
+    LuaList = "{ " + catlist + " }";
+  in
+  LuaList;
 
   RCTable = luaTablePrinter categories;
 
@@ -57,49 +78,66 @@
             :lua print(vim.inspect(require('nixCats')))
 
         will return something like this:
+
         {
-            AI = true,
-            bash = true,
-            cmp = true,
-            customPlugins = true,
-            general = true,
-            gitPlugins = true,
-            java = false,
-            kotlin = true,
-            lspDebugMode = false,
-            markdown = true,
-            neonixdev = true,
-            telescope = true,
-            theBestCat = "says meow!!!",
-            treesitter = true
+          AI = true,
+          bash = true,
+          cmp = true,
+          customPlugins = true,
+          general = true,
+          gitPlugins = true,
+          java = false,
+          kotlin = true,
+          lspDebugMode = false,
+          markdown = true,
+          neonixdev = true,
+          telescope = true,
+          theBestCat = "says meow!!!",
+          theWorstCat = {
+            thing1 = { "MEOW", "HISSS" },
+            thing2 = { {
+                thing3 = { "give", "treat" }
+              }, "I LOVE KEYBOARDS" },
+            thing4 = "couch is for scratching"
+          },
+          treesitter = true
         }
 
-        Note: it also accepts strings.
+        Note: it also accepts other things.
+        lists will become arrays
+        sets will become tables
+        null will become nil
+        everything else becomes a string.
+        also the orders of things can be unpredictable 
+        so arrays are bad if you care about order of them.
+        How did treesitter end up last?
 
         If you use this syntax,
+        
             local cats = require('nixCats')
             if(cats.theBestCat) then
               print("true")
             end
-        theBestCat will evaluate as true if it contains a string.
+
+        theBestCat will evaluate as true if 
+        it contains something that isnt false (or nil).
+
             local cats = require('nixCats')
             if(cats.theBestCat == true) then
               print("true")
             else
               print("false")
             end
+
         However, this will print false.
 
-        Either way, dependencies included under vocal cats 
+        Regardless, dependencies included under vocal cats 
         will not be included. So don't go changing all true 
         values to "meow" it wont work.
 
         Use this fact as you wish.
         You could use it to pass information like port numbers or paths
         Or whatever else you want.
-
-        It gets this string in nix by calling builtins.toString 
-        on the thing you provided and then surrounding it in [[]]
 
         ----------------------------------------------------------------------------------------
         vim:tw=78:ts=8:ft=help:norl:

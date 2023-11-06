@@ -309,11 +309,21 @@
           # this does not have an associated category of plugins, 
           # but lua can still check for it
           lspDebugMode = false;
-          # you could also pass something else and it calls 
-          # builtins.toString on it and passes it in as a string
+          # you could also pass something else:
           theBestCat = "says meow!!!";
+          theWorstCat = {
+            thing1 = [ "MEOW" "HISSS" ];
+            thing2 = [
+              {
+              thing3 = [ "give" "treat" ];
+              }
+              "I LOVE KEYBOARDS"
+            ];
+            thing4 = "couch is for scratching";
+          };
           # maybe you need to pass a port or path in or something idk.
           # you could :lua print(require('nixCats').theBestCat)
+          # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
           # see :help nixCats
         };
         noAIneodev = birdeeVimBuild {
