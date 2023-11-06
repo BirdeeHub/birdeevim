@@ -82,7 +82,11 @@
           This is the documentation for the flake itself.
           This flake uses nix for importing plugins, lsps, dependencies, and more,
           in place of usual nvim package managers such as packer, lazy or mason.
+
           Everything else is done in a regular lua config style.
+          Simply pretend the root of the flake is the root of your Lua config,
+          except without the root level init.lua folder. 
+          Set RCName to set which lua folder to require first! Details on RCName below.
 
           Related:
           For detecting what was included by 
