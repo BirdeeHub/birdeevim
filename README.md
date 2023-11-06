@@ -83,9 +83,13 @@ I have not tested on wsl or mac yet, but it might work. It has cmake and neovim 
 
 ## To Do:
 It has dap and dap-ui but no debuggers for languages
-and no auto formatters. If you add a debugger to it please let me know.
+and no auto formatters. 
+
+If you add a debugger to it please let me know.
+
 I didnt really have time to understand configuring dap yet before I heard about nix.
 I was only using neovim for about 3 months before making this flake, and hadn't tried to do that yet.
+You just put the debugger in lspAndDeps and then configure in lua, but I don't know how to do the lua part?
 
 It might remain incomplete for a little while as I work on
 getting the rest of my stuff working on nixOS like nvidia and whatnot so I can swap.
@@ -103,6 +107,7 @@ getting the rest of my stuff working on nixOS like nvidia and whatnot so I can s
         note, I have tried every variation of .#packagename and ./.#packagename 
         and .#<something>.packagename and ./.#<something>.packagename
         that I could find in the repl. I even tried it straight from github!
+        nix flake show shows that they are there!!!!
 
 ---
 
