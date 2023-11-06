@@ -93,6 +93,10 @@ section of nvim without bracketed paste and without a clipboard at all you cant 
 
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
+This is not a minimal config. It is my config where I try to do all the things. 
+
+It is, however, very easy to make a minimal package with it should you choose to do so.
+
 ## To Do:
 It has dap and dap-ui but no debuggers for languages
 and no auto formatters. 
