@@ -14,7 +14,7 @@
   let
     # this is what allows for dynamic packaging in flake.nix
     utils = import ./utils.nix;
-    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlatten SetOfCategoryLists categories);
+    filterAndFlatten = SetOfCategoryLists: categories: pkgs.lib.unique (utils.filterAndFlattenAttrsOfLists SetOfCategoryLists categories);
 
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
 

@@ -36,7 +36,7 @@ rec {
   in
   LuaList;
 
-  filterAndFlatten = SetOfCategoryLists: categories: let
+  filterAndFlattenAttrsOfLists = SetOfCategoryLists: categories: let
     inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
     thingsIncluded = builtins.mapAttrs (name: value:
         if value == true then builtins.getAttr name SetOfCategoryLists else []
