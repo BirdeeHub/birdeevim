@@ -38,7 +38,8 @@ rec {
   in
   LuaList;
 
-  # takes an attrset of lists and returns a flattened list with only thoses lists 
+  # takes an attrset of lists and an attrset of booleans,
+  # and returns a flattened list with only those lists 
   # whose name was associated with a true value within the categories set
   filterAndFlattenAttrsOfLists = SetOfCategoryLists: categories: let
     inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
