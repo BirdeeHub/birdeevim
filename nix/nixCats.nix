@@ -3,7 +3,7 @@
   nixCats = pkgs.stdenv.mkDerivation {
     name = "nixCats";
     builder = let
-      # This is the entire code of nixCats. it returns a table generated here.
+      # This is the entire code of nixCats. it returns a table generated here by utils.luaTablePrinter.
       cats = builtins.toFile "nixCats.lua" "return ${utils.luaTablePrinter categories}";
       # This is where the help file is generated.
       # First, here are the help tags.
