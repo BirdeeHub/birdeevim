@@ -1,6 +1,5 @@
 local categories = require('nixCats')
--- local colorschemer = "catppuccin" -- also schemes lualine
-local colorschemer = 'onedark' -- also schemes lualine
+local colorschemer = categories.colorscheme-- also schemes lualine
 local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
 
 vim.cmd.colorscheme(colorschemer)

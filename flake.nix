@@ -312,7 +312,7 @@
           # but lua can still check for it
           lspDebugMode = false;
           # you could also pass something else:
-          theBestCat = "says meow!!!";
+          colorscheme = "onedark";
           theWorstCat = {
             thing1 = [ "MEOW" "HISSS" ];
             thing2 = [
@@ -323,8 +323,6 @@
             ];
             thing4 = "couch is for scratching";
           };
-          # maybe you need to pass a port or path in or something idk.
-          # you could :lua print(require('nixCats').theBestCat)
           # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
           # I honestly dont know what you would need a table like this for,
           # but I got carried away and it worked FIRST TRY.
