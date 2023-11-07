@@ -339,7 +339,7 @@
           neonixdev = true;
           AI = false;
           lspDebugMode = true;
-          theBestCat = "says meow!!!";
+          colorscheme = "onedark";
           theWorstCat = {
             thing1 = [ "MEOW" "HISSS" ];
             thing2 = [
@@ -361,6 +361,7 @@
           general = true;
           AI = true;
           java = true;
+          colorscheme = "onedark";
         };
         kotlinVim = birdeeVimBuild {
           cmp = true;
@@ -373,6 +374,7 @@
           AI = true;
           kotlin = true;
           java = false; #is included in kotlin category
+          colorscheme = "onedark";
         };
       in
 
