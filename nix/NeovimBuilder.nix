@@ -42,6 +42,8 @@
 
     # add any dependencies/lsps/whatever we need available at runtime
     # learned this from kickstarter-nix
+    # Then I found more info at
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
       (pkgs.lib.optional (runtimedeps != [])
         ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')

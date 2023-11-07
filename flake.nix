@@ -14,6 +14,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
+    nixd.url = "github:nix-community/nixd";
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     # Theme
@@ -106,6 +107,7 @@
             standardPluginOverlay
             customPluginOverlay
             inputs.codeium.outputs.overlays.${system}.default
+            inputs.nixd.outputs.overlays.default
           ];
           config.allowUnfree = true;
         };
@@ -181,11 +183,15 @@
             nix = with pkgs; [
               nix-doc
               nil
+              nixd
             ];
             neonixdev = with pkgs; [
+              # nix-doc tags will make your tags much better in nix
+              # but only if you have nil as well for some reason
               nix-doc
               nil
               lua-language-server
+              nixd
             ];
             bash = with pkgs; [
               # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
@@ -311,7 +317,7 @@
             thing1 = [ "MEOW" "HISSS" ];
             thing2 = [
               {
-              thing3 = [ "give" "treat" ];
+                thing3 = [ "give" "treat" ];
               }
               "I LOVE KEYBOARDS"
             ];
