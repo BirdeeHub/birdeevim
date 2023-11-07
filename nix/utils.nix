@@ -1,4 +1,6 @@
 rec {
+  # 2 recursive functions that rely on each other to
+  # convert nix attrsets and lists to Lua tables and lists of strings.
   luaTablePrinter = attrSet: let
     luatableformatter = attrSet: let
       nameandstringmap = builtins.mapAttrs (name: value:
@@ -36,6 +38,8 @@ rec {
   in
   LuaList;
 
+  # takes an attrset of lists and returns a flattened list with only thoses lists 
+  # whose name was associated with a true value within the categories set
   filterAndFlattenAttrsOfLists = SetOfCategoryLists: categories: let
     inputsToCheck = builtins.intersectAttrs SetOfCategoryLists categories;
     thingsIncluded = builtins.mapAttrs (name: value:
