@@ -14,7 +14,6 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
-    nixd.url = "github:nix-community/nixd";
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     # Theme
@@ -68,6 +67,7 @@
       url = "github:chentoast/marks.nvim";
       flake = false;
     };
+    nixd.url = "github:nix-community/nixd";
     # I use this for autocomplete filler especially for comments. 
     "codeium" = {
       url = "github:Exafunction/codeium.nvim";
