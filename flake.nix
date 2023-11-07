@@ -134,14 +134,16 @@
           # to use a different lua folder other than myLuaConf, change this value:
           RCName = "myLuaConf";
 
-          # for the following items: lspsAndDeps, propagatedBuildInputs, startup, and optional,
-          # you define lists within the set with a particular name.
+          # for the following items: 
+          # lspsAndDeps, propagatedBuildInputs, startupPlugins, and optionalPlugins,
+          # you define lists of programs or plugins within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
 
-          # to define and use a new category, simply add a new list to the set,
-          # and include categoryname = true;
-          # in the set you provide when you build the package using this function
+          # to define and use a new category, simply add a new list to the set here, 
+          # and later, you will include categoryname = true; in the set you
+          # provide when you build the package using this builder function.
+          # see :help birdee.flake.outputs.packaging for info on that section.
 
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
