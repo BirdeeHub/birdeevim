@@ -4,6 +4,12 @@
 
 :help [nixCats](./nix/nixCats.nix)
 
+There is no lua help file. 
+
+Its just regular lua config without an initial init.lua file.
+
+And also nixCats.
+
 ## Introduction
 
 The idea is, replace lazy and mason with nix, 
