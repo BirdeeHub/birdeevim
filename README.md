@@ -184,4 +184,10 @@ Many thanks to Quoteme for a great repo to teach me the basics of nix!!! I borro
 
 Thank you!!! It taught me both about an overlay's existence and how it works.
 
+for finer details on the builder function itself in the nix directory
 
+see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
+
+If you are new to nix, dont worry about that one. You won't need it, and if you do, 
+it is as simple as adding an argument and calling a function an extra time 
+and you should look at the bottom of the file for how to do that.
