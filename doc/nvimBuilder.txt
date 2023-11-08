@@ -88,7 +88,7 @@ just doing this and including more comments than code.
           .FilterAttrsOfAttrsFlatMapInner pkgs categories;
 
     # This one filters and flattens attrs of lists and then maps value
-    # into a list of based on the function we provide it.
+    # into a list based on the function we provide it.
     # it the same as above but for a mapping function with 1 argument
     # because the inner thing we are mapping is a list not a set.
 
