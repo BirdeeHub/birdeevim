@@ -49,7 +49,7 @@ To do that:
     Optionally delete all the categories of plugins you dont want,
     (it is optional because you could just create new categories and only enable those)
     copy your config in (minus the init.lua at the root of your config folder),
-    change rc name to point to your config,
+    change RCName to point to your config,
     add your plugins to your desired categories,
     enable any categories you want to use to package for YOUR specific projects/languages/environments
     add your new package to the list of outputs.
