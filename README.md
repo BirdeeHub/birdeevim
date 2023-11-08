@@ -17,6 +17,12 @@ You should only need to interact with flake.nix, and occasionally customPluginOv
 Both are in the root directory of this repo.
 And the help. Other than that, it is all lua.
 
+#### Attention!! This repo is unfinished!
+    The flake scheme itself is very useable.
+    The lua config itself still leaves many things to be desired.
+        I'm not the most seasoned at neovim config.
+        But its regular, I'm having regular nvim lua problems.
+
 To learn to use this flake and get an overview of how it works,
 
 see :help birdee.flake
