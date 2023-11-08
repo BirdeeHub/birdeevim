@@ -152,9 +152,6 @@
           # and neovim path when using nix develop
           propagatedBuildInputs = {
             generalBuildInputs = with pkgs; [
-              # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
-              # It has cmake in it I think among other things?
-              pkgs.stdenv.cc.cc.lib
             ];
           };
 

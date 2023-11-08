@@ -36,7 +36,9 @@
     filterAndFlatten = (import ./utils.nix)
           .filterAndFlattenAttrsOfLists pkgs categories;
 
-    buildInputs = filterAndFlatten propagatedBuildInputs;
+    # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
+    # It has cmake in it I think among other things?
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs;
     start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
     opt = filterAndFlatten optionalPlugins;
 
