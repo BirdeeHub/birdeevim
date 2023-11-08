@@ -8,7 +8,8 @@ There is no lua help file.
 
 Its just regular lua config without an initial init.lua file.
 
-And also nixCats.
+And also nixCats. see 
+:help [nixCats](./nix/nixCats.nix)
 
 ## Introduction
 
@@ -82,8 +83,7 @@ So I wanted my scheme to be simple.
 I also wanted to be able to copy paste setup functions for new plugins
 right into my lua rather than adding hooks for a DSL.
 
-But I wanted to also manage and download the lua with the flake.
-I wanted to also be able to easily specifically package for projects.
+But I wanted to also be able to easily specifically package for projects.
 Also the wrapper I have figured out how to use only does init.vim
 
 The solution to a regular config? 
