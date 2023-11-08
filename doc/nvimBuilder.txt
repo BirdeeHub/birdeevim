@@ -1,5 +1,6 @@
 =================================================================================
-                                               *birdee.nixperts.neovimBuilder*
+INTRODUCTION NVIM BUILDER                      *birdee.nixperts.neovimBuilder*
+
 Wait, why is this code? Well, I have a way to add a few extra features.
 But I have not added them because I do not know what they do and 
 I dont want extra sets of categories lying around I will never use.
@@ -15,6 +16,9 @@ all the other features of this wrapper if desired to the flake.nix
 
 I could not find a better way to incorporate code examples without
 just doing this and including more comments than code.
+
+--------------------------------------------------------------------------
+                                        *birdee.nixperts.neovimBuilder.opener*
 
 { 
   # our arguments ? and their default values
@@ -51,6 +55,7 @@ just doing this and including more comments than code.
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
 
 ---------------------------------------------------------------------------------
+                                  *birdee.nixperts.neovimBuilder.basicFlatmap*
 
     # this is what allows for dynamic packaging in flake.nix
     # It includes categories marked as true, then flattens to a single list
@@ -59,6 +64,8 @@ just doing this and including more comments than code.
           .filterAndFlattenAttrsOfLists pkgs categories;
 
     # we can use that function to filter many of the options.
+    # anything that is a list of categories of packages, 
+    # you can filter this way
 
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs;
     start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
@@ -68,11 +75,14 @@ just doing this and including more comments than code.
     # It has cmake in it I think among other things?
 
 ---------------------------------------------------------------------------------
+                                   *birdee.nixperts.neovimBuilder.mapWrapArgCats*
 
     # This one filters and flattens like above but for attrs of attrs 
     # and then maps name and value
     # into a list based on the function we provide it.
     # its like a flatmap function but with a built in filter for category.
+    # you will use this to create categories for wrapper arguments
+    # more info on wrapper arguments below.
 
     filterAndFlattenWrapAttrs = (import ./utils.nix)
           .FilterAttrsOfAttrsFlatMapInner pkgs categories;
@@ -94,6 +104,7 @@ just doing this and including more comments than code.
 
 
 ---------------------------------------------------------------------------------
+                               *birdee.nixperts.neovimBuilder.usingWrapArgMap*
 
     # we are going to provide a function to map name and value
     # into a wrapper argument that sets an environment variable
@@ -110,6 +121,7 @@ just doing this and including more comments than code.
     # you can use filterAndFlattenWrapLists and its attr set counterpart in order
     # to create new sets of categories in the flake's builder function
     # that are to do with wrapper args.
+
     # you would add the set as an argument to this file, then, create one of these.
     # to create one, pass it a new wrapping function. I.E. 
     # FandFpassFlags = filterAndFlattenWrapLists (value: "--add-flags ${value}")
@@ -153,6 +165,9 @@ just doing this and including more comments than code.
       # I like my method because it was a natural extension of me writing a
       # generalized system for packaging wrapper args by category.
     );
+
+---------------------------------------------------------------------------------
+                              *birdee.nixperts.neovimBuilder.generatingNeovim*
 
     # here is where we add our propagated build dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
