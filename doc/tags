@@ -6,3 +6,4 @@ birdee.flake.outputs.builder	birdeeVimDoc.txt	/*birdee.flake.outputs.builder*
 birdee.flake.outputs.overlays	birdeeVimDoc.txt	/*birdee.flake.outputs.overlays*
 birdee.flake.outputs.packages	birdeeVimDoc.txt	/*birdee.flake.outputs.packages*
 birdee.flake.outputs.packaging	birdeeVimDoc.txt	/*birdee.flake.outputs.packaging*
+birdee.nixperts.neovimBuilder	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder*

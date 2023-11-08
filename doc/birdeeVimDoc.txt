@@ -28,18 +28,17 @@ If they have a build step or are not a plugin,
 i.e. an lsp, dont name them in that format.
 
 If they are on nixpkgs, you dont necessarily need to put them in inputs,
-because you will be able to access them through pkgs variable later.
+because you will be able to access them through pkgs.vimPlugins variable later.
 
 Context for later:
 
 If they have a build step, you will deal with them in customPluginOverlay
-then import them into a category of the builder.
+then import them into a category of the builder. 
+(assuming nixpkgs hasn't already done it!!)
 
 If they are not a plugin:
 You will import them into a category of the builder under lspsAndDeps, 
 unless they are for build time, then put them under propagatedBuildInputs
-
-see birdee.flake.inputs.overlays, which is the next section.
 
 =======================================================================================
 Flake Outputs Introduction                              *birdee.flake.outputs*
@@ -62,7 +61,11 @@ with 'pkgs.neovimPlugins.somepluginname'
 
 -- The second is ./customPluginOverlay:
 If you need to interact with one of these overlays, it will be this one.
-You should not need to do it much. I only needed it once.
+You should not need to do it much. 
+As of writing this, I have only needed it once.
+At the time of saying that, I only am missing lua config for debug and lint.
+I can install the programs fine I just dont know how to do neovim.
+I needed it for markdown-preview of all things.
 
 It is used for defining plugins with build steps that 
 were not well handled by nixpkgs.
@@ -141,7 +144,7 @@ The category names are the names of those lists.
 Add a new list, then enable the category here.
 
 If you have categories with the same name in 
-startup, lspsAndDeps, propagatedBuildInputs, and/or optional, 
+multiple different sets outlined above in the builder,
 all plugins in those categories will be
 included when you set "thatname = true;" here.
 hence, AI = true; will include the AI lspsAndDeps category,

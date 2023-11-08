@@ -12,7 +12,8 @@
   , extraWrapperArgs ? {}
   , categories ? {}
   }:
-  # todo: swap to new wrapper maybe, definitely add environmentVariables
+  # for a more extensive guide to this file
+  # see :help birdee.nixperts.neovimBuilder
   let
     # package the entire flake as plugin
     # and create our customRC to call it
@@ -42,6 +43,7 @@
     start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
     opt = filterAndFlatten optionalPlugins;
 
+    #For wrapperArgs:
     # This one filters and flattens like above but for attrs of attrs 
     # and then maps name and value
     # into a list based on the function we provide it.
@@ -55,55 +57,24 @@
     filterAndFlattenWrapLists = (import ./utils.nix)
           .FilterAttrsOfListsFlatMapInner pkgs categories;
 
-    # we are going to provide a function to map name and value
-    # into a wrapper argument that sets an environment variable
+    # and then applied:
+
     FandF_envVarSet = filterAndFlattenWrapAttrs 
           (name: value: ''--set ${name} "${value}"'');
 
-    # and this one we define a function that just passes it through.
-    # this one takes an a set of lists rather than a set of sets
     FandF_passWrapperArgs = filterAndFlattenWrapLists (value: value);
 
-
-    # you can use filterAndFlattenWrapAttrs and its list counterpart in order
-    # to create new sets of categories in the flake's builder function.
-    # pass it a new wrapping function. I.E. 
-    # FandFpassFlags = filterAndFlattenWrapLists (value: "--add-flags ${value}")
-    # I just figured, environmentVariables are the main thing, and any extra,
-    # by the time you actually need the other wrapper args,
-    # you will already know what you are doing, and would prefer to just
-    # pass in a list of wrapper args. Hence the passthrough.
-
-    # and this is how we add our lsps!
     # add any dependencies/lsps/whatever we need available at runtime
     FandF_WrapRuntimeDeps = filterAndFlattenWrapLists (value:
       ''--prefix PATH : "${pkgs.lib.makeBinPath [ value ] }"''
     );
 
+    # cat our args
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
       (FandF_WrapRuntimeDeps lspsAndRuntimeDeps)
       ++ (FandF_envVarSet environmentVariables)
       ++ (FandF_passWrapperArgs extraWrapperArgs)
-      # I learned this from https://github.com/mrcjkb/kickstart-nix.nvim
-      # Then I found more info at
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
-      # with kickstarters method I did this before:
-      # outside of extraMakeWrapperArgs I would do:
-
-      # runtimedeps = filterAndFlatten lspsAndDeps;
-
-      # and then in here I would do:
-
-      # (pkgs.lib.optional (runtimedeps != [])
-      #   ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
-
-      # vs now I do
-      # (FandF_WrapRuntimeDeps lspsAndDeps)
-      # Im pretty sure mine takes longer to evaluate the flake, but like
-      # it shouldnt have any other impact, and that is a very small portion
-      # of the overall install time. Plus mine calls unique on it.
-      # I like my method because it was a natural extension of me writing a
-      # generalized system for packaging wrapper args by category.
     );
 
     # add our propagated build dependencies

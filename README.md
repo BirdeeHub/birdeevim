@@ -1,8 +1,8 @@
 # A Lua-natic's neovim flake: birdeeVim
 
-:help birdee.flake
+:help [birdee.flake](./doc/birdeeVimDoc.txt)
 
-:help nixCats
+:help [nixCats](./nix/nixCats.nix)
 
 ## Introduction
 
@@ -15,17 +15,61 @@ Fully reproducble package management, reasonably non-painful config.
 
 You should only need to interact with flake.nix, and occasionally customPluginOverlay.nix.
 Both are in the root directory of this repo.
-And the help. Other than that, it is all lua.
+The help pages I have provided should be useful. Other than that, it is all lua.
 
 #### Attention!! This repo is unfinished!
-    The flake scheme itself is very useable.
+    The flake scheme itself is very useable, including how it
+        communicates with the lua config.
+        The ./nix directory is where the
+        magic happens for sorting the categories
+        and creating nixCats.
+        All you have to do is add plugins to lists.
+        And then enable those lists.
+
     The lua config itself still leaves many things to be desired.
         I'm not the most seasoned at neovim config.
         But its regular, I'm having regular nvim lua problems.
+        Like, how to do debuggers and stuff. Nothing to do with nix.
+        You should probably scrap most of my lua config if
+        you are any good at configuring neovim.
+
+This is not a minimal config. It is my config where I try to do all the things. 
+
+It is, however, very easy to make a minimal package with it should you choose to do so.
+
+To do that:
+
+    Optionally delete all the categories of plugins you dont want,
+    (it is optional because you could just create new categories and only enable those)
+    copy your config in (minus the init.lua at the root of your config folder),
+    change rc name to point to your config,
+    add your plugins to your desired categories,
+    enable any categories you want to use to package for YOUR specific projects/languages/environments
+    add your new package to the list of outputs.
+
+    Within the lua you will also have to change any 
+    package manager plugin setups to regular .setup() calls
+    because they have already been installed via nix. 
+    but thats just swapping to a new plugin manager.
+    Except this time you are simultaneously learning the default way
+    that all the other managers call.
+
+    You can check for what categories are available to your config
+    in your lua with nixCats so that you can use the same 
+    lua config for many different projects and not get any plugin not found errors.
+
+There are more features you COULD use, but thats the basics!
+
+Oh, and, for the rare plugin not handled well by nixpkgs, 
+that doesnt have a flake, AND has a non-cmake build step?
+
+Thats what customPluginOverlay exists for. I have only needed it 1 time.
 
 To learn to use this flake and get an overview of how it works,
 
-see :help birdee.flake
+:help [birdee.flake](./doc/birdeeVimDoc.txt)
+
+## Philosophy and Design
 
 This is my first time using nix. I'm also semi new to neovim but I like it a lot.
 So I wanted my scheme to be simple.
@@ -36,8 +80,10 @@ But I wanted to also manage and download the lua with the flake.
 I wanted to also be able to easily specifically package for projects.
 Also the wrapper I have figured out how to use only does init.vim
 
-The solution? Include my flake itself as a plugin. 
+The solution to a regular config? 
+Include my flake itself as a plugin. 
 
+The solution to project specific config?
 It also creates a new plugin called nixCats
 
 require('nixCats') returns a table of booleans stating if that category is enabled in the flake
@@ -46,13 +92,15 @@ to aid in creating packages specific to languages or projects.
 You can find out what cats you have whenever you require nixCats, 
 and you may do this as much as you want, even in ftplugin and autoload folders!
 
-for more info, see :help nixCats
+They can also say meow in tables of lists of tables if you wish.
+
+for more info, see :help [nixCats](./nix/nixCats.nix)
 
 To add new categories, simply add a new list in flake.nix in the desired section, and enable the category
 
 Currently the automatically generated init.vim calls: lua require('myLuaConf').
 If you want to change the name of the folder used from lua directory, 
-you must provide a different name to RCName attribute in [flake.nix](./flake.nix) so that it uses the new folder.
+you must provide a different name to RCName attribute in flake.nix so that it uses the new folder.
 It will change myLuaConf to your new folder name in the generated init.vim and require it instead.
 
 This would be a good idea, for example, if you wanted to copy your own folder in and then 
@@ -99,10 +147,6 @@ It runs correctly with less as well but you wont be able to copy paste into the 
 section of nvim without bracketed paste and without a clipboard at all you cant copy paste into or out of it at all. Or, well, into or out of anything.
 
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
-
-This is not a minimal config. It is my config where I try to do all the things. 
-
-It is, however, very easy to make a minimal package with it should you choose to do so.
 
 ## To Do:
 It has dap and dap-ui but no debuggers for languages
