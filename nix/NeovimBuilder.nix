@@ -41,7 +41,7 @@
     opt = filterAndFlatten optionalPlugins categories;
 
     # add any dependencies/lsps/whatever we need available at runtime
-    # learned this from kickstarter-nix
+    # learned this from https://github.com/mrcjkb/kickstart-nix.nvim
     # Then I found more info at
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
