@@ -135,7 +135,7 @@
           RCName = "myLuaConf";
 
           # for the following items: 
-          # lspsAndDeps, propagatedBuildInputs, startupPlugins, and optionalPlugins,
+          # lspsAndRuntimeDeps, propagatedBuildInputs, startupPlugins, environmentVariables and optionalPlugins,
           # you define lists of programs or plugins within the set with a particular name.
           # Then, you include that name in the categories set,
           # which you provide when you call this function to build a package.
@@ -148,17 +148,21 @@
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
           # at BUILD TIME for plugins. WILL NOT be available to PATH
-          # However, they WILL be available to the shell and neovim path when using nix develop
+          # However, they WILL be available to the shell 
+          # and neovim path when using nix develop
           propagatedBuildInputs = {
             generalBuildInputs = with pkgs; [
+              # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
+              # It has cmake in it I think among other things?
+              pkgs.stdenv.cc.cc.lib
             ];
           };
 
-          # lspsAndDeps:
+          # lspsAndRuntimeDeps:
           # this section is for dependencies that should be available
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           # this includes LSPs
-          lspsAndDeps = {
+          lspsAndRuntimeDeps = {
             general = with pkgs; [
               universal-ctags
             ];
@@ -284,6 +288,24 @@
             gitPlugins = with pkgs.neovimPlugins; [ ];
             general = with pkgs.vimPlugins; [ ];
           };
+
+          # environmentVariables:
+          # this section is for environmentVariables that should be available
+          # at RUN TIME for plugins. Will be available to path within neovim terminal
+          environmentVariables = {
+            general = {
+              BIRDTVAR = "It worked!";
+            };
+          };
+
+          # If you know what these are, you can provide custom ones by category here.
+          # If you dont, check this link out:
+          # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
+          extraWrapperArgs = {
+            general = [
+              '' --set BIRDTVAR2 "It worked again!"''
+            ];
+          };
         });
 
 
@@ -298,6 +320,7 @@
 
         # see :help birdee.flake.outputs.packaging
         birdeeVim = birdeeVimBuild {
+          generalBuildInputs = true;
           bash = true;
           cmp = true;
           telescope = true;
@@ -331,6 +354,7 @@
           # see :help nixCats
         };
         noAIneodev = birdeeVimBuild {
+          generalBuildInputs = true;
           cmp = true;
           telescope = true;
           treesitter = true;
@@ -354,6 +378,7 @@
           };
         };
         coffeeVim = birdeeVimBuild {
+          generalBuildInputs = true;
           cmp = true;
           telescope = true;
           treesitter = true;
@@ -366,6 +391,7 @@
           colorscheme = "onedark";
         };
         kotlinVim = birdeeVimBuild {
+          generalBuildInputs = true;
           cmp = true;
           telescope = true;
           treesitter = true;

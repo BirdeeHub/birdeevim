@@ -43,12 +43,12 @@ see birdee.flake.inputs.overlays, which is the next section.
 
 =======================================================================================
 Flake Outputs Introduction                              *birdee.flake.outputs*
-                                               *birdee.flake.outputs.overlays*
 
 With our inputs to our flake taken care of:
 
 First, we call flake utils to get system variable for all default systems.
 
+                                               *birdee.flake.outputs.overlays*
 Then, we define our overlays. We have 2 main ones to discuss.
 
 -- The first is ./nix/pluginOverlay:
@@ -62,6 +62,7 @@ with 'pkgs.neovimPlugins.somepluginname'
 
 -- The second is ./customPluginOverlay:
 If you need to interact with one of these overlays, it will be this one.
+You should not need to do it much. I only needed it once.
 
 It is used for defining plugins with build steps that 
 were not well handled by nixpkgs.
@@ -78,7 +79,6 @@ It will contain all our plugins and programs we will need from this point on.
 
 ---------------------------------------------------------------------------------------
 Neovim Builder Creation:                        *birdee.flake.outputs.builder*
-                                                 *birdee.flake.outputs.RCName*
 
 we now create a builder function that takes a set of 
 categories as an argument by importing nix/NeovimBuilder.
@@ -90,16 +90,25 @@ To define this function that takes this set of categories as an argument,
 we import nix/NeovimBuilder and provide it a set containing the following info.
 
 {
+
 - a reference to the self variable that gives us the path to the flake.
 
 - the pkgs set with the overlays
 
 - boolean options for vi and vim aliases
-
+                                                 *birdee.flake.outputs.RCName*
 - RCName: the name of folder to require within lua directory.
 
 - the categories set that this function took as an argument.
       It will define which of the categories to include from the following:
+
+- a flexible set of categories, each containing a list of 
+      internal BUILD TIME dependencies
+
+- a flexible set of categories, each containing a list of LSP's or 
+      other internal runtime dependencies such as ctags or debuggers
+      these are available to the path while within neovim program.
+      this includes the neovim terminal.
 
 - a flexible set of categories, each containing a list of startup plugins.
       Startup plugins are loaded and can be required. 
@@ -107,11 +116,14 @@ we import nix/NeovimBuilder and provide it a set containing the following info.
 - a flexible set of categories, each containing a list of optional plugins.
       Optional plugins need to be added with packadd before being required.
 
-- a flexible set of categories, each containing a list of LSP's or 
-      other internal runtime dependencies such as ctags or debuggers
+- a flexible set of categories, each containing an ATTRIBUTE SET of 
+      EnvironmentVariableName = "EnvironmentVariableValue";
 
 - a flexible set of categories, each containing a list of 
-      internal build time dependencies
+      extra wrapper arguments.
+      If you don't know what that is, see here:
+github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
+
 }
 
 ---------------------------------------------------------------------------------------
