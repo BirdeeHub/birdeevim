@@ -64,8 +64,8 @@ just doing this and including more comments than code.
           .filterAndFlattenAttrsOfLists pkgs categories;
 
     # we can use that function to filter many of the options.
-    # anything that is a list of categories of packages, 
-    # you can filter this way
+    # anything that has an argument in the wrapper and 
+    # is a list of categories of packages, you can filter this way
 
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs;
     start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
