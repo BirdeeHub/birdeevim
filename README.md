@@ -147,7 +147,6 @@ with only i3, xfce.xfce4-terminal, xclip, xsel, git, and flakes enabled.
 Any terminal that supports bracketed paste will work, I just like that one's default font.
 
 It also runs correctly on a manjaro system with random stuff installed including other versions of all of it's dependencies.
-Also I am not sure I even have nix package manager installed correctly on it because I can only import specific packages on the nixOS vm....
 
 It runs correctly with less as well but you wont be able to copy paste into the terminal 
 section of nvim without bracketed paste and without a clipboard at all you cant copy paste into or out of it at all. Or, well, into or out of anything.
@@ -176,8 +175,6 @@ getting the rest of my stuff working on nixOS like nvidia and whatnot so I can s
         language debuggers for dap and dap-ui without mason in Lua?
         Regular or Nix it doesnt matter, just no non-nix package managers for the debugger itself.
 
-    3. Why can I only select a non-default package in bash? In zsh it says bad pattern or no match.
-
 ---
 
 Many thanks to Quoteme for a great repo to teach me the basics of nix!!! I borrowed some code from it as well because I couldn't have written it better yet.
@@ -191,5 +188,3 @@ for finer details on the builder function itself in the nix directory
 see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
 
 If you are new to nix, dont worry too much if you dont get all of that one, 
-
-just check the arguments that are available up top because not all were added to the flake itself.
