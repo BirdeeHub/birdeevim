@@ -1,25 +1,13 @@
 =================================================================================
 INTRODUCTION NVIM BUILDER                      *birdee.nixperts.neovimBuilder*
 
-Wait, why is this code? Well, I have a way to add a few extra features.
-But I have not added them because I do not know what they do and 
-I dont want extra sets of categories lying around I will never use.
-
-I also want to be able to delete some of the comments without hurting
-anyone who wishes to use this. The scheme will remain the same, 
-regardless of what features are added, because the whole wrapper
-is implementable with this scheme.
-
-There are a ton of comments. 
-They will hopefully convey enough to be able to add
-all the other features of this wrapper if desired to the flake.nix
-
+Wait, why is this code? 
 I could not find a better way to incorporate code examples without
 just doing this and including more comments than code.
 
 --------------------------------------------------------------------------
-                                        *birdee.nixperts.neovimBuilder.opener*
-
+                                        *birdee.nixperts.neovimBuilder.arguments*
+# this function takes a set with the following items:
 { 
   # our arguments ? and their default values
   self
@@ -27,14 +15,41 @@ just doing this and including more comments than code.
   , RCName
   , viAlias ? false
   , vimAlias ? false
+  , categories ? {}
   , startupPlugins ? {}
   , optionalPlugins ? {}
   , lspsAndRuntimeDeps ? {}
   , propagatedBuildInputs ? {}
   , environmentVariables ? {}
   , extraWrapperArgs ? {}
-  , categories ? {}
+
+  # I don't know what these do so I didnt add their categories
+  # to the flake itself. I implemented them though.
+  # for now, dont worry too much about the rest of the args.
+  # :h birdee.nixperts.neovimBuilder.extraPackages (later in this file)
+  # will explain how to process the 3 hard ones.
+
+  , withNodeJs ? false
+  , withRuby ? true
+  , extraName ? ""
+  , withPython3 ? true
+
+  # the default arg of the wrapper is (_: []) for these.
+  # in other words, the wrapper takes a FUNCTION that returns a list.
+  # rather than just a list of derivations.
+  # So the extra packages arguments here take a set of lists of FUNCTIONS
+  # and those functions return lists.
+  # Ours takes { category = [ (_: []) ... ]; }
+  # I also don't know what these do, but they will work.
+
+  , extraPythonPackages ? {}
+  , extraPython3Packages ? {}
+  , extraLuaPackages ? {}
   }:
+
+--------------------------------------------------------------------------
+                                        *birdee.nixperts.neovimBuilder.opener*
+
   let
     # package the entire flake as plugin
     # and create our customRC to call it
@@ -167,6 +182,21 @@ just doing this and including more comments than code.
     );
 
 ---------------------------------------------------------------------------------
+                                 *birdee.nixperts.neovimBuilder.extraPackages*
+
+    # extraPythonPackages and the like require FUNCTIONS that return lists.
+    # so we make a function that returns a function that returns lists.
+    # this is used for the fields in the wrapper where the default value is (_: [])
+
+    catsOfFuncCombined = sect:
+      (x: let
+        appliedfunctions = builtins.map (value: (value) x ) (filterAndFlatten sect);
+        combinedFuncRes = builtins.concatLists appliedfunctions;
+        uniquifiedList = pkgs.lib.unique combinedFuncRes;
+      in
+      uniquifiedList);
+
+---------------------------------------------------------------------------------
                               *birdee.nixperts.neovimBuilder.generatingNeovim*
 
     # here is where we add our propagated build dependencies
@@ -186,23 +216,21 @@ pkgs.wrapNeovim myNeovimUnwrapped {
       inherit opt;
     };
   };
-  # These are the extra arguments you have available that I didnt use.
-  # I did not use them because I do not know what they do.
-  # What I do know is, you could use:
-  # extraPythonPackages = filterAndFlatten setOfCategoriesOfextraPythonPackages
-  # and pass the set in as an argument to this file to add a section to the builder.
 
-  # Copied verbatim from source for this function:
-  /* the function you would have passed to python.withPackages */
-  # , extraPythonPackages ? (_: [])
-  /* the function you would have passed to python.withPackages */
-  # , withPython3 ? true
-  # , extraPython3Packages ? (_: [])
-  /* the function you would have passed to lua.withPackages */
-  # , extraLuaPackages ? (_: [])
-  # , withNodeJs ? false
-  # , withRuby ? true
-  # , extraName ? ""
+  # I dont know what these do, but I implemented them?
+  # the extra packages arguments take (_: []) as a default argument
+
+    /* the function you would have passed to python.withPackages */
+  extraPythonPackages = catsOfFuncCombined extraPythonPackages;
+    /* the function you would have passed to python.withPackages */
+  inherit withPython3;
+  extraPython3Packages = catsOfFuncCombined extraPython3Packages;
+    /* the function you would have passed to lua.withPackages */
+  extraLuaPackages = catsOfFuncCombined extraLuaPackages;
+  inherit withNodeJs;
+  inherit withRuby;
+  inherit extraName;
 }
+
 ===========================================================================================================
 vim:tw=78:ts=8:ft=help:norl:

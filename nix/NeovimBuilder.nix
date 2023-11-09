@@ -11,6 +11,19 @@
   , environmentVariables ? {}
   , extraWrapperArgs ? {}
   , categories ? {}
+  # I dont know what these do so I didnt add their categories
+  # to the flake itself. I implemented them though.
+  # for the the extra packages fields, 
+  # rather than requiring a set of lists of derivations,
+  # they instead require a set of lists of functions that return lists.
+  # which is the same as the normal wrapper, just in categories
+  , withNodeJs ? false
+  , withRuby ? true
+  , extraName ? ""
+  , extraPythonPackages ? {}
+  , withPython3 ? true
+  , extraPython3Packages ? {}
+  , extraLuaPackages ? {}
   }:
   # for a more extensive guide to this file
   # see :help birdee.nixperts.neovimBuilder
@@ -69,6 +82,17 @@
       ''--prefix PATH : "${pkgs.lib.makeBinPath [ value ] }"''
     );
 
+    # extraPythonPackages and the like require FUNCTIONS that return lists.
+    # so we make a function that returns a function that returns lists.
+    # this is used for the fields in the wrapper where the default value is (_: [])
+    catsOfFuncCombined = sect:
+      (x: let
+        appliedfunctions = builtins.map (value: (value) x ) (filterAndFlatten sect);
+        combinedFuncRes = builtins.concatLists appliedfunctions;
+        uniquifiedList = pkgs.lib.unique combinedFuncRes;
+      in
+      uniquifiedList);
+
     # cat our args
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
       (FandF_WrapRuntimeDeps lspsAndRuntimeDeps)
@@ -81,6 +105,7 @@
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
       propagatedBuildInputs = buildInputs;
     });
+
   in
   # add our lsps and plugins and our config, and wrap it all up!
 pkgs.wrapNeovim myNeovimUnwrapped {
@@ -94,22 +119,16 @@ pkgs.wrapNeovim myNeovimUnwrapped {
       inherit opt;
     };
   };
-    # These are the extra arguments you have available that I didnt use.
-    # I did not use them because I do not know what they do.
-    # What I do know is, you could use:
-    # extraPythonPackages = filterAndFlatten setOfCategoriesOfextraPythonPackages
-    # and pass the set in as an argument to this file to add a section to the builder.
-
-    # Copied verbatim from source:
+  # I dont know what these do, but I implemented them?
     /* the function you would have passed to python.withPackages */
-    # , extraPythonPackages ? (_: [])
+  extraPythonPackages = catsOfFuncCombined extraPythonPackages;
     /* the function you would have passed to python.withPackages */
-    # , withPython3 ? true
-    # , extraPython3Packages ? (_: [])
+  inherit withPython3;
+  extraPython3Packages = catsOfFuncCombined extraPython3Packages;
     /* the function you would have passed to lua.withPackages */
-    # , extraLuaPackages ? (_: [])
-    # , withNodeJs ? false
-    # , withRuby ? true
-    # , extraName ? ""
+  extraLuaPackages = catsOfFuncCombined extraLuaPackages;
+  inherit withNodeJs;
+  inherit withRuby;
+  inherit extraName;
 }
 

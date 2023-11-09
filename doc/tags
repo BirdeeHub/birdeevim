@@ -7,7 +7,9 @@ birdee.flake.outputs.overlays	birdeeVimDoc.txt	/*birdee.flake.outputs.overlays*
 birdee.flake.outputs.packages	birdeeVimDoc.txt	/*birdee.flake.outputs.packages*
 birdee.flake.outputs.packaging	birdeeVimDoc.txt	/*birdee.flake.outputs.packaging*
 birdee.nixperts.neovimBuilder	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder*
+birdee.nixperts.neovimBuilder.arguments	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.arguments*
 birdee.nixperts.neovimBuilder.basicFlatmap	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.basicFlatmap*
+birdee.nixperts.neovimBuilder.extraPackages	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.extraPackages*
 birdee.nixperts.neovimBuilder.generatingNeovim	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.generatingNeovim*
 birdee.nixperts.neovimBuilder.mapWrapArgCats	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.mapWrapArgCats*
 birdee.nixperts.neovimBuilder.opener	nvimBuilder.txt	/*birdee.nixperts.neovimBuilder.opener*
