@@ -85,7 +85,7 @@
     # extraPythonPackages and the like require FUNCTIONS that return lists.
     # so we make a function that returns a function that returns lists.
     # this is used for the fields in the wrapper where the default value is (_: [])
-    catsOfFuncCombined = sect:
+    combineCatsOfFuncs = sect:
       (x: let
         appliedfunctions = builtins.map (value: (value) x ) (filterAndFlatten sect);
         combinedFuncRes = builtins.concatLists appliedfunctions;
@@ -121,12 +121,12 @@ pkgs.wrapNeovim myNeovimUnwrapped {
   };
   # I dont know what these do, but I implemented them?
     /* the function you would have passed to python.withPackages */
-  extraPythonPackages = catsOfFuncCombined extraPythonPackages;
+  extraPythonPackages = combineCatsOfFuncs extraPythonPackages;
     /* the function you would have passed to python.withPackages */
   inherit withPython3;
-  extraPython3Packages = catsOfFuncCombined extraPython3Packages;
+  extraPython3Packages = combineCatsOfFuncs extraPython3Packages;
     /* the function you would have passed to lua.withPackages */
-  extraLuaPackages = catsOfFuncCombined extraLuaPackages;
+  extraLuaPackages = combineCatsOfFuncs extraLuaPackages;
   inherit withNodeJs;
   inherit withRuby;
   inherit extraName;

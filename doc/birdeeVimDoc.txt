@@ -129,6 +129,13 @@ github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper
 
 }
 
+There are some extra available arguments for extraPythonPackages and python 3
+and lua and a few others in the arguments for wrapNeovim.
+I have implemented them in the builder already. You can make categories of them,
+so feel free to create a new set of categories for them if you know 
+what they are for. (I implemented them without knowing what they did. I just
+pass whatever you stick in there anyway, I dont actually need to know.)
+
 ---------------------------------------------------------------------------------------
 Package Generation:                           *birdee.flake.outputs.packaging*
 
