@@ -176,11 +176,7 @@ getting the rest of my stuff working on nixOS like nvidia and whatnot so I can s
         language debuggers for dap and dap-ui without mason in Lua?
         Regular or Nix it doesnt matter, just no non-nix package managers for the debugger itself.
 
-    3. how to actually target a specific flake package from cli commands
-        note, I have tried every variation of .#packagename and ./.#packagename 
-        and .#<something>.packagename and ./.#<something>.packagename
-        that I could find in the repl. I even tried it straight from github!
-        nix flake show shows that they are there!!!!
+    3. Why can I only select a non-default package in bash? In zsh it says bad pattern or no match.
 
 ---
 
