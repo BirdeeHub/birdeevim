@@ -190,6 +190,6 @@ for finer details on the builder function itself in the nix directory
 
 see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
 
-If you are new to nix, dont worry about that one. You won't need it, and if you do, 
-it is as simple as adding an argument and calling a function an extra time 
-and you should look at the bottom of the file for how to do that.
+If you are new to nix, dont worry too much if you dont get all of that one, 
+
+just check the arguments that are available up top because not all were added to the flake itself.
