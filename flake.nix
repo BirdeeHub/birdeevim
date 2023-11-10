@@ -109,7 +109,7 @@
             inputs.codeium.outputs.overlays.${system}.default
             inputs.nixd.outputs.overlays.default
           ];
-          config.allowUnfree = true;
+          # config.allowUnfree = true;
         };
 
 
