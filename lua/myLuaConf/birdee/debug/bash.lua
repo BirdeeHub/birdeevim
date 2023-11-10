@@ -1,1 +1,24 @@
--- local dap = require 'dap'
+-- local dap = require "dap"
+-- dap.adapters.sh = {
+--     type = "executable",
+--     command = "bashdb",
+-- }
+-- dap.configurations.sh = {
+--     {
+--         name = "Launch Bash debugger",
+--         type = "sh",
+--         request = "launch",
+--         program = "${file}",
+--         cwd = "${fileDirname}",
+--         -- pathBashdb = BASHDB_DIR .. "/bashdb",
+--         -- pathBashdbLib = BASHDB_DIR,
+--         -- pathBash = "bash",
+--         -- pathCat = "cat",
+--         -- pathMkfifo = "mkfifo",
+--         -- pathPkill = "pkill",
+--         env = {},
+--         args = {},
+--         -- showDebugOutput = true,
+--         -- trace = true,
+--     }
+-- }

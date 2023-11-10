@@ -408,6 +408,13 @@
       # see :help birdee.flake.outputs.packages
 
       { # choose your package
+        overlays = {
+          default = final: prev: { inherit birdeeVim; };
+          birdeeVim = final: prev: { inherit birdeeVim; };
+          noAIneodev = final: prev: { inherit noAIneodev; };
+          coffeeVim = final: prev: { inherit coffeeVim; };
+          kotlinVim = final: prev: { inherit kotlinVim; };
+        };
         devShell = pkgs.mkShell {
           name = "neodevshell";
           packages = [ noAIneodev ];
