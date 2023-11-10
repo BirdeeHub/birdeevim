@@ -9,8 +9,12 @@
   , propagatedBuildInputs ? {}
   , environmentVariables ? {}
   , extraWrapperArgs ? {}
+  # the source says:
+    /* the function you would have passed to python.withPackages */
+  # So you put in a set of categories of lists of them.
   , extraPythonPackages ? {}
   , extraPython3Packages ? {}
+  # same thing except for lua.withPackages
   , extraLuaPackages ? {}
   }:
   # for a more extensive guide to this file

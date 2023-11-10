@@ -25,8 +25,11 @@ just doing this and including more comments than code.
   # and those functions return lists of packages.
   # Idk why they work that way, 
   # but I combine the outputs.
+  # the source says:
+    /* the function you would have passed to python.withPackages */
   , extraPythonPackages ? {}
   , extraPython3Packages ? {}
+  # same thing except for lua.withPackages
   , extraLuaPackages ? {}
   }:
   let
