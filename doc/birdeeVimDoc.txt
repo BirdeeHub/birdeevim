@@ -142,7 +142,7 @@ what they are for.
 
 ---------------------------------------------------------------------------------------
 Settings Profiles:                             *birdee.flake.outputs.settings*
-
+                                                 *birdee.flake.outputs.RCName*
 These are the defaults:
   settings = {
     defaults = {
@@ -169,7 +169,9 @@ Package Generation:                           *birdee.flake.outputs.packaging*
 
 generate packages by calling that builder function we just created.
 
-Pass it a set of named boolean values like this:
+First, pick the set of settings you wish to include.
+
+Then, pass it a set of named boolean values like this:
 { categoryname1 = true; categoryname2 = false; etc... }
 False may be omitted. True may not be omitted.
 Only true matters for what plugins will be added.
@@ -185,8 +187,6 @@ all plugins in those categories will be
 included when you set "thatname = true;" here.
 hence, AI = true; will include the AI lspsAndDeps category,
 as well as the AI startup category.
-
-After that, pick the set of settings you wish to include.
 
 an example package definition:
 
