@@ -154,6 +154,9 @@ section of nvim without bracketed paste and without a clipboard at all you cant 
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
 ## To Do:
+
+MOVE TO NEW WRAPPER
+
 It has dap and dap-ui but no debuggers for languages
 and no auto formatters. 
 
