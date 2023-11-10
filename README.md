@@ -48,10 +48,16 @@ To do that:
 
     Optionally delete all the categories of plugins you dont want,
     (it is optional because you could just create new categories and only enable those)
+
     copy your config in (minus the init.lua at the root of your config folder),
-    change RCName to point to your config,
+
     add your plugins to your desired categories,
+
+    change RCName to point to your config,
+    or turn wrapRc off to point it to your regular ~/.config/nvim
+
     enable any categories you want to use to package for YOUR specific projects/languages/environments
+
     add your new package to the list of outputs.
 
     Within the lua you will also have to change any 
@@ -84,7 +90,6 @@ I also wanted to be able to copy paste setup functions for new plugins
 right into my lua rather than adding hooks for a DSL.
 
 But I wanted to also be able to easily specifically package for projects.
-Also the wrapper I have figured out how to use only does init.vim
 
 The solution to a regular config? 
 Include my flake itself as a plugin. 
@@ -154,8 +159,6 @@ section of nvim without bracketed paste and without a clipboard at all you cant 
 I have not tested on wsl or mac yet, but it might work. It has cmake and neovim and the plugins with external portions are cross platform?
 
 ## To Do:
-
-MOVE TO NEW WRAPPER
 
 It has dap and dap-ui but no debuggers for languages
 and no auto formatters. 

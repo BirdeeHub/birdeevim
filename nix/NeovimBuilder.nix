@@ -1,40 +1,39 @@
 { 
   self
   , pkgs
-  , RCName
-  , viAlias ? false
-  , vimAlias ? false
+  , categories ? {}
+  , settings ? {}
   , startupPlugins ? {}
   , optionalPlugins ? {}
   , lspsAndRuntimeDeps ? {}
   , propagatedBuildInputs ? {}
   , environmentVariables ? {}
   , extraWrapperArgs ? {}
-  , categories ? {}
-  # I dont know what these do so I didnt add their categories
-  # to the flake itself. I implemented them though.
-  # for the the extra packages fields, 
-  # rather than requiring a set of lists of derivations,
-  # they instead require a set of lists of functions that return lists.
-  # which is the same as the normal wrapper, just in categories
-  , withNodeJs ? false
-  , withRuby ? true
-  , extraName ? ""
   , extraPythonPackages ? {}
-  , withPython3 ? true
   , extraPython3Packages ? {}
   , extraLuaPackages ? {}
   }:
   # for a more extensive guide to this file
   # see :help birdee.nixperts.neovimBuilder
   let
+    config = {
+      RCName = "myLuaConf";
+      viAlias = false;
+      vimAlias = false;
+      withNodeJs = false;
+      withRuby = true;
+      extraName = "";
+      withPython3 = true;
+      wrapRc = true;
+    } // settings;
+
     # package the entire flake as plugin
     # and create our customRC to call it
-    customRC = if RCName != "" then 
-        "lua require('" + RCName + "')" 
+    customRC = if config.RCName != "" then 
+        "lua require('" + config.RCName + "')" 
       else "";
     LuaConfig = pkgs.stdenv.mkDerivation {
-      name = RCName;
+      name = config.RCName;
       builder = builtins.toFile "builder.sh" ''
         source $stdenv/setup
         mkdir -p $out
@@ -108,10 +107,11 @@
 
   in
   # add our lsps and plugins and our config, and wrap it all up!
-pkgs.wrapNeovim myNeovimUnwrapped {
+(import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
+  wrapRc = config.wrapRc;
   inherit extraMakeWrapperArgs;
-  inherit viAlias;
-  inherit vimAlias;
+  viAlias = config.viAlias;
+  vimAlias = config.vimAlias;
   configure = {
     inherit customRC;
     packages.myVimPackage = {
@@ -123,12 +123,12 @@ pkgs.wrapNeovim myNeovimUnwrapped {
     /* the function you would have passed to python.withPackages */
   extraPythonPackages = combineCatsOfFuncs extraPythonPackages;
     /* the function you would have passed to python.withPackages */
-  inherit withPython3;
+  withPython3 = config.withPython3;
   extraPython3Packages = combineCatsOfFuncs extraPython3Packages;
     /* the function you would have passed to lua.withPackages */
   extraLuaPackages = combineCatsOfFuncs extraLuaPackages;
-  inherit withNodeJs;
-  inherit withRuby;
-  inherit extraName;
+  withNodeJs = config.withNodeJs;
+  withRuby = config.withRuby;
+  extraName = config.extraName;
 }
 

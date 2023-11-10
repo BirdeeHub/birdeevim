@@ -112,34 +112,23 @@
           # config.allowUnfree = true;
         };
 
-
-
         # see :help birdee.flake.outputs.builder
 
         # Now that our plugin inputs/overlays and pkgs have been defined,
         # We define a function to facilitate package building for particular categories
-        # what that function does is it intakes a set of categories with a boolean value for each
+        # what that function does is it intakes a set of categories 
+        # with a boolean value for each, and a set of settings
         # and then it imports NeovimBuilder.nix, passing it that categories set but also
         # our other information. This allows us to define our categories later.
-        birdeeVimBuild = categories: (import ./nix/NeovimBuilder.nix {
+        birdeeVimBuild = settings: categories: (import ./nix/NeovimBuilder.nix {
           # these are required
           inherit self;
           inherit pkgs;
+          # you supply these when you apply this function
           inherit categories;
-          # you can set these or omit them for false
-          viAlias = true;
-          vimAlias = true;
+          inherit settings;
 
-          # This is a required field:
-          # to use a different lua folder other than myLuaConf, change this value:
-          RCName = "myLuaConf";
-
-          # for the following items: 
-          # lspsAndRuntimeDeps, propagatedBuildInputs, startupPlugins, environmentVariables and optionalPlugins,
-          # you define lists of programs or plugins within the set with a particular name.
-          # Then, you include that name in the categories set,
-          # which you provide when you call this function to build a package.
-
+          # see :help birdee.flake.outputs.builder
           # to define and use a new category, simply add a new list to the set here, 
           # and later, you will include categoryname = true; in the set you
           # provide when you build the package using this builder function.
@@ -290,7 +279,7 @@
           # this section is for environmentVariables that should be available
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
-            general = {
+            test = {
               BIRDTVAR = "It worked!";
             };
           };
@@ -299,13 +288,34 @@
           # If you dont, check this link out:
           # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
           extraWrapperArgs = {
-            general = [
+            test = [
               '' --set BIRDTVAR2 "It worked again!"''
             ];
           };
+
+          # there are more available sections, extraPythonPackages, extraPython3Packages, extraLuaPackages.
+          # see :help birdee.flake.outputs.builder and :help birdee.nixperts.neovimBuilder
         });
 
-
+        # see :help birdee.flake.outputs.settings
+        settings = {
+          birdee = {
+            wrapRc = true;
+            # to use a different lua folder other than myLuaConf, change this value:
+            RCName = "myLuaConf";
+            viAlias = true;
+            vimAlias = true;
+            withNodeJs = false;
+            withRuby = true;
+            extraName = "";
+            withPython3 = true;
+          };
+          unwrappedLua = {
+            wrapRc = false;
+            viAlias = true;
+            vimAlias = true;
+          };
+        };
 
 
 
@@ -316,7 +326,7 @@
         # It is passed as a Lua table with values name = boolean. same as here.
 
         # see :help birdee.flake.outputs.packaging
-        birdeeVim = birdeeVimBuild {
+        birdeeVim = birdeeVimBuild settings.birdee {
           generalBuildInputs = true;
           bash = true;
           cmp = true;
@@ -330,6 +340,7 @@
           AI = true;
           java = false; # is included in kotlin category
           kotlin = true;
+          test = true;
           # this does not have an associated category of plugins, 
           # but lua can still check for it
           lspDebugMode = false;
@@ -350,7 +361,7 @@
           # but I got carried away and it worked FIRST TRY.
           # see :help nixCats
         };
-        noAIneodev = birdeeVimBuild {
+        noAIneodev = birdeeVimBuild settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -362,6 +373,7 @@
           neonixdev = true;
           AI = false;
           lspDebugMode = true;
+          test = true;
           colorscheme = "onedark";
           theWorstCat = {
             thing1 = [ "MEOW" "HISSS" ];
@@ -374,7 +386,7 @@
             thing4 = "couch is for scratching";
           };
         };
-        coffeeVim = birdeeVimBuild {
+        coffeeVim = birdeeVimBuild settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -387,7 +399,7 @@
           java = true;
           colorscheme = "onedark";
         };
-        kotlinVim = birdeeVimBuild {
+        kotlinVim = birdeeVimBuild settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
