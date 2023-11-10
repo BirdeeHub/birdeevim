@@ -189,7 +189,14 @@ see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
 
 If you are new to nix, dont worry too much if you dont get all of that one, 
 
+## How to try:
+```bash
+# to test:
+nix shell github:BirdeeHub/birdeeVim#noAIneodev
+```
 
+However, you should really just clone or fork the repo, because to edit your config,
+you edit the flake.
 
 ```nix
 {
