@@ -188,3 +188,34 @@ for finer details on the builder function itself in the nix directory
 see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
 
 If you are new to nix, dont worry too much if you dont get all of that one, 
+
+
+
+```nix
+{
+    description = "How to import birdeeVim in a flake. 2 ways.";
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+        flake-utils.url = "github:numtide/flake-utils";
+        birdeeVim.url = "github:BirdeeHub/birdeeVim";
+    };
+    outputs = { self, nixpkgs, flake-utils, birdeeVim }@inputs: 
+    flake-utils.lib.eachDefaultSystem (system: let 
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            birdeeVim.outputs.overlays.${system}.birdeeVim
+            birdeeVim.outputs.overlays.${system}.kotlinVim
+          ];
+        };
+    in
+        {
+
+            packages.default = birdeeVim.outputs.packages.${system}.noAIneodev;
+            packages.kotlinVim = pkgs.kotlinVim;
+            packages.birdeeVim = pkgs.birdeeVim;
+
+        }
+    );
+}
+```
