@@ -160,6 +160,8 @@ I have not tested on wsl or mac yet, but it might work. It has cmake and neovim 
 
 ## To Do:
 
+Neodev thinks its a plugin unless you save it to your .config/nvim folder, so, fix that.
+
 It has dap and dap-ui but no debuggers for languages
 and no auto formatters. 
 

@@ -1,6 +1,12 @@
 local categories = require('nixCats')
 if (categories.neonixdev) then
-  require('neodev').setup({})
+  require('neodev').setup({
+    library = {
+      -- runtime = categories.packpath + "," + vim.o.rtp,
+      -- runtime = false,
+      -- runtime = "/home/birdee/Projects/birdeeVim/"
+    },
+  })
   require("myLuaConf.birdee.LSPs.nix")
   require("myLuaConf.birdee.LSPs.lua")
 elseif (categories.nix) then
