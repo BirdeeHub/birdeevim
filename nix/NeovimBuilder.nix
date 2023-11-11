@@ -43,8 +43,7 @@
         builder = builtins.toFile "builder.sh" ''
           source $stdenv/setup
           mkdir -p $out
-          cp -r ${self}/doc $out
-          cp -r ${self}/lua $out
+          cp -r ${self}/* $out
         '';
       }
       else pkgs.stdenv.mkDerivation {
