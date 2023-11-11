@@ -150,8 +150,12 @@ These are the defaults:
       # or would you rather do it in your .config/nvim?
       # nixCats will work either way.
       wrapRc = true;
+
       # RCName: the name of folder to require within lua directory.
-      RCName = "myLuaConf";
+      # the default is empty, and if left empty, 
+      # wrapRc will default to false.
+      RCName = "";
+
       viAlias = false;
       vimAlias = false;
       withNodeJs = false;

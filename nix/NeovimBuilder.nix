@@ -21,7 +21,7 @@
   # see :help birdee.nixperts.neovimBuilder
   let
     config = {
-      RCName = "myLuaConf";
+      RCName = "";
       viAlias = false;
       vimAlias = false;
       withNodeJs = false;
@@ -37,7 +37,7 @@
         "lua require('" + config.RCName + "')" 
       else "";
     # this if else just helps with goto definition in an unwrapped lua config
-    LuaConfig = if config.wrapRc 
+    LuaConfig = if config.wrapRc && customRC != ""
       then pkgs.stdenv.mkDerivation {
         name = config.RCName;
         builder = builtins.toFile "builder.sh" ''
@@ -123,7 +123,7 @@
   in
   # add our lsps and plugins and our config, and wrap it all up!
 (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
-  wrapRc = config.wrapRc;
+  wrapRc = if customRC != "" then config.wrapRc else false;
   inherit extraMakeWrapperArgs;
   viAlias = config.viAlias;
   vimAlias = config.vimAlias;

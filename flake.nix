@@ -312,6 +312,7 @@
           };
           unwrappedLua = {
             wrapRc = false;
+            RCName = "myLuaConf";
             viAlias = true;
             vimAlias = true;
           };
@@ -326,7 +327,7 @@
         # It is passed as a Lua table with values name = boolean. same as here.
 
         # see :help birdee.flake.outputs.packaging
-        birdeeVim = birdeeVimBuild settings.birdee {
+        birdeeVim = birdeeVimBuild settings.unwrappedLua {
           generalBuildInputs = true;
           bash = true;
           cmp = true;
