@@ -33,17 +33,28 @@
 
     # package the entire flake as plugin
     # and create our customRC to call it
-    customRC = if config.RCName != "" then 
+    customRC = if config.RCName != "" && config.wrapRc != false then 
         "lua require('" + config.RCName + "')" 
       else "";
-    LuaConfig = pkgs.stdenv.mkDerivation {
-      name = config.RCName;
-      builder = builtins.toFile "builder.sh" ''
-        source $stdenv/setup
-        mkdir -p $out
-        cp -r ${self}/* $out
-      '';
-    };
+    # this if else just helps with goto definition in an unwrapped lua config
+    LuaConfig = if config.wrapRc 
+      then pkgs.stdenv.mkDerivation {
+        name = config.RCName;
+        builder = builtins.toFile "builder.sh" ''
+          source $stdenv/setup
+          mkdir -p $out
+          cp -r ${self}/doc $out
+          cp -r ${self}/lua $out
+        '';
+      }
+      else pkgs.stdenv.mkDerivation {
+        name = config.RCName;
+        builder = builtins.toFile "builder.sh" ''
+          source $stdenv/setup
+          mkdir -p $out
+          cp -r ${self}/doc $out
+        '';
+      };
 
     # see :help nixCats
     nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
@@ -59,7 +70,7 @@
     start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
     opt = filterAndFlatten optionalPlugins;
 
-    #For wrapperArgs:
+    # For wrapperArgs:
     # This one filters and flattens like above but for attrs of attrs 
     # and then maps name and value
     # into a list based on the function we provide it.
