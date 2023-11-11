@@ -327,7 +327,7 @@
         # It is passed as a Lua table with values name = boolean. same as here.
 
         # see :help birdee.flake.outputs.packaging
-        birdeeVim = birdeeVimBuild settings.unwrappedLua {
+        birdeeVim = birdeeVimBuild settings.birdee {
           generalBuildInputs = true;
           bash = true;
           cmp = true;
