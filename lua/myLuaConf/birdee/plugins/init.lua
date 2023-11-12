@@ -47,7 +47,6 @@ require('eyeliner').setup {
 require('hlargs').setup({
   color = hlargsColor,
 })
-require('which-key').setup()
 require('Comment').setup()
   -- require('fidget').setup()
 require('lualine').setup({
@@ -106,3 +105,22 @@ require('neo-tree').setup({
 })
 vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
+local leaderCmsg
+if categories.AI then 
+  leaderCmsg = "[C]ode (and [C]ody)"
+else
+  leaderCmsg = "[C]ode"
+end
+
+require('which-key').setup()
+require('which-key').register {
+  ['<leader>c'] = { name = leaderCmsg, _ = 'which_key_ignore' },
+  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>m'] = { name = '[M]arkdown', _ = 'which_key_ignore' },
+  ['<leader>F'] = { name = '[F]ile explorer', _ = 'which_key_ignore' },
+  ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
+}
