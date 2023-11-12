@@ -46,7 +46,9 @@
       name = "nixCats";
       builder = let
         cats = builtins.toFile "nixCats.lua" ''
-            vim.api.nvim_create_user_command('NixCats', [[lua print(vim.inspect(require('nixCats')))]] , { desc = 'So Cute!' })
+            vim.api.nvim_create_user_command('NixCats', 
+            [[lua print(vim.inspect(require('nixCats')))]] , 
+            { desc = 'So Cute!' })
             return ${(import ./utils.nix).luaTablePrinter categories}
           '';
       in builtins.toFile "builder.sh" ''
