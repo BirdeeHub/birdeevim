@@ -1,15 +1,14 @@
 # A Lua-natic's neovim flake: birdeeVim
 
-:help [birdee.flake](./doc/birdeeVimDoc.txt)
+:help [nixCats.flake](./nixCatsHelp/nixCatsFlake.txt)
 
-:help [nixCats](./nix/nixCats.nix)
-
+:help [nixCats](./nixCatsHelp/nixCats.nix)
 There is no lua help file. 
 
 Its just regular lua config without an initial init.lua file.
 
 And also nixCats. see 
-:help [nixCats](./nix/nixCats.nix)
+:help [nixCats](./nixCatsHelp/nixCats.nix)
 
 ## Introduction
 
@@ -80,7 +79,7 @@ Thats what customPluginOverlay exists for. I have only needed it 1 time.
 
 To learn to use this flake and get an overview of how it works,
 
-:help [birdee.flake](./doc/birdeeVimDoc.txt)
+:help [nixCats.flake](./nixCatsHelp/nixCatsFlake.txt)
 
 ## Philosophy and Design
 
@@ -105,7 +104,7 @@ and you may do this as much as you want, even in ftplugin and autoload folders!
 
 They can also say meow in tables of lists of tables if you wish.
 
-for more info, see :help [nixCats](./nix/nixCats.nix)
+for more info, see :help [nixCats](./nixCatsHelp/nixCats.nix)
 
 To add new categories, simply add a new list in flake.nix in the desired section, and enable the category
 
@@ -119,7 +118,7 @@ change mason for lspconfig and package manager for setup functions.
 
 That way you dont have to change all your internal require calls.
 
-see :help birdee.flake.outputs.RCName
+see :help nixCats.flake.outputs.RCName
 
 #### These are the reasons I wanted to do it this way: 
 
@@ -193,7 +192,7 @@ Thank you!!! It taught me both about an overlay's existence and how it works.
 
 for finer details on the builder function itself in the nix directory
 
-see: [birdee.nixperts.neovimBuilder](./doc/nvimBuilder.txt)
+see :help [nixCats.flake.nixperts.nvimBuilder](./nixCatsHelp/nvimBuilder.txt)
 
 If you are new to nix, dont worry too much if you dont get all of that one, 
 
