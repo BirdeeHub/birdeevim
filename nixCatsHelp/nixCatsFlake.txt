@@ -1,5 +1,5 @@
 =======================================================================================
-Birdee's Neovim Flake                                           *birdee.flake*
+Flake Help                                                      *nixCats.flake*
 
 A Lua-natic's neovim flake, with extra cats! nixCats!;
 
@@ -18,7 +18,7 @@ the flake in your Lua, see:
 :help nixCats
 
 =======================================================================================
-Flake Inputs:                                            *birdee.flake.inputs*
+Flake Inputs:                                            *nixCats.flake.inputs*
 
 If they dont have a build step, name the plugins you import from github 
 plugins-somepluginname 
@@ -41,13 +41,13 @@ You will import them into a category of the builder under lspsAndDeps,
 unless they are for build time, then put them under propagatedBuildInputs
 
 =======================================================================================
-Flake Outputs Introduction                              *birdee.flake.outputs*
+Flake Outputs Introduction                              *nixCats.flake.outputs*
 
 With our inputs to our flake taken care of:
 
 First, we call flake utils to get system variable for all default systems.
 
-                                               *birdee.flake.outputs.overlays*
+                                               *nixCats.flake.outputs.overlays*
 Then, we define our overlays. We have 2 main ones to discuss.
 
 -- The first is ./nix/pluginOverlay:
@@ -62,10 +62,6 @@ with 'pkgs.neovimPlugins.somepluginname'
 -- The second is ./customPluginOverlay:
 If you need to interact with one of these overlays, it will be this one.
 You should not need to do it much. 
-As of writing this, I have only needed it once.
-At the time of saying that, I only am missing lua config for debug and lint.
-I can install the programs fine I just dont know how to do neovim.
-I needed it for markdown-preview of all things.
 
 It is used for defining plugins with build steps that 
 were not well handled by nixpkgs.
@@ -76,12 +72,16 @@ with 'pkgs.customPlugins.somepluginname'
 
 After the overlays we wish to include are all defined:
 
-we now generate the pkgs set that contains all the nixpkgs and overlay packages, 
-and the system variable from flake-utils.
-It will contain all our plugins and programs we will need from this point on.
+We now generate the pkgs set that contains all the nixpkgs and overlay packages, 
+and the system variable from flake-utils. If you imported any flakes with
+overlays, add their overlay here as well.
+
+pkgs will contain all our plugins and programs we will need from this point on.
+with the occasional exception of a flake that has no overlays, which you just
+add to a category directly.
 
 ---------------------------------------------------------------------------------------
-Neovim Builder Creation:                        *birdee.flake.outputs.builder*
+Neovim Builder Creation:                        *nixCats.flake.outputs.builder*
 
 we now create a builder function that takes 2 arguments. 
 A set of categories and a set of settings. 
@@ -89,7 +89,7 @@ It does this by importing nix/NeovimBuilder.
 
 The default settings for the settings set are defined below. 
 They did not make sense to include in the categories system.
-see :help birdee.flake.outputs.settings
+see :help nixCats.flake.outputs.settings
 
 the set of categories is a set of named boolean values like this:
 { categoryname1 = true; categoryname2 = false; etc... }
@@ -131,24 +131,27 @@ and provide it a set containing the following info.
       If you don't know what that is, see here:
 github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
 
+- 2 flexible sets of categories, one for python and the other for python3,
+  each containing a list of FUNCTIONS that return lists of python packages.
+  These functions are the same thing that you would pass to python.withPackages.
+
+- a flexible set of categories, each containing a list of FUNCTIONS 
+  that return lists of extra Lua packages.
+  These functions are the same thing that you would pass to lua.withPackages.
 }
 
-There are some extra available arguments for extraPythonPackages and python 3
-and lua and a few others in the arguments for wrapNeovim.
-I have implemented them in the builder already. You can make categories of them,
-the categories would include lists of what you would usually include.
-So feel free to create a new set of categories for them if you know 
-what they are for. 
+how this function actually works is covered in 
+:help nixCats.flake.nixperts.nvimBuilder
 
 ---------------------------------------------------------------------------------------
-Settings Profiles:                             *birdee.flake.outputs.settings*
-                                                 *birdee.flake.outputs.RCName*
+Settings Profiles:                             *nixCats.flake.outputs.settings*
+                                                 *nixCats.flake.outputs.RCName*
 These are the defaults:
   settings = {
     defaults = {
       # do you want to use lua from this flake?
       # or would you rather do it in your .config/nvim?
-      # nixCats will work either way.
+      # nixCats and this help will work either way.
       wrapRc = true;
 
       # RCName: the name of folder to require within lua directory.
@@ -169,7 +172,7 @@ If you wish to have something different, you may define some or all of these
 options, in a set within the settings set to be included in the packaging section below.
 
 ---------------------------------------------------------------------------------------
-Package Generation:                           *birdee.flake.outputs.packaging*
+Package Generation:                           *nixCats.flake.outputs.packaging*
 
 generate packages by calling that builder function we just created.
 
@@ -189,19 +192,16 @@ If you have categories with the same name in
 multiple different sets outlined above in the builder,
 all plugins in those categories will be
 included when you set "thatname = true;" here.
-hence, AI = true; will include the AI lspsAndDeps category,
-as well as the AI startup category.
+hence, general = true; will include the general lspsAndDeps category,
+as well as the general startupPlugins category.
 
 an example package definition:
 
-        birdeeVim = birdeeVimBuild settings.defaults {
-          markdown = true;
-          customPlugins = true;
+        nixCats = nixVimBuilder settings.nixCats {
+          custom = true;
           gitPlugins = true;
-          AI = false;
           general = true;
           neonixdev = true;
-          kotlin = true;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it
@@ -220,7 +220,7 @@ It returns a lua table of the same format.
 see :help nixCats
 
 ---------------------------------------------------------------------------------------
-Flake devShell and package definitions         *birdee.flake.outputs.packages*
+Flake devShell and package definitions         *nixCats.flake.outputs.packages*
 
 Put the names of the packages you created in the above 
 packaging section into the appropriate flake output category, 

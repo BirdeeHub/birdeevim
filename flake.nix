@@ -4,7 +4,7 @@
         # install debuggers for languages (dap & dapui installed)
         # install formatters
 
-    # see :help birdee.flake.inputs
+    # see :help nixCats.flake.inputs
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils = {
@@ -80,13 +80,13 @@
     };
   };
 
-  # see :help birdee.flake.outputs
+  # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     # This line makes this package availeable for all systems
     # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # see :help birdee.flake.outputs.overlays
+        # see :help nixCats.flake.outputs.overlays
 
         # If you cant import them with the standard overlay, 
         # define a derivation in ./customPluginOverlay.nix
@@ -112,7 +112,7 @@
           # config.allowUnfree = true;
         };
 
-        # see :help birdee.flake.outputs.builder
+        # see :help nixCats.flake.outputs.builder
 
         # Now that our plugin inputs/overlays and pkgs have been defined,
         # We define a function to facilitate package building for particular categories
@@ -120,7 +120,7 @@
         # with a boolean value for each, and a set of settings
         # and then it imports NeovimBuilder.nix, passing it that categories set but also
         # our other information. This allows us to define our categories later.
-        birdeeVimBuild = settings: categories: (import ./nix/NeovimBuilder.nix {
+        nixVimBuilder = settings: categories: (import ./nix/NeovimBuilder.nix {
           # these are required
           inherit self;
           inherit pkgs;
@@ -128,11 +128,11 @@
           inherit categories;
           inherit settings;
 
-          # see :help birdee.flake.outputs.builder
+          # see :help nixCats.flake.outputs.builder
           # to define and use a new category, simply add a new list to the set here, 
           # and later, you will include categoryname = true; in the set you
           # provide when you build the package using this builder function.
-          # see :help birdee.flake.outputs.packaging for info on that section.
+          # see :help nixCats.flake.outputs.packaging for info on that section.
 
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
@@ -294,10 +294,10 @@
           };
 
           # there are more available sections, extraPythonPackages, extraPython3Packages, extraLuaPackages.
-          # see :help birdee.flake.outputs.builder and :help birdee.nixperts.neovimBuilder
+          # see :help nixCats.flake.outputs.builder and :help nixCats.flake.nixperts.nvimBuilder
         });
 
-        # see :help birdee.flake.outputs.settings
+        # see :help nixCats.flake.outputs.settings
         settings = {
           birdee = {
             wrapRc = true;
@@ -326,8 +326,8 @@
         # This entire set is also passed to nixCats for querying within the lua.
         # It is passed as a Lua table with values name = boolean. same as here.
 
-        # see :help birdee.flake.outputs.packaging
-        birdeeVim = birdeeVimBuild settings.birdee {
+        # see :help nixCats.flake.outputs.packaging
+        birdeeVim = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
           bash = true;
           cmp = true;
@@ -362,7 +362,7 @@
           # but I got carried away and it worked FIRST TRY.
           # see :help nixCats
         };
-        noAIneodev = birdeeVimBuild settings.birdee {
+        noAIneodev = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -387,7 +387,7 @@
             thing4 = "couch is for scratching";
           };
         };
-        coffeeVim = birdeeVimBuild settings.birdee {
+        coffeeVim = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -400,7 +400,7 @@
           java = true;
           colorscheme = "onedark";
         };
-        kotlinVim = birdeeVimBuild settings.birdee {
+        kotlinVim = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -418,7 +418,7 @@
 
 
 
-      # see :help birdee.flake.outputs.packages
+      # see :help nixCats.flake.outputs.packages
 
       { # choose your package
         overlays = {

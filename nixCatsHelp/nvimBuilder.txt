@@ -1,12 +1,12 @@
 =================================================================================
-INTRODUCTION                                     *birdee.nixperts.neovimBuilder*
+INTRODUCTION                              *nixCats.flake.nixperts.nvimBuilder*
 
 Wait, why is this code? 
 I could not find a better way to incorporate code examples without
 just doing this and including more comments than code.
 
 --------------------------------------------------------------------------
-                                        *birdee.nixperts.neovimBuilder.arguments*
+                                *nixCats.flake.nixperts.nvimBuilder.arguments*
 # this function takes a set with the following items:
 { 
   # our arguments ? and their default values
@@ -36,39 +36,53 @@ just doing this and including more comments than code.
     # when packaging, one of these is passed, but it may not have everything.
     # update the config with whatever new options were passed
     config = {
-      RCName = "myLuaConf";
+      wrapRc = true;
+      RCName = "";
       viAlias = false;
       vimAlias = false;
       withNodeJs = false;
       withRuby = true;
       extraName = "";
       withPython3 = true;
-      wrapRc = true;
     } // settings;
 
 --------------------------------------------------------------------------
-                                        *birdee.nixperts.neovimBuilder.opener*
+                                   *nixCats.flake.nixperts.nvimBuilder.opener*
 
     # package the entire flake as plugin
-    # and create our customRC to call it
-    customRC = if config.RCName != "" then 
-        "lua require('" + config.RCName + "')" 
-      else "";
     LuaConfig = pkgs.stdenv.mkDerivation {
-      name = config.RCName;
-      builder = builtins.toFile "builder.sh" ''
+        name = config.RCName;
+        builder = builtins.toFile "builder.sh" ''
+          source $stdenv/setup
+          mkdir -p $out
+          cp -r ${self}/* $out
+        '';
+      };
+
+    # see :help nixCats
+    nixCats = pkgs.stdenv.mkDerivation {
+      name = "nixCats";
+      builder = let
+        cats = builtins.toFile "nixCats.lua" 
+          "return ${(import ./utils.nix).luaTablePrinter categories}";
+      in builtins.toFile "builder.sh" ''
         source $stdenv/setup
-        mkdir -p $out
-        cp -r ${self}/* $out
+        mkdir -p $out/lua
+        mkdir -p $out/doc
+        cp ${cats} $out/lua/nixCats.lua
+        cp -r ${self}/nixCatsHelp/* $out/doc
       '';
     };
 
-    # generate nixCats
-    # see :help nixCats
-    nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
+    wrapRc = if config.RCName != "" then config.wrapRc else false;
+
+    # and create our customRC to call it
+    customRC = if wrapRc then "lua require('" + config.RCName + "')" else "";
+
+    extraPlugins = if wrapRc then [ nixCats LuaConfig ] else [ nixCats ];
 
 ---------------------------------------------------------------------------------
-                                  *birdee.nixperts.neovimBuilder.basicFlatmap*
+                             *nixCats.flake.nixperts.nvimBuilder.basicFlatmap*
 
     # this is what allows for dynamic packaging in flake.nix
     # It includes categories marked as true, then flattens to a single list
@@ -81,14 +95,14 @@ just doing this and including more comments than code.
     # is a list of categories of packages, you can filter this way
 
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs;
-    start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
+    start = extraPlugins ++ filterAndFlatten startupPlugins;
     opt = filterAndFlatten optionalPlugins;
 
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
     # It has cmake in it I think among other things?
 
 ---------------------------------------------------------------------------------
-                                   *birdee.nixperts.neovimBuilder.mapWrapArgCats*
+                           *nixCats.flake.nixperts.nvimBuilder.mapWrapArgCats*
 
     # This one filters and flattens like above but for attrs of attrs 
     # and then maps name and value
@@ -117,7 +131,7 @@ just doing this and including more comments than code.
 
 
 ---------------------------------------------------------------------------------
-                               *birdee.nixperts.neovimBuilder.usingWrapArgMap*
+                          *nixCats.flake.nixperts.nvimBuilder.usingWrapArgMap*
 
     # we are going to provide a function to map name and value
     # into a wrapper argument that sets an environment variable
@@ -154,33 +168,13 @@ just doing this and including more comments than code.
       ++ (FandF_envVarSet environmentVariables)
       ++ (FandF_passWrapperArgs extraWrapperArgs)
 
-      # I learned this from https://github.com/mrcjkb/kickstart-nix.nvim
-      # Then I found more info at
+      # More info at:
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
 
-      # with the kickstarter method I did this before:
-      # outside of extraMakeWrapperArgs I would do:
-
-      # runtimedeps = filterAndFlatten lspsAndDeps;
-
-      # and then in here I would do:
-
-      # (pkgs.lib.optional (runtimedeps != [])
-      #   ''--prefix PATH : "${pkgs.lib.makeBinPath runtimedeps}"'')
-
-      # vs now I do (after putting in the other 3 arguments above)
-
-      # (FandF_WrapRuntimeDeps lspsAndDeps)
-
-      # Im pretty sure mine takes slightly longer to evaluate the flake, but
-      # it shouldnt have any other impact, and that is a very small portion
-      # of the overall install time. Plus mine calls unique on it.
-      # I like my method because it was a natural extension of me writing a
-      # generalized system for packaging wrapper args by category.
     );
 
 ---------------------------------------------------------------------------------
-                                 *birdee.nixperts.neovimBuilder.extraPackages*
+                            *nixCats.flake.nixperts.nvimBuilder.extraPackages*
 
     # extraPythonPackages and the like require FUNCTIONS that return lists.
     # so we make a function that returns a function that returns lists.
@@ -197,7 +191,7 @@ just doing this and including more comments than code.
       uniquifiedList);
 
 ---------------------------------------------------------------------------------
-                              *birdee.nixperts.neovimBuilder.generatingNeovim*
+                         *nixCats.flake.nixperts.nvimBuilder.generatingNeovim*
 
     # here is where we add our propagated build dependencies
     myNeovimUnwrapped = pkgs.neovim-unwrapped.overrideAttrs (prev: {
@@ -208,7 +202,7 @@ just doing this and including more comments than code.
   # the following is just the regular pkgs.wrapNeovim
   # except it also accepts wrapRc as an argument
 (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
-  wrapRc = config.wrapRc;
+  inherit wrapRc;
   inherit extraMakeWrapperArgs;
   viAlias = config.viAlias;
   vimAlias = config.vimAlias;

@@ -18,9 +18,10 @@
   , extraLuaPackages ? {}
   }:
   # for a more extensive guide to this file
-  # see :help birdee.nixperts.neovimBuilder
+  # see :help nixCats.flake.nixperts.nvimBuilder
   let
     config = {
+      wrapRc = true;
       RCName = "";
       viAlias = false;
       vimAlias = false;
@@ -28,35 +29,39 @@
       withRuby = true;
       extraName = "";
       withPython3 = true;
-      wrapRc = true;
     } // settings;
 
     # package the entire flake as plugin
-    # and create our customRC to call it
-    customRC = if config.RCName != "" && config.wrapRc != false then 
-        "lua require('" + config.RCName + "')" 
-      else "";
-    # this if else just helps with goto definition in an unwrapped lua config
-    LuaConfig = if config.wrapRc && customRC != ""
-      then pkgs.stdenv.mkDerivation {
+    LuaConfig = pkgs.stdenv.mkDerivation {
         name = config.RCName;
         builder = builtins.toFile "builder.sh" ''
           source $stdenv/setup
           mkdir -p $out
           cp -r ${self}/* $out
         '';
-      }
-      else pkgs.stdenv.mkDerivation {
-        name = config.RCName;
-        builder = builtins.toFile "builder.sh" ''
-          source $stdenv/setup
-          mkdir -p $out
-          cp -r ${self}/doc $out
-        '';
       };
 
     # see :help nixCats
-    nixCats = import ./nixCats.nix { inherit pkgs; inherit categories; };
+    nixCats = pkgs.stdenv.mkDerivation {
+      name = "nixCats";
+      builder = let
+        cats = builtins.toFile "nixCats.lua" 
+          "return ${(import ./utils.nix).luaTablePrinter categories}";
+      in builtins.toFile "builder.sh" ''
+        source $stdenv/setup
+        mkdir -p $out/lua
+        mkdir -p $out/doc
+        cp ${cats} $out/lua/nixCats.lua
+        cp -r ${self}/nixCatsHelp/* $out/doc
+      '';
+    };
+
+    wrapRc = if config.RCName != "" then config.wrapRc else false;
+
+    # and create our customRC to call it
+    customRC = if wrapRc then "lua require('" + config.RCName + "')" else "";
+
+    extraPlugins = if wrapRc then [ nixCats LuaConfig ] else [ nixCats ];
 
     # this is what allows for dynamic packaging in flake.nix
     # It includes categories marked as true, then flattens to a single list
@@ -66,7 +71,7 @@
     # I didnt add stdenv.cc.cc.lib, so I would suggest not removing it.
     # It has cmake in it I think among other things?
     buildInputs = [ pkgs.stdenv.cc.cc.lib ] ++ filterAndFlatten propagatedBuildInputs;
-    start = [ nixCats LuaConfig ] ++ filterAndFlatten startupPlugins;
+    start = extraPlugins ++ filterAndFlatten startupPlugins;
     opt = filterAndFlatten optionalPlugins;
 
     # For wrapperArgs:
@@ -122,7 +127,7 @@
   in
   # add our lsps and plugins and our config, and wrap it all up!
 (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
-  wrapRc = if customRC != "" then config.wrapRc else false;
+  inherit wrapRc;
   inherit extraMakeWrapperArgs;
   viAlias = config.viAlias;
   vimAlias = config.vimAlias;
@@ -145,4 +150,3 @@
   withRuby = config.withRuby;
   extraName = config.extraName;
 }
-
