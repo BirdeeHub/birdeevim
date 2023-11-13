@@ -1,7 +1,7 @@
 {
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
         # TO DO: 
-        # install debuggers for languages (dap & dapui installed)
+        # connect debuggers for languages (dap & dapui installed)
         # install formatters
 
     # see :help nixCats.flake.inputs
@@ -34,11 +34,6 @@
       url = "github:folke/which-key.nvim";
       flake = false;
     };
-    # "plugins-fidget" = {
-    # how do I do this????!!!!
-    #   url = "https://github.com/j-hui/fidget.nvim/tree/legacy";
-    #   flake = false;
-    # };
     "plugins-lualine" = {
       url = "github:nvim-lualine/lualine.nvim";
       flake = false;
