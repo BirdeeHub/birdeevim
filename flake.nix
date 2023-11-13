@@ -186,7 +186,7 @@
               nixd
             ];
             bash = with pkgs; [
-              # bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
+              bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
             ];
           };
 
@@ -312,7 +312,6 @@
           };
           unwrappedLua = {
             wrapRc = false;
-            RCName = "myLuaConf";
             viAlias = true;
             vimAlias = true;
           };
@@ -414,6 +413,25 @@
           java = false; #is included in kotlin category
           colorscheme = "onedark";
         };
+        birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
+          generalBuildInputs = true;
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = true;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          test = true;
+          lspDebugMode = false;
+          colorscheme = "onedark";
+        };
+
       in
 
 
@@ -427,6 +445,7 @@
           noAIneodev = final: prev: { inherit noAIneodev; };
           coffeeVim = final: prev: { inherit coffeeVim; };
           kotlinVim = final: prev: { inherit kotlinVim; };
+          birdeeUnwrapped = final: prev: { inherit kotlinVim; };
         };
         devShell = pkgs.mkShell {
           name = "neodevshell";
@@ -441,6 +460,7 @@
           inherit noAIneodev;
           inherit coffeeVim;
           inherit kotlinVim;
+          inherit birdeeUnwrapped;
         };
       }
 

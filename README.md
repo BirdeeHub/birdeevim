@@ -1,5 +1,15 @@
 # A Lua-natic's neovim flake: birdeeVim
 
+This is my configuration. 
+
+It has ai and other random stuff, 
+
+so if you are using the kickstarter version, you can see a few more examples here.
+
+for the kickstarter version, see [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)
+
+Its basically this but the lua config is less nested and it doesnt have a bunch of superfluous categories and stuff.
+
 :help [nixCats.flake](./nixCatsHelp/nixCatsFlake.txt)
 
 :help [nixCats](./nixCatsHelp/nixCats.nix)
