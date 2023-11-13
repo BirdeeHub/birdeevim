@@ -61,10 +61,11 @@ require('lualine').setup({
       {
         'filename', path = 1, status = true,
       },
-      'lsp_progress',
+      -- 'lsp_progress',
     },
   },
 })
+require('fidget').setup({})
 require('nvim-surround').setup()
 
 require('harpoon').setup()

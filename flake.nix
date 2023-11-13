@@ -67,6 +67,10 @@
       url = "github:chentoast/marks.nvim";
       flake = false;
     };
+    "plugins-fidget" = {
+      url = "github:j-hui/fidget.nvim/legacy";
+      flake = false;
+    };
     nixd.url = "github:nix-community/nixd";
     # I use this for autocomplete filler especially for comments. 
     "codeium" = {
@@ -245,7 +249,7 @@
               harpoon
               hlargs
               marks
-              # fidget # once you figure out how to import from legacy tag
+              fidget
             ];
             general = with pkgs.vimPlugins; [
               lspkind-nvim
@@ -256,7 +260,7 @@
               nvim-surround
               eyeliner-nvim
               indent-blankline-nvim
-              lualine-lsp-progress
+              # lualine-lsp-progress
               undotree
               nvim-web-devicons
               nui-nvim
