@@ -14,6 +14,10 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
+    "bash-debug-adapter" = {
+      url = "github:rogalmic/vscode-bash-debug";
+      flake = false;
+    };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     # Theme
@@ -186,6 +190,7 @@
             ];
             bash = with pkgs; [
               bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
+              pkgs.stubbornRuntimeDeps.bash-debug-adapter
             ];
           };
 
@@ -312,7 +317,6 @@
           unwrappedLua = {
             wrapRc = false;
             viAlias = true;
-            vimAlias = true;
           };
         };
 

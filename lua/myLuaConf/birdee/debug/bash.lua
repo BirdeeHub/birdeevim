@@ -1,24 +1,22 @@
--- local dap = require "dap"
--- dap.adapters.sh = {
---     type = "executable",
---     command = "bashdb",
--- }
--- dap.configurations.sh = {
---     {
---         name = "Launch Bash debugger",
---         type = "sh",
---         request = "launch",
---         program = "${file}",
---         cwd = "${fileDirname}",
---         -- pathBashdb = BASHDB_DIR .. "/bashdb",
---         -- pathBashdbLib = BASHDB_DIR,
---         -- pathBash = "bash",
---         -- pathCat = "cat",
---         -- pathMkfifo = "mkfifo",
---         -- pathPkill = "pkill",
---         env = {},
---         args = {},
---         -- showDebugOutput = true,
---         -- trace = true,
---     }
--- }
+local dap = require "dap"
+dap.adapters.sh = {
+    type = 'executable',
+    command = vim.fn.exepath('bash-debug-adapter')
+}
+dap.configurations.sh = {
+    {
+        name = "Launch Bash Debugger",
+        type = "sh",
+        request = "launch",
+        program = "${file}",
+        cwd = "${fileDirname}",
+        pathBashdb = vim.fn.exepath('bashdb'),
+        pathBashdbLib = vim.fn.fnamemodify(vim.fn.exepath('bashdb'), ":h") .. "/share/bashdb",
+        pathBash = "bash",
+        pathCat = "cat",
+        pathMkfifo = "mkfifo",
+        pathPkill = "pkill",
+        env = {},
+        args = {},
+    }
+}

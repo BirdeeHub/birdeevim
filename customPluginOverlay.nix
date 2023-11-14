@@ -1,6 +1,11 @@
 inputs: let
   customPluginOverlay = self: super: { 
+    stubbornRuntimeDeps = {
+      # this is not accurate.
+      bash-debug-adapter = inputs.bash-debug-adapter;
+    };
     customPlugins = {
+
 
       # reddit user bin-c found this link for me,
       # and I adapted the funtion to my overlay

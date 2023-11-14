@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bash-debug-adapter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1613339650,
+        "narHash": "sha256-YTMjqSzbtiR23yi344lHEH9Tj5CiX6ni/NIySAmtMSk=",
+        "owner": "rogalmic",
+        "repo": "vscode-bash-debug",
+        "rev": "e9ae6ea07c05ce621d2f25b899b5560d000d9c57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rogalmic",
+        "repo": "vscode-bash-debug",
+        "type": "github"
+      }
+    },
     "codeium": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -268,11 +284,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1697038389,
-        "narHash": "sha256-hbzFPXyQQxJObRdb+CsylUXii29UfFV7866WWgWYs6Y=",
+        "lastModified": 1699966122,
+        "narHash": "sha256-zEN3ET7jfXpIKYeYh/z4xekOBOoaFS+n0q3oL3sVh+0=",
         "owner": "nix-community",
         "repo": "nixd",
-        "rev": "29904e121cc775e7caaf4fffa6bc7da09376a43b",
+        "rev": "b3bb9ea7cd3c2f07c89779a474d6468b2c11e303",
         "type": "github"
       },
       "original": {
@@ -550,11 +566,11 @@
     "plugins-lspconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1699752146,
-        "narHash": "sha256-ULNq1G3Ks5DVzureNF258PlCi3StzCl1oEEK6BBf+28=",
+        "lastModified": 1699962261,
+        "narHash": "sha256-oPE03P95sbQa+S3uqwoh3mRJq91p7M88923fR4mnxEQ=",
         "owner": "neovim",
         "repo": "nvim-lspconfig",
-        "rev": "90a28fd7637b66e055af62387ecee06f7cbd3173",
+        "rev": "0a0682d4646a6869b85a4e4d0e30da5ef8b11f66",
         "type": "github"
       },
       "original": {
@@ -667,6 +683,7 @@
     },
     "root": {
       "inputs": {
+        "bash-debug-adapter": "bash-debug-adapter",
         "codeium": "codeium",
         "flake-utils": "flake-utils_2",
         "nixd": "nixd",
