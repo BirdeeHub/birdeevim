@@ -105,11 +105,9 @@
 
         nixVimBuilder = settings: categories: (import ./builder {
           # these are required
-          inherit self;
-          inherit pkgs;
+          inherit self pkgs;
           # you supply these when you apply this function
-          inherit categories;
-          inherit settings;
+          inherit categories settings;
 
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
@@ -234,7 +232,6 @@
               nvim-surround
               eyeliner-nvim
               indent-blankline-nvim
-              # lualine-lsp-progress
               undotree
               nvim-web-devicons
               nui-nvim
@@ -407,11 +404,7 @@
         };
         packages = {
           default = birdeeVim;
-          inherit birdeeVim;
-          inherit noAIneodev;
-          inherit coffeeVim;
-          inherit kotlinVim;
-          inherit birdeeUnwrapped;
+          inherit birdeeVim noAIneodev coffeeVim kotlinVim birdeeUnwrapped;
         };
       }
 
