@@ -1,5 +1,5 @@
 inputs: let
-  customPluginOverlay = self: super: { 
+  customBuildsOverlay = self: super: { 
     stubbornRuntimeDeps = {
       # this is not accurate.
       bash-debug-adapter = inputs.bash-debug-adapter;
@@ -43,5 +43,4 @@ inputs: let
     };
   };
 in
-customPluginOverlay
-
+customBuildsOverlay

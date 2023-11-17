@@ -91,51 +91,25 @@
       let
         # see :help nixCats.flake.outputs.overlays
 
-        # If you cant import them with the standard overlay, 
-        # define a derivation in ./customPluginOverlay.nix
-        # if it has a build step, do that there.
-        # afterwards, you can add as pkgs.customPlugins.pluginname
-        # If you do that, don't name the flake input "plugins-something",
-        # because that would be loaded by the standard overlay.
-        customPluginOverlay = import ./customPluginOverlay.nix inputs;
-
-        # Apply the overlays and load nixpkgs as `pkgs`
-        # Once we add these overlays to our nixpkgs, we are able to
-        # use `pkgs.neovimPlugins`, which is a map of our plugins.
-        # or use `pkgs.customPlugins`, which is a map of our custom built plugins.
-        standardPluginOverlay = import ./nix/pluginOverlay.nix inputs;
+        overlays = (import ./overlays inputs) ++ [
+          # add any flake overlays here.
+          inputs.nixd.outputs.overlays.default
+          inputs.codeium.outputs.overlays.${system}.default
+        ];
         pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            standardPluginOverlay
-            customPluginOverlay
-            inputs.codeium.outputs.overlays.${system}.default
-            inputs.nixd.outputs.overlays.default
-          ];
+          inherit system overlays;
           # config.allowUnfree = true;
         };
 
         # see :help nixCats.flake.outputs.builder
 
-        # Now that our plugin inputs/overlays and pkgs have been defined,
-        # We define a function to facilitate package building for particular categories
-        # what that function does is it intakes a set of categories 
-        # with a boolean value for each, and a set of settings
-        # and then it imports NeovimBuilder.nix, passing it that categories set but also
-        # our other information. This allows us to define our categories later.
-        nixVimBuilder = settings: categories: (import ./nix/NeovimBuilder.nix {
+        nixVimBuilder = settings: categories: (import ./builder {
           # these are required
           inherit self;
           inherit pkgs;
           # you supply these when you apply this function
           inherit categories;
           inherit settings;
-
-          # see :help nixCats.flake.outputs.builder
-          # to define and use a new category, simply add a new list to the set here, 
-          # and later, you will include categoryname = true; in the set you
-          # provide when you build the package using this builder function.
-          # see :help nixCats.flake.outputs.packaging for info on that section.
 
           # propagatedBuildInputs:
           # this section is for dependencies that should be available
@@ -344,24 +318,8 @@
           java = false; # is included in kotlin category
           kotlin = true;
           test = true;
-          # this does not have an associated category of plugins, 
-          # but lua can still check for it
           lspDebugMode = false;
-          # you could also pass something else:
           colorscheme = "onedark";
-          theWorstCat = {
-            thing1 = [ "MEOW" "HISSS" ];
-            thing2 = [
-              {
-                thing3 = [ "give" "treat" ];
-              }
-              "I LOVE KEYBOARDS"
-            ];
-            thing4 = "couch is for scratching";
-          };
-          # you could :lua print(vim.inspect(require('nixCats').theWorstCat))
-          # I honestly dont know what you would need a table like this for,
-          # but I got carried away and it worked FIRST TRY.
           # see :help nixCats
         };
         noAIneodev = nixVimBuilder settings.birdee {
@@ -378,16 +336,6 @@
           lspDebugMode = true;
           test = true;
           colorscheme = "onedark";
-          theWorstCat = {
-            thing1 = [ "MEOW" "HISSS" ];
-            thing2 = [
-              {
-              thing3 = [ "give" "treat" ];
-              }
-              "I LOVE KEYBOARDS"
-            ];
-            thing4 = "couch is for scratching";
-          };
         };
         coffeeVim = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
