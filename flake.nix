@@ -72,15 +72,11 @@
     };
     nixd.url = "github:nix-community/nixd";
     # I use this for autocomplete filler especially for comments. 
-    "codeium" = {
-      url = "github:Exafunction/codeium.nvim";
-    };
+    codeium.url = "github:Exafunction/codeium.nvim";
     # I ask this questions I couldnt google the answer to and/or
     # need things I havent heard of. Its better than gpt and has context.
     # It also occasionally helps with goto definition.
-    sg-nvim = {
-      url = "github:sourcegraph/sg.nvim";
-    };
+    sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
 
   # see :help nixCats.flake.outputs
