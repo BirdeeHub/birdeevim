@@ -276,7 +276,7 @@
             # to use a different lua folder other than myLuaConf, change this value:
             RCName = "myLuaConf";
             # so that it finds my ai auth in .local/birdeeVim
-            configDirName = "birdeeVim";
+            configDirName = "birdeevim";
             viAlias = true;
             vimAlias = true;
             withNodeJs = false;
@@ -285,7 +285,7 @@
             withPython3 = true;
           };
           unwrappedLua = {
-            configDirName = "birdeeVim";
+            configDirName = "birdeevim";
             wrapRc = false;
             viAlias = true;
             vimAlias = true;
