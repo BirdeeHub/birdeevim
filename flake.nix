@@ -166,6 +166,7 @@
           startupPlugins = {
             neonixdev = [
               pkgs.vimPlugins.neodev-nvim
+              pkgs.vimPlugins.neoconf-nvim
               pkgs.neovimPlugins.nvim-luaref
             ];
             AI = [
