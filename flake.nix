@@ -283,8 +283,10 @@
             withPython3 = true;
           };
           unwrappedLua = {
+            configDirName = "birdeeVim";
             wrapRc = false;
             viAlias = true;
+            vimAlias = true;
           };
         };
 
