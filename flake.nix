@@ -250,6 +250,12 @@
           # this section is for environmentVariables that should be available
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
+            AI = {
+              # I provision the auth file directly so I don't have to put my token on github
+              # But this is a way you could do it
+              # SRC_ENDPOINT = "https://sourcegraph.com";
+              # SRC_ACCESS_TOKEN = builtins.readFile ./secrets/codyToken;
+            };
             test = {
               BIRDTVAR = "It worked!";
             };
@@ -287,6 +293,13 @@
             withPython3 = true;
           };
           unwrappedLua = {
+            configDirName = "birdeevim";
+            wrapRc = false;
+            withNodeJs = true;
+            viAlias = true;
+            vimAlias = true;
+          };
+          unwrapNOjs = {
             configDirName = "birdeevim";
             wrapRc = false;
             withNodeJs = true;
@@ -383,6 +396,24 @@
           lspDebugMode = false;
           colorscheme = "onedark";
         };
+        noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
+          generalBuildInputs = true;
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = false;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          test = true;
+          lspDebugMode = false;
+          colorscheme = "onedark";
+        };
 
       in
 
@@ -397,7 +428,8 @@
           noAIneodev = final: prev: { inherit noAIneodev; };
           coffeeVim = final: prev: { inherit coffeeVim; };
           kotlinVim = final: prev: { inherit kotlinVim; };
-          birdeeUnwrapped = final: prev: { inherit kotlinVim; };
+          birdeeUnwrapped = final: prev: { inherit birdeeUnwrapped; };
+          noAIunwrapped = final: prev: { inherit noAIunwrapped; };
         };
         devShell = pkgs.mkShell {
           name = "neodevshell";
@@ -408,7 +440,7 @@
         };
         packages = {
           default = birdeeVim;
-          inherit birdeeVim noAIneodev coffeeVim kotlinVim birdeeUnwrapped;
+          inherit birdeeVim noAIneodev coffeeVim kotlinVim birdeeUnwrapped noAIunwrapped;
         };
       }
 
