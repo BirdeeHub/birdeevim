@@ -342,7 +342,6 @@
           # see :help nixCats
         };
         noAIneodev = nixVimBuilder settings.birdee {
-          bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -406,7 +405,6 @@
           colorscheme = "onedark";
         };
         noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
-          bitwarden = true;
           generalBuildInputs = true;
           bash = true;
           cmp = true;
