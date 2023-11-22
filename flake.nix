@@ -254,7 +254,7 @@
               BIRDTVAR = "It worked!";
             };
             bash = {
-              BASHDAP = "${pkgs.stubbornRuntimeDeps.bash-debug-adapter}";
+              BASHDAP = "${pkgs.nixCatsDebug.bash-debug-adapter}";
             };
           };
 
