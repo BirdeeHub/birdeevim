@@ -1,8 +1,9 @@
 local dap = require "dap"
 dap.adapters.sh = {
     type = 'executable',
-    command = vim.fn.exepath('bash-debug-adapter')
+    command = vim.fn.expand('$BASHDAP')
 }
+
 dap.configurations.sh = {
     {
         name = "Launch Bash Debugger",

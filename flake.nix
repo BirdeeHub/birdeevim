@@ -131,7 +131,6 @@
               inputs.codeium.outputs.packages.${system}.codeium-lsp
 
               inputs.sg-nvim.packages.${system}.default
-              pkgs.nodejs
             ];
             java = with pkgs; [
               jdt-language-server
@@ -158,7 +157,7 @@
             ];
             bash = with pkgs; [
               bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-              pkgs.stubbornRuntimeDeps.bash-debug-adapter
+              pkgs.nixCatsDebug.bash-debug-adapter
             ];
           };
 
@@ -254,6 +253,9 @@
             test = {
               BIRDTVAR = "It worked!";
             };
+            bash = {
+              BASHDAP = "${pkgs.stubbornRuntimeDeps.bash-debug-adapter}";
+            };
           };
 
           # If you know what these are, you can provide custom ones by category here.
@@ -279,7 +281,7 @@
             configDirName = "birdeevim";
             viAlias = true;
             vimAlias = true;
-            withNodeJs = false;
+            withNodeJs = true;
             withRuby = true;
             extraName = "";
             withPython3 = true;
@@ -287,6 +289,7 @@
           unwrappedLua = {
             configDirName = "birdeevim";
             wrapRc = false;
+            withNodeJs = true;
             viAlias = true;
             vimAlias = true;
           };

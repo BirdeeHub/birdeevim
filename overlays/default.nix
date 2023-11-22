@@ -2,6 +2,7 @@ inputs: let
   overlaySet = {
 
     customBuilds = import ./customBuildsOverlay.nix inputs;
+    debuggers = import ./debuggerOverlay.nix inputs;
 
     # This overlay grabs all the inputs named in the format
     # `plugins-<pluginName>`
