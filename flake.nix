@@ -277,7 +277,7 @@
             wrapRc = true;
             # to use a different lua folder other than myLuaConf, change this value:
             RCName = "myLuaConf";
-            # so that it finds my ai auth in .local/birdeeVim
+            # so that it finds my ai auth in .local/birdeevim
             configDirName = "birdeevim";
             viAlias = true;
             vimAlias = true;
