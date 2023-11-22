@@ -322,6 +322,7 @@
 
         # see :help nixCats.flake.outputs.packaging
         birdeeVim = nixVimBuilder settings.birdee {
+          bitwarden = true;
           generalBuildInputs = true;
           bash = true;
           cmp = true;
@@ -341,6 +342,7 @@
           # see :help nixCats
         };
         noAIneodev = nixVimBuilder settings.birdee {
+          bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -356,6 +358,7 @@
           colorscheme = "onedark";
         };
         coffeeVim = nixVimBuilder settings.birdee {
+          bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -369,6 +372,7 @@
           colorscheme = "onedark";
         };
         kotlinVim = nixVimBuilder settings.birdee {
+          bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
           telescope = true;
@@ -383,6 +387,7 @@
           colorscheme = "onedark";
         };
         birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
+          bitwarden = true;
           generalBuildInputs = true;
           bash = true;
           cmp = true;
@@ -401,6 +406,7 @@
           colorscheme = "onedark";
         };
         noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
+          bitwarden = true;
           generalBuildInputs = true;
           bash = true;
           cmp = true;
