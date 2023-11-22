@@ -1,6 +1,6 @@
-local username = vim.fn.expand('$USER')
+local userHome = vim.fn.expand('$HOME')
 require'lspconfig'.jdtls.setup {
-  cmd = { "jdt-language-server", "-configuration", "/home/".. username .."/.cache/jdtls/config", "-data", "/home/".. username .."/.cache/jdtls/workspace" },
+  cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
   on_attach = require("myLuaConf.caps-onattach").on_attach,
   filetypes = { "kotlin", "java" },
