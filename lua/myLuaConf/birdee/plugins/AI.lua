@@ -70,6 +70,6 @@ function M.deleteFileIfExists(file_path)
     os.remove(file_path)
   end
 end
-vim.cmd([[command! DeleteSGAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
-vim.cmd([[command! DeleteCodeiumAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
+vim.cmd([[command! ClearSGAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
+vim.cmd([[command! ClearCodeiumAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
 return M
