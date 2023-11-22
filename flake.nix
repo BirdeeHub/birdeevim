@@ -251,10 +251,13 @@
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
             AI = {
-              # I provision the auth file directly so I don't have to put my token on github
+              # I provision the auth in the lua from system path
+              # so I don't have to put my token on github
               # But this is a way you could do it
               # SRC_ENDPOINT = "https://sourcegraph.com";
               # SRC_ACCESS_TOKEN = builtins.readFile ./secrets/codyToken;
+              # this only works if you use the --impure option when building.
+              # SRC_ACCESS_TOKEN = builtins.readFile /absolute/path/to/secrets/codyToken;
             };
             test = {
               BIRDTVAR = "It worked!";
@@ -283,7 +286,7 @@
             wrapRc = true;
             # to use a different lua folder other than myLuaConf, change this value:
             RCName = "myLuaConf";
-            # so that it finds my ai auth in .local/birdeevim
+            # so that it finds my ai auths in ~/.cache/birdeevim
             configDirName = "birdeevim";
             viAlias = true;
             vimAlias = true;
@@ -293,6 +296,7 @@
             withPython3 = true;
           };
           unwrappedLua = {
+            # so that it looks for .config/birdeevim instead
             configDirName = "birdeevim";
             wrapRc = false;
             withNodeJs = true;
@@ -302,7 +306,7 @@
           unwrapNOjs = {
             configDirName = "birdeevim";
             wrapRc = false;
-            withNodeJs = true;
+            withNodeJs = false;
             viAlias = true;
             vimAlias = true;
           };
