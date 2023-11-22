@@ -9,7 +9,7 @@ if (require('sg.auth').valid() == false) then
   local tokenPath = vim.fn.expand("$HOME") .. "/.secrets/codyToken"
   if (bitwardenAuth or vim.fn.filereadable(tokenPath) == 1) then
     local result
-    local handle 
+    local handle
     if bitwardenAuth then
       handle = io.popen("bw get notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34", "r")
     else
@@ -63,3 +63,13 @@ if vim.fn.filereadable(full_file_path) == 0 then
     end
   end
 end
+
+local M = {}
+function M.deleteFileIfExists(file_path)
+  if vim.fn.filereadable(file_path) == 1 then
+    os.remove(file_path)
+  end
+end
+vim.cmd([[command! DeleteSGAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
+vim.cmd([[command! DeleteCodeiumAuth lua require('myLuaConf.birdee.plugins.AI').deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
+return M
