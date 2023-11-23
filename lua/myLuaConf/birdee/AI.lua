@@ -31,8 +31,7 @@ if(require('nixCats').AI) then
     return result
   end
 
-  local authItemIDs = require('nixCats').bitwardenItemIDs
-  local bitwardenAuth = require('nixCats').bitwarden
+  local bitwardenAuth = require('nixCats').bitwardenItemIDs
   local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
   local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
   local session
@@ -47,7 +46,7 @@ if(require('nixCats').AI) then
       local result
       local handle
       if bitwardenAuth then
-        handle = io.popen("bw get --nointeraction --session " .. session .. " " .. authItemIDs.cody, "r")
+        handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.cody, "r")
       else
         handle = io.open(tokenPath, "r")
       end
@@ -78,7 +77,7 @@ if(require('nixCats').AI) then
       local result
       local handle
       if bitwardenAuth then
-        handle = io.popen("bw get --nointeraction --session " .. session .. " " .. authItemIDs.codeium, "r")
+        handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.codeium, "r")
       else
         handle = io.open(keyPath, "r")
       end
