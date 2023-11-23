@@ -127,6 +127,9 @@
               ripgrep
               fd
             ];
+            bitwarden = with pkgs; [
+              bitwarden-cli
+            ];
             AI = [
               inputs.codeium.outputs.packages.${system}.codeium-lsp
 
@@ -312,7 +315,10 @@
           };
         };
 
-
+        bitwardenItemIDs = {
+          codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
+          cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
+        };
 
         # And then build a package with specific categories from above here:
         # All categories you wish to include must be marked true,
@@ -322,6 +328,7 @@
 
         # see :help nixCats.flake.outputs.packaging
         birdeeVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
           bash = true;
@@ -357,6 +364,7 @@
           colorscheme = "onedark";
         };
         coffeeVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
@@ -371,6 +379,7 @@
           colorscheme = "onedark";
         };
         kotlinVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
           cmp = true;
@@ -386,6 +395,7 @@
           colorscheme = "onedark";
         };
         birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
+          inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
           bash = true;
