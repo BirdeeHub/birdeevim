@@ -7,3 +7,6 @@ require("myLuaConf.birdee.format")
 require("myLuaConf.birdee.keymaps")
 require("myLuaConf.clippy")
 require("myLuaConf.birdee.opts")
+if(require('nixCats').AI) then
+  require('myLuaConf.birdee.plugins.AI')
+end

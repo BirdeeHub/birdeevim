@@ -12,10 +12,6 @@ if(categories.treesitter) then
   require('myLuaConf.birdee.plugins.nestsitter')
 end
 
-if(categories.AI) then
-  require('myLuaConf.birdee.plugins.AI')
-end
-
 if(categories.cmp) then
   require('myLuaConf.birdee.plugins.completion')
 end
