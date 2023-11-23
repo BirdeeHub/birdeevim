@@ -1,5 +1,4 @@
 if(require('nixCats').AI) then
-  local M = {}
   local function AuthTerminal()
     local result
     local handle
@@ -103,6 +102,7 @@ if(require('nixCats').AI) then
     end
   end
 
+  local M = {}
   function M.deleteFileIfExists(file_path)
     if vim.fn.filereadable(file_path) == 1 then
       os.remove(file_path)
