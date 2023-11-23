@@ -110,5 +110,6 @@ if(require('nixCats').AI) then
   end
   vim.cmd([[command! ClearSGAuth lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
   vim.cmd([[command! ClearCodeiumAuth lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
+  vim.cmd([[command! ClearBitwardenData lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
   return M
 end
