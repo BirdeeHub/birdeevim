@@ -81,8 +81,6 @@
 
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    # This line makes this package availeable for all systems
-    # ("x86_64-linux", "aarch64-linux", "i686-linux", "x86_64-darwin",...)
     flake-utils.lib.eachDefaultSystem (system:
       let
         # see :help nixCats.flake.outputs.overlays
@@ -105,20 +103,11 @@
           # you supply these when you apply this function
           inherit categories settings;
 
-          # propagatedBuildInputs:
-          # this section is for dependencies that should be available
-          # at BUILD TIME for plugins. WILL NOT be available to PATH
-          # However, they WILL be available to the shell 
-          # and neovim path when using nix develop
           propagatedBuildInputs = {
             generalBuildInputs = with pkgs; [
             ];
           };
 
-          # lspsAndRuntimeDeps:
-          # this section is for dependencies that should be available
-          # at RUN TIME for plugins. Will be available to path within neovim terminal
-          # this includes LSPs
           lspsAndRuntimeDeps = {
             general = with pkgs; [
               universal-ctags
@@ -164,7 +153,6 @@
             ];
           };
 
-          # This is for plugins that will load at startup without using packadd:
           startupPlugins = {
             neonixdev = [
               pkgs.vimPlugins.neodev-nvim
@@ -241,20 +229,15 @@
             ];
           };
 
-          # not loaded automatically at startup.
-          # use with packadd in config to achieve something like lazy loading
           optionalPlugins = {
             customPlugins = with pkgs.customPlugins; [ ];
             gitPlugins = with pkgs.neovimPlugins; [ ];
             general = with pkgs.vimPlugins; [ ];
           };
 
-          # environmentVariables:
-          # this section is for environmentVariables that should be available
-          # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
             AI = {
-              # I provision the auth in the lua from system path
+              # I provision the auth in the lua from bitwarden
               # so I don't have to put my token on github
               # But this is a way you could do it
               # SRC_ENDPOINT = "https://sourcegraph.com";
@@ -315,16 +298,11 @@
           };
         };
 
+        # just to select the right thing out of bitwarden don't get excited
         bitwardenItemIDs = {
           codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
           cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
         };
-
-        # And then build a package with specific categories from above here:
-        # All categories you wish to include must be marked true,
-        # but false may be omitted.
-        # This entire set is also passed to nixCats for querying within the lua.
-        # It is passed as a Lua table with values name = boolean. same as here.
 
         # see :help nixCats.flake.outputs.packaging
         birdeeVim = nixVimBuilder settings.birdee {
