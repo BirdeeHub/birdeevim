@@ -74,7 +74,7 @@
     # I use this for autocomplete filler especially for comments. 
     codeium.url = "github:Exafunction/codeium.nvim";
     # I ask this questions I couldnt google the answer to and/or
-    # need things I havent heard of. Its better than gpt and has context.
+    # need things I havent heard of. It has better code context than gpt.
     # It also occasionally helps with goto definition.
     sg-nvim.url = "github:sourcegraph/sg.nvim";
   };
@@ -162,7 +162,6 @@
             AI = [
               pkgs.vimPlugins.codeium-nvim
               inputs.sg-nvim.packages.${system}.sg-nvim
-              # cmp-tabnine
             ];
             customPlugins = with pkgs.customPlugins; [
             ];
@@ -253,10 +252,8 @@
             };
           };
 
-          # If you know what these are, you can provide custom ones by category here.
-          # If you dont, check this link out:
-          # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
           extraWrapperArgs = {
+          # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
             test = [
               '' --set BIRDTVAR2 "It worked again!"''
             ];
