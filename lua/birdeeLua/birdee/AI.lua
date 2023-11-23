@@ -64,7 +64,7 @@ if(require('nixCats').AI) then
     end
   end
   require("sg").setup({
-    on_attach = require('myLuaConf.caps-onattach').on_attach,
+    on_attach = require(require('nixCats').RCName .. '.caps-onattach').on_attach,
     enable_cody = true,
   })
   vim.keymap.set('n', '<leader>cs', require('sg.extensions.telescope').fuzzy_search_results, { noremap = true, desc = 'cody search' })
@@ -107,8 +107,8 @@ if(require('nixCats').AI) then
       os.remove(file_path)
     end
   end
-  vim.cmd([[command! ClearSGAuth lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
-  vim.cmd([[command! ClearCodeiumAuth lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
-  vim.cmd([[command! ClearBitwardenData lua require('myLuaConf.birdee.AI').deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
+  vim.cmd([[command! ClearSGAuth lua require(require('nixCats').RCName .. ".birdee.AI").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
+  vim.cmd([[command! ClearCodeiumAuth lua require(require('nixCats').RCName .. ".birdee.AI").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
+  vim.cmd([[command! ClearBitwardenData lua require(require('nixCats').RCName .. ".birdee.AI").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
   return M
 end

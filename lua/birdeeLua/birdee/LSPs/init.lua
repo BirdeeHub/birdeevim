@@ -14,17 +14,17 @@ if (categories.neonixdev) then
       },
     },
   })
-  require("myLuaConf.birdee.LSPs.nix")
-  require("myLuaConf.birdee.LSPs.lua")
+  require(require('nixCats').RCName .. ".birdee.LSPs.nix")
+  require(require('nixCats').RCName .. ".birdee.LSPs.lua")
 elseif (categories.nix) then
-  require("myLuaConf.birdee.LSPs.nix")
+  require(require('nixCats').RCName .. ".birdee.LSPs.nix")
 elseif (categories.lua) then
-  require("myLuaConf.birdee.LSPs.lua")
+  require(require('nixCats').RCName .. ".birdee.LSPs.lua")
 end
 if (categories.kotlin) then
-  require("myLuaConf.birdee.LSPs.kotlin")
+  require(require('nixCats').RCName .. ".birdee.LSPs.kotlin")
 elseif (categories.java) then
-  require("myLuaConf.birdee.LSPs.java")
+  require(require('nixCats').RCName .. ".birdee.LSPs.java")
 end
 if (categories.lspDebugMode) then
   vim.lsp.set_log_level("debug")

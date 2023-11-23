@@ -1,6 +1,6 @@
 require'lspconfig'.lua_ls.setup {
-  capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
-  on_attach = require("myLuaConf.caps-onattach").on_attach,
+  capabilities = require(require('nixCats').RCName .. ".caps-onattach").get_capabilities(),
+  on_attach = require(require('nixCats').RCName .. ".caps-onattach").on_attach,
   filetypes = { "lua" },
   settings = {
     Lua = {

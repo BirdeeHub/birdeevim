@@ -1,8 +1,8 @@
 local userHome = vim.fn.expand('$HOME')
 require'lspconfig'.jdtls.setup {
   cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
-  capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
-  on_attach = require("myLuaConf.caps-onattach").on_attach,
+  capabilities = require(require('nixCats').RCName .. ".caps-onattach").get_capabilities(),
+  on_attach = require(require('nixCats').RCName .. ".caps-onattach").on_attach,
   filetypes = { "kotlin", "java" },
   settings = {
     java = {
@@ -16,8 +16,8 @@ require'lspconfig'.jdtls.setup {
   },
 }
 require'lspconfig'.kotlin_language_server.setup {
-  capabilities = require("myLuaConf.caps-onattach").get_capabilities(),
-  on_attach = require("myLuaConf.caps-onattach").on_attach,
+  capabilities = require(require('nixCats').RCName .. ".caps-onattach").get_capabilities(),
+  on_attach = require(require('nixCats').RCName .. ".caps-onattach").on_attach,
   filetypes = { "kotlin" },
   settings = {
     kotlin = {

@@ -23,9 +23,9 @@ other than that, its just a normal config now.
 ]]
 
 if vim.g.vscode == nil then
-  require("myLuaConf.birdee")
+  require(require('nixCats').RCName .. ".birdee")
 else
   -- currently not implemented
   -- its basically to be just a stripped down version for embedding
-  require('myLuaConf.vscody')
+  require(require('nixCats').RCName .. '.vscody')
 end

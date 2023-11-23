@@ -77,18 +77,18 @@ require("nvim-dap-virtual-text").setup {
 -- Install lang specific config
 local categories = require('nixCats')
 if (categories.neonixdev) then
-  require("myLuaConf.birdee.debug.nix")
-  require("myLuaConf.birdee.debug.lua")
+  require(require('nixCats').RCName .. ".birdee.debug.nix")
+  require(require('nixCats').RCName .. ".birdee.debug.lua")
 elseif (categories.nix) then
-  require("myLuaConf.birdee.debug.nix")
+  require(require('nixCats').RCName .. ".birdee.debug.nix")
 elseif (categories.lua) then
-  require("myLuaConf.birdee.debug.lua")
+  require(require('nixCats').RCName .. ".birdee.debug.lua")
 end
 if (categories.kotlin) then
-  require("myLuaConf.birdee.debug.kotlin")
+  require(require('nixCats').RCName .. ".birdee.debug.kotlin")
 elseif (categories.java) then
-  require("myLuaConf.birdee.debug.java")
+  require(require('nixCats').RCName .. ".birdee.debug.java")
 end
 if (categories.bash) then
-  require("myLuaConf.birdee.debug.bash")
+  require(require('nixCats').RCName .. ".birdee.debug.bash")
 end

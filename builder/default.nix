@@ -1,4 +1,5 @@
-
+# Copyright (c) 2023 BirdeeHub 
+# Licensed under the MIT license 
 { 
   self
   , pkgs
@@ -56,11 +57,12 @@
     nixCats = pkgs.stdenv.mkDerivation {
       name = "nixCats";
       builder = let
+        categoriesPlus = categories // { RCName = config.RCName; inherit wrapRc; };
         cats = builtins.toFile "nixCats.lua" ''
             vim.api.nvim_create_user_command('NixCats', 
             [[lua print(vim.inspect(require('nixCats')))]] , 
             { desc = 'So Cute!' })
-            return ${(import ./utils.nix).luaTablePrinter categories}
+            return ${(import ./utils.nix).luaTablePrinter categoriesPlus}
           '';
       in builtins.toFile "builder.sh" ''
         source $stdenv/setup
@@ -170,4 +172,3 @@
     /* the function you would have passed to lua.withPackages */
   extraLuaPackages = combineCatsOfFuncs extraLuaPackages;
 }
-

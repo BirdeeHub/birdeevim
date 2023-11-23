@@ -5,15 +5,15 @@ local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it h
 vim.cmd.colorscheme(colorschemer)
 
 if(categories.telescope) then
-  require('myLuaConf.birdee.plugins.telescope')
+  require(require('nixCats').RCName .. '.birdee.plugins.telescope')
 end
 
 if(categories.treesitter) then
-  require('myLuaConf.birdee.plugins.nestsitter')
+  require(require('nixCats').RCName .. '.birdee.plugins.nestsitter')
 end
 
 if(categories.cmp) then
-  require('myLuaConf.birdee.plugins.completion')
+  require(require('nixCats').RCName .. '.birdee.plugins.completion')
 end
 
 if(categories.markdown) then
@@ -23,7 +23,7 @@ if(categories.markdown) then
   vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
 end
 
-require('myLuaConf.birdee.plugins.gutter')
+require(require('nixCats').RCName .. '.birdee.plugins.gutter')
 
 
 vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })

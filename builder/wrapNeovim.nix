@@ -4,7 +4,6 @@ rec {
   wrapNeovim = pkgs: neovim-unwrapped: pkgs.lib.makeOverridable (legacyWrapper pkgs neovim-unwrapped);
 
   # and this is the code from neovimUtils that it calls
-  # except this is a flake so we also need pkgs
   legacyWrapper = pkgs: neovim: {
     extraMakeWrapperArgs ? ""
     /* the function you would have passed to python.withPackages */
@@ -37,10 +36,10 @@ rec {
         inherit extraName;
       };
     in
-    # it uses the new wrapper under the hood.
+    # it uses the new wrapper!!!
     pkgs.wrapNeovimUnstable neovim (res // {
       wrapperArgs = pkgs.lib.escapeShellArgs res.wrapperArgs + " " + extraMakeWrapperArgs;
-      # and changed this
+      # I passed this out. I think this is the only extra option not covered?
       inherit wrapRc;
   });
 }
