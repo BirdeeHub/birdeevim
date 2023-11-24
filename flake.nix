@@ -1,3 +1,5 @@
+# Copyright (c) 2023 BirdeeHub 
+# Licensed under the MIT license 
 {
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
         # TO DO: 
@@ -297,7 +299,8 @@
           };
         };
 
-        # just to select the right thing out of bitwarden don't get excited
+        # just to select the right thing out of bitwarden. 
+        # Don't get excited its just a UUID
         bitwardenItemIDs = {
           codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
           cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
