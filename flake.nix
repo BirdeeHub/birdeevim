@@ -126,7 +126,6 @@
             jdt-language-server
           ];
           kotlin = with pkgs; [
-            jdt-language-server
             kotlin-language-server
           ];
           lua = with pkgs; [
