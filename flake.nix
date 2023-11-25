@@ -18,6 +18,10 @@
       url = "github:rogalmic/vscode-bash-debug";
       flake = false;
     };
+    # "plugins-bash-debug-adapter" = {
+    #   url = "github:rogalmic/vscode-bash-debug";
+    #   flake = false;
+    # };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
     # Theme
@@ -157,8 +161,6 @@
           AI = [
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
-          ];
-          debuggers = with pkgs.neovimDebuggers; [
           ];
           markdown = with pkgs.customPlugins; [
             markdown-preview-nvim
