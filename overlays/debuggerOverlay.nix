@@ -1,6 +1,6 @@
 inputs: let
   debuggerOverlay = self: super: { 
-    nixCatsDebug = {
+    neovimDebuggers = {
 
       # this is not accurate.
       bash-debug-adapter = inputs.bash-debug-adapter;

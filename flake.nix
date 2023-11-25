@@ -144,7 +144,7 @@
           ];
           bash = with pkgs; [
             bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-            pkgs.nixCatsDebug.bash-debug-adapter
+            pkgs.neovimDebuggers.bash-debug-adapter
           ];
         };
 
@@ -158,7 +158,7 @@
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
           ];
-          customPlugins = with pkgs.customPlugins; [
+          debuggers = with pkgs.neovimDebuggers; [
           ];
           markdown = with pkgs.customPlugins; [
             markdown-preview-nvim
@@ -243,7 +243,7 @@
             BIRDTVAR = "It worked!";
           };
           bash = {
-            BASHDAP = "${pkgs.nixCatsDebug.bash-debug-adapter}";
+            BASHDAP = "${pkgs.neovimDebuggers.bash-debug-adapter}";
           };
         };
 
