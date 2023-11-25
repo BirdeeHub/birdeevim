@@ -109,8 +109,6 @@
         lspsAndRuntimeDeps = {
           general = with pkgs; [
             universal-ctags
-          ];
-          telescope = with pkgs; [
             ripgrep
             fd
           ];
