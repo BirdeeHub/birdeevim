@@ -166,33 +166,10 @@
           markdown = with pkgs.customPlugins; [
             markdown-preview-nvim
           ];
-          telescope = with pkgs.vimPlugins; [
-            telescope-fzf-native-nvim
-            plenary-nvim
-            telescope-nvim
-          ];
-          cmp = with pkgs.vimPlugins; [
-            nvim-cmp
-            luasnip
-            cmp_luasnip
-            cmp-buffer
-            cmp-path
-            cmp-nvim-lua
-            cmp-nvim-lsp
-            friendly-snippets
-            cmp-cmdline
-            cmp-nvim-lsp-signature-help
-            cmp-cmdline-history
-          ];
-          treesitter = with pkgs.vimPlugins; [
-            nvim-treesitter-textobjects
-            nvim-treesitter.withAllGrammars
-            # (nvim-treesitter.withPlugins (
-            #   plugins: with plugins; [
-            #     nix
-            #     lua
-            #   ]
-            # ))
+          debug = with pkgs.vimPlugins; [
+            nvim-dap
+            nvim-dap-ui
+            nvim-dap-virtual-text
           ];
           gitPlugins = with pkgs.neovimPlugins; [
             # catppuccin
@@ -208,7 +185,33 @@
             fidget
           ];
           general = with pkgs.vimPlugins; [
+            # telescope
+            telescope-fzf-native-nvim
+            plenary-nvim
+            telescope-nvim
+            # treesitter
+            nvim-treesitter-textobjects
+            nvim-treesitter.withAllGrammars
+            # (nvim-treesitter.withPlugins (
+            #   plugins: with plugins; [
+            #     nix
+            #     lua
+            #   ]
+            # ))
+            # cmp stuff
+            nvim-cmp
+            luasnip
+            cmp_luasnip
+            cmp-buffer
+            cmp-path
+            cmp-nvim-lua
+            cmp-nvim-lsp
+            friendly-snippets
+            cmp-cmdline
+            cmp-nvim-lsp-signature-help
+            cmp-cmdline-history
             lspkind-nvim
+            # other
             vim-sleuth
             vim-fugitive
             vim-rhubarb
@@ -220,9 +223,6 @@
             nvim-web-devicons
             nui-nvim
             neo-tree-nvim
-            nvim-dap
-            nvim-dap-ui
-            nvim-dap-virtual-text
           ];
         };
 
@@ -309,9 +309,7 @@
           bitwarden = true;
           generalBuildInputs = true;
           bash = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
@@ -327,48 +325,42 @@
         };
         noAIneodev = nixVimBuilder settings.birdee {
           generalBuildInputs = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           general = true;
           neonixdev = true;
-          AI = false;
-          lspDebugMode = true;
           test = true;
+          lspDebugMode = true;
           colorscheme = "onedark";
         };
         coffeeVim = nixVimBuilder settings.birdee {
           inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           general = true;
           AI = true;
           java = true;
+          lspDebugMode = false;
           colorscheme = "onedark";
         };
         kotlinVim = nixVimBuilder settings.birdee {
           inherit bitwardenItemIDs;
           bitwarden = true;
           generalBuildInputs = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           general = true;
           AI = true;
           kotlin = true;
-          java = false; #is included in kotlin category
+          lspDebugMode = false;
           colorscheme = "onedark";
         };
         birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
@@ -376,16 +368,13 @@
           bitwarden = true;
           generalBuildInputs = true;
           bash = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           general = true;
           neonixdev = true;
           AI = true;
-          java = false; # is included in kotlin category
           kotlin = true;
           test = true;
           lspDebugMode = false;
@@ -394,16 +383,12 @@
         noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
           generalBuildInputs = true;
           bash = true;
-          cmp = true;
-          telescope = true;
-          treesitter = true;
+          debug = true;
           markdown = true;
           customPlugins = true;
           gitPlugins = true;
           general = true;
           neonixdev = true;
-          AI = false;
-          java = false; # is included in kotlin category
           kotlin = true;
           test = true;
           lspDebugMode = false;
