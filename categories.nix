@@ -1,4 +1,5 @@
 self: pkgs: inputs: system: settings: categories: (import ./builder {
+  # see :help nixCats.flake.outputs.builder
   # these are required
   inherit self pkgs;
   # you supply these when you apply this function
@@ -21,9 +22,9 @@ self: pkgs: inputs: system: settings: categories: (import ./builder {
       bitwarden-cli
     ];
     AI = [
-      inputs.codeium.outputs.packages.${system}.codeium-lsp
+      inputs.codeium.outputs.packages.${pkgs.system}.codeium-lsp
 
-      inputs.sg-nvim.packages.${system}.default
+      inputs.sg-nvim.packages.${pkgs.system}.default
     ];
     java = with pkgs; [
       jdt-language-server
@@ -62,7 +63,7 @@ self: pkgs: inputs: system: settings: categories: (import ./builder {
     ];
     AI = [
       pkgs.vimPlugins.codeium-nvim
-      inputs.sg-nvim.packages.${system}.sg-nvim
+      inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
     ];
     customPlugins = with pkgs.customPlugins; [
     ];

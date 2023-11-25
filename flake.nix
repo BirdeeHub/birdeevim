@@ -2,10 +2,6 @@
 # Licensed under the MIT license 
 {
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
-        # TO DO: 
-        # connect debuggers for languages (dap & dapui installed)
-        # install formatters
-
     # see :help nixCats.flake.inputs
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -88,7 +84,6 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         # see :help nixCats.flake.outputs.overlays
-
         overlays = (import ./overlays inputs) ++ [
           # add any flake overlays here.
           inputs.nixd.outputs.overlays.default
@@ -249,37 +244,29 @@
           lspDebugMode = false;
           colorscheme = "onedark";
         };
-
       in
-
-
-
-      # see :help nixCats.flake.outputs.packages
-
-      { # choose your package
-        overlays = {
-          default = final: prev: { inherit birdeeVim; };
-          birdeeVim = final: prev: { inherit birdeeVim; };
-          noAIneodev = final: prev: { inherit noAIneodev; };
-          coffeeVim = final: prev: { inherit coffeeVim; };
-          kotlinVim = final: prev: { inherit kotlinVim; };
-          birdeeUnwrapped = final: prev: { inherit birdeeUnwrapped; };
-          noAIunwrapped = final: prev: { inherit noAIunwrapped; };
-        };
-        devShell = pkgs.mkShell {
-          name = "neodevshell";
-          packages = [ noAIneodev ];
-          inputsFrom = [ ];
-          shellHook = ''
-          '';
-        };
-        packages = {
-          default = birdeeVim;
-          inherit birdeeVim noAIneodev coffeeVim kotlinVim birdeeUnwrapped noAIunwrapped;
-        };
-      }
-
-
-
-    ); # end of flake utils, which returns the value of outputs
+    # see :help nixCats.flake.outputs.packages
+    {
+      overlays = {
+        default = final: prev: { inherit birdeeVim; };
+        birdeeVim = final: prev: { inherit birdeeVim; };
+        noAIneodev = final: prev: { inherit noAIneodev; };
+        coffeeVim = final: prev: { inherit coffeeVim; };
+        kotlinVim = final: prev: { inherit kotlinVim; };
+        birdeeUnwrapped = final: prev: { inherit birdeeUnwrapped; };
+        noAIunwrapped = final: prev: { inherit noAIunwrapped; };
+      };
+      devShell = pkgs.mkShell {
+        name = "neodevshell";
+        packages = [ noAIneodev ];
+        inputsFrom = [ ];
+        shellHook = ''
+        '';
+      };
+      packages = {
+        default = birdeeVim;
+        inherit birdeeVim noAIneodev coffeeVim kotlinVim birdeeUnwrapped noAIunwrapped;
+      };
+    }
+  );
 }
