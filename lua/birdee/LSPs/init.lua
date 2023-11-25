@@ -14,18 +14,18 @@ if (categories.neonixdev) then
       },
     },
   })
-  require("birdeeLua.birdee.LSPs.nix")
-  require("birdeeLua.birdee.LSPs.lua")
+  require("birdee.LSPs.nix")
+  require("birdee.LSPs.lua")
 elseif (categories.nix) then
-  require("birdeeLua.birdee.LSPs.nix")
+  require("birdee.LSPs.nix")
 elseif (categories.lua) then
-  require("birdeeLua.birdee.LSPs.lua")
+  require("birdee.LSPs.lua")
 end
 if (categories.kotlin) then
-  require("birdeeLua.birdee.LSPs.kotlin")
+  require("birdee.LSPs.kotlin")
 end
 if (categories.java) then
-  require("birdeeLua.birdee.LSPs.java")
+  require("birdee.LSPs.java")
 end
 if (categories.lspDebugMode) then
   vim.lsp.set_log_level("debug")

@@ -1,6 +1,6 @@
 require'lspconfig'.nil_ls.setup {
-  capabilities = require("birdeeLua.caps-onattach").get_capabilities(),
-  on_attach = require("birdeeLua.caps-onattach").on_attach,
+  capabilities = require("caps-onattach").get_capabilities(),
+  on_attach = require("caps-onattach").on_attach,
   -- settings = {
   --   nix = {
   --     formatters = {
@@ -13,8 +13,8 @@ require'lspconfig'.nil_ls.setup {
   -- },
 }
 require'lspconfig'.nixd.setup {
-  capabilities = require("birdeeLua.caps-onattach").get_capabilities(),
-  on_attach = require("birdeeLua.caps-onattach").on_attach,
+  capabilities = require("caps-onattach").get_capabilities(),
+  on_attach = require("caps-onattach").on_attach,
   -- settings = {
   --   nix = {
   --     formatters = {
