@@ -86,7 +86,8 @@ elseif (categories.lua) then
 end
 if (categories.kotlin) then
   require(require('nixCats').RCName .. ".birdee.debug.kotlin")
-elseif (categories.java) then
+end
+if (categories.java) then
   require(require('nixCats').RCName .. ".birdee.debug.java")
 end
 if (categories.bash) then

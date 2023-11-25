@@ -23,7 +23,8 @@ elseif (categories.lua) then
 end
 if (categories.kotlin) then
   require(require('nixCats').RCName .. ".birdee.LSPs.kotlin")
-elseif (categories.java) then
+end
+if (categories.java) then
   require(require('nixCats').RCName .. ".birdee.LSPs.java")
 end
 if (categories.lspDebugMode) then

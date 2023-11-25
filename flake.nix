@@ -316,7 +316,7 @@
           general = true;
           neonixdev = true;
           AI = true;
-          java = false; # is included in kotlin category
+          java = true; # is included in kotlin category
           kotlin = true;
           test = true;
           lspDebugMode = false;
@@ -359,6 +359,7 @@
           gitPlugins = true;
           general = true;
           AI = true;
+          java = true;
           kotlin = true;
           lspDebugMode = false;
           colorscheme = "onedark";
@@ -375,6 +376,7 @@
           general = true;
           neonixdev = true;
           AI = true;
+          java = true;
           kotlin = true;
           test = true;
           lspDebugMode = false;
@@ -389,6 +391,7 @@
           gitPlugins = true;
           general = true;
           neonixdev = true;
+          java = true;
           kotlin = true;
           test = true;
           lspDebugMode = false;
