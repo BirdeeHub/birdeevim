@@ -4,17 +4,11 @@ local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it h
 
 vim.cmd.colorscheme(colorschemer)
 
-if(categories.telescope) then
-  require(require('nixCats').RCName .. '.birdee.plugins.telescope')
-end
+require(require('nixCats').RCName .. '.birdee.plugins.telescope')
 
-if(categories.treesitter) then
-  require(require('nixCats').RCName .. '.birdee.plugins.nestsitter')
-end
+require(require('nixCats').RCName .. '.birdee.plugins.nestsitter')
 
-if(categories.cmp) then
-  require(require('nixCats').RCName .. '.birdee.plugins.completion')
-end
+require(require('nixCats').RCName .. '.birdee.plugins.completion')
 
 if(categories.markdown) then
   vim.g.mkdp_auto_close = 0
@@ -98,7 +92,7 @@ require('neo-tree').setup({
 vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
 local leaderCmsg
-if categories.AI then 
+if categories.AI then
   leaderCmsg = "[C]ode (and [C]ody)"
 else
   leaderCmsg = "[C]ode"
