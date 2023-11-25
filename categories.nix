@@ -1,4 +1,4 @@
-self: pkgs: inputs: system: settings: categories: (import ./builder {
+self: pkgs: inputs: settings: categories: (import ./builder {
   # see :help nixCats.flake.outputs.builder
   # these are required
   inherit self pkgs;
