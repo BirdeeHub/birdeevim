@@ -62,8 +62,7 @@ just doing this and including more comments than code.
 --------------------------------------------------------------------------
                                    *nixCats.flake.nixperts.nvimBuilder.opener*
 
-    # package the entire runtimepath as plugin
-    # see :h rtp
+    # package the entire runtimepath as plugin. see :help `'rtp'`
     # it simply copies each of the folders mentioned the same as we do for luaAfter
 >nix
     LuaConfig = pkgs.stdenv.mkDerivation {
@@ -87,16 +86,18 @@ just doing this and including more comments than code.
     # see :help `nixCats`
     # here is where nixCats is generated
     # it uses some recursive stuff in utils to print a lua table to a file.
+    # That table is the categories we were including, plus RCName and wrapRc
     # Thats it. Also it defines a user command.
 >nix
     nixCats = pkgs.stdenv.mkDerivation {
       name = "nixCats";
       builder = let
+        categoriesPlus = categories // { RCName = config.RCName; inherit wrapRc; };
         cats = builtins.toFile "nixCats.lua" ''
             vim.api.nvim_create_user_command('NixCats', 
             [[lua print(vim.inspect(require('nixCats')))]] , 
             { desc = 'So Cute!' })
-            return ${(import ./utils.nix).luaTablePrinter categories}
+            return ${(import ./utils.nix).luaTablePrinter categoriesPlus}
           '';
       # It installs itself and these docs to wherever it installs to.
       in builtins.toFile "builder.sh" ''
@@ -113,10 +114,16 @@ just doing this and including more comments than code.
     # and create our customRC to call it
     # This makes sure our config is loaded first and our after is loaded last
     # and it also requires the chosen directory or file in the lua directory
+    # it also removes the regular config dir from the path.
+    configDir = if config.configDirName != null && config.configDirName != ""
+      then config.configDirName else "nvim";
     customRC = if wrapRc then ''
+        let configdir = expand('~') . "/.config/${configDir}"
+        execute "set runtimepath-=" . configdir
+        execute "set runtimepath-=" . configdir . "/after"
         packadd ${config.RCName}
-        lua require('${config.RCName}')
         set runtimepath+=${luaAfter}
+        lua require('${config.RCName}')
       '' else "";
 
     # only include LuaConfig if we want it
@@ -210,19 +217,15 @@ just doing this and including more comments than code.
     # which is just pkgs.wrapNeovim with an extra argument
 >nix
     # this sets the name of the folder to look for nvim stuff in
-    configDirName = if config.configDirName != "nvim" &&
-      config.configDirName != null && config.configDirName != ""
-        then [ ''--set NVIM_APPNAME "${config.configDirName}"'' ] else [];
-
+    configDirName = if configDir != "nvim" then [ ''--set NVIM_APPNAME "${configDir}"'' ] else [];
+    # We call the functions above and add them into a big list
+    # which we then call concatStringsSep " " on
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
-      # We call the functions above and add them into a big list
-      # which we then call concatStringsSep " " on
+      # and these are our now sorted args
       configDirName
       ++ (FandF_WrapRuntimeDeps lspsAndRuntimeDeps)
       ++ (FandF_envVarSet environmentVariables)
       ++ (FandF_passWrapperArgs extraWrapperArgs)
-
-
     );
 <
 ---------------------------------------------------------------------------------
