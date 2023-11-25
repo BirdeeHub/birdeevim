@@ -81,172 +81,172 @@
 
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        # see :help nixCats.flake.outputs.overlays
-        overlays = (import ./overlays inputs) ++ [
-          # add any flake overlays here.
-          inputs.nixd.outputs.overlays.default
-          inputs.codeium.outputs.overlays.${system}.default
-        ];
-        pkgs = import nixpkgs {
-          inherit system overlays;
-          # config.allowUnfree = true;
-        };
+    flake-utils.lib.eachDefaultSystem (system: let
+      # see :help nixCats.flake.outputs.overlays
+      overlays = (import ./overlays inputs) ++ [
+        # add any flake overlays here.
+        inputs.nixd.outputs.overlays.default
+        inputs.codeium.outputs.overlays.${system}.default
+      ];
+      pkgs = import nixpkgs {
+        inherit system overlays;
+        # config.allowUnfree = true;
+      };
 
-        # see :help nixCats.flake.outputs.builder
-        nixVimBuilder = (import ./categories.nix) self pkgs inputs;
+      # see :help nixCats.flake.outputs.builder
+      # I sent it to another file because idk it seemed nicer
+      nixVimBuilder = (import ./categories.nix) self pkgs inputs;
 
-        # see :help nixCats.flake.outputs.settings
-        settings = {
-          birdee = {
-            wrapRc = true;
-            # to use a different lua folder other than myLuaConf, change this value:
-            RCName = "birdeeLua";
-            # so that it finds my ai auths in ~/.cache/birdeevim
-            configDirName = "birdeevim";
-            viAlias = true;
-            vimAlias = true;
-            withNodeJs = true;
-            withRuby = true;
-            extraName = "";
-            withPython3 = true;
-          };
-          unwrappedLua = {
-            # so that it looks for .config/birdeevim instead
-            configDirName = "birdeevim";
-            RCName = "birdeeLua";
-            wrapRc = false;
-            withNodeJs = true;
-            viAlias = true;
-            vimAlias = true;
-          };
-          unwrapNOjs = {
-            configDirName = "birdeevim";
-            RCName = "birdeeLua";
-            wrapRc = false;
-            withNodeJs = false;
-            viAlias = true;
-            vimAlias = true;
-          };
+      # see :help nixCats.flake.outputs.settings
+      settings = {
+        birdee = {
+          wrapRc = true;
+          # to use a different lua folder other than myLuaConf, change this value:
+          RCName = "birdeeLua";
+          # so that it finds my ai auths in ~/.cache/birdeevim
+          configDirName = "birdeevim";
+          viAlias = true;
+          vimAlias = true;
+          withNodeJs = true;
+          withRuby = true;
+          extraName = "";
+          withPython3 = true;
         };
+        unwrappedLua = {
+          # so that it looks for .config/birdeevim instead
+          configDirName = "birdeevim";
+          RCName = "birdeeLua";
+          wrapRc = false;
+          withNodeJs = true;
+          viAlias = true;
+          vimAlias = true;
+        };
+        unwrapNOjs = {
+          configDirName = "birdeevim";
+          RCName = "birdeeLua";
+          wrapRc = false;
+          withNodeJs = false;
+          viAlias = true;
+          vimAlias = true;
+        };
+      };
 
-        # just to select the right thing out of bitwarden. 
-        # Don't get excited its just a UUID
-        bitwardenItemIDs = {
-          codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
-          cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
-        };
+      # just to select the right thing out of bitwarden. 
+      # Don't get excited its just a UUID
+      bitwardenItemIDs = {
+        codeium = "notes d9124a28-89ad-4335-b84f-b0c20135b048";
+        cody = "notes d0bddbff-ec1f-4151-a2a7-b0c20134eb34";
+      };
 
-        packageDefinitions = {
-          # see :help nixCats.flake.outputs.packaging
-          birdeeVim = nixVimBuilder settings.birdee {
-            inherit bitwardenItemIDs;
-            bitwarden = true;
-            generalBuildInputs = true;
-            bash = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            neonixdev = true;
-            AI = true;
-            java = false; # is included in kotlin category
-            kotlin = true;
-            test = true;
-            lspDebugMode = false;
-            colorscheme = "onedark";
-            # see :help nixCats
-          };
-          noAIneodev = nixVimBuilder settings.birdee {
-            generalBuildInputs = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            neonixdev = true;
-            AI = false;
-            lspDebugMode = true;
-            test = true;
-            colorscheme = "onedark";
-          };
-          coffeeVim = nixVimBuilder settings.birdee {
-            inherit bitwardenItemIDs;
-            bitwarden = true;
-            generalBuildInputs = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            AI = true;
-            java = true;
-            colorscheme = "onedark";
-          };
-          kotlinVim = nixVimBuilder settings.birdee {
-            inherit bitwardenItemIDs;
-            bitwarden = true;
-            generalBuildInputs = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            AI = true;
-            kotlin = true;
-            java = false; #is included in kotlin category
-            colorscheme = "onedark";
-          };
-          birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
-            inherit bitwardenItemIDs;
-            bitwarden = true;
-            generalBuildInputs = true;
-            bash = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            neonixdev = true;
-            AI = true;
-            java = false; # is included in kotlin category
-            kotlin = true;
-            test = true;
-            lspDebugMode = false;
-            colorscheme = "onedark";
-          };
-          noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
-            generalBuildInputs = true;
-            bash = true;
-            cmp = true;
-            telescope = true;
-            treesitter = true;
-            markdown = true;
-            customPlugins = true;
-            gitPlugins = true;
-            general = true;
-            neonixdev = true;
-            AI = false;
-            java = false; # is included in kotlin category
-            kotlin = true;
-            test = true;
-            lspDebugMode = false;
-            colorscheme = "onedark";
-          };
+      packageDefinitions = {
+        # see :help nixCats.flake.outputs.packaging
+        birdeeVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
+          bitwarden = true;
+          generalBuildInputs = true;
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = true;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          test = true;
+          lspDebugMode = false;
+          colorscheme = "onedark";
+          # see :help nixCats
         };
-      in
+        noAIneodev = nixVimBuilder settings.birdee {
+          generalBuildInputs = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = false;
+          lspDebugMode = true;
+          test = true;
+          colorscheme = "onedark";
+        };
+        coffeeVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
+          bitwarden = true;
+          generalBuildInputs = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          AI = true;
+          java = true;
+          colorscheme = "onedark";
+        };
+        kotlinVim = nixVimBuilder settings.birdee {
+          inherit bitwardenItemIDs;
+          bitwarden = true;
+          generalBuildInputs = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          AI = true;
+          kotlin = true;
+          java = false; #is included in kotlin category
+          colorscheme = "onedark";
+        };
+        birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
+          inherit bitwardenItemIDs;
+          bitwarden = true;
+          generalBuildInputs = true;
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = true;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          test = true;
+          lspDebugMode = false;
+          colorscheme = "onedark";
+        };
+        noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
+          generalBuildInputs = true;
+          bash = true;
+          cmp = true;
+          telescope = true;
+          treesitter = true;
+          markdown = true;
+          customPlugins = true;
+          gitPlugins = true;
+          general = true;
+          neonixdev = true;
+          AI = false;
+          java = false; # is included in kotlin category
+          kotlin = true;
+          test = true;
+          lspDebugMode = false;
+          colorscheme = "onedark";
+        };
+      };
+    in
     # see :help nixCats.flake.outputs.packages
     {
       # choose your default overlay package
