@@ -1,7 +1,7 @@
-
+-- print(debug.getinfo(1, "S").source:sub(2))
 if vim.g.vscode == nil then
-  require(require('nixCats').RCName .. ".birdee")
+  require("birdeeLua.birdee")
 else
   -- a stripped down version for embedding
-  require(require('nixCats').RCName .. '.vscody')
+  require('birdeeLua.vscody')
 end

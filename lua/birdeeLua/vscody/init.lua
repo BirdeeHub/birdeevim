@@ -8,7 +8,7 @@
   vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
   vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
   vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
-  require(require('nixCats').RCName .. '.clippy')
+  require('birdeeLua.clippy')
 
   -- see help sticky keys on windows
   vim.cmd([[command! W w]])

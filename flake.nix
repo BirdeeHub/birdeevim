@@ -260,8 +260,6 @@
       settings = {
         birdee = {
           wrapRc = true;
-          # to use a different lua folder other than myLuaConf, change this value:
-          RCName = "birdeeLua";
           # so that it finds my ai auths in ~/.cache/birdeevim
           configDirName = "birdeevim";
           viAlias = true;
@@ -274,7 +272,6 @@
         unwrappedLua = {
           # so that it looks for .config/birdeevim instead
           configDirName = "birdeevim";
-          RCName = "birdeeLua";
           wrapRc = false;
           withNodeJs = true;
           viAlias = true;
@@ -282,7 +279,6 @@
         };
         unwrapNOjs = {
           configDirName = "birdeevim";
-          RCName = "birdeeLua";
           wrapRc = false;
           withNodeJs = false;
           viAlias = true;

@@ -1,7 +1,7 @@
 local M
 if vim.g.vscode == nil then
-  M = require(require('nixCats').RCName .. '.birdee.caps-onattach')
+  M = require('birdeeLua.birdee.caps-onattach')
 else
-  M = require(require('nixCats').RCName .. '.vscody.caps-onattach')
+  M = require('birdeeLua.vscody.caps-onattach')
 end
 return M

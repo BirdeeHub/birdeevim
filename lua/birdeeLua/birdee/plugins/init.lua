@@ -4,11 +4,11 @@ local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it h
 
 vim.cmd.colorscheme(colorschemer)
 
-require(require('nixCats').RCName .. '.birdee.plugins.telescope')
+require('birdeeLua.birdee.plugins.telescope')
 
-require(require('nixCats').RCName .. '.birdee.plugins.nestsitter')
+require('birdeeLua.birdee.plugins.nestsitter')
 
-require(require('nixCats').RCName .. '.birdee.plugins.completion')
+require('birdeeLua.birdee.plugins.completion')
 
 if(categories.markdown) then
   vim.g.mkdp_auto_close = 0
@@ -17,7 +17,7 @@ if(categories.markdown) then
   vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
 end
 
-require(require('nixCats').RCName .. '.birdee.plugins.gutter')
+require('birdeeLua.birdee.plugins.gutter')
 
 
 vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })

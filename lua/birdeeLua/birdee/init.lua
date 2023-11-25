@@ -1,12 +1,12 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-require(require('nixCats').RCName .. ".birdee.plugins")
-require(require('nixCats').RCName .. ".birdee.LSPs")
+require("birdeeLua.birdee.plugins")
+require("birdeeLua.birdee.LSPs")
 if require('nixCats').debug then
-  require(require('nixCats').RCName .. ".birdee.debug")
+  require("birdeeLua.birdee.debug")
 end
-require(require('nixCats').RCName .. ".birdee.format")
-require(require('nixCats').RCName .. ".birdee.keymaps")
-require(require('nixCats').RCName .. ".clippy")
-require(require('nixCats').RCName .. ".birdee.opts")
-require(require('nixCats').RCName .. '.birdee.AI')
+require("birdeeLua.birdee.format")
+require("birdeeLua.birdee.keymaps")
+require("birdeeLua.clippy")
+require("birdeeLua.birdee.opts")
+require("birdeeLua.birdee.AI")
