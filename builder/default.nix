@@ -69,15 +69,13 @@ self: {
     # so we add in the config directory ourselves to prevent any issues.
     configDir = if config.configDirName != null && config.configDirName != ""
       then config.configDirName else "nvim";
-    customRC = if config.wrapRc then ''
+    customRC = ''
         let configdir = expand('~') . "/.config/${configDir}"
         execute "set runtimepath-=" . configdir
         execute "set runtimepath-=" . configdir . "/after"
-
-        let new_directory = '${LuaConfig}'
-        let current_runtimepath = &runtimepath
-        let runtimepath_list = split(current_runtimepath, ',')
-        call insert(runtimepath_list, new_directory, 0)
+      '' + (if config.wrapRc then ''
+        let runtimepath_list = split(&runtimepath, ',')
+        call insert(runtimepath_list, ${LuaConfig}, 0)
         let &runtimepath = join(runtimepath_list, ',')
 
         set runtimepath+=${LuaConfig}/after
@@ -85,12 +83,7 @@ self: {
         lua package.path = package.path .. ';${LuaConfig}/init.lua'
         lua require('${builtins.baseNameOf LuaConfig}')
       '' else ''
-        let configdir = expand('~') . "/.config/${configDir}"
-        execute "set runtimepath-=" . configdir
-        execute "set runtimepath-=" . configdir . "/after"
-
-        let current_runtimepath = &runtimepath
-        let runtimepath_list = split(current_runtimepath, ',')
+        let runtimepath_list = split(&runtimepath, ',')
         call insert(runtimepath_list, configdir, 0)
         let &runtimepath = join(runtimepath_list, ',')
 
@@ -98,7 +91,7 @@ self: {
 
         lua package.path = package.path .. ';' .. vim.api.nvim_get_var('configdir') .. '/init.lua'
         lua require('${configDir}')
-      '';
+      '');
 
 
     # this is what allows for dynamic packaging in flake.nix
@@ -170,7 +163,6 @@ self: {
 (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
   inherit extraMakeWrapperArgs;
   inherit (config) vimAlias viAlias withRuby extraName withNodeJs;
-  wrapRc = true;
   configure = {
     inherit customRC;
     packages.myVimPackage = {
