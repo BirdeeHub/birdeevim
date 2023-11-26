@@ -392,7 +392,7 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
-      # will still recieve the flake's lua when wrapRc = true;
+      # These 2 will still recieve the flake's lua when wrapRc = true;
       customBuilders = {
         fresh = newPkgs: categoryDefs: settings: categories: 
           (import ./builder self newPkgs 

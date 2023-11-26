@@ -295,7 +295,14 @@ but dont want to define a package in the flake for it.
 
 It also defines 2 ways to create your own builder 
 within another flake that calls this one for even more options.
-When using these, unless you have wrapRc = false 
+One is called fresh, the other is called merged.
+
+Fresh has no nix categories defined. It is best used with wrapRc = false.
+
+Merged has the categories you defined, but you can redefine 
+any category you wish or add new categories.
+
+When using either of these, unless you have wrapRc = false 
 it will recieve the flake's lua. There is a way
 to add additional lua, but it is not recommended over editing the flake.
 for more details on that, see :help `nixCats.flake.nixperts.nvimBuilder`
