@@ -394,8 +394,8 @@
     {
       # will still recieve the flake's lua when wrapRc = true;
       customBuilders = {
-        fresh = categoryDefs: settings: categories: 
-          (import ./builder self pkgs 
+        fresh = newPkgs: categoryDefs: settings: categories: 
+          (import ./builder self newPkgs 
           (categoryDefs // { inherit settings categories; }));
         merged = newPkgs: categoryDefs: settings: categories: 
           (import ./builder self 
