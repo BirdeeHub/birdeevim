@@ -94,10 +94,10 @@
       };
 
       # see :help nixCats.flake.outputs.builder
-      nixVimBuilder = settings: categories: (import ./builder {
+      nixVimBuilder = settings: categories: (import ./builder self {
         # see :help nixCats.flake.outputs.builder
         # these are required
-        inherit self pkgs;
+        inherit pkgs;
         # you supply these when you apply this function
         inherit categories settings;
 
@@ -392,6 +392,8 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
+      customBuilder = import ./builder self;
+      customPackager = nixVimBuilder;
       # choose your default overlay package
       overlays = { default = self: super: { inherit (packageDefinitions) birdeeVim; }; }
         # this will make an overlay out of each of the packageDefinitions defined above

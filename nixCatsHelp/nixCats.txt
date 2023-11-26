@@ -5,9 +5,10 @@ For help with the nix flake files, see :help `nixCats.flake`
 
 *******************************************************
 One IMPORTANT note:
-When editing the lua within the flake directory,
+When editing the files within the flake directory,
 nix will not package a new file if it isn't staged in git.
 run git add before rebuilding it whenever adding a new file.
+Using wrapRc = true would mean this also applies to lua files.
 *******************************************************
 
 nixCats: returns category names included by nix for this package 
@@ -47,7 +48,7 @@ If in your flake, your package definition looked like this:
     general = true;
     neonixdev = true;
     AI = true;
-    java = false; # is included in kotlin category
+    java = false;
     kotlin = true;
     # this does not have an associated category of plugins, 
     # but lua can still check for it
@@ -108,7 +109,7 @@ Note: it also accepts other things.
 lists will become arrays
 sets will become tables
 null will become nil
-also the orders of nested things can be unpredictable 
+also the orders of things can be unpredictable 
 so arrays are bad if you care about order of them.
 How did treesitter end up last?
 

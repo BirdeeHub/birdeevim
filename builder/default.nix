@@ -1,8 +1,7 @@
 # Copyright (c) 2023 BirdeeHub 
 # Licensed under the MIT license 
-{ 
-  self
-  , pkgs
+self: { 
+  pkgs
   , categories ? {}
   , settings ? {}
   , startupPlugins ? {}
@@ -66,6 +65,8 @@
     # create our customRC to call it
     # This makes sure our config is loaded first and our after is loaded last
     # it also removes the regular config dir from the path.
+    # the wrapper we are using might put it in the wrong place for our uses.
+    # so we add in the config directory ourselves to prevent any issues.
     configDir = if config.configDirName != null && config.configDirName != ""
       then config.configDirName else "nvim";
     customRC = if config.wrapRc then ''
@@ -83,7 +84,21 @@
 
         lua package.path = package.path .. ';${LuaConfig}/init.lua'
         lua require('${builtins.baseNameOf LuaConfig}')
-      '' else "";
+      '' else ''
+        let configdir = expand('~') . "/.config/${configDir}"
+        execute "set runtimepath-=" . configdir
+        execute "set runtimepath-=" . configdir . "/after"
+
+        let current_runtimepath = &runtimepath
+        let runtimepath_list = split(current_runtimepath, ',')
+        call insert(runtimepath_list, configdir, 0)
+        let &runtimepath = join(runtimepath_list, ',')
+
+        execute "set runtimepath+=" . configdir . "/after"
+
+        lua package.path = package.path .. ';' .. vim.api.nvim_get_var('configdir') .. '/init.lua'
+        lua require('${configDir}')
+      '';
 
 
     # this is what allows for dynamic packaging in flake.nix
@@ -154,7 +169,8 @@
   # add our lsps and plugins and our config, and wrap it all up!
 (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
   inherit extraMakeWrapperArgs;
-  inherit (config) wrapRc vimAlias viAlias withRuby extraName withNodeJs;
+  inherit (config) vimAlias viAlias withRuby extraName withNodeJs;
+  wrapRc = true;
   configure = {
     inherit customRC;
     packages.myVimPackage = {
