@@ -11,12 +11,12 @@ just doing this and including more comments than code.
   # this function takes a set with the following items:
   # our arguments ? and their default values
 >nix
-  { 
-    self
-    , pkgs
+  self: pkgs: { 
+    # defined in packaging section:
     , categories ? {}
     , settings ? {}
 
+    # defined in builder section:
     , startupPlugins ? {}
     , optionalPlugins ? {}
     , lspsAndRuntimeDeps ? {}

@@ -38,7 +38,7 @@ rec {
     pkgs.wrapNeovimUnstable neovim (res // {
       wrapperArgs = pkgs.lib.escapeShellArgs res.wrapperArgs + " " + extraMakeWrapperArgs;
       # I handle this with customRC 
-      # otherwise it will get loaded in the wrong place after startup plugins.
+      # otherwise it will get loaded in at the wrong time after startup plugins.
       wrapRc = true;
   });
 }
