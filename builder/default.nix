@@ -1,8 +1,7 @@
 # Copyright (c) 2023 BirdeeHub 
 # Licensed under the MIT license 
-self: { 
-  pkgs
-  , categories ? {}
+self: pkgs: { 
+  categories ? {}
   , settings ? {}
   , startupPlugins ? {}
   , optionalPlugins ? {}
@@ -75,7 +74,7 @@ self: {
         execute "set runtimepath-=" . configdir . "/after"
       '' + (if config.wrapRc then ''
         let runtimepath_list = split(&runtimepath, ',')
-        call insert(runtimepath_list, ${LuaConfig}, 0)
+        call insert(runtimepath_list, "${LuaConfig}", 0)
         let &runtimepath = join(runtimepath_list, ',')
 
         set runtimepath+=${LuaConfig}/after

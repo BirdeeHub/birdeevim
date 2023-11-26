@@ -94,13 +94,9 @@
       };
 
       # see :help nixCats.flake.outputs.builder
-      nixVimBuilder = settings: categories: (import ./builder self {
+      nixVimBuilder = (categoryDefs: settings: categories: (import ./builder self pkgs (categoryDefinitions // { inherit settings categories; }))) categoryDefinitions;
+      categoryDefinitions = {
         # see :help nixCats.flake.outputs.builder
-        # these are required
-        inherit pkgs;
-        # you supply these when you apply this function
-        inherit categories settings;
-
         propagatedBuildInputs = {
           generalBuildInputs = with pkgs; [
           ];
@@ -254,7 +250,7 @@
 
         # there are more available sections, extraPythonPackages, extraPython3Packages, extraLuaPackages.
         # see :help nixCats.flake.outputs.builder and :help nixCats.flake.nixperts.nvimBuilder
-      });
+      };
 
       # see :help nixCats.flake.outputs.settings
       settings = {
@@ -392,7 +388,9 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
-      customBuilder = import ./builder self;
+      customBuilder = newPkgs: categoryDefs: settings: categories: 
+        (import ./builder self 
+        (pkgs // newPkgs) ((categoryDefinitions // categoryDefs) // { inherit settings categories; }));
       customPackager = nixVimBuilder;
       # choose your default overlay package
       overlays = { default = self: super: { inherit (packageDefinitions) birdeeVim; }; }
