@@ -392,6 +392,7 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
+      # will still recieve the flake's lua when wrapRc = true;
       customBuilders = {
         fresh = categoryDefs: settings: categories: 
           (import ./builder self pkgs 
@@ -400,6 +401,7 @@
           (import ./builder self 
           (pkgs // newPkgs) ((categoryDefinitions // categoryDefs) // { inherit settings categories; }));
       };
+      # To choose settings and categories from the flake that calls this flake.
       customPackager = nixVimBuilder;
       # choose your default overlay package
       overlays = { default = self: super: { inherit (packageDefinitions) birdeeVim; }; }
