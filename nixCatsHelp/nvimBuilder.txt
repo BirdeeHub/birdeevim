@@ -103,26 +103,35 @@ just doing this and including more comments than code.
     # This makes sure our config is loaded at the right time and our after is loaded last.
     # It requires the root level init.lua file. 
     # It also removes the regular config dir from the path.
-    # It only does this if config.wrapRc == true
+    # The wrapper we are using might put it in the wrong place for our uses.
+    # so we add in the config directory ourselves to prevent any issues.
+    # even when wrapRc == false.
 >nix
     configDir = if config.configDirName != null && config.configDirName != ""
       then config.configDirName else "nvim";
-    customRC = if config.wrapRc then ''
+    customRC = ''
         let configdir = expand('~') . "/.config/${configDir}"
         execute "set runtimepath-=" . configdir
         execute "set runtimepath-=" . configdir . "/after"
-
-        let new_directory = '${LuaConfig}'
-        let current_runtimepath = &runtimepath
-        let runtimepath_list = split(current_runtimepath, ',')
-        call insert(runtimepath_list, new_directory, 0)
+      '' + (if config.wrapRc then ''
+        let runtimepath_list = split(&runtimepath, ',')
+        call insert(runtimepath_list, ${LuaConfig}, 0)
         let &runtimepath = join(runtimepath_list, ',')
 
         set runtimepath+=${LuaConfig}/after
 
         lua package.path = package.path .. ';${LuaConfig}/init.lua'
         lua require('${builtins.baseNameOf LuaConfig}')
-      '' else "";
+      '' else ''
+        let runtimepath_list = split(&runtimepath, ',')
+        call insert(runtimepath_list, configdir, 0)
+        let &runtimepath = join(runtimepath_list, ',')
+
+        execute "set runtimepath+=" . configdir . "/after"
+
+        lua package.path = package.path .. ';' .. vim.api.nvim_get_var('configdir') .. '/init.lua'
+        lua require('${configDir}')
+      '');
 <
 ---------------------------------------------------------------------------------
                              *nixCats.flake.nixperts.nvimBuilder.basicFlatmap*
