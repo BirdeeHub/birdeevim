@@ -16,6 +16,9 @@ self: pkgs: {
   , extraPython3Packages ? {}
   # same thing except for lua.withPackages
   , extraLuaPackages ? {}
+  # only for use when importing flake in a flake 
+  # and need to add a bit of lua for an added plugin
+  , optionalLuaAdditions ? ""
   }:
   # for a more extensive guide to this file
   # see :help nixCats.flake.nixperts.nvimBuilder
@@ -90,7 +93,15 @@ self: pkgs: {
 
         lua package.path = package.path .. ';' .. vim.api.nvim_get_var('configdir') .. '/init.lua'
         lua require('${configDir}')
-      '');
+      '') + ''
+        lua << EOF
+        ${optionalLuaAdditions}
+        EOF
+      '';
+      # optionalLuaAdditions is not the suggested way to add lua to this flake
+      # only for use when importing flake in a flake 
+      # and need to add a bit of lua for an added plugin
+      # you could add a new directory though idk thats your buisness.
 
 
     # this is what allows for dynamic packaging in flake.nix

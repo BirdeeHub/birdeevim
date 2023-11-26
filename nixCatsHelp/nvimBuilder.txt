@@ -40,6 +40,10 @@ just doing this and including more comments than code.
     , extraPython3Packages ? {}
     # same thing except for lua.withPackages
     , extraLuaPackages ? {}
+<
+    # only for use when importing this flake in another flake 
+    # and need to add a bit of lua for an added plugin >nix
+    , optionalLuaAdditions ? ""
     }:
     let
 <
@@ -131,8 +135,17 @@ just doing this and including more comments than code.
 
         lua package.path = package.path .. ';' .. vim.api.nvim_get_var('configdir') .. '/init.lua'
         lua require('${configDir}')
-      '');
+      '') + ''
+        lua << EOF
+        ${optionalLuaAdditions}
+        EOF
+      '';
 <
+      # optionalLuaAdditions is not the suggested way to add lua to this flake
+      # It is only for use when importing this flake in another flake 
+      # and need to add a bit of lua for 
+      # an added plugin using a custom builder
+
 ---------------------------------------------------------------------------------
                              *nixCats.flake.nixperts.nvimBuilder.basicFlatmap*
 
@@ -262,7 +275,7 @@ just doing this and including more comments than code.
     # except it also accepts wrapRc as an argument
   (import ./wrapNeovim.nix).wrapNeovim pkgs myNeovimUnwrapped {
     inherit extraMakeWrapperArgs;
-    inherit (config) wrapRc vimAlias viAlias withRuby extraName withNodeJs;
+    inherit (config) vimAlias viAlias withRuby extraName withNodeJs;
     configure = {
       inherit customRC;
       packages.myVimPackage = {
