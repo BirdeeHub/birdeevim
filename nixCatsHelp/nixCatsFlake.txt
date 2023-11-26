@@ -289,9 +289,16 @@ In addition, it defines a way for you to choose what
 categories and settings are included in 
 the flake that imports this flake, rather than choosing
 a package you defined within the flake itself.
+This can be quite handy when you only need some things
+from a flake you defined, 
+but dont want to define a package in the flake for it.
 
 It also defines 2 ways to create your own builder 
 within another flake that calls this one for even more options.
+When using these, unless you have wrapRc = false 
+it will recieve the flake's lua. There is a way
+to add additional lua, but it is not recommended over editing the flake.
+for more details on that, see :help `nixCats.flake.nixperts.nvimBuilder`
 
 ---------------------------------------------------------------------------------------
 vim:tw=78:ts=8:ft=help:norl:
