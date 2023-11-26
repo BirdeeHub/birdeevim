@@ -133,20 +133,26 @@ It will tell us which categories to include per package.
 
 To define this function that takes this set of categories and 
 the settings as an argument, 
-we import ./builder/default.nix and supply it 2 arguments.
-A reference to self, so that it can get the path to the flake, 
+we import ./builder/default.nix and supply it the following.
+1. The pkgs set so that it can use it for making its own derivations.
+2. A reference to self, so that it can get the path to the flake, 
 (it uses the self variable to wrap the lua when wrapRc = true)
 and a set containing the following info.
+3. the settings and categories from arguments
+4. our set of categoryDefinitions.
 
-ourBuilderFunction = <settings>: <categories>: 
-(import ./builder) self {
+ourBuilderFunction = (<categoryDefs>: 
+    <settings>: <categories>: 
+      (import ./builder self pkgs 
+      (<categoryDefs> // { inherit <settings> <categories>; }))
 
-<-> the pkgs set so that it can use it for making its own derivations.
+    ) <categoryDefinitions>; 
+    # notice how we then call it with the set we provide below?
+    # this will return a function that takes our other 2 remaining arguments!
 
-<-> the <settings> set that this function took as an argument.
+Then we define what is in our categories!
 
-<-> the <categories> set that this function took as an argument.
-      It will define which of the categories to include from the following:
+<categoryDefinitions> = {
 
 <-> a flexible set of categories, each containing a list of 
       internal BUILD TIME dependencies
