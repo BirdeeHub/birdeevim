@@ -31,26 +31,6 @@
     #   flake = false;
     # };
 
-    "plugins-gitsigns" = {
-      url = "github:lewis6991/gitsigns.nvim";
-      flake = false;
-    };
-    "plugins-which-key" = {
-      url = "github:folke/which-key.nvim";
-      flake = false;
-    };
-    "plugins-lualine" = {
-      url = "github:nvim-lualine/lualine.nvim";
-      flake = false;
-    };
-    "plugins-lspconfig" = {
-      url = "github:neovim/nvim-lspconfig";
-      flake = false;
-    };
-    "plugins-Comment" = {
-      url = "github:numToStr/Comment.nvim";
-      flake = false;
-    };
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
@@ -61,10 +41,6 @@
     };
     "plugins-hlargs" = {
       url = "github:m-demare/hlargs.nvim";
-      flake = false;
-    };
-    "plugins-marks" = {
-      url = "github:chentoast/marks.nvim";
       flake = false;
     };
     "plugins-fidget" = {
@@ -169,14 +145,8 @@
           gitPlugins = with pkgs.neovimPlugins; [
             # catppuccin
             onedark-vim
-            gitsigns
-            which-key
-            lspconfig
-            lualine
-            Comment
             harpoon
             hlargs
-            marks
             fidget
           ];
           general = with pkgs.vimPlugins; [
@@ -207,6 +177,12 @@
             cmp-cmdline-history
             lspkind-nvim
             # other
+            nvim-lspconfig
+            lualine-nvim
+            gitsigns-nvim
+            which-key-nvim
+            comment-nvim
+            marks-nvim
             vim-sleuth
             vim-fugitive
             vim-rhubarb
