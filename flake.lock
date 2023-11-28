@@ -319,22 +319,17 @@
         "flake-utils": "flake-utils_3",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs_3",
-        "plugins-Comment": "plugins-Comment",
         "plugins-fidget": "plugins-fidget",
-        "plugins-gitsigns": "plugins-gitsigns",
         "plugins-harpoon": "plugins-harpoon",
         "plugins-hlargs": "plugins-hlargs",
-        "plugins-lspconfig": "plugins-lspconfig",
-        "plugins-lualine": "plugins-lualine",
-        "plugins-onedark-vim": "plugins-onedark-vim",
-        "plugins-which-key": "plugins-which-key"
+        "plugins-onedark-vim": "plugins-onedark-vim"
       },
       "locked": {
-        "lastModified": 1701208306,
-        "narHash": "sha256-u7izCP9v2zpTDz/rL+1Zqdg86ZD+352FKexpknjJumU=",
+        "lastModified": 1701212097,
+        "narHash": "sha256-WZ1+fKoVvIEaSFG/aYzyoZYjusB36qkNwsyV4j1MtE4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "25893e08042d2c6141a2bb5c80ae18304520369c",
+        "rev": "7bf5ba050bb0e79e7e1aabc38d5bf0cfe04a2e6c",
         "type": "github"
       },
       "original": {
@@ -632,22 +627,6 @@
         "type": "github"
       }
     },
-    "plugins-Comment_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1691409559,
-        "narHash": "sha256-+dF1ZombrlO6nQggufSb0igXW5zwU++o0W/5ZA07cdc=",
-        "owner": "numToStr",
-        "repo": "Comment.nvim",
-        "rev": "0236521ea582747b58869cb72f70ccfa967d2e89",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numToStr",
-        "repo": "Comment.nvim",
-        "type": "github"
-      }
-    },
     "plugins-fidget": {
       "flake": false,
       "locked": {
@@ -683,22 +662,6 @@
       }
     },
     "plugins-gitsigns": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1701160367,
-        "narHash": "sha256-5DY7jQ6Znw+iP7gEI72xXy4wxnHBbZuCKtntPXIPI+g=",
-        "owner": "lewis6991",
-        "repo": "gitsigns.nvim",
-        "rev": "175e74f87d3d2e4d20952d390af5f2a794f5ed7e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lewis6991",
-        "repo": "gitsigns.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-gitsigns_2": {
       "flake": false,
       "locked": {
         "lastModified": 1701160367,
@@ -794,39 +757,7 @@
         "type": "github"
       }
     },
-    "plugins-lspconfig_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1701174146,
-        "narHash": "sha256-Y54JEoQNo4xJJl1ltEjKx5KSmUfA0HkwnLx6bXu3A9U=",
-        "owner": "neovim",
-        "repo": "nvim-lspconfig",
-        "rev": "39546f730bdff8eccf7cec344cfce694f19ac908",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neovim",
-        "repo": "nvim-lspconfig",
-        "type": "github"
-      }
-    },
     "plugins-lualine": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1697772980,
-        "narHash": "sha256-jV+6mV0dyuhiHGei1UqE2r2GoiKJLtdZI2AMNexbi7E=",
-        "owner": "nvim-lualine",
-        "repo": "lualine.nvim",
-        "rev": "2248ef254d0a1488a72041cfb45ca9caada6d994",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-lualine",
-        "repo": "lualine.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-lualine_2": {
       "flake": false,
       "locked": {
         "lastModified": 1697772980,
@@ -922,22 +853,6 @@
         "type": "github"
       }
     },
-    "plugins-which-key_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1697801635,
-        "narHash": "sha256-uvghPj/teWrRMm09Gh8iQ/LV2nYJw0lmoiZK6L4+1cY=",
-        "owner": "folke",
-        "repo": "which-key.nvim",
-        "rev": "4433e5ec9a507e5097571ed55c02ea9658fb268a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "folke",
-        "repo": "which-key.nvim",
-        "type": "github"
-      }
-    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -968,17 +883,17 @@
         "nixCats": "nixCats",
         "nixd": "nixd_2",
         "nixpkgs": "nixpkgs_5",
-        "plugins-Comment": "plugins-Comment_2",
+        "plugins-Comment": "plugins-Comment",
         "plugins-fidget": "plugins-fidget_2",
-        "plugins-gitsigns": "plugins-gitsigns_2",
+        "plugins-gitsigns": "plugins-gitsigns",
         "plugins-harpoon": "plugins-harpoon_2",
         "plugins-hlargs": "plugins-hlargs_2",
-        "plugins-lspconfig": "plugins-lspconfig_2",
-        "plugins-lualine": "plugins-lualine_2",
+        "plugins-lspconfig": "plugins-lspconfig",
+        "plugins-lualine": "plugins-lualine",
         "plugins-marks": "plugins-marks",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-onedark-vim": "plugins-onedark-vim_2",
-        "plugins-which-key": "plugins-which-key_2",
+        "plugins-which-key": "plugins-which-key",
         "sg-nvim": "sg-nvim"
       }
     },
