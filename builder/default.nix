@@ -1,9 +1,8 @@
 # Copyright (c) 2023 BirdeeHub 
 # Licensed under the MIT license 
-self: pkgs: { 
-  categories ? {}
-  , settings ? {}
-  , startupPlugins ? {}
+helpPath: path: pkgs:
+{
+  startupPlugins ? {}
   , optionalPlugins ? {}
   , lspsAndRuntimeDeps ? {}
   , propagatedBuildInputs ? {}
@@ -19,7 +18,7 @@ self: pkgs: {
   # only for use when importing flake in a flake 
   # and need to add a bit of lua for an added plugin
   , optionalLuaAdditions ? ""
-  }:
+  }: settings: categories:
   # for a more extensive guide to this file
   # see :help nixCats.flake.nixperts.nvimBuilder
   let
@@ -36,11 +35,11 @@ self: pkgs: {
 
     # package entire flake into the store
     LuaConfig = pkgs.stdenv.mkDerivation {
-      name = builtins.baseNameOf self;
+      name = builtins.baseNameOf path;
       builder = builtins.toFile "builder.sh" ''
         source $stdenv/setup
         mkdir -p $out
-        cp -r ${self}/* $out/
+        cp -r ${path}/* $out/
       '';
     };
 
@@ -60,7 +59,7 @@ self: pkgs: {
         mkdir -p $out/lua
         mkdir -p $out/doc
         cp ${cats} $out/lua/nixCats.lua
-        cp -r ${self}/nixCatsHelp/* $out/doc
+        cp -r ${helpPath}/* $out/doc
       '';
     };
 

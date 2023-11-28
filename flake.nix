@@ -94,10 +94,8 @@
       };
 
       # see :help nixCats.flake.outputs.builder
-      nixVimBuilder = (categoryDefs: settings: categories: 
-        (import ./builder self pkgs 
-        (categoryDefs // { inherit settings categories; }))
-        ) categoryDefinitions;
+      helpPath = "${self}/nixCatsHelp";
+      nixVimBuilder = import ./builder helpPath self pkgs categoryDefinitions;
 
       categoryDefinitions = {
         # see :help nixCats.flake.outputs.builder
@@ -392,17 +390,6 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
-      # These 2 will still recieve the flake's lua when wrapRc = true;
-      customBuilders = {
-        fresh = newPkgs: categoryDefs: settings: categories: 
-          (import ./builder self newPkgs 
-          (categoryDefs // { inherit settings categories; }));
-        merged = newPkgs: categoryDefs: settings: categories: 
-          (import ./builder self 
-          (pkgs // newPkgs) ((categoryDefinitions // categoryDefs) // { inherit settings categories; }));
-      };
-      # To choose settings and categories from the flake that calls this flake.
-      customPackager = nixVimBuilder;
       # choose your default overlay package
       overlays = { default = self: super: { inherit (packageDefinitions) birdeeVim; }; }
         # this will make an overlay out of each of the packageDefinitions defined above
@@ -421,6 +408,19 @@
         inputsFrom = [ ];
         shellHook = ''
         '';
+      };
+      # To choose settings and categories from the flake that calls this flake.
+      customPackager = nixVimBuilder;
+      standardPluginOverlay = import ./overlays/standardPluginOverlay.nix;
+      customBuilders = {
+        # These 2 will still recieve the flake's lua when wrapRc = true;
+        fresh = import ./builder helpPath self;
+        merged = newPkgs: categoryDefs:
+          (import ./builder helpPath self (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
+        # for these ones, you may specify a new path to lua that can be used with wrapRc = true
+        newLuaPath = import ./builder helpPath;
+        mergedNewLuaPath = path: newPkgs: categoryDefs:
+          (import ./builder helpPath path (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
       };
     }
   );

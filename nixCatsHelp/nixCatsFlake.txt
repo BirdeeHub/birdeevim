@@ -26,6 +26,8 @@ When editing the files within the flake directory,
 nix will not package a new file if it isn't staged in git.
 run git add before rebuilding it whenever adding a new file.
 Using wrapRc = true would mean this also applies to lua files.
+In fact, when wrapRc = true, even changes within a lua file
+will not be reflected unless you run git add.
 *******************************************************
 
 Related:
@@ -68,12 +70,14 @@ First, we call flake utils to get system variable for all default systems.
 Then, we define our overlays. They are in the overlays directory.
 Thus, we can import that directory here,
 which runs overlays/default.nix.
+overlays/default.nix simply imports
+a list of other overlays in the directory.
 We have 2 main overlays to discuss.
 
 <1>
 -- The first is standardPluginOverlay:
 
-This overlay is defined in full in overlays/default.nix.
+This overlay is defined in full in overlays/standardPluginOverlay.nix.
 You do not need to edit it to use it.
 
 It takes all the inputs named in the format
@@ -134,26 +138,24 @@ It will tell us which categories to include per package.
 To define this function that takes this set of categories and 
 the settings as an argument, 
 we import ./builder/default.nix and supply it the following.
-1. The pkgs set so that it can use it for making its own derivations.
-2. A reference to self, so that it can get the path to the flake, 
-(it uses the self variable to wrap the lua when wrapRc = true)
-and a set containing the following info.
-3. the settings and categories from arguments
+
+1. The path to the help directory so that it is always included.
+2. The path to the lua to include (in the flake, we use the self variable to get
+     this path and wrap the lua when wrapRc = true)
+3. The pkgs set so that it can use it for making its own derivations.
 4. our set of categoryDefinitions.
 
-ourBuilderFunction = (<categoryDefs>: 
-    <settings>: <categories>: 
-      (import ./builder self pkgs 
-      (<categoryDefs> // { inherit <settings> <categories>; }))
-
-    ) <categoryDefinitions>; 
-    # notice how we then call it with the set we provide below?
-    # this will return a function that takes our other 2 remaining arguments!
+And it will return a function that takes the 
+settings and categories tables as arguments
+>nix
+  nixVimBuilder = import ./builder helpPath self pkgs categoryDefinitions;
+  # notice how we provide it with the set we define below?
+<
 
 Then we define what is in our categories!
-
-<categoryDefinitions> = {
-
+>nix
+  categoryDefinitions = {
+<
 <-> a flexible set of categories, each containing a list of 
       internal BUILD TIME dependencies
 
@@ -281,7 +283,7 @@ see :help `nixCats`
 Flake devShell and package definitions         *nixCats.flake.outputs.packages*
 
 This will automatically add all of the packages in the 
-packageDefinitions set defined in the section above. 
+packageDefinitions set defined in the section above.
 
 However you still must choose your default packages.
 
@@ -289,23 +291,46 @@ In addition, it defines a way for you to choose what
 categories and settings are included in 
 the flake that imports this flake, rather than choosing
 a package you defined within the flake itself.
+Exactly like :help `nixCats.flake.outputs.packaging`
+
 This can be quite handy when you only need some things
 from a flake you defined, 
 but dont want to define a package in the flake for it.
+This option is called with customPackager.${system}
 
-It also defines 2 ways to create your own builder 
+For this next section, these are related to:
+:help `nixCats.flake.outputs.builder`
+
+This flake defines 4 ways to create your own builder, but
 within another flake that calls this one for even more options.
-One is called fresh, the other is called merged.
+they are called:
+customBuilders.${system}.fresh, merged, newLuaPath, and mergedNewLuaPath.
 
-Fresh has no nix categories defined. It is best used with wrapRc = false.
+It also exposes standardPluginOverlay.${system} so that you
+may use it within flakes that import this one.
 
-Merged has the categories you defined, but you can redefine 
+Fresh has no nix categories defined. 
+It is usually best used with wrapRc = false.
+
+Merged has the categories you defined, but you can REDEFINE 
 any category you wish or add new categories.
 
 When using either of these, unless you have wrapRc = false 
 it will recieve the flake's lua. There is a way
 to add additional lua, but it is not recommended over editing the flake.
 for more details on that, see :help `nixCats.flake.nixperts.nvimBuilder`
+
+The last 2 ways to create your own builder do not recieve the flake's lua.
+
+Instead, you must specify an absolute or store path (which includes the self
+variable from another flake) to look in for when wrapRc == true.
+
+Otherwise, they are the equivalent to the two above.
+
+The order of arguments for these builder functions 
+is the same as the regular one.
+
+path: pkgs: categoryDefinitions: settings: categories:
 
 ---------------------------------------------------------------------------------------
 vim:tw=78:ts=8:ft=help:norl:
