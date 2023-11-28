@@ -330,11 +330,11 @@
         "plugins-which-key": "plugins-which-key"
       },
       "locked": {
-        "lastModified": 1701206996,
-        "narHash": "sha256-BcGmpc7mT1hSz9TPC8rFZgV/G33RNSJSmnFyI8EsXeY=",
+        "lastModified": 1701208306,
+        "narHash": "sha256-u7izCP9v2zpTDz/rL+1Zqdg86ZD+352FKexpknjJumU=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "4ba0a4e6ad477428783ee88940653942bcc0d38a",
+        "rev": "25893e08042d2c6141a2bb5c80ae18304520369c",
         "type": "github"
       },
       "original": {
