@@ -12,6 +12,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
     "bash-debug-adapter" = {
@@ -80,10 +81,11 @@
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
       # see :help nixCats.flake.outputs.overlays
       overlays = (import ./overlays inputs) ++ [
+        (nixCats.outputs.standardPluginOverlay.${system} inputs)
         # add any flake overlays here.
         inputs.nixd.outputs.overlays.default
         inputs.codeium.outputs.overlays.${system}.default
@@ -92,10 +94,10 @@
         inherit system overlays;
         # config.allowUnfree = true;
       };
+      nixCatsFreshest = nixCats.outputs.customBuilders.${system}.newLuaPath;
 
       # see :help nixCats.flake.outputs.builder
-      helpPath = "${self}/nixCatsHelp";
-      nixVimBuilder = import ./builder helpPath self pkgs categoryDefinitions;
+      nixVimBuilder = nixCatsFreshest self pkgs categoryDefinitions;
 
       categoryDefinitions = {
         # see :help nixCats.flake.outputs.builder
@@ -411,16 +413,16 @@
       };
       # To choose settings and categories from the flake that calls this flake.
       customPackager = nixVimBuilder;
-      standardPluginOverlay = import ./overlays/standardPluginOverlay.nix;
+      standardPluginOverlay = nixCats.outputs.standardPluginOverlay.${system};
       customBuilders = {
         # These 2 will still recieve the flake's lua when wrapRc = true;
-        fresh = import ./builder helpPath self;
+        fresh = nixCatsFreshest self;
         merged = newPkgs: categoryDefs:
-          (import ./builder helpPath self (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
+          (nixCatsFreshest self (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
         # for these ones, you may specify a new path to lua that can be used with wrapRc = true
-        newLuaPath = import ./builder helpPath;
+        newLuaPath = nixCatsFreshest;
         mergedNewLuaPath = path: newPkgs: categoryDefs:
-          (import ./builder helpPath path (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
+          (nixCatsFreshest path (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
       };
     }
   );
