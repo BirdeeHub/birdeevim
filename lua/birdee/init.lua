@@ -7,5 +7,5 @@ if require('nixCats').debug then
 end
 require("birdee.format")
 require("birdee.keymaps")
-require("clippy")
+require("birdee.clippy")
 require("birdee.opts")
