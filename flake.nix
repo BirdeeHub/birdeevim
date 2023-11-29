@@ -386,7 +386,7 @@
       # choose your package for devShell
       # and whatever else you want in it.
       devShell = pkgs.mkShell {
-        name = "nixCats.nvim";
+        name = "birdeeVim";
         packages = [ (nixVimBuilder packageDefinitions.birdeeVim) ];
         inputsFrom = [ ];
         shellHook = ''
@@ -397,7 +397,7 @@
       overlays = let
         # choose the name and value of your defaultOverlayPackage
         defaultOverlayPackage = {
-          name = "nixCats";
+          name = "birdeeVim";
           value = packageDefinitions.birdeeVim;
         };
       in
