@@ -51,16 +51,16 @@
     flake-utils.lib.eachDefaultSystem (system: let
       # see :help nixCats.flake.outputs.overlays
       overlays = (import ./overlays inputs) ++ [
-        (nixCats.outputs.standardPluginOverlay.${system} inputs)
+        (nixCats.standardPluginOverlay.${system} inputs)
         # add any flake overlays here.
-        inputs.nixd.outputs.overlays.default
-        inputs.codeium.outputs.overlays.${system}.default
+        inputs.nixd.overlays.default
+        inputs.codeium.overlays.${system}.default
       ];
       pkgs = import nixpkgs {
         inherit system overlays;
         # config.allowUnfree = true;
       };
-      nixCatsFreshest = nixCats.outputs.customBuilders.${system}.newLuaPath;
+      nixCatsFreshest = nixCats.customBuilders.${system}.newLuaPath;
 
       # see :help nixCats.flake.outputs.builder
       nixVimBuilder = nixCatsFreshest self pkgs categoryDefinitions;
@@ -82,7 +82,7 @@
             bitwarden-cli
           ];
           AI = [
-            inputs.codeium.outputs.packages.${pkgs.system}.codeium-lsp
+            inputs.codeium.packages.${pkgs.system}.codeium-lsp
 
             inputs.sg-nvim.packages.${pkgs.system}.default
           ];
@@ -407,7 +407,7 @@
       customPackager = nixVimBuilder;
 
       # The overlay that allows for auto import with plugins-pluginname
-      standardPluginOverlay = nixCats.outputs.standardPluginOverlay.${system};
+      standardPluginOverlay = nixCats.standardPluginOverlay.${system};
       # You may use these to modify some or all of your categoryDefinitions
       customBuilders = {
         # These 2 will still recieve the flake's lua when wrapRc = true;
