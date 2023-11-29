@@ -47,9 +47,9 @@
         inherit system overlays;
         # config.allowUnfree = true;
       };
-      nixCatsFreshest = nixCats.customBuilders.${system}.newLuaPath;
 
       # see :help nixCats.flake.outputs.builder
+      nixCatsFreshest = nixCats.customBuilders.${system}.newLuaPath;
       nixVimBuilder = nixCatsFreshest self pkgs categoryDefinitions;
 
       categoryDefinitions = {

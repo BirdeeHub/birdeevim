@@ -1,43 +1,11 @@
 if(require('nixCats').AI) then
-  local function AuthTerminal()
-    local result
-    local handle
-    handle = io.popen([[bw login --check ]], "r")
-    if handle then
-      result = handle:read("*l")
-      handle:close()
-    end
-    if result == "You are logged in!" then
-      handle = io.popen([[bw unlock --raw --nointeraction ]] .. vim.fn.inputsecret('Enter password: '), "r")
-      if handle then
-        result = handle:read("*l")
-        handle:close()
-      end
-    else
-      local email = vim.fn.inputsecret('Enter email: ')
-      local pass = vim.fn.inputsecret('Enter password: ')
-      local client_secret = vim.fn.inputsecret('Enter api key client_secret: ')
-      handle = io.popen([[bw login --raw --quiet ]] .. email .. " " .. pass .. ">/dev/null 2>&1", "w")
-      if handle then
-        handle:write(client_secret)
-        handle:close()
-      end
-      handle = io.popen([[bw unlock --raw --nointeraction ]] .. pass, "r")
-      if handle then
-        result = handle:read("*l")
-        handle:close()
-      end
-    end
-    return result
-  end
-
   local bitwardenAuth = require('nixCats').bitwardenItemIDs
   local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
   local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
   local session
   if bitwardenAuth then
     if (require('sg.auth').valid() == false or vim.fn.filereadable(codeiumAuthFile) == 0) then
-      session = AuthTerminal()
+      session = require("birdee.utils").authTerminal()
     end
   end
   if (require('sg.auth').valid() == false) then
@@ -101,14 +69,7 @@ if(require('nixCats').AI) then
     end
   end
 
-  local M = {}
-  function M.deleteFileIfExists(file_path)
-    if vim.fn.filereadable(file_path) == 1 then
-      os.remove(file_path)
-    end
-  end
-  vim.cmd([[command! ClearSGAuth lua require("birdee.AI").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
-  vim.cmd([[command! ClearCodeiumAuth lua require("birdee.AI").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
-  vim.cmd([[command! ClearBitwardenData lua require("birdee.AI").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
-  return M
+  vim.cmd([[command! ClearSGAuth lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('data') .. '/cody.json')]])
+  vim.cmd([[command! ClearCodeiumAuth lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('cache') .. '/codeium/config.json')]])
+  vim.cmd([[command! ClearBitwardenData lua require("birdee.utils").deleteFileIfExists(vim.fn.stdpath('config') .. '/../Bitwarden\ CLI/data.json')]])
 end
