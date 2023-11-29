@@ -133,8 +133,6 @@
             nvim-dap-virtual-text
           ];
           gitPlugins = with pkgs.neovimPlugins; [
-            # catppuccin
-            # onedark-vim
             harpoon
             hlargs
             fidget
@@ -142,6 +140,7 @@
           general = with pkgs.vimPlugins; [
             # theme
             onedark-vim
+            # catppuccin-nvim
             # telescope
             telescope-fzf-native-nvim
             plenary-nvim
