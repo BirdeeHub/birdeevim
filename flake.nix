@@ -38,7 +38,7 @@
     flake-utils.lib.eachDefaultSystem (system: let
       # see :help nixCats.flake.outputs.overlays
       overlays = (import ./overlays inputs) ++ [
-        (nixCats.standardPluginOverlay.${system} (inputs // nixCats.inputs))
+        (nixCats.standardPluginOverlay.${system} (nixCats.inputs // inputs))
         # add any flake overlays here.
         nixCats.inputs.nixd.overlays.default
         inputs.codeium.overlays.${system}.default
