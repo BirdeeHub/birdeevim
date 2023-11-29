@@ -25,6 +25,10 @@
       url = "github:milisims/nvim-luaref";
       flake = false;
     };
+    "plugins-harpoon" = {
+      url = "github:ThePrimeagen/harpoon";
+      flake = false;
+    };
     # I use this for autocomplete filler especially for comments. 
     codeium.url = "github:Exafunction/codeium.nvim/822e762567a0bf50b1a4e733c8c93691934d7606";
     # I ask this questions I couldnt google the answer to and/or
