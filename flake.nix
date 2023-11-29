@@ -251,6 +251,13 @@
           viAlias = true;
           vimAlias = true;
         };
+        wrappedNOjs = {
+          configDirName = "birdeevim";
+          wrapRc = true;
+          withNodeJs = false;
+          viAlias = true;
+          vimAlias = true;
+        };
       };
 
       # just to select the right thing out of bitwarden. 
@@ -285,7 +292,7 @@
           };
         };
         noAIneodev = {
-          settings = settings.birdee;
+          settings = settings.wrappedNOjs;
           categories = {
             generalBuildInputs = true;
             debug = true;
