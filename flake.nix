@@ -25,19 +25,6 @@
       url = "github:milisims/nvim-luaref";
       flake = false;
     };
-    "plugins-harpoon" = {
-      url = "github:ThePrimeagen/harpoon";
-      flake = false;
-    };
-    "plugins-hlargs" = {
-      url = "github:m-demare/hlargs.nvim";
-      flake = false;
-    };
-    "plugins-fidget" = {
-      url = "github:j-hui/fidget.nvim/legacy";
-      flake = false;
-    };
-    nixd.url = "github:nix-community/nixd";
     # I use this for autocomplete filler especially for comments. 
     codeium.url = "github:Exafunction/codeium.nvim";
     # I ask this questions I couldnt google the answer to and/or
@@ -51,9 +38,9 @@
     flake-utils.lib.eachDefaultSystem (system: let
       # see :help nixCats.flake.outputs.overlays
       overlays = (import ./overlays inputs) ++ [
-        (nixCats.standardPluginOverlay.${system} inputs)
+        (nixCats.standardPluginOverlay.${system} (inputs // nixCats.inputs))
         # add any flake overlays here.
-        inputs.nixd.overlays.default
+        nixCats.inputs.nixd.overlays.default
         inputs.codeium.overlays.${system}.default
       ];
       pkgs = import nixpkgs {
