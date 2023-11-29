@@ -1,7 +1,7 @@
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local categories = require('nixCats')
-if (categories.AI) then require("codeium").setup({}) end
+if (categories.AI) then require("codeium").setup() end
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
