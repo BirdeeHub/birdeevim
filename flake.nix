@@ -26,7 +26,7 @@
       flake = false;
     };
     # I use this for autocomplete filler especially for comments. 
-    codeium.url = "github:Exafunction/codeium.nvim";
+    codeium.url = "github:Exafunction/codeium.nvim/822e762567a0bf50b1a4e733c8c93691934d7606";
     # I ask this questions I couldnt google the answer to and/or
     # need things I havent heard of. It has better code context than gpt.
     # It also occasionally helps with goto definition.
