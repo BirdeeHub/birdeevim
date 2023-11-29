@@ -321,15 +321,14 @@
         "nixpkgs": "nixpkgs_3",
         "plugins-fidget": "plugins-fidget",
         "plugins-harpoon": "plugins-harpoon",
-        "plugins-hlargs": "plugins-hlargs",
-        "plugins-onedark-vim": "plugins-onedark-vim"
+        "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1701212097,
-        "narHash": "sha256-WZ1+fKoVvIEaSFG/aYzyoZYjusB36qkNwsyV4j1MtE4=",
+        "lastModified": 1701218276,
+        "narHash": "sha256-bIOjNJBH4hUxxBPIUsO93Jgwkn8wQd9defvzXE+iWFs=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "7bf5ba050bb0e79e7e1aabc38d5bf0cfe04a2e6c",
+        "rev": "96a6ab4a930d3c8e3f3591abbfceed0355e541ab",
         "type": "github"
       },
       "original": {
@@ -725,38 +724,6 @@
         "type": "github"
       }
     },
-    "plugins-onedark-vim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689744943,
-        "narHash": "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=",
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "rev": "57b77747694ea5676c3ca0eeaf9567dc499730c0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "type": "github"
-      }
-    },
-    "plugins-onedark-vim_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689744943,
-        "narHash": "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=",
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "rev": "57b77747694ea5676c3ca0eeaf9567dc499730c0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "type": "github"
-      }
-    },
     "pre-commit-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -791,7 +758,6 @@
         "plugins-harpoon": "plugins-harpoon_2",
         "plugins-hlargs": "plugins-hlargs_2",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
-        "plugins-onedark-vim": "plugins-onedark-vim_2",
         "sg-nvim": "sg-nvim"
       }
     },

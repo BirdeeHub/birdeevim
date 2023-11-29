@@ -21,16 +21,6 @@
     };
     # If you want your plugin to be loaded by the standard overlay,
     # Then you should name it "plugins-something"
-    # Theme
-    "plugins-onedark-vim" = {
-      url = "github:joshdick/onedark.vim";
-      flake = false;
-    };
-    # "plugins-catppuccin" = {
-    #   url = "github:catppuccin/nvim";
-    #   flake = false;
-    # };
-
     "plugins-nvim-luaref" = {
       url = "github:milisims/nvim-luaref";
       flake = false;
@@ -120,7 +110,7 @@
           ];
           bash = with pkgs; [
             bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-            pkgs.neovimDebuggers.bash-debug-adapter
+            pkgs.neovimDebuggers.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
           ];
         };
 
@@ -144,12 +134,14 @@
           ];
           gitPlugins = with pkgs.neovimPlugins; [
             # catppuccin
-            onedark-vim
+            # onedark-vim
             harpoon
             hlargs
             fidget
           ];
           general = with pkgs.vimPlugins; [
+            # theme
+            onedark-vim
             # telescope
             telescope-fzf-native-nvim
             plenary-nvim
