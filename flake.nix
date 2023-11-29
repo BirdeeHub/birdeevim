@@ -407,11 +407,11 @@
         # These 2 will still recieve the flake's lua when wrapRc = true;
         fresh = nixCatsFreshest self;
         merged = newPkgs: categoryDefs:
-          (nixCatsFreshest self (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
+          (nixCatsFreshest self (pkgs.lib.recursiveUpdate pkgs newPkgs) (pkgs.lib.recursiveUpdate categoryDefinitions categoryDefs));
         # for these ones, you may specify a new path to lua that can be used with wrapRc = true
         newLuaPath = nixCatsFreshest;
         mergedNewLuaPath = path: newPkgs: categoryDefs:
-          (nixCatsFreshest path (pkgs // newPkgs) (categoryDefinitions // categoryDefs));
+          (nixCatsFreshest path (pkgs.lib.recursiveUpdate pkgs newPkgs) (pkgs.lib.recursiveUpdate categoryDefinitions categoryDefs));
       };
     }
   );
