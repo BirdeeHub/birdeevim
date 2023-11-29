@@ -278,18 +278,24 @@
             # see :help nixCats
           };
         };
-        noAIneodev = {
-          settings = settings.wrappedNOjs;
+        birdeeUnwrapped = {
+          settings = settings.unwrappedLua;
           categories = {
+            inherit bitwardenItemIDs;
+            bitwarden = true;
             generalBuildInputs = true;
+            bash = true;
             debug = true;
             markdown = true;
             customPlugins = true;
             gitPlugins = true;
             general = true;
             neonixdev = true;
+            AI = true;
+            java = true;
+            kotlin = true;
             test = true;
-            lspDebugMode = true;
+            lspDebugMode = false;
             colorscheme = "onedark";
           };
         };
@@ -328,24 +334,18 @@
             colorscheme = "onedark";
           };
         };
-        birdeeUnwrapped = {
-          settings = settings.unwrappedLua;
+        noAIneodev = {
+          settings = settings.wrappedNOjs;
           categories = {
-            inherit bitwardenItemIDs;
-            bitwarden = true;
             generalBuildInputs = true;
-            bash = true;
             debug = true;
             markdown = true;
             customPlugins = true;
             gitPlugins = true;
             general = true;
             neonixdev = true;
-            AI = true;
-            java = true;
-            kotlin = true;
             test = true;
-            lspDebugMode = false;
+            lspDebugMode = true;
             colorscheme = "onedark";
           };
         };
