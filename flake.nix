@@ -263,125 +263,153 @@
 
       packageDefinitions = {
         # see :help nixCats.flake.outputs.packaging
-        birdeeVim = nixVimBuilder settings.birdee {
-          inherit bitwardenItemIDs;
-          bitwarden = true;
-          generalBuildInputs = true;
-          bash = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          neonixdev = true;
-          AI = true;
-          java = true; # is included in kotlin category
-          kotlin = true;
-          test = true;
-          lspDebugMode = false;
-          colorscheme = "onedark";
-          # see :help nixCats
+        birdeeVim = {
+          settings = settings.birdee;
+          categories = {
+            inherit bitwardenItemIDs;
+            bitwarden = true;
+            generalBuildInputs = true;
+            bash = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            neonixdev = true;
+            AI = true;
+            java = true; # is included in kotlin category
+            kotlin = true;
+            test = true;
+            lspDebugMode = false;
+            colorscheme = "onedark";
+            # see :help nixCats
+          };
         };
-        noAIneodev = nixVimBuilder settings.birdee {
-          generalBuildInputs = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          neonixdev = true;
-          test = true;
-          lspDebugMode = true;
-          colorscheme = "onedark";
+        noAIneodev = {
+          settings = settings.birdee;
+          categories = {
+            generalBuildInputs = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            neonixdev = true;
+            test = true;
+            lspDebugMode = true;
+            colorscheme = "onedark";
+          };
         };
-        coffeeVim = nixVimBuilder settings.birdee {
-          inherit bitwardenItemIDs;
-          bitwarden = true;
-          generalBuildInputs = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          AI = true;
-          java = true;
-          lspDebugMode = false;
-          colorscheme = "onedark";
+        coffeeVim = {
+          settings = settings.birdee;
+          categories = {
+            inherit bitwardenItemIDs;
+            bitwarden = true;
+            generalBuildInputs = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            AI = true;
+            java = true;
+            lspDebugMode = false;
+            colorscheme = "onedark";
+          };
         };
-        kotlinVim = nixVimBuilder settings.birdee {
-          inherit bitwardenItemIDs;
-          bitwarden = true;
-          generalBuildInputs = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          AI = true;
-          java = true;
-          kotlin = true;
-          lspDebugMode = false;
-          colorscheme = "onedark";
+        kotlinVim = {
+          settings = settings.birdee;
+          categories = {
+            inherit bitwardenItemIDs;
+            bitwarden = true;
+            generalBuildInputs = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            AI = true;
+            java = true;
+            kotlin = true;
+            lspDebugMode = false;
+            colorscheme = "onedark";
+          };
         };
-        birdeeUnwrapped = nixVimBuilder settings.unwrappedLua {
-          inherit bitwardenItemIDs;
-          bitwarden = true;
-          generalBuildInputs = true;
-          bash = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          neonixdev = true;
-          AI = true;
-          java = true;
-          kotlin = true;
-          test = true;
-          lspDebugMode = false;
-          colorscheme = "onedark";
+        birdeeUnwrapped = {
+          settings = settings.unwrappedLua;
+          categories = {
+            inherit bitwardenItemIDs;
+            bitwarden = true;
+            generalBuildInputs = true;
+            bash = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            neonixdev = true;
+            AI = true;
+            java = true;
+            kotlin = true;
+            test = true;
+            lspDebugMode = false;
+            colorscheme = "onedark";
+          };
         };
-        noAIunwrapped = nixVimBuilder settings.unwrapNOjs {
-          generalBuildInputs = true;
-          bash = true;
-          debug = true;
-          markdown = true;
-          customPlugins = true;
-          gitPlugins = true;
-          general = true;
-          neonixdev = true;
-          java = true;
-          kotlin = true;
-          test = true;
-          lspDebugMode = false;
-          colorscheme = "onedark";
+        noAIunwrapped = {
+          settings = settings.unwrapNOjs;
+          categories = {
+            generalBuildInputs = true;
+            bash = true;
+            debug = true;
+            markdown = true;
+            customPlugins = true;
+            gitPlugins = true;
+            general = true;
+            neonixdev = true;
+            java = true;
+            kotlin = true;
+            test = true;
+            lspDebugMode = false;
+            colorscheme = "onedark";
+          };
         };
       };
     in
     # see :help nixCats.flake.outputs.packages
     {
-      # choose your default overlay package
-      overlays = { default = self: super: { inherit (packageDefinitions) birdeeVim; }; }
-        # this will make an overlay out of each of the packageDefinitions defined above
-        // builtins.mapAttrs (name: value: (self: super: { ${name} = value; })) packageDefinitions;
-
       # choose your default package
-      packages = { default = packageDefinitions.birdeeVim; }
+      packages = { default = (nixVimBuilder packageDefinitions.birdeeVim); }
         # this will add all packageDefinitions defined above
-        // packageDefinitions;
+        // (builtins.mapAttrs (value: nixVimBuilder value) packageDefinitions);
 
       # choose your package for devShell
       # and whatever else you want in it.
       devShell = pkgs.mkShell {
         name = "nixCats.nvim";
-        packages = [ packageDefinitions.birdeeVim ];
+        packages = [ (nixVimBuilder packageDefinitions.birdeeVim) ];
         inputsFrom = [ ];
         shellHook = ''
         '';
       };
+
+      # this will make an overlay out of each of the packageDefinitions defined above
+      overlays = let
+        # choose the name and value of your defaultOverlayPackage
+        defaultOverlayPackage = {
+          name = "nixCats";
+          value = packageDefinitions.birdeeVim;
+        };
+      in
+      { default = (self: super: { ${defaultOverlayPackage.name} = nixVimBuilder defaultOverlayPackage.value; }); } 
+      // (builtins.mapAttrs (name: value: (self: super: { ${name} = nixVimBuilder value; })) packageDefinitions);
+
       # To choose settings and categories from the flake that calls this flake.
       customPackager = nixVimBuilder;
+
+      # The overlay that allows for auto import with plugins-pluginname
       standardPluginOverlay = nixCats.outputs.standardPluginOverlay.${system};
+      # You may use these to modify some or all of your categoryDefinitions
       customBuilders = {
         # These 2 will still recieve the flake's lua when wrapRc = true;
         fresh = nixCatsFreshest self;
