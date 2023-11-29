@@ -270,7 +270,7 @@
             general = true;
             neonixdev = true;
             AI = true;
-            java = true; # is included in kotlin category
+            java = true;
             kotlin = true;
             test = true;
             lspDebugMode = false;
