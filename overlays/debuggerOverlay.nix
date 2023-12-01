@@ -1,6 +1,6 @@
-inputs: let
-  debuggerOverlay = self: super: { 
-    neovimDebuggers = {
+importName: inputs: let
+  overlay = self: super: { 
+    ${importName} = {
 
       # this is not accurate.
       bash-debug-adapter = inputs.bash-debug-adapter;
@@ -8,4 +8,4 @@ inputs: let
     };
   };
 in
-debuggerOverlay
+overlay

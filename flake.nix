@@ -40,23 +40,36 @@
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
+
       # see :help nixCats.flake.outputs.overlays
-      overlays = (import ./overlays inputs) ++ [
-        (nixCats.standardPluginOverlay.${system} (nixCats.inputs // inputs))
+      # This overlay grabs all the inputs named in the format
+      # `plugins-<pluginName>`
+      # Once we add this overlay to our nixpkgs, we are able to
+      # use `pkgs.neovimPlugins`, which is a set of our plugins.
+      # we will import it separaly from the others
+      # so we can export it separately from the flake.
+      standardPluginOverlay = nixCats.utils.${system}.standardPluginOverlay;
+      # you may define more overlays in the overlays directory, and import them
+      # in the default.nix file in that directory just like customBuildsOverlay.
+      # `pkgs.customBuilds` is a set of plugins defined in that directory.
+      # see overlays/default.nix for how to add more overlays in that directory.
+      # or see :help nixCats.flake.nixperts.overlays
+      otherOverlays = (import ./overlays inputs) ++ [
         # add any flake overlays here.
-        nixCats.inputs.nixd.overlays.default
         inputs.codeium.overlays.${system}.default
       ];
       pkgs = import nixpkgs {
-        inherit system overlays;
+        inherit system;
+        overlays = otherOverlays ++ nixCats.otherOverlays.${system} ++
+          [ (standardPluginOverlay (nixCats.inputs // inputs)) ];
         # config.allowUnfree = true;
       };
 
       # see :help nixCats.flake.outputs.builder
-      nixCatsFreshest = nixCats.customBuilders.${system}.newLuaPath;
-      nixVimBuilder = nixCatsFreshest self pkgs categoryDefinitions;
+      baseBuilder = nixCats.customBuilders.${system}.fresh;
+      nixCatsBuilder = baseBuilder self pkgs categoryDefinitions packageDefinitions;
 
-      categoryDefinitions = {
+      categoryDefinitions = name: {
         # see :help nixCats.flake.outputs.builder
         propagatedBuildInputs = {
           generalBuildInputs = with pkgs; [
@@ -101,7 +114,7 @@
           ];
           bash = with pkgs; [
             bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-            pkgs.neovimDebuggers.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
+            pkgs.birdeeBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
           ];
         };
 
@@ -115,7 +128,7 @@
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
           ];
-          markdown = with pkgs.customPlugins; [
+          markdown = with pkgs.nixCatsBuilds; [
             markdown-preview-nvim
           ];
           debug = with pkgs.vimPlugins; [
@@ -180,7 +193,7 @@
         };
 
         optionalPlugins = {
-          customPlugins = with pkgs.customPlugins; [ ];
+          customPlugins = with pkgs.birdeeBuilds; [ ];
           gitPlugins = with pkgs.neovimPlugins; [ ];
           general = with pkgs.vimPlugins; [ ];
         };
@@ -199,7 +212,7 @@
             BIRDTVAR = "It worked!";
           };
           bash = {
-            BASHDAP = "${pkgs.neovimDebuggers.bash-debug-adapter}";
+            BASHDAP = "${pkgs.birdeeBuilds.bash-debug-adapter}";
           };
         };
 
@@ -375,48 +388,36 @@
     in
     # see :help nixCats.flake.outputs.packages
     {
-      # choose your default package
-      packages = { default = (nixVimBuilder packageDefinitions.birdeeVim); }
-        # this will add all packageDefinitions defined above
-        // (builtins.mapAttrs (value: nixVimBuilder value) packageDefinitions);
+      # this will make a package out of each of the packageDefinitions defined above
+      # and set the default package to the one named here.
+      packages = nixCats.utils.${system}.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
+
+      # this will make an overlay out of each of the packageDefinitions defined above
+      # and set the default overlay to the one named here.
+      overlays = nixCats.utils.${system}.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
 
       # choose your package for devShell
-      # and whatever else you want in it.
+      # and add whatever else you want in it.
       devShell = pkgs.mkShell {
         name = "birdeeVim";
-        packages = [ (nixVimBuilder packageDefinitions.birdeeVim) ];
+        packages = [ (nixCatsBuilder "birdeeVim") ];
         inputsFrom = [ ];
         shellHook = ''
         '';
       };
 
-      # this will make an overlay out of each of the packageDefinitions defined above
-      overlays = let
-        # choose the name and value of your defaultOverlayPackage
-        defaultOverlayPackage = {
-          name = "birdeeVim";
-          value = packageDefinitions.birdeeVim;
-        };
-      in
-      { default = (self: super: { ${defaultOverlayPackage.name} = nixVimBuilder defaultOverlayPackage.value; }); } 
-      // (builtins.mapAttrs (name: value: (self: super: { ${name} = nixVimBuilder value; })) packageDefinitions);
-
       # To choose settings and categories from the flake that calls this flake.
-      customPackager = nixVimBuilder;
+      customPackager = baseBuilder self pkgs categoryDefinitions;
 
-      # The overlay that allows for auto import with plugins-pluginname
-      standardPluginOverlay = nixCats.standardPluginOverlay.${system};
       # You may use these to modify some or all of your categoryDefinitions
       customBuilders = {
-        # These 2 will still recieve the flake's lua when wrapRc = true;
-        fresh = nixCatsFreshest self;
-        merged = newPkgs: categoryDefs:
-          (nixCatsFreshest self (pkgs.lib.recursiveUpdate pkgs newPkgs) (pkgs.lib.recursiveUpdate categoryDefinitions categoryDefs));
-        # for these ones, you may specify a new path to lua that can be used with wrapRc = true
-        newLuaPath = nixCatsFreshest;
-        mergedNewLuaPath = path: newPkgs: categoryDefs:
-          (nixCatsFreshest path (pkgs.lib.recursiveUpdate pkgs newPkgs) (pkgs.lib.recursiveUpdate categoryDefinitions categoryDefs));
+        fresh = baseBuilder;
+        keepLua = baseBuilder self;
       };
+
+      inherit otherOverlays;
+      inherit categoryDefinitions;
+      utils = nixCats.utils.${system};
     }
   );
 }
