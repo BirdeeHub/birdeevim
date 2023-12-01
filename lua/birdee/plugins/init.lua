@@ -1,8 +1,9 @@
 local categories = require('nixCats')
 local colorschemer = categories.colorscheme-- also schemes lualine
 local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
-
-vim.cmd.colorscheme(colorschemer)
+if colorschemer ~= "" then
+  vim.cmd.colorscheme(colorschemer)
+end
 
 require('birdee.plugins.telescope')
 
