@@ -129,9 +129,6 @@
             fidget
           ];
           general = with pkgs.vimPlugins; [
-            # theme
-            onedark-vim
-            # catppuccin-nvim
             # telescope
             telescope-fzf-native-nvim
             plenary-nvim
@@ -176,7 +173,10 @@
             nvim-web-devicons
             nui-nvim
             neo-tree-nvim
-          ];
+          ] ++ [ (builtins.getAttr packageDefinitions.${name}.categories.colorscheme { 
+                  "onedark" = onedark-vim; 
+                  "catppuccin" = catppuccin-nvim; 
+                }) ];
         };
 
         optionalPlugins = {
