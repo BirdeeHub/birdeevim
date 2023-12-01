@@ -41,19 +41,7 @@
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
 
-      # see :help nixCats.flake.outputs.overlays
-      # This overlay grabs all the inputs named in the format
-      # `plugins-<pluginName>`
-      # Once we add this overlay to our nixpkgs, we are able to
-      # use `pkgs.neovimPlugins`, which is a set of our plugins.
-      # we will import it separaly from the others
-      # so we can export it separately from the flake.
       standardPluginOverlay = nixCats.utils.${system}.standardPluginOverlay;
-      # you may define more overlays in the overlays directory, and import them
-      # in the default.nix file in that directory just like customBuildsOverlay.
-      # `pkgs.customBuilds` is a set of plugins defined in that directory.
-      # see overlays/default.nix for how to add more overlays in that directory.
-      # or see :help nixCats.flake.nixperts.overlays
       otherOverlays = (import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
@@ -65,12 +53,11 @@
         # config.allowUnfree = true;
       };
 
-      # see :help nixCats.flake.outputs.builder
       baseBuilder = nixCats.customBuilders.${system}.fresh;
       nixCatsBuilder = baseBuilder self pkgs categoryDefinitions packageDefinitions;
 
       categoryDefinitions = name: {
-        # see :help nixCats.flake.outputs.builder
+
         propagatedBuildInputs = {
           generalBuildInputs = with pkgs; [
           ];
@@ -223,11 +210,8 @@
           ];
         };
 
-        # there are more available sections, extraPythonPackages, extraPython3Packages, extraLuaPackages.
-        # see :help nixCats.flake.outputs.builder and :help nixCats.flake.nixperts.nvimBuilder
       };
 
-      # see :help nixCats.flake.outputs.settings
       settings = {
         birdee = {
           wrapRc = true;
@@ -241,7 +225,6 @@
           withPython3 = true;
         };
         unwrappedLua = {
-          # so that it looks for .config/birdeevim instead
           configDirName = "birdeevim";
           wrapRc = false;
           withNodeJs = true;
@@ -272,7 +255,6 @@
       };
 
       packageDefinitions = {
-        # see :help nixCats.flake.outputs.packaging
         birdeeVim = {
           settings = settings.birdee;
           categories = {
@@ -292,7 +274,6 @@
             test = true;
             lspDebugMode = false;
             colorscheme = "onedark";
-            # see :help nixCats
           };
         };
         birdeeUnwrapped = {
@@ -386,18 +367,11 @@
         };
       };
     in
-    # see :help nixCats.flake.outputs.packages
     {
-      # this will make a package out of each of the packageDefinitions defined above
-      # and set the default package to the one named here.
       packages = nixCats.utils.${system}.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
 
-      # this will make an overlay out of each of the packageDefinitions defined above
-      # and set the default overlay to the one named here.
       overlays = nixCats.utils.${system}.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
 
-      # choose your package for devShell
-      # and add whatever else you want in it.
       devShell = pkgs.mkShell {
         name = "birdeeVim";
         packages = [ (nixCatsBuilder "birdeeVim") ];
@@ -406,10 +380,8 @@
         '';
       };
 
-      # To choose settings and categories from the flake that calls this flake.
       customPackager = baseBuilder self pkgs categoryDefinitions;
 
-      # You may use these to modify some or all of your categoryDefinitions
       customBuilders = {
         fresh = baseBuilder;
         keepLua = baseBuilder self;
