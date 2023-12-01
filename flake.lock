@@ -559,11 +559,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1701464206,
-        "narHash": "sha256-cPA+a7mdV6DGCNxJFW3+r7DGRToKnGknZEdevdI47fM=",
+        "lastModified": 1701466136,
+        "narHash": "sha256-gyxYyqUYFe1fAb6LTkqETI1DmeIPMI1WVodF+TaIGRQ=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "1e041f13b10f99c240381172e4097b8a08785c9e",
+        "rev": "245875a29f1f50a4d4e21b76db92635e1b15c651",
         "type": "github"
       },
       "original": {
