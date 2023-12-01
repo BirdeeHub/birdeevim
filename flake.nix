@@ -101,7 +101,7 @@
           ];
           bash = with pkgs; [
             bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-            pkgs.birdeeBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
+            pkgs.birdeebug.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
           ];
         };
 
@@ -180,7 +180,7 @@
         };
 
         optionalPlugins = {
-          customPlugins = with pkgs.birdeeBuilds; [ ];
+          customPlugins = with pkgs.birdeebug; [ ];
           gitPlugins = with pkgs.neovimPlugins; [ ];
           general = with pkgs.vimPlugins; [ ];
         };
@@ -199,7 +199,7 @@
             BIRDTVAR = "It worked!";
           };
           bash = {
-            BASHDAP = "${pkgs.birdeeBuilds.bash-debug-adapter}";
+            BASHDAP = "${pkgs.birdeebug.bash-debug-adapter}";
           };
         };
 

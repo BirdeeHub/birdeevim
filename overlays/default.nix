@@ -22,7 +22,7 @@ inputs: let
 
     # this is how you would add another overlay file
     # for if your customBuildsOverlay gets too long
-    birdeeBuilds = import ./debuggerOverlay.nix;
+    birdeebug = import ./debuggerOverlay.nix;
 
   };
 in
