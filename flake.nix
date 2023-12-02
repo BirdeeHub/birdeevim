@@ -47,8 +47,7 @@
       ];
       pkgs = import nixpkgs {
         inherit system;
-        overlays =
-          [
+        overlays = [
             (nixCats.utils.${system}.standardPluginOverlay (nixCats.inputs // inputs))
             (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} otherOverlays)
           ];
