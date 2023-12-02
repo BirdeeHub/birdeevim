@@ -115,8 +115,8 @@
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
           ];
-          markdown = with pkgs.nixCatsBuilds; [
-            markdown-preview-nvim
+          markdown = [
+            pkgs.nixCatsBuilds.markdown-preview-nvim
           ];
           debug = with pkgs.vimPlugins; [
             nvim-dap
@@ -311,7 +311,7 @@
             AI = true;
             java = true;
             lspDebugMode = false;
-            colorscheme = "onedark";
+            colorscheme = "catppuccin";
           };
         };
         kotlinVim = {
@@ -329,7 +329,7 @@
             java = true;
             kotlin = true;
             lspDebugMode = false;
-            colorscheme = "onedark";
+            colorscheme = "catppuccin";
           };
         };
         noAIneodev = {
