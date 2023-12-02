@@ -48,8 +48,11 @@
       ];
       pkgs = import nixpkgs {
         inherit system;
-        overlays = otherOverlays ++ nixCats.otherOverlays.${system} ++
-          [ (standardPluginOverlay (nixCats.inputs // inputs)) ];
+        overlays =
+          [
+            (standardPluginOverlay (nixCats.inputs // inputs))
+            (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} otherOverlays)
+          ];
         # config.allowUnfree = true;
       };
 
@@ -101,7 +104,7 @@
           ];
           bash = with pkgs; [
             bashdb # a bash debugger. seemed like an easy first debugger to add, and would be useful
-            pkgs.birdeebug.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
+            pkgs.nixCatsBuilds.bash-debug-adapter # I unfortunately need to build it I think... IDK how yet.
           ];
         };
 
@@ -199,7 +202,7 @@
             BIRDTVAR = "It worked!";
           };
           bash = {
-            BASHDAP = "${pkgs.birdeebug.bash-debug-adapter}";
+            BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
           };
         };
 
