@@ -131,8 +131,11 @@
           ];
           general = with pkgs.vimPlugins; [
             (builtins.getAttr packageDefinitions.${name}.categories.colorscheme { 
-                "onedark" = onedark-vim; 
-                "catppuccin" = catppuccin-nvim; 
+                "onedark" = onedark-vim;
+                "catppuccin" = catppuccin-nvim;
+                "catppuccin-mocha" = catppuccin-nvim;
+                "tokyonight" = tokyonight-nvim;
+                "tokyonight-day" = tokyonight-nvim;
               }
             ) 
           ] ++ [
