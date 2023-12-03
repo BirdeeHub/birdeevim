@@ -157,6 +157,7 @@
             cmp-cmdline-history
             lspkind-nvim
             # other
+            conform-nvim
             nvim-lspconfig
             lualine-nvim
             gitsigns-nvim
