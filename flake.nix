@@ -42,7 +42,7 @@
     flake-utils.lib.eachDefaultSystem (system: let
       utils = nixCats.utils.${system};
 
-      otherOverlays = [ (utils.mergeOverlayLists nixCats.otherOverlays.${system} 
+      otherOverlays = [ (utils.mergeOverlayLists nixCats.otherOverlays.${system}
       ((import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
