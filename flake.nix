@@ -186,15 +186,6 @@
         };
 
         environmentVariables = {
-          AI = {
-            # I provision the auth in the lua from bitwarden
-            # so I don't have to put my token on github
-            # But this is a way you could do it
-            # SRC_ENDPOINT = "https://sourcegraph.com";
-            # SRC_ACCESS_TOKEN = builtins.readFile ./secrets/codyToken;
-            # this only works if you use the --impure option when building.
-            # SRC_ACCESS_TOKEN = builtins.readFile /absolute/path/to/secrets/codyToken;
-          };
           test = {
             BIRDTVAR = "It worked!";
           };
