@@ -41,15 +41,14 @@
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
 
-      otherOverlays = (import ./overlays inputs) ++ [
+      otherOverlays = (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} ((import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
-      ];
+      ]));
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
+        overlays = [ otherOverlays ] ++ [
             (nixCats.utils.${system}.standardPluginOverlay (nixCats.inputs // inputs))
-            (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} otherOverlays)
           ];
         # config.allowUnfree = true;
       };
@@ -115,7 +114,7 @@
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
           ];
-          markdown = [
+          markdown = with pkgs.vimPlugins; [
             pkgs.nixCatsBuilds.markdown-preview-nvim
           ];
           debug = with pkgs.vimPlugins; [
@@ -180,7 +179,7 @@
         };
 
         optionalPlugins = {
-          customPlugins = with pkgs.birdeebug; [ ];
+          customPlugins = with pkgs.nixCatsBuilds; [ ];
           gitPlugins = with pkgs.neovimPlugins; [ ];
           general = with pkgs.vimPlugins; [ ];
         };

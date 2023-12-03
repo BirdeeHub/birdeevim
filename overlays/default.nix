@@ -13,7 +13,7 @@ overlay
 inputs: let 
   overlaySet = {
 
-    nixCatsBuilds = import ./debuggerOverlay.nix;
+    nixCatsBuilds = import ./customBuildsOverlay.nix;
 
   };
 in
