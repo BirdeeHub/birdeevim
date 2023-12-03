@@ -41,14 +41,14 @@
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
 
-      otherOverlays = (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} 
+      otherOverlays = [ (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} 
       ((import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
-      ]));
+      ])) ];
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ otherOverlays ] ++ [
+        overlays = otherOverlays ++ [
             (nixCats.utils.${system}.standardPluginOverlay (nixCats.inputs // inputs))
           ];
         # config.allowUnfree = true;
