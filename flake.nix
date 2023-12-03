@@ -75,7 +75,6 @@
           ];
           AI = [
             inputs.codeium.packages.${pkgs.system}.codeium-lsp
-
             inputs.sg-nvim.packages.${pkgs.system}.default
           ];
           java = with pkgs; [
