@@ -5,9 +5,7 @@ require("birdee.LSPs")
 if require('nixCats').debug then
   require("birdee.debug")
 end
--- if require('nixCats').formatting then
-  require("birdee.format")
--- end
+require("birdee.format")
 require("birdee.keymaps")
 require("birdee.clippy")
 require("birdee.opts")
