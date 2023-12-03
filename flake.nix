@@ -40,8 +40,9 @@
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
+      utils = nixCats.utils.${system};
 
-      otherOverlays = [ (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} 
+      otherOverlays = [ (utils.mergeOverlayLists nixCats.otherOverlays.${system} 
       ((import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
@@ -49,7 +50,7 @@
       pkgs = import nixpkgs {
         inherit system;
         overlays = otherOverlays ++ [
-            (nixCats.utils.${system}.standardPluginOverlay (nixCats.inputs // inputs))
+            (utils.standardPluginOverlay (nixCats.inputs // inputs))
           ];
         # config.allowUnfree = true;
       };
@@ -359,9 +360,9 @@
       };
     in
     {
-      packages = nixCats.utils.${system}.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
+      packages = utils.mkPackages nixCatsBuilder packageDefinitions "birdeeVim";
 
-      overlays = nixCats.utils.${system}.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
+      overlays = utils.mkOverlays nixCatsBuilder packageDefinitions "birdeeVim";
 
       devShell = pkgs.mkShell {
         name = "birdeeVim";
@@ -380,7 +381,7 @@
 
       inherit otherOverlays;
       inherit categoryDefinitions;
-      utils = nixCats.utils.${system};
+      inherit utils;
     }
   );
 }
