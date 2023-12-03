@@ -41,7 +41,8 @@
   outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system: let
 
-      otherOverlays = (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} ((import ./overlays inputs) ++ [
+      otherOverlays = (nixCats.utils.${system}.mergeOverlayLists nixCats.otherOverlays.${system} 
+      ((import ./overlays inputs) ++ [
         # add any flake overlays here.
         inputs.codeium.overlays.${system}.default
       ]));
