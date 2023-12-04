@@ -26,7 +26,8 @@
       flake = false;
     };
     "plugins-harpoon" = {
-      url = "github:ThePrimeagen/harpoon";
+      # url = "github:ThePrimeagen/harpoon/harpoon2";
+      url = "github:ThePrimeagen/harpoon/80a428855f0852661c55cef7ad53f369d38721f9";
       flake = false;
     };
     # I use this for autocomplete filler especially for comments. 
@@ -254,6 +255,7 @@
       };
 
       packageDefinitions = {
+        minimal = {settings = settings.unwrapNOjs; categories = {};};
         birdeeVim = {
           settings = settings.birdee;
           categories = {

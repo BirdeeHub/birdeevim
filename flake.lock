@@ -168,11 +168,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1701680307,
+        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
         "type": "github"
       },
       "original": {
@@ -306,11 +306,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1701605261,
-        "narHash": "sha256-oRfaYSVBzNIJnIzgH0BJ6ReKdyxOxsMr+T3oIuqrqus=",
+        "lastModified": 1701610532,
+        "narHash": "sha256-oC9BbEvxkcvrDQafMtaiFKEKAgZ+Rp/iQGNb1bgTqf4=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "864a5afc39c404e7a93c53645832f3b7a9dc858b",
+        "rev": "aa1b59341731b415324643368fe1cce60e6c23db",
         "type": "github"
       },
       "original": {
@@ -423,11 +423,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1701401302,
-        "narHash": "sha256-kfCOHzgtmHcgJwH7uagk8B+K1Qz58rN79eTLe55eGqA=",
+        "lastModified": 1701432845,
+        "narHash": "sha256-06sd2rQ+DPMSueh+hW4MiXbpMSdhQHJOi/sw0vuwqvs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "69a165d0fd2b08a78dbd2c98f6f860ceb2bbcd40",
+        "rev": "77da99a144cd341408308e0a37622f5edcc6c5ba",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1701401302,
-        "narHash": "sha256-kfCOHzgtmHcgJwH7uagk8B+K1Qz58rN79eTLe55eGqA=",
+        "lastModified": 1701626906,
+        "narHash": "sha256-ugr1QyzzwNk505ICE4VMQzonHQ9QS5W33xF2FXzFQ00=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "69a165d0fd2b08a78dbd2c98f6f860ceb2bbcd40",
+        "rev": "0c6d8c783336a59f4c59d4a6daed6ab269c4b361",
         "type": "github"
       },
       "original": {
@@ -559,16 +559,17 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1701558082,
-        "narHash": "sha256-man4zWgQQEosvpFwcCjaLfiGiu/OAqGSaxhUnTWX3bo=",
+        "lastModified": 1701712186,
+        "narHash": "sha256-0SIRxdKOTgDaLEXfCQ932WUuHkz9jF/nKgvNHbhYPwE=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "581da797f9d66485f841525af596255270c2bcf5",
+        "rev": "80a428855f0852661c55cef7ad53f369d38721f9",
         "type": "github"
       },
       "original": {
         "owner": "ThePrimeagen",
         "repo": "harpoon",
+        "rev": "80a428855f0852661c55cef7ad53f369d38721f9",
         "type": "github"
       }
     },
