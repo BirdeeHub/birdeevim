@@ -12,7 +12,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim/v3.0_update";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
     "bash-debug-adapter" = {
@@ -58,7 +58,7 @@
       baseBuilder = nixCats.customBuilders.${system}.fresh;
       nixCatsBuilder = baseBuilder self pkgs categoryDefinitions packageDefinitions;
 
-      categoryDefinitions = name: {
+      categoryDefinitions = packageDef: {
 
         propagatedBuildInputs = {
           generalBuildInputs = with pkgs; [
@@ -130,7 +130,7 @@
             fidget
           ];
           general = with pkgs.vimPlugins; [
-            (builtins.getAttr packageDefinitions.${name}.categories.colorscheme { 
+            (builtins.getAttr packageDef.categories.colorscheme { 
                 "onedark" = onedark-vim;
                 "catppuccin" = catppuccin-nvim;
                 "catppuccin-mocha" = catppuccin-nvim;
@@ -380,17 +380,36 @@
         '';
       };
 
+      # To choose settings and categories from the flake that calls this flake.
       customPackager = baseBuilder self pkgs categoryDefinitions;
 
+      # You may use these to modify some or all of your categoryDefinitions
       customBuilders = {
         fresh = baseBuilder;
         keepLua = baseBuilder self;
       };
+      inherit utils;
 
+      # and you export this so people dont have to redefine stuff.
       inherit otherOverlays;
       inherit categoryDefinitions;
-      inherit utils;
       inherit packageDefinitions;
+
+      # we also export a nixos module to allow configuration from configuration.nix
+      nixosModules.default = utils.mkNixosModules {
+        defaultPackageName = "birdeeVim";
+        luaPath = "${self}";
+        inherit nixpkgs inputs baseBuilder otherOverlays 
+          pkgs categoryDefinitions packageDefinitions;
+      };
+      # and the same for home manager
+      homeModule = utils.mkHomeModules {
+        defaultPackageName = "birdeeVim";
+        luaPath = "${self}";
+        inherit nixpkgs inputs baseBuilder otherOverlays 
+          pkgs categoryDefinitions packageDefinitions;
+      };
+
     }
-  );
+  ) // { templates = nixCats.utils."x86_64-linux".templates; };
 }

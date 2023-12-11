@@ -306,15 +306,16 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1701877001,
-        "narHash": "sha256-TOFUB+ic7oEYlQkvdWqCwqUbxakJccfnaiSgg8FxTbM=",
+        "lastModified": 1702299885,
+        "narHash": "sha256-a9QBaq6w763M80lTaRD9nMGRm0B4zMkNiKNUnC7P398=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "a02a8608ddbe7c3deb2516e58924bf49017d5d7c",
+        "rev": "87423f246b67e4eded534e02416f1e2b95cd4e42",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
+        "ref": "v3.0_update",
         "repo": "nixCats-nvim",
         "type": "github"
       }
@@ -423,11 +424,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1701693815,
-        "narHash": "sha256-7BkrXykVWfkn6+c1EhFA3ko4MLi3gVG0p9G96PNnKTM=",
+        "lastModified": 1702206697,
+        "narHash": "sha256-vE9oEx3Y8TO5MnWwFlmopjHd1JoEBno+EhsfUCq5iR8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "09ec6a0881e1a36c29d67497693a67a16f4da573",
+        "rev": "29d6c96900b9b576c2fb89491452f283aa979819",
         "type": "github"
       },
       "original": {
@@ -439,11 +440,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1701693815,
-        "narHash": "sha256-7BkrXykVWfkn6+c1EhFA3ko4MLi3gVG0p9G96PNnKTM=",
+        "lastModified": 1702206697,
+        "narHash": "sha256-vE9oEx3Y8TO5MnWwFlmopjHd1JoEBno+EhsfUCq5iR8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "09ec6a0881e1a36c29d67497693a67a16f4da573",
+        "rev": "29d6c96900b9b576c2fb89491452f283aa979819",
         "type": "github"
       },
       "original": {
@@ -559,11 +560,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1701871267,
-        "narHash": "sha256-rVzru/A0Z6PwiEUG0dHv8+KiOz9GYeHllrdSzFZSDM8=",
+        "lastModified": 1702262518,
+        "narHash": "sha256-UAd+YMZoW/U8H5e+KarBY0kPeXOGx1wwbG7eoVG4zO0=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "07cca27cf14a458c469a759c897124f78d953db0",
+        "rev": "bb806acff3ceaec3b94bd3c92bc52945040004bf",
         "type": "github"
       },
       "original": {
