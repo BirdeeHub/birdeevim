@@ -306,11 +306,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1702308191,
-        "narHash": "sha256-b1oK8G80F34OiP4t9Y/b2ICZZuTKTjNAH4GVolXXxiQ=",
+        "lastModified": 1702512856,
+        "narHash": "sha256-RUaM0v2M1yFxZP6FJM1nOm1U20LtDb1R/QMz2Qh62xU=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "546e59418d9ca9f0241f21f93a892cf7b3aa0c0a",
+        "rev": "9465689877b2f81aa32f3f51410f0f90b766d57f",
         "type": "github"
       },
       "original": {
@@ -423,11 +423,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1702206697,
-        "narHash": "sha256-vE9oEx3Y8TO5MnWwFlmopjHd1JoEBno+EhsfUCq5iR8=",
+        "lastModified": 1702272962,
+        "narHash": "sha256-D+zHwkwPc6oYQ4G3A1HuadopqRwUY/JkMwHz1YF7j4Q=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "29d6c96900b9b576c2fb89491452f283aa979819",
+        "rev": "e97b3e4186bcadf0ef1b6be22b8558eab1cdeb5d",
         "type": "github"
       },
       "original": {
@@ -559,11 +559,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1702262518,
-        "narHash": "sha256-UAd+YMZoW/U8H5e+KarBY0kPeXOGx1wwbG7eoVG4zO0=",
+        "lastModified": 1702435770,
+        "narHash": "sha256-4e9VY6LkiwnKRt6t0tKacripVcJ1eFmD425+NyoktUg=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "bb806acff3ceaec3b94bd3c92bc52945040004bf",
+        "rev": "8f67088e9d479397347b63e69920ee861a9838cd",
         "type": "github"
       },
       "original": {
@@ -576,11 +576,11 @@
     "plugins-hlargs": {
       "flake": false,
       "locked": {
-        "lastModified": 1694799735,
-        "narHash": "sha256-bH0OOf5T4Z96Td4ZBV1q8DI/bO1pV8DwqEWho6jeggg=",
+        "lastModified": 1702317151,
+        "narHash": "sha256-AgHETTIsDOLgEnEaFWq1kXY+Ye/DUU6W+95M37VNOVw=",
         "owner": "m-demare",
         "repo": "hlargs.nvim",
-        "rev": "6218a401824c5733ac50b264991b62d064e85ab2",
+        "rev": "872c332dcc65324604011fa6056c4d71253e399b",
         "type": "github"
       },
       "original": {
@@ -683,11 +683,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1700062448,
-        "narHash": "sha256-25YsWGz/fdsvRrn8rbxdJeVTVWHY6DsMRW0gitY/kDc=",
+        "lastModified": 1702484914,
+        "narHash": "sha256-62vD3bGz8Dwv0JLmAm565qVk1dOdvUFC6ezXvI+/uyA=",
         "owner": "sourcegraph",
         "repo": "sg.nvim",
-        "rev": "41378567217097a3d78b624c9f11d29436381e99",
+        "rev": "9eeb00c758a394cccd2828720b0eaadce6f1ad51",
         "type": "github"
       },
       "original": {
