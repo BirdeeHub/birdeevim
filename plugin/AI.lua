@@ -4,33 +4,33 @@ if(require('nixCats').AI) then
   local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
   local session
   if bitwardenAuth then
-    if (require('sg.auth').valid() == false or vim.fn.filereadable(codeiumAuthFile) == 0) then
+    if (--[[ require('sg.auth').valid() == false or ]] vim.fn.filereadable(codeiumAuthFile) == 0) then
       session = require("birdee.utils").authTerminal()
     end
   end
-  if (require('sg.auth').valid() == false) then
-    local tokenPath = vim.fn.expand("$HOME") .. "/.secrets/codyToken"
-    if (bitwardenAuth or vim.fn.filereadable(tokenPath) == 1) then
-      local result
-      local handle
-      if bitwardenAuth then
-        handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.cody, "r")
-      else
-        handle = io.open(tokenPath, "r")
-      end
-      if handle then
-        result = handle:read("*l")
-        handle:close()
-      end
-        if (string.len(result) == 44) then
-          require('sg.auth').set_nvim_auth({
-            tos_accepted = true,
-            endpoint = 'https://sourcegraph.com',
-            token = result,
-          })
-        end
-    end
-  end
+  -- if (require('sg.auth').valid() == false) then
+  --   local tokenPath = vim.fn.expand("$HOME") .. "/.secrets/codyToken"
+  --   if (bitwardenAuth or vim.fn.filereadable(tokenPath) == 1) then
+  --     local result
+  --     local handle
+  --     if bitwardenAuth then
+  --       handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.cody, "r")
+  --     else
+  --       handle = io.open(tokenPath, "r")
+  --     end
+  --     if handle then
+  --       result = handle:read("*l")
+  --       handle:close()
+  --     end
+  --       if (string.len(result) == 44) then
+  --         require('sg.auth').set_nvim_auth({
+  --           tos_accepted = true,
+  --           endpoint = 'https://sourcegraph.com',
+  --           token = result,
+  --         })
+  --       end
+  --   end
+  -- end
   require("sg").setup({
     on_attach = require("caps-onattach").on_attach,
     enable_cody = true,
