@@ -23,7 +23,7 @@ if(require('nixCats').AI) then
         result = handle:read("*l")
         handle:close()
       end
-        -- if (string.len(result) == 44) then
+        -- if (string.len(result) == 61) then
           local endpoint = 'https://sourcegraph.com'
           local token = result
           require('sg.auth').set(endpoint, token)
