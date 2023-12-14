@@ -9,28 +9,27 @@ if(require('nixCats').AI) then
     end
   end
   -- if (require('sg.auth').valid() == false) then
-  --   local tokenPath = vim.fn.expand("$HOME") .. "/.secrets/codyToken"
-  --   if (bitwardenAuth or vim.fn.filereadable(tokenPath) == 1) then
-  --     local result
-  --     local handle
-  --     if bitwardenAuth then
-  --       handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.cody, "r")
-  --     else
-  --       handle = io.open(tokenPath, "r")
-  --     end
-  --     if handle then
-  --       result = handle:read("*l")
-  --       handle:close()
-  --     end
-  --       if (string.len(result) == 44) then
-  --         require('sg.auth').set_nvim_auth({
-  --           tos_accepted = true,
-  --           endpoint = 'https://sourcegraph.com',
-  --           token = result,
-  --         })
-  --       end
-  --   end
-  -- end
+  if (vim.fn.expand("$SRC_ACCESS_TOKEN") == "$SRC_ACCESS_TOKEN") then
+    local tokenPath = vim.fn.expand("$HOME") .. "/.secrets/codyToken"
+    if (--[[ bitwardenAuth or ]] vim.fn.filereadable(tokenPath) == 1) then
+      local result
+      local handle
+      -- if bitwardenAuth then
+      --   handle = io.popen("bw get --nointeraction --session " .. session .. " " .. bitwardenAuth.cody, "r")
+      -- else
+        handle = io.open(tokenPath, "r")
+      -- end
+      if handle then
+        result = handle:read("*l")
+        handle:close()
+      end
+        -- if (string.len(result) == 44) then
+          local endpoint = 'https://sourcegraph.com'
+          local token = result
+          require('sg.auth').set(endpoint, token)
+        -- end
+    end
+  end
   require("sg").setup({
     on_attach = require("caps-onattach").on_attach,
     enable_cody = true,

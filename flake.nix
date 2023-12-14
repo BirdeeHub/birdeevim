@@ -197,9 +197,6 @@
           test = {
             BIRDTVAR = "It worked!";
           };
-          AI = {
-            SRC_ENDPOINT = "https://sourcegraph.com";
-          };
           bash = {
             BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
           };
@@ -218,7 +215,7 @@
         birdee = {
           wrapRc = true;
           # so that it finds my ai auths in ~/.cache/birdeevim
-          configDirName = "birdeevim";
+          configDirName = "birdeevimTEST3";
           viAlias = true;
           vimAlias = true;
           withNodeJs = true;
