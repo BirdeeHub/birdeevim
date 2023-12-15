@@ -176,6 +176,7 @@
             vim-sleuth
             vim-fugitive
             vim-rhubarb
+            diffview-nvim
             vim-repeat
             nvim-surround
             eyeliner-nvim
