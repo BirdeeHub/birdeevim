@@ -438,11 +438,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1702272962,
-        "narHash": "sha256-D+zHwkwPc6oYQ4G3A1HuadopqRwUY/JkMwHz1YF7j4Q=",
+        "lastModified": 1702508050,
+        "narHash": "sha256-imn+/Rj+bqagOSm7GmRDbrqkxtc7QnjY3Cu85gv46BU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e97b3e4186bcadf0ef1b6be22b8558eab1cdeb5d",
+        "rev": "fd04bea4cbf76f86f244b9e2549fca066db8ddff",
         "type": "github"
       },
       "original": {
@@ -558,11 +558,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1702435770,
-        "narHash": "sha256-4e9VY6LkiwnKRt6t0tKacripVcJ1eFmD425+NyoktUg=",
+        "lastModified": 1702611428,
+        "narHash": "sha256-X0az5wj5xWk7s2L5dy5GvBvgccZqasSuKSeg29wdLF4=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "8f67088e9d479397347b63e69920ee861a9838cd",
+        "rev": "362cdc869f7e10c470afdd437c65c4e9d5129018",
         "type": "github"
       },
       "original": {
