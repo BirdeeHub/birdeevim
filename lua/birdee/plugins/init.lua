@@ -11,7 +11,7 @@ require('birdee.plugins.nestsitter')
 
 require('birdee.plugins.completion')
 
-if(categories.markdown) then
+if(categories.general or categories.general.markdown) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
   vim.keymap.set('n','<leader>ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })

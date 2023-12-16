@@ -12,7 +12,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats_updates";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
     "bash-debug-adapter" = {
@@ -116,76 +116,81 @@
             pkgs.vimPlugins.codeium-nvim
             inputs.sg-nvim.packages.${pkgs.system}.sg-nvim
           ];
-          markdown = with pkgs.vimPlugins; [
-            pkgs.nixCatsBuilds.markdown-preview-nvim
-          ];
           debug = with pkgs.vimPlugins; [
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
           ];
-          gitPlugins = with pkgs.neovimPlugins; [
-            harpoon
-            hlargs
-            fidget
-          ];
-          general = with pkgs.vimPlugins; [
-            (builtins.getAttr packageDef.categories.colorscheme { 
-                "onedark" = onedark-vim;
-                "catppuccin" = catppuccin-nvim;
-                "catppuccin-mocha" = catppuccin-nvim;
-                "tokyonight" = tokyonight-nvim;
-                "tokyonight-day" = tokyonight-nvim;
-              }
-            ) 
-          ] ++ [
-            # telescope
-            telescope-fzf-native-nvim
-            plenary-nvim
-            telescope-nvim
-            # treesitter
-            nvim-treesitter-textobjects
-            nvim-treesitter.withAllGrammars
-            # (nvim-treesitter.withPlugins (
-            #   plugins: with plugins; [
-            #     nix
-            #     lua
-            #   ]
-            # ))
-            # cmp stuff
-            nvim-cmp
-            luasnip
-            cmp_luasnip
-            cmp-buffer
-            cmp-path
-            cmp-nvim-lua
-            cmp-nvim-lsp
-            friendly-snippets
-            cmp-cmdline
-            cmp-nvim-lsp-signature-help
-            cmp-cmdline-history
-            lspkind-nvim
-            # other
-            conform-nvim
-            nvim-lspconfig
-            lualine-nvim
-            gitsigns-nvim
-            which-key-nvim
-            comment-nvim
-            marks-nvim
-            vim-sleuth
-            vim-fugitive
-            vim-rhubarb
-            diffview-nvim
-            vim-repeat
-            nvim-surround
-            eyeliner-nvim
-            indent-blankline-nvim
-            undotree
-            nvim-web-devicons
-            nui-nvim
-            neo-tree-nvim
-          ];
+          general = with pkgs.vimPlugins; {
+            theme = builtins.getAttr packageDef.categories.colorscheme { 
+              "onedark" = onedark-vim;
+              "catppuccin" = catppuccin-nvim;
+              "catppuccin-mocha" = catppuccin-nvim;
+              "tokyonight" = tokyonight-nvim;
+              "tokyonight-day" = tokyonight-nvim;
+            };
+            markdown = with pkgs.vimPlugins; [
+              pkgs.nixCatsBuilds.markdown-preview-nvim
+            ];
+            StdPlugOver = with pkgs.neovimPlugins; [
+              harpoon
+              hlargs
+              fidget
+            ];
+            cmp = [
+              # cmp stuff
+              nvim-cmp
+              luasnip
+              cmp_luasnip
+              cmp-buffer
+              cmp-path
+              cmp-nvim-lua
+              cmp-nvim-lsp
+              friendly-snippets
+              cmp-cmdline
+              cmp-nvim-lsp-signature-help
+              cmp-cmdline-history
+              lspkind-nvim
+            ];
+            git = [
+              vim-sleuth
+              vim-fugitive
+              vim-rhubarb
+              diffview-nvim
+            ];
+            core = [
+              # telescope
+              telescope-fzf-native-nvim
+              plenary-nvim
+              telescope-nvim
+              # treesitter
+              nvim-treesitter-textobjects
+              nvim-treesitter.withAllGrammars
+              # (nvim-treesitter.withPlugins (
+              #   plugins: with plugins; [
+              #     nix
+              #     lua
+              #   ]
+              # ))
+              nvim-lspconfig
+              lualine-nvim
+              marks-nvim
+              vim-repeat
+              comment-nvim
+              indent-blankline-nvim
+              gitsigns-nvim
+            ];
+            other = [
+              nvim-web-devicons
+              conform-nvim
+              which-key-nvim
+              nvim-surround
+              eyeliner-nvim
+              undotree
+              nui-nvim
+              neo-tree-nvim
+            ];
+          };
         };
 
         optionalPlugins = {
@@ -264,9 +269,7 @@
             generalBuildInputs = true;
             bash = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             neonixdev = true;
             AI = true;
@@ -285,9 +288,7 @@
             generalBuildInputs = true;
             bash = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             neonixdev = true;
             AI = true;
@@ -305,9 +306,7 @@
             bitwarden = true;
             generalBuildInputs = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             AI = true;
             java = true;
@@ -322,9 +321,7 @@
             bitwarden = true;
             generalBuildInputs = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             AI = true;
             java = true;
@@ -338,9 +335,7 @@
           categories = {
             generalBuildInputs = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             neonixdev = true;
             test = true;
@@ -354,9 +349,7 @@
             generalBuildInputs = true;
             bash = true;
             debug = true;
-            markdown = true;
             customPlugins = true;
-            gitPlugins = true;
             general = true;
             neonixdev = true;
             java = true;
@@ -400,15 +393,15 @@
       nixosModules.default = utils.mkNixosModules {
         defaultPackageName = "birdeeVim";
         luaPath = "${self}";
-        inherit nixpkgs inputs baseBuilder otherOverlays 
-          pkgs categoryDefinitions packageDefinitions;
+        inherit nixpkgs inputs otherOverlays 
+          system categoryDefinitions packageDefinitions;
       };
       # and the same for home manager
       homeModule = utils.mkHomeModules {
         defaultPackageName = "birdeeVim";
         luaPath = "${self}";
-        inherit nixpkgs inputs baseBuilder otherOverlays 
-          pkgs categoryDefinitions packageDefinitions;
+        inherit nixpkgs inputs otherOverlays 
+          system categoryDefinitions packageDefinitions;
       };
 
     }
