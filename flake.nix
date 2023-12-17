@@ -203,9 +203,6 @@
           test = {
             BIRDTVAR = "It worked!";
           };
-          bash = {
-            BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
-          };
         };
 
         extraWrapperArgs = {
@@ -268,6 +265,7 @@
             bitwarden = true;
             generalBuildInputs = true;
             bash = true;
+            BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
             debug = true;
             customPlugins = true;
             general = true;
@@ -287,6 +285,7 @@
             bitwarden = true;
             generalBuildInputs = true;
             bash = true;
+            BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
             debug = true;
             customPlugins = true;
             general = true;
@@ -348,6 +347,7 @@
           categories = {
             generalBuildInputs = true;
             bash = true;
+            BASHDAP = "${pkgs.nixCatsBuilds.bash-debug-adapter}";
             debug = true;
             customPlugins = true;
             general = true;
