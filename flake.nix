@@ -12,6 +12,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
+    # nixCats.url = "/home/birdee/Projects/nixCats-nvim";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
@@ -394,14 +395,14 @@
         defaultPackageName = "birdeeVim";
         luaPath = "${self}";
         inherit nixpkgs inputs otherOverlays 
-          system categoryDefinitions packageDefinitions;
+          categoryDefinitions packageDefinitions;
       };
       # and the same for home manager
       homeModule = utils.mkHomeModules {
         defaultPackageName = "birdeeVim";
         luaPath = "${self}";
         inherit nixpkgs inputs otherOverlays 
-          system categoryDefinitions packageDefinitions;
+          categoryDefinitions packageDefinitions;
       };
 
     }
