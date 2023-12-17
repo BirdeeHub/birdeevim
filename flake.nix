@@ -12,7 +12,7 @@
             # warning: 
             # input 'flake-utils' has an override for a non-existent input 'nixpkgs'
     };
-    nixCats.url = "github:BirdeeHub/nixCats-nvim/nixCats_updates";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     # have not figured out how to download a debug adapter not on nixpkgs
     # Will be attempting to build this from source in an overlay
     "bash-debug-adapter" = {
