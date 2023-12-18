@@ -1,7 +1,7 @@
 local dap = require "dap"
 dap.adapters.sh = {
     type = 'executable',
-    command = nixCats('BASHDAP')
+    command = vim.fn.exepath('bashdb')
 }
 
 dap.configurations.sh = {
