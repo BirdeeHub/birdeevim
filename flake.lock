@@ -22,11 +22,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1702771773,
-        "narHash": "sha256-KWht3guLiEBcb3ai5loZKooxelS9dNIgNiIECC1pOXY=",
+        "lastModified": 1703626554,
+        "narHash": "sha256-LnPNj12V0ecCp3ScXoLuoaWp8qIiAoqdPmYtJZ7ZEoc=",
         "owner": "Exafunction",
         "repo": "codeium.nvim",
-        "rev": "445dca5efbbfa4c5fad7e5ffda46b1cb21028d2c",
+        "rev": "f871000e91faa9ed334da2bfa4eadbf54d0e1047",
         "type": "github"
       },
       "original": {
@@ -562,11 +562,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1703174510,
-        "narHash": "sha256-dJDawg76OcMKaAtbvKdJmUrNp6TBA2NHJvupmGCvYEc=",
+        "lastModified": 1703617042,
+        "narHash": "sha256-5Mj3FO/qAUGjJN4mtT9bGBw8HHScWPur7lIsVh+96Ww=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "31701337377991c66eebb57ebd23ef01eb587352",
+        "rev": "2d3abde3c4db4981294f9405ca11e3156ae78323",
         "type": "github"
       },
       "original": {
