@@ -308,11 +308,11 @@
         "plugins-hlargs": "plugins-hlargs"
       },
       "locked": {
-        "lastModified": 1703724348,
-        "narHash": "sha256-I5uRnchxpcQlRVsir4ZjOaOBmza+A3+lWRwzb2dUGpM=",
+        "lastModified": 1703737790,
+        "narHash": "sha256-bXDeBQ7XmovkmovorBm0G4DFxRrsbDwADxGgO2fX9Zg=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "97f9061533c1cdecb9fc6de52739f4f5697494eb",
+        "rev": "b1ec8819520b5459cd3c1161d0fd4555e517799b",
         "type": "github"
       },
       "original": {

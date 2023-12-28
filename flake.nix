@@ -136,7 +136,6 @@
             StdPlugOver = with pkgs.neovimPlugins; [
               harpoon
               hlargs
-              fidget
             ];
             cmp = [
               # cmp stuff
@@ -174,6 +173,7 @@
               #   ]
               # ))
               nvim-lspconfig
+              fidget-nvim
               lualine-nvim
               marks-nvim
               vim-repeat
