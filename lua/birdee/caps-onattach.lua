@@ -44,9 +44,8 @@ end
 
 function M.get_capabilities()
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-  local categories = require('nixCats')
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  if categories.cmp then
+  if nixCats('cmp') then
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
   end
   --vim.tbl_extend('keep', capabilities, require'coq'.lsp_ensure_capabilities())

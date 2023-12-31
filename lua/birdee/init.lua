@@ -1,9 +1,13 @@
+require('nixCatsUtils').setup {
+  default_cat_value = true,
+}
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-if require('nixCats').nixCats_packageName ~= "minimal" then
+require('nixCatsUtils.catPacker')
+if nixCats('nixCats_packageName') ~= "minimal" then
   require("birdee.plugins")
   require("birdee.LSPs")
-  if require('nixCats').debug then
+  if nixCats('debug') then
     require("birdee.debug")
   end
   require("birdee.format")

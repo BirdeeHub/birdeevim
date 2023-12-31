@@ -1,6 +1,12 @@
-local categories = require('nixCats')
+if not require('nixCatsUtils').isNixCats then
+  -- mason-lspconfig requires that these setup functions are called in this order
+  -- before setting up the servers.
+  require('mason').setup()
+  require('mason-lspconfig').setup()
+end
+
 local servers = {}
-if (categories.neonixdev) then
+if (nixCats('neonixdev')) then
   require('neodev').setup({})
   -- this allows our thing to have plugin library detection
   -- despite not being in our .config/nvim folder
@@ -28,13 +34,15 @@ if (categories.neonixdev) then
     telemetry = { enabled = false },
     filetypes = { 'lua' },
   }
-  servers.nixd = {}
+  if require('nixCatsUtils').isNixCats then servers.nixd = {}
+  else servers.rnix = {}
+  end
   servers.nil_ls = {}
 
-elseif (categories.nix) then
+elseif (nixCats('nix')) then
   servers.nixd = {}
   servers.nil_ls = {}
-elseif (categories.lua) then
+elseif (nixCats('lua')) then
   servers.lua_ls = {
     Lua = {
       formatters = {
@@ -47,7 +55,7 @@ elseif (categories.lua) then
     filetypes = { 'lua' },
   }
 end
-if (categories.kotlin) then
+if (nixCats('kotlin')) then
   servers.kotlin_language_server = {
     Lua = {
       formatters = {
@@ -61,7 +69,7 @@ if (categories.kotlin) then
     root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},
   }
 end
-if (categories.java) then
+if (nixCats('java')) then
 local userHome = vim.fn.expand('$HOME')
   servers.jdtls = {
     Lua = {
@@ -76,7 +84,7 @@ local userHome = vim.fn.expand('$HOME')
     cmd = { "jdt-language-server", "-configuration", userHome .."/.cache/jdtls/config", "-data", userHome .."/.cache/jdtls/workspace" },
   }
 end
-if (categories.lspDebugMode) then
+if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
 end
 
@@ -99,13 +107,33 @@ end
 -- servers.tsserver = {},
 -- servers.html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-for server_name,_ in pairs(servers) do
-  require('lspconfig')[server_name].setup({
-    capabilities = require('caps-onattach').get_capabilities(),
-    on_attach = require('caps-onattach').on_attach,
-    settings = servers[server_name],
-    filetypes = (servers[server_name] or {}).filetypes,
-    cmd = (servers[server_name] or {}).cmd,
-    root_pattern = (servers[server_name] or {}).root_pattern,
-  })
+if not require('nixCatsUtils').isNixCats then
+  -- Ensure the servers above are installed
+  local mason_lspconfig = require 'mason-lspconfig'
+
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
+  }
+
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = require('caps-onattach').get_capabilities(),
+        on_attach = require('caps-onattach').on_attach,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+      }
+    end,
+  }
+else
+  for server_name,_ in pairs(servers) do
+    require('lspconfig')[server_name].setup({
+      capabilities = require('caps-onattach').get_capabilities(),
+      on_attach = require('caps-onattach').on_attach,
+      settings = servers[server_name],
+      filetypes = (servers[server_name] or {}).filetypes,
+      cmd = (servers[server_name] or {}).cmd,
+      root_pattern = (servers[server_name] or {}).root_pattern,
+    })
+  end
 end

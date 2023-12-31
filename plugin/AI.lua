@@ -1,6 +1,7 @@
-if require('nixCats').nixCats_packageName ~= "minimal" then
-  if(require('nixCats').AI) then
-    local bitwardenAuth = require('nixCats').bitwardenItemIDs
+if nixCats('nixCats_packageName') ~= "minimal" then
+  if nixCats('AI') then
+    local bitwardenAuth = nixCats('bitwardenItemIDs')
+    if not require('nixCatsUtils').isNixCats then bitwardenAuth = false end
     local codeiumDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
     local codeiumAuthFile = codeiumDir .. '/' .. 'config.json'
     local session

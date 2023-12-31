@@ -1,5 +1,7 @@
-local categories = require('nixCats')
-local colorschemer = categories.colorscheme-- also schemes lualine
+local colorschemer = nixCats('colorscheme')-- also schemes lualine
+if not require('nixCatsUtils').isNixCats then
+  colorschemer = 'onedark'
+end
 local hlargsColor =  '#32a88f' -- if this doesnt work for new theme, change it here
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
@@ -11,7 +13,7 @@ require('birdee.plugins.nestsitter')
 
 require('birdee.plugins.completion')
 
-if(categories.general or categories.general.markdown) then
+if(nixCats('general.markdown')) then
   vim.g.mkdp_auto_close = 0
   vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
   vim.keymap.set('n','<leader>ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })
@@ -100,7 +102,7 @@ require('neo-tree').setup({
 vim.keymap.set("n", "<leader>FT", "<cmd>Neotree toggle<CR>", { noremap = true, desc = '[F]ile [T]ree' })
 
 local leaderCmsg
-if categories.AI then
+if nixCats('AI') then
   leaderCmsg = "[C]ode (and [C]ody)"
 else
   leaderCmsg = "[C]ode"
