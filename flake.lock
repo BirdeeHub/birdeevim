@@ -441,11 +441,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1704008649,
-        "narHash": "sha256-rGPSWjXTXTurQN9beuHdyJhB8O761w1Zc5BqSSmHvoM=",
+        "lastModified": 1704161960,
+        "narHash": "sha256-QGua89Pmq+FBAro8NriTuoO/wNaUtugt29/qqA8zeeM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d44d59d2b5bd694cd9d996fd8c51d03e3e9ba7f7",
+        "rev": "63143ac2c9186be6d9da6035fa22620018c85932",
         "type": "github"
       },
       "original": {
@@ -544,11 +544,11 @@
     "plugins-harpoon": {
       "flake": false,
       "locked": {
-        "lastModified": 1703800925,
-        "narHash": "sha256-WD93Oq1WHrfkdOVbYDJiExr+MP1Uezl5WKA53jEdwmY=",
+        "lastModified": 1704494063,
+        "narHash": "sha256-IlsIzHhS9+Hz6HaZij5wcK29Vs71e6zbciE6vFeaxJg=",
         "owner": "ThePrimeagen",
         "repo": "harpoon",
-        "rev": "6afc142443f8135329f8dd09b77e229f65001c0c",
+        "rev": "fe03a9dda0c5a039b9ca284aa12211c2a099c16c",
         "type": "github"
       },
       "original": {
@@ -668,11 +668,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1702574503,
-        "narHash": "sha256-hZrrIALavpxVbXgo1HkNhKmPj3XU3oCONy55WzHN9Is=",
+        "lastModified": 1704482238,
+        "narHash": "sha256-R/9b7IQolWWiMWD5KfQm6pdPQb+yZSC/PmD2VRtMt2Q=",
         "owner": "sourcegraph",
         "repo": "sg.nvim",
-        "rev": "817f1f36e4c43f82e8e1cdfa4cf978dffa037255",
+        "rev": "fe5b4b24f607e7691f269294f525bcc8588efe4d",
         "type": "github"
       },
       "original": {
