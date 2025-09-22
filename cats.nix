@@ -65,6 +65,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
   # populates $LUA_PATH and $LUA_CPATH
   extraLuaPackages = {
     fennel = [ (lp: with lp; [ fennel ]) ];
+    other = [ (lp: with lp; [ tomlua ]) ];
   };
 
   lspsAndRuntimeDeps = with pkgs; {

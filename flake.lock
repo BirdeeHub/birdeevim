@@ -837,7 +837,8 @@
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
-        "templ": "templ"
+        "templ": "templ",
+        "tomlua": "tomlua"
       }
     },
     "rust-analyzer-src": {
@@ -906,6 +907,26 @@
       "original": {
         "owner": "a-h",
         "repo": "templ",
+        "type": "github"
+      }
+    },
+    "tomlua": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758553340,
+        "narHash": "sha256-fuX2MluoNJXGqemhhVoj3A7TdjitLqyoBPf+VFCPYEQ=",
+        "owner": "BirdeeHub",
+        "repo": "tomlua",
+        "rev": "a66f4742233a3abded11e87c8a80459a98b20c12",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "tomlua",
         "type": "github"
       }
     },

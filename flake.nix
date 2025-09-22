@@ -15,6 +15,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgsLocked.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    tomlua = {
+      # url = "git+file:/home/birdee/Projects/tomlua";
+      url = "github:BirdeeHub/tomlua";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim";
     # neovim-src = { url = "github:BirdeeHub/neovim/pack_add_spec_passthru"; flake = false; };
     neovim-nightly-overlay = {

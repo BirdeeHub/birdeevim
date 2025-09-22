@@ -28,6 +28,7 @@ inputs: let
     (utils.sanitizedPluginOverlay inputs)
     # add any flake overlays here.
     inputs.neorg-overlay.overlays.default
+    inputs.tomlua.overlays.default
     inputs.neovim-nightly-overlay.overlays.default
     # (utils.fixSystemizedOverlay inputs.windsurf.overlays
     #   (system: inputs.windsurf.overlays.${system}.default)
