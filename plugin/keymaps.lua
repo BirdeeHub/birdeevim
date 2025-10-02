@@ -17,6 +17,16 @@ vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous bu
 vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
 vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
 vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
+vim.keymap.set("n", "<leader><leader>r", function()
+  local n = vim.v.count
+  if pcall(vim.cmd.buffer, n > 0 and n or "#") then
+    vim.cmd.bdelete("#")
+  end
+end, { desc = "Replace buffer (with count or #)" })
+vim.keymap.set('n', '<leader><leader>g', function()
+  local n = vim.v.count
+  vim.cmd.buffer(n > 0 and n or "#")
+end, { noremap = true, silent = true, desc = 'Go to buffer by number [num]<keybind>', })
 
 vim.keymap.set("v", "<", "<gv", { desc = 'Indent left and reselect' })
 vim.keymap.set("v", ">", ">gv", { desc = 'Indent right and reselect' })
@@ -27,7 +37,7 @@ vim.cmd([[command! Wq wq]])
 vim.cmd([[command! WQ wq]])
 vim.cmd([[command! Q q]])
 
-vim.keymap.set("n", "<leader>:", ":<C-f>", { desc = 'delete buffer' })
+vim.keymap.set("n", "<leader>:", ":<C-f>", { desc = 'cli buffer' })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -58,15 +68,6 @@ end, { desc = 'Toggle virtual lines' })
 
 
 vim.keymap.set('n', '<leader>lh', function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { desc = 'Toggle inlay hints' })
-
-vim.keymap.set('n', '<leader><leader>g', function()
-  local count = vim.v.count
-  if count > 0 then
-    vim.cmd('buffer ' .. count)
-  else
-    print("No buffer number provided")
-  end
-end, { noremap = true, silent = true, desc = 'Go to buffer by number [num]<keybind>', })
 
 --TODO: get this to ask you your sudo password
 vim.api.nvim_create_user_command('Swq', function(args)

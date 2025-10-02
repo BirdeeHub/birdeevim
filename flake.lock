@@ -917,11 +917,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758553340,
-        "narHash": "sha256-fuX2MluoNJXGqemhhVoj3A7TdjitLqyoBPf+VFCPYEQ=",
+        "lastModified": 1759326799,
+        "narHash": "sha256-GadmtfM0ay1HiX2ARR+mE+ojmBlTQZybn5nAPYL+NGI=",
         "owner": "BirdeeHub",
         "repo": "tomlua",
-        "rev": "a66f4742233a3abded11e87c8a80459a98b20c12",
+        "rev": "f09f1130fcc2553e3c3ff5e24cef1f225afa7004",
         "type": "github"
       },
       "original": {

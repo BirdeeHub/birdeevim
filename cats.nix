@@ -65,7 +65,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
   # populates $LUA_PATH and $LUA_CPATH
   extraLuaPackages = {
     fennel = [ (lp: with lp; [ fennel ]) ];
-    other = [ (lp: with lp; [ tomlua ]) ];
+    # other = [ (lp: with lp; [ tomlua ]) ];
   };
 
   lspsAndRuntimeDeps = with pkgs; {
@@ -244,6 +244,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       nvim-ts-autotag
     ];
     other = [
+      tomlua
       nvim-spectre
       pkgs.neovimPlugins.shelua
       # (pkgs.neovimUtils.grammarToPlugin (pkgs.tree-sitter-grammars.tree-sitter-nu.overrideAttrs (p: { installQueries = true; })))
