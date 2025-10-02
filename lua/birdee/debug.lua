@@ -24,9 +24,9 @@ return {
     on_require = { "dap" },
     keys = {
       { "<F5>", desc = "Debug: Start/Continue" },
-      { "<F1>", desc = "Debug: Step Into" },
-      { "<F2>", desc = "Debug: Step Over" },
-      { "<F3>", desc = "Debug: Step Out" },
+      { "<F2>", desc = "Debug: Step Into" },
+      { "<F3>", desc = "Debug: Step Over" },
+      { "<F4>", desc = "Debug: Step Out" },
       { "<leader>b", desc = "Debug: Toggle Breakpoint" },
       { "<leader>B", desc = "Debug: Set Breakpoint" },
       { "<F7>", desc = "Debug: See last session result." },
@@ -44,9 +44,9 @@ return {
 
       -- Basic debugging keymaps, feel free to change to your liking!
       vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-      vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-      vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-      vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+      vim.keymap.set('n', '<F2>', dap.step_into, { desc = 'Debug: Step Into' })
+      vim.keymap.set('n', '<F3>', dap.step_over, { desc = 'Debug: Step Over' })
+      vim.keymap.set('n', '<F4>', dap.step_out, { desc = 'Debug: Step Out' })
       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
       vim.keymap.set('n', '<leader>B', function()
         dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
