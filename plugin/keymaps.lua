@@ -1,4 +1,5 @@
 -- [[ Basic Keymaps ]]
+-- inoremap <silent> <F1> <C-o>
 vim.keymap.set("i", "<F1>", "<C-o>", { noremap = true, silent = true, desc = "Temp normal (same as insert mode <c-o>)" })
 
 -- Keymaps for better default experience
