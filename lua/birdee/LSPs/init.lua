@@ -166,6 +166,13 @@ return {
     },
   },
   {
+    "roc_ls",
+    for_cat = "roc",
+    lsp = {
+      filetypes = { "roc" },
+    },
+  },
+  {
     "harper_ls",
     for_cat = "markdown",
     lsp = {

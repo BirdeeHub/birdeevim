@@ -53,6 +53,7 @@ inputs: let
     general = true;
     otter = true;
     bash = true;
+    roc = true;
     neonixdev = true;
     markdown = true;
     java = true;

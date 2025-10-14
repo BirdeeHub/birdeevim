@@ -103,6 +103,9 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
         opencode
       ];
     };
+    roc = [
+      inputs.roc.packages.${system}.lang-server
+    ];
     java = [
       jdt-language-server
     ];
