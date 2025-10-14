@@ -545,6 +545,22 @@
     },
     "nixpkgs_10": {
       "locked": {
+        "lastModified": 1760284886,
+        "narHash": "sha256-TK9Kr0BYBQ/1P5kAsnNQhmWWKgmZXwUQr4ZMjCzWf2c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cf3f5c4def3c7b5f1fc012b3d839575dbe552d43",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_11": {
+      "locked": {
         "lastModified": 1753345091,
         "narHash": "sha256-CdX2Rtvp5I8HGu9swBmYuq+ILwRxpXdJwlpg8jvN4tU=",
         "owner": "NixOS",
@@ -1026,20 +1042,18 @@
       "inputs": {
         "fenix": "fenix_2",
         "flake-utils": "flake-utils_6",
-        "nixpkgs": [
-          "fenix"
-        ]
+        "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1760476281,
+        "lastModified": 1760477917,
         "narHash": "sha256-aSvl1rfG7labJ+6TF4WpkeBRGnKyPh2cOURA92VBCKE=",
-        "owner": "BirdeeHub",
+        "owner": "thomasschafer",
         "repo": "scooter",
-        "rev": "ede532d915dda6c1c9b40433fd5675f69cefc457",
+        "rev": "8c522fb8b2a46059de86a00e77489b155fb69881",
         "type": "github"
       },
       "original": {
-        "owner": "BirdeeHub",
+        "owner": "thomasschafer",
         "repo": "scooter",
         "type": "github"
       }
@@ -1107,7 +1121,7 @@
     "templ": {
       "inputs": {
         "gitignore": "gitignore_2",
-        "nixpkgs": "nixpkgs_10",
+        "nixpkgs": "nixpkgs_11",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "version": "version",
         "xc": "xc"
