@@ -19,7 +19,6 @@ inputs: let
     # kotlin-lsp = import ./kotlin-lsp.nix;
     aider-wrapped = import ./aider-wrapped.nix;
     # locked = import ./locked.nix;
-    scooter = import ./scooter.nix;
     # internalvim = import ./build;
     # lua-git2 = import ./lua-git2.nix;
     opencode = import ./opencode.nix;

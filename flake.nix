@@ -39,10 +39,7 @@
     #   flake = false;
     # };
 
-    scooter-src = {
-      url = "github:thomasschafer/scooter";
-      flake = false;
-    };
+    scooter.url = "github:BirdeeHub/scooter";
     roc.url = "github:roc-lang/roc";
     fenix.url = "github:nix-community/fenix";
     nix-appimage.url = "github:ralismark/nix-appimage";
@@ -93,8 +90,7 @@
       flake = false;
     };
     "plugins-snacks.nvim" = {
-      # temporary
-      url = "github:BirdeeHub/snacks.nvim";
+      url = "github:folke/snacks.nvim";
       flake = false;
     };
     "plugins-opencode-nvim" = {

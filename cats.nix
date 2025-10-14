@@ -230,13 +230,19 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
               [editor_open]
               command = "${name} --server $NVIM --remote-send '<cmd>lua require('birdee.plugins.scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
             '';
-          } ''
+          } (let
+            wrapperArgs = [
+              "${inputs.scooter.packages.${pkgs.system}.default}/bin/scooter"
+              "${placeholder "out"}/bin/scooter" "--inherit-argv0"
+              "--add-flag" "--config-dir" "--add-flag"
+              "${placeholder "out"}/share/bundled_config"
+            ];
+          in ''
           mkdir -p "$out/bin"
           mkdir -p "$out/share/bundled_config"
           cp "$scootcfg" "$out/share/bundled_config/config.toml"
-          makeWrapper "${pkgs.scooter}/bin/scooter" "$out/bin/scooter" --inherit-argv0 \
-            --add-flag --config-dir --add-flag "$out/share/bundled_config"
-        '')
+          makeWrapper ${pkgs.lib.escapeShellArgs wrapperArgs}
+        ''))
       ];
     };
   };
