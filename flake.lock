@@ -1045,11 +1045,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1760474371,
-        "narHash": "sha256-IfBzEJh9hSb/C+6lOeP/xvzEATXYYYuQgAeiI52r4og=",
+        "lastModified": 1760476281,
+        "narHash": "sha256-aSvl1rfG7labJ+6TF4WpkeBRGnKyPh2cOURA92VBCKE=",
         "owner": "BirdeeHub",
         "repo": "scooter",
-        "rev": "baa04048889ab427fa27450df34e2be2775e462f",
+        "rev": "ede532d915dda6c1c9b40433fd5675f69cefc457",
         "type": "github"
       },
       "original": {
