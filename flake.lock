@@ -909,6 +909,7 @@
         "plugins-snacks.nvim": "plugins-snacks.nvim",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",
+        "scooter-src": "scooter-src",
         "templ": "templ",
         "tomlua": "tomlua"
       }
@@ -948,6 +949,22 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "scooter-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1760422016,
+        "narHash": "sha256-mkzUgpJ32wOm5Ej9o7fE/Dllb7PzHkFb3+Q5d/G8gsE=",
+        "owner": "thomasschafer",
+        "repo": "scooter",
+        "rev": "03752e7c3fd4ebc04cf665eeabed4db29ae56d60",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomasschafer",
+        "repo": "scooter",
         "type": "github"
       }
     },

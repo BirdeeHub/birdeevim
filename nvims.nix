@@ -67,6 +67,8 @@ inputs: let
     fennel = true;
     zig = true;
     typst = true;
+    mass_find_and_replace.scooter = true;
+    mass_find_and_replace.spectre = true;
   };
   birdeevim_extra = { pkgs, ... }@misc: {
     colorscheme = "onedark";

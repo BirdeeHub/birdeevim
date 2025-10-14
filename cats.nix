@@ -222,6 +222,23 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
     ];
     SQL = [
     ];
+    mass_find_and_replace = {
+      scooter = [
+        (pkgs.runCommand "scooter-w-cfg" {
+            nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+            scootcfg = builtins.toFile "config.toml" /*toml*/''
+              [editor_open]
+              command = "${name} --server $NVIM --remote-send '<cmd>lua require('birdee.plugins.scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
+            '';
+          } ''
+          mkdir -p "$out/bin"
+          mkdir -p "$out/share/bundled_config"
+          cp "$scootcfg" "$out/share/bundled_config/config.toml"
+          makeWrapper "${pkgs.scooter}/bin/scooter" "$out/bin/scooter" --inherit-argv0 \
+            --add-flag --config-dir --add-flag "$out/share/bundled_config"
+        '')
+      ];
+    };
   };
 
   startupPlugins = with pkgs.vimPlugins; {
@@ -248,10 +265,14 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
     ];
     other = [
       tomlua
-      nvim-spectre
       pkgs.neovimPlugins.shelua
       # (pkgs.neovimUtils.grammarToPlugin (pkgs.tree-sitter-grammars.tree-sitter-nu.overrideAttrs (p: { installQueries = true; })))
     ];
+    mass_find_and_replace = {
+      spectre = [
+        nvim-spectre
+      ];
+    };
     lua = [
       luvit-meta
     ];
