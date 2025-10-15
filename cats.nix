@@ -240,7 +240,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
             "--add-flag" "--config-dir" "--add-flag"
             "${placeholder "out"}/share/bundled_config"
           ]}
-'')
+        '')
       ];
     };
   };
