@@ -38,18 +38,18 @@ end
 
 function M.go(num)
   if num > 0 and vim.fn.argc(-1) >= num then
-    vim.cmd.argu(num)
+    vim.cmd.argument(num)
   end
 end
 
 function M.rm(num_or_name)
   local atype = type(num_or_name)
   if atype == "number" and num_or_name > 0 and vim.fn.argc(-1) >= num_or_name then
-    vim.cmd.argdel { range = { num_or_name, num_or_name } }
+    vim.cmd.argdelete { range = { num_or_name, num_or_name } }
   elseif atype == "string" then
     vim.cmd.argdelete(num_or_name)
   else
-    pcall(vim.cmd.argdel, "%")
+    pcall(vim.cmd.argdelete, "%")
   end
 end
 
@@ -102,7 +102,7 @@ function M.edit()
     buffer = argseditor,
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
-      vim.cmd("%argd")
+      vim.cmd.argdelete { range = "%" }
       vim.cmd.arga(table.concat(to_write, " "))
     end
   })
