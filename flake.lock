@@ -889,11 +889,11 @@
     "plugins-snacks.nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1761238553,
-        "narHash": "sha256-s/oB+rabH5WO6QbuwJZJd1imOpMacFTghDIdnJVsugI=",
+        "lastModified": 1761509117,
+        "narHash": "sha256-5KKO7KjX2xb+AddJeqXqBYTsLJxCGIKInUl3Yirfq/U=",
         "owner": "folke",
         "repo": "snacks.nvim",
-        "rev": "7229dca7c22c7c7e3bf80b84aec50f0843282e1b",
+        "rev": "ecde81fc0ce7c4834def0ce710dd5dc62b0822fc",
         "type": "github"
       },
       "original": {

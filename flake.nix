@@ -91,6 +91,7 @@
     };
     "plugins-snacks.nvim" = {
       url = "github:folke/snacks.nvim";
+      # url = "git+file:/home/birdee/Projects/snacks.nvim";
       flake = false;
     };
     "plugins-opencode-nvim" = {
