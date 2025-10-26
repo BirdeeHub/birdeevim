@@ -86,7 +86,7 @@ function M.edit()
   -- Go to file under cursor
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
-    vim.api.nvim_buf_delete(argseditor, { force = true })
+    vim.api.nvim_win_close(winid, true)
     vim.cmd.edit(f)
   end, { buffer = argseditor, desc = "Go to file under cursor" })
 
