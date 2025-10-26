@@ -1,29 +1,29 @@
 local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
-local folder_icon = "󰉋"
+local folder_icon = "%#Conditional#" .. "󰉋" .. "%#Normal#"
 local kind_icons = {
-    "󰈙", -- file
-    "", -- module
-    "", -- namespace
-    "󰌋", -- keyword
-    "󰠱", -- class
-    "󰆧", -- method
-    "󰜢", -- property
-    "󰇽", -- field
-    "", -- constructor
-    "", -- enum
-    "", -- interface
-    "󰊕", -- function
-    "󰂡", -- variable
-    "󰏿", -- constant
-    "", -- string
-    "", -- number
-    "", -- boolean
-    "", -- array
-    "", -- object
+    "%#File#" .. "󰈙" .. "%#Normal#", -- file
+    "%#Module#" .. "" .. "%#Normal#", -- module
+    "%#Structure#" .. "" .. "%#Normal#", -- namespace
+    "%#Keyword#" .. "󰌋" .. "%#Normal#", -- keyword
+    "%#Class#" .. "󰠱" .. "%#Normal#", -- class
+    "%#Method#" .. "󰆧" .. "%#Normal#", -- method
+    "%#Property#" .. "󰜢" .. "%#Normal#", -- property
+    "%#Field#" .. "󰇽" .. "%#Normal#", -- field
+    "%#Function#" .. "" .. "%#Normal#", -- constructor
+    "%#Enum#" .. "" .. "%#Normal#", -- enum
+    "%#Type#" .. "" .. "%#Normal#", -- interface
+    "%#Function#" .. "󰊕" .. "%#Normal#", -- function
+    "%#None#" .. "󰂡" .. "%#Normal#", -- variable
+    "%#Constant#" .. "󰏿" .. "%#Normal#", -- constant
+    "%#String#" .. "" .. "%#Normal#", -- string
+    "%#Number#" .. "" .. "%#Normal#", -- number
+    "%#Boolean#" .. "" .. "%#Normal#", -- boolean
+    "%#Array#" .. "" .. "%#Normal#", -- array
+    "%#Class#" .. "" .. "%#Normal#", -- object
     "", -- package
     "󰟢", -- null
     "", -- enum-member
-    "", -- struct
+    "%#Struct#" .. "" .. "%#Normal#", -- struct
     "", -- event
     "", -- operator
     "󰅲", -- type-parameter
@@ -81,6 +81,7 @@ local function lsp_callback(err, symbols, ctx, config)
         vim.wo.winbar = nil
         return
     end
+    vim.api.nvim_set_hl(0, "WinBar", { link = "Normal" })
 
     local pos = vim.api.nvim_win_get_cursor(0)
     local cursor_line = pos[1] - 1
@@ -129,7 +130,7 @@ local function lsp_callback(err, symbols, ctx, config)
 
     find_symbol_path(symbols, cursor_line, cursor_char, breadcrumbs)
 
-    local breadcrumb_string = "%#Normal#" .. table.concat(breadcrumbs, " > ")
+    local breadcrumb_string = table.concat(breadcrumbs, " > ")
 
     if breadcrumb_string ~= "" then
         vim.wo.winbar = breadcrumb_string
