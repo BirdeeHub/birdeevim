@@ -7,15 +7,14 @@ function M.get_display_text()
   arglist = type(arglist) == "table" and arglist or { arglist }
   ---@cast arglist string[]
   for i = 1, #arglist do
-    local this_path = arglist[i]
-    local this_name = vim.fn.fnamemodify(this_path, ":t")
-    if this_name == "" then
-      this_name = vim.fn.fnamemodify(this_path .. ".", ":h:t")
+    local name = vim.fn.fnamemodify(arglist[i], ":t")
+    if name == "" then
+      name = vim.fn.fnamemodify(name .. ".", ":h:t")
     end
-    if vim.fn.fnamemodify(this_path, ":p") == current then
-      res = res .. " [" .. this_name .. "]"
+    if i == vim.fn.argidx() + 1 then
+      res = res .. " [" .. name .. "]"
     else
-      res = res .. " " .. this_name
+      res = res .. " " .. name
     end
   end
   return res
