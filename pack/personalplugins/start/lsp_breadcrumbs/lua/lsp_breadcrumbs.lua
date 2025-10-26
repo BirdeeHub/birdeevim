@@ -61,7 +61,7 @@ local function lsp_callback(err, symbols, ctx, config)
     if #clients > 0 and clients[1].root_dir then
         local root_dir = clients[1].root_dir
         if root_dir == nil then
-            relative_path = ""
+            relative_path = file_path
         else
             relative_path = vim.fs.relpath(root_dir, file_path) or file_path
             relative_path = relative_path:gsub("/", " > ")
