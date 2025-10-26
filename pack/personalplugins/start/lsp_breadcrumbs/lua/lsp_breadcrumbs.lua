@@ -24,7 +24,7 @@ local kind_icons = {
     "", -- package
     "󰟢", -- null
     "", -- enum-member
-    "%#Struct#" .. "" .. "%#WinBar#", -- struct
+    "%#Structure#" .. "" .. "%#WinBar#", -- struct
     "", -- event
     "", -- operator
     "󰅲", -- type-parameter
