@@ -20,6 +20,7 @@ require("arglist_utils").setup {
     rm = "<leader><leader>x",
     go = "<leader><leader><leader>",
     add = "<leader><leader>a",
+    edit = "<leader><leader>e",
   }
 }
 
