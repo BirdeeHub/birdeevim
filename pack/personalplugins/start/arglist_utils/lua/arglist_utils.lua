@@ -105,7 +105,7 @@ function M.edit()
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
       vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-      if ((to_write or {})[1] or ""):match("^%s*$") == nil then
+      if to_write[1] and to_write[1]:match("^%s*$") == nil then
         vim.cmd.argadd(table.concat(to_write, " "))
       end
     end
