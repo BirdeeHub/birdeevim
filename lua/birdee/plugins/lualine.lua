@@ -1,8 +1,7 @@
 -- NOTE: do not set winbar via lualine it will override the winbar
 -- that is why you are calling this here, to remind yourself
-local toggle_breadcrumbs = require("birdee.plugins.breadcrumbs")
-vim.keymap.set("n", "<leader>lb", toggle_breadcrumbs, { desc = "Toggle [l]sp [b]readcrumbs" })
-vim.keymap.set("n", "<leader>lB", function() toggle_breadcrumbs(false) end, { desc = "Clear [l]sp [B]readcrumbs" })
+vim.keymap.set("n", "<leader>lb", function() require("birdee.plugins.breadcrumbs")() end, { desc = "Toggle [l]sp [b]readcrumbs" })
+vim.keymap.set("n", "<leader>lB", function() require("birdee.plugins.breadcrumbs")(false) end, { desc = "Clear [l]sp [B]readcrumbs" })
 return {
   {
     "lualine.nvim",
