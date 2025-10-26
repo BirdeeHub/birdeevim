@@ -87,14 +87,14 @@ function M.edit()
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
     vim.api.nvim_buf_delete(argseditor, { force = true })
-    vim.cmd.e(f)
+    vim.cmd.edit(f)
   end, { buffer = argseditor, desc = "Go to file under cursor" })
 
   -- Write new arglist and close argseditor
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
     vim.cmd("%argd")
-    vim.cmd.arga(table.concat(to_write, " "))
+    vim.cmd.argadd(table.concat(to_write, " "))
     vim.api.nvim_buf_delete(argseditor, { force = true })
   end, { buffer = argseditor, desc = "Update arglist" })
 
@@ -103,7 +103,7 @@ function M.edit()
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
       vim.cmd.argdelete { range = "%" }
-      vim.cmd.arga(table.concat(to_write, " "))
+      vim.cmd.argadd(table.concat(to_write, " "))
     end
   })
 end
