@@ -1,4 +1,40 @@
-local breadcrumbs_enabled = false
+local folder_icon = "%#Conditional#" .. "󰉋" .. "%#Normal#"
+
+local kind_icons = {
+    "%#File#" .. "󰈙" .. "%#Normal#", -- file
+    "%#Module#" .. "" .. "%#Normal#", -- module
+    "%#Structure#" .. "" .. "%#Normal#", -- namespace
+    "%#Keyword#" .. "󰌋" .. "%#Normal#", -- keyword
+    "%#Class#" .. "󰠱" .. "%#Normal#", -- class
+    "%#Method#" .. "󰆧" .. "%#Normal#", -- method
+    "%#Property#" .. "󰜢" .. "%#Normal#", -- property
+    "%#Field#" .. "󰇽" .. "%#Normal#", -- field
+    "%#Function#" .. "" .. "%#Normal#", -- constructor
+    "%#Enum#" .. "" .. "%#Normal#", -- enum
+    "%#Type#" .. "" .. "%#Normal#", -- interface
+    "%#Function#" .. "󰊕" .. "%#Normal#", -- function
+    "%#None#" .. "󰂡" .. "%#Normal#", -- variable
+    "%#Constant#" .. "󰏿" .. "%#Normal#", -- constant
+    "%#String#" .. "" .. "%#Normal#", -- string
+    "%#Number#" .. "" .. "%#Normal#", -- number
+    "%#Boolean#" .. "" .. "%#Normal#", -- boolean
+    "%#Array#" .. "" .. "%#Normal#", -- array
+    "%#Class#" .. "" .. "%#Normal#", -- object
+    "", -- package
+    "󰟢", -- null
+    "", -- enum-member
+    "%#Struct#" .. "" .. "%#Normal#", -- struct
+    "", -- event
+    "", -- operator
+    "󰅲", -- type-parameter
+    "",
+    "",
+    "󰎠",
+    "",
+    "󰏘",
+    "",
+    "󰉋",
+}
 
 local function range_contains_pos(range, line, char)
     local start = range.start
@@ -26,7 +62,8 @@ local function find_symbol_path(symbol_list, line, char, path)
 
     for _, symbol in ipairs(symbol_list) do
         if range_contains_pos(symbol.range, line, char) then
-            table.insert(path, symbol.name)
+            local icon = kind_icons[symbol.kind] or ""
+            table.insert(path, icon .. " " .. symbol.name)
             find_symbol_path(symbol.children, line, char, path)
             return true
         end
@@ -34,6 +71,7 @@ local function find_symbol_path(symbol_list, line, char, path)
     return false
 end
 
+local breadcrumbs_enabled = false
 local function lsp_callback(err, symbols, ctx, config)
     if not breadcrumbs_enabled then
         vim.wo.winbar = nil
@@ -63,12 +101,24 @@ local function lsp_callback(err, symbols, ctx, config)
         if root_dir == nil then
             relative_path = file_path
         else
-            relative_path = vim.fs.relpath(root_dir, file_path) or file_path
-            relative_path = relative_path:gsub("/", " > ")
+            relative_path = vim.fs.relpath(root_dir, file_path)
         end
+    else
+        local root_dir = vim.fn.getcwd(0)
+        relative_path = vim.fs.relpath(root_dir, file_path)
     end
 
-    local breadcrumbs = { relative_path }
+    local breadcrumbs = {}
+
+    local path_components = vim.split(relative_path or "", "[/\\]", { trimempty = true })
+    local num_components = #path_components
+    for i, component in ipairs(path_components) do
+        if i == num_components then
+            table.insert(breadcrumbs, kind_icons[1] .. " " .. component)
+        else
+            table.insert(breadcrumbs, folder_icon .. " " .. component)
+        end
+    end
 
     find_symbol_path(symbols, cursor_line, cursor_char, breadcrumbs)
 
