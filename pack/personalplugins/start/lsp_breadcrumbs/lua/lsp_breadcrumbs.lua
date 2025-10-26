@@ -145,9 +145,7 @@ end
 local function breadcrumbs_set()
     local bufnr = vim.api.nvim_get_current_buf()
     local uri = vim.lsp.util.make_text_document_params(bufnr)["uri"]
-    if not uri then
-        return
-    end
+    if not uri then return end
 
     local params = {
         textDocument = {
