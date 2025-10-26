@@ -1,7 +1,8 @@
 local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
 local folder_icon = "%#File#" .. "󰉋" .. "%#WinBar#"
+local file_icon = "󰈙"
 local kind_icons = {
-    "%#File#" .. "󰈙" .. "%#WinBar#", -- file
+    "%#File#" .. file_icon .. "%#WinBar#", -- file
     "%#Module#" .. "" .. "%#WinBar#", -- module
     "%#Structure#" .. "" .. "%#WinBar#", -- namespace
     "%#Keyword#" .. "󰌋" .. "%#WinBar#", -- keyword
@@ -113,18 +114,17 @@ local function lsp_callback(err, symbols, ctx, config)
     local path_components = vim.split(relative_path or "", "[/\\]", { trimempty = true })
     local num_components = #path_components
     for i, component in ipairs(path_components) do
+        local iconstr
         if i == num_components then
-            local iconstr
+            local icon, icon_hl
             if devicons_ok then
-                local icon, icon_hl = devicons.get_icon(component)
-                if icon and icon_hl then
-                    iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#WinBar#"
-                end
+                icon, icon_hl = devicons.get_icon(component)
             end
-            table.insert(breadcrumbs, (iconstr or kind_icons[1]) .. " " .. component)
+            iconstr = "%#" .. (icon_hl or "File") .. "#" .. (icon or file_icon) .. "%#WinBar#"
         else
-            table.insert(breadcrumbs, folder_icon .. " " .. component)
+            iconstr = folder_icon
         end
+        table.insert(breadcrumbs, iconstr .. " " .. component)
     end
 
     find_symbol_path(symbols, cursor_line, cursor_char, breadcrumbs)
