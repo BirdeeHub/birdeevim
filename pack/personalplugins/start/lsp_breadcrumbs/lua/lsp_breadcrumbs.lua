@@ -1,8 +1,8 @@
 local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
 local folder_icon = "%#File#" .. "󰉋" .. "%#WinBar#"
-local file_icon = "󰈙"
+local file_icon = "%#File#" .. "󰈙" .. "%#WinBar#"
 local kind_icons = {
-    "%#File#" .. file_icon .. "%#WinBar#", -- file
+    file_icon, -- file
     "%#Module#" .. "" .. "%#WinBar#", -- module
     "%#Structure#" .. "" .. "%#WinBar#", -- namespace
     "%#Keyword#" .. "󰌋" .. "%#WinBar#", -- keyword
@@ -120,7 +120,11 @@ local function lsp_callback(err, symbols, ctx, config)
             if devicons_ok then
                 icon, icon_hl = devicons.get_icon(component)
             end
-            iconstr = "%#" .. (icon_hl or "File") .. "#" .. (icon or file_icon) .. "%#WinBar#"
+            if icon and icon_hl then
+                iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#WinBar#"
+            else
+                iconstr = file_icon
+            end
         else
             iconstr = folder_icon
         end
