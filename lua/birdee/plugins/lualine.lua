@@ -1,3 +1,6 @@
+-- NOTE: do not set winbar via lualine it will override the winbar
+-- that is why you are calling this here, to remind yourself
+vim.keymap.set("n", "<leader>lb", require("birdee.plugins.breadcrumbs"), { desc = "Toggle [l]sp [b]readcrumbs" })
 return {
   {
     "lualine.nvim",
@@ -41,7 +44,6 @@ return {
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
             statusline = {},
-            winbar = {},
           },
           ignore_focus = {},
           always_divide_middle = true,
@@ -49,7 +51,6 @@ return {
           refresh = {
             statusline = 1000,
             tabline = 1000,
-            winbar = 1000,
           },
         },
         sections = {
@@ -105,22 +106,6 @@ return {
           lualine_x = {},
           lualine_y = { 'grapple', },
           lualine_z = { 'tabs' }
-        },
-        winbar = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {}
-        },
-        inactive_winbar = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {}
         },
         extensions = {}
       })
