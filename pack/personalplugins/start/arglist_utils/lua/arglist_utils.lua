@@ -39,7 +39,7 @@ function M.rm(num_or_name)
   elseif atype == "string" then
     vim.cmd.argdelete(num_or_name)
   else
-    vim.cmd.argdel("%")
+    pcall(vim.cmd.argdel, "%")
   end
 end
 
