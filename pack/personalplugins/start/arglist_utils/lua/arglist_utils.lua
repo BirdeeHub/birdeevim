@@ -10,7 +10,7 @@ function M.get_display_text()
     local this_path = arglist[i]
     local this_name = vim.fn.fnamemodify(this_path, ":t")
     if this_name == "" then
-      this_name = vim.fn.fnamemodify(this_path:gsub("[\\/]$", ""), ":t")
+      this_name = vim.fn.fnamemodify(this_path .. ".", ":h:t")
     end
     if vim.fn.fnamemodify(this_path, ":p") == current then
       res = res .. " [" .. this_name .. "]"
