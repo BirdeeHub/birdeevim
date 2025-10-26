@@ -68,7 +68,7 @@ function M.edit()
 
   -- Create centered floating window
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
-  vim.api.nvim_open_win(argseditor, true, {
+  local winid = vim.api.nvim_open_win(argseditor, true, {
     relative = "editor",
     height = math.min(vim.fn.argc(-1), abs_height),
     width = math.ceil(cols * rel_width),
@@ -94,8 +94,10 @@ function M.edit()
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
     vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-    vim.cmd.argadd(table.concat(to_write, " "))
-    vim.api.nvim_buf_delete(argseditor, { force = true })
+    if to_write[1] and to_write[1]:match("^%s*$") == nil then
+      vim.cmd.argadd(table.concat(to_write, " "))
+    end
+    vim.api.nvim_win_close(winid, true)
   end, { buffer = argseditor, desc = "Update arglist" })
 
   vim.api.nvim_create_autocmd("BufWriteCmd" ,{
@@ -103,7 +105,9 @@ function M.edit()
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
       vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-      vim.cmd.argadd(table.concat(to_write, " "))
+      if ((to_write or {})[1] or ""):match("^%s*$") == nil then
+        vim.cmd.argadd(table.concat(to_write, " "))
+      end
     end
   })
 end
