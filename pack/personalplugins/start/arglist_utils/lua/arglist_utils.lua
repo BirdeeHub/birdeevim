@@ -8,10 +8,14 @@ function M.get_display_text()
   ---@cast arglist string[]
   for i = 1, #arglist do
     local this_path = arglist[i]
+    local this_name = vim.fn.fnamemodify(this_path, ":t")
+    if this_name == "" then
+      this_name = vim.fn.fnamemodify(this_path:gsub("[\\/]$", ""), ":t")
+    end
     if vim.fn.fnamemodify(this_path, ":p") == current then
-      res = res .. " [" .. vim.fn.fnamemodify(this_path, ":t") .. "]"
+      res = res .. " [" .. this_name .. "]"
     else
-      res = res .. " " .. vim.fn.fnamemodify(this_path, ":t")
+      res = res .. " " .. this_name
     end
   end
   return res
