@@ -1,5 +1,4 @@
 inputs: let
-
   inherit (inputs.nixCats) utils;
   birdeevim_settings = { pkgs, name, ... }@misc: {
     # so that it finds my ai auths in ~/.cache/birdeevim
