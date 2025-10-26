@@ -110,6 +110,13 @@ function M.edit()
       vim.cmd.argdedupe()
     end
   })
+
+  vim.api.nvim_create_autocmd({ "WinLeave", "BufWinLeave", "BufLeave" } ,{
+    buffer = argseditor,
+    callback = function()
+      vim.api.nvim_win_close(winid, true)
+    end
+  })
 end
 
 function M.setup(opts)
