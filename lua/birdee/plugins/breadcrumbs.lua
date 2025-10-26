@@ -1,3 +1,5 @@
+local breadcrumbs_enabled = false
+
 local function range_contains_pos(range, line, char)
     local start = range.start
     local stop = range['end']
@@ -33,6 +35,10 @@ local function find_symbol_path(symbol_list, line, char, path)
 end
 
 local function lsp_callback(err, symbols, ctx, config)
+    if not breadcrumbs_enabled then
+        vim.wo.winbar = nil
+        return
+    end
     if err or not symbols then
         vim.wo.winbar = " "
         return
@@ -96,7 +102,6 @@ local function breadcrumbs_set()
     )
 end
 
-local breadcrumbs_enabled = false
 local breadcrumbs_augroup = nil
 
 return function(enable)
