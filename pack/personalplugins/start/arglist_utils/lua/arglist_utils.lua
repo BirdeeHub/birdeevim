@@ -1,6 +1,6 @@
 local M = {}
 
-function M.lualine_component()
+function M.get_display_text()
   local res = ""
   local current = vim.api.nvim_buf_get_name(0)
   local arglist = vim.fn.argv()
