@@ -93,7 +93,7 @@ function M.edit()
   -- Write new arglist and close argseditor
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
-    vim.cmd("%argd")
+    vim.cmd [[%argdelete]]
     vim.cmd.argadd(table.concat(to_write, " "))
     vim.api.nvim_buf_delete(argseditor, { force = true })
   end, { buffer = argseditor, desc = "Update arglist" })
@@ -102,7 +102,7 @@ function M.edit()
     buffer = argseditor,
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
-      vim.cmd.argdelete { range = "%" }
+      vim.cmd [[%argdelete]]
       vim.cmd.argadd(table.concat(to_write, " "))
     end
   })
