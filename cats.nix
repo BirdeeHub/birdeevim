@@ -230,7 +230,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
           nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
           scootcfg = builtins.toFile "config.toml" /*toml*/''
             [editor_open]
-            command = "${name} --server $NVIM --remote-send '<cmd>lua require('birdee.plugins.scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
+            command = "${name} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
           '';
           postBuild = ''
             mkdir -p "$out/share/bundled_config"

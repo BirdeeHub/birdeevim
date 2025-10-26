@@ -16,13 +16,12 @@ if colorschemer ~= "" then
 end
 
 if nixCats('mass_find_and_replace.scooter') then
-  local scootils = require('birdee.plugins.scooter')
-  vim.keymap.set('n', '<leader>rr', scootils.open_scooter, { desc = 'Open scooter' })
+  vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
   vim.keymap.set('v', '<leader>rr',
     function()
         local selection = vim.fn.getreg('"')
         vim.cmd('normal! "ay')
-        scootils.open_scooter_with_text(vim.fn.getreg('a'))
+        require('scooter').open_scooter_with_text(vim.fn.getreg('a'))
         vim.fn.setreg('"', selection)
     end,
     { desc = 'Search selected text in scooter' })
