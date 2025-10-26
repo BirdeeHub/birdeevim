@@ -43,22 +43,68 @@ function M.rm(num_or_name)
   end
 end
 
+function M.edit()
+  -- Set dimensions
+  local abs_height = 15
+  local rel_width = 0.7
+
+  -- Create buf
+  local argseditor = vim.api.nvim_create_buf(false, true)
+  local filetype = "argseditor"
+  vim.api.nvim_set_option_value("filetype", filetype, { buf = argseditor })
+
+  -- Create centered floating window
+  local rows, cols = vim.opt.lines._value, vim.opt.columns._value
+  vim.api.nvim_open_win(argseditor, true, {
+    relative = "editor",
+    height = abs_height,
+    width = math.ceil(cols * rel_width),
+    row = math.ceil(rows / 2 - abs_height / 2),
+    col = math.ceil(cols / 2 - cols * rel_width / 2),
+    border = "single",
+    title = filetype,
+  })
+
+  -- Put current arglist
+  local arglist = vim.fn.argv(-1)
+  local to_read = type(arglist) == "table" and arglist or { arglist }
+  vim.api.nvim_buf_set_lines(argseditor, 0, -1, false, to_read)
+
+  -- Go to file under cursor
+  vim.keymap.set("n", "<CR>", function()
+    local f = vim.fn.getline(".")
+    vim.api.nvim_buf_delete(argseditor, { force = true })
+    vim.cmd.e(f)
+  end, { buffer = argseditor, desc = "Go to file under cursor" })
+
+  -- Write new arglist and close argseditor
+  vim.keymap.set("n", "<M-w>", function()
+    local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
+    vim.cmd("%argd")
+    vim.cmd.arga(table.concat(to_write, " "))
+    vim.api.nvim_buf_delete(argseditor, { force = true })
+  end, { buffer = argseditor, desc = "Update arglist" })
+end
+
 function M.setup(opts)
   local keys = (opts or {}).keys or {}
-  if keys.rm then
+  if keys.rm ~= false then
     vim.keymap.set("n", keys.rm or "<leader><leader>x", function()
       M.rm(vim.v.count)
     end, { silent = true, desc = "Remove buffer at count (or current) from arglist"})
   end
-  if keys.add then
+  if keys.add ~= false then
     vim.keymap.set("n", keys.add or "<leader><leader>a", function()
       M.add(vim.v.count)
     end, { silent = true, desc = "Add buffer (count or current) to arglist" })
   end
-  if keys.go then
+  if keys.go ~= false then
     vim.keymap.set("n", keys.go or "<leader><leader><leader>", function()
       M.go(vim.v.count)
     end, { silent = true, desc = "Go to buffer at count in arglist" })
+  end
+  if keys.edit ~= false then
+    vim.keymap.set("n", keys.edit or "<leader><leader>e", M.edit, { silent = true, desc = "edit arglist in floating window"})
   end
 end
 
