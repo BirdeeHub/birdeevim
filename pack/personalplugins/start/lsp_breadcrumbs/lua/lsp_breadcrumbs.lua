@@ -1,29 +1,29 @@
 local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
-local folder_icon = "%#File#" .. "󰉋" .. "%#Normal#"
+local folder_icon = "%#File#" .. "󰉋" .. "%#WinBar#"
 local kind_icons = {
-    "%#File#" .. "󰈙" .. "%#Normal#", -- file
-    "%#Module#" .. "" .. "%#Normal#", -- module
-    "%#Structure#" .. "" .. "%#Normal#", -- namespace
-    "%#Keyword#" .. "󰌋" .. "%#Normal#", -- keyword
-    "%#Class#" .. "󰠱" .. "%#Normal#", -- class
-    "%#Method#" .. "󰆧" .. "%#Normal#", -- method
-    "%#Property#" .. "󰜢" .. "%#Normal#", -- property
-    "%#Field#" .. "󰇽" .. "%#Normal#", -- field
-    "%#Function#" .. "" .. "%#Normal#", -- constructor
-    "%#Enum#" .. "" .. "%#Normal#", -- enum
-    "%#Type#" .. "" .. "%#Normal#", -- interface
-    "%#Function#" .. "󰊕" .. "%#Normal#", -- function
-    "%#None#" .. "󰂡" .. "%#Normal#", -- variable
-    "%#Constant#" .. "󰏿" .. "%#Normal#", -- constant
-    "%#String#" .. "" .. "%#Normal#", -- string
-    "%#Number#" .. "" .. "%#Normal#", -- number
-    "%#Boolean#" .. "" .. "%#Normal#", -- boolean
-    "%#Array#" .. "" .. "%#Normal#", -- array
-    "%#Class#" .. "" .. "%#Normal#", -- object
+    "%#File#" .. "󰈙" .. "%#WinBar#", -- file
+    "%#Module#" .. "" .. "%#WinBar#", -- module
+    "%#Structure#" .. "" .. "%#WinBar#", -- namespace
+    "%#Keyword#" .. "󰌋" .. "%#WinBar#", -- keyword
+    "%#Class#" .. "󰠱" .. "%#WinBar#", -- class
+    "%#Method#" .. "󰆧" .. "%#WinBar#", -- method
+    "%#Property#" .. "󰜢" .. "%#WinBar#", -- property
+    "%#Field#" .. "󰇽" .. "%#WinBar#", -- field
+    "%#Function#" .. "" .. "%#WinBar#", -- constructor
+    "%#Enum#" .. "" .. "%#WinBar#", -- enum
+    "%#Type#" .. "" .. "%#WinBar#", -- interface
+    "%#Function#" .. "󰊕" .. "%#WinBar#", -- function
+    "%#None#" .. "󰂡" .. "%#WinBar#", -- variable
+    "%#Constant#" .. "󰏿" .. "%#WinBar#", -- constant
+    "%#String#" .. "" .. "%#WinBar#", -- string
+    "%#Number#" .. "" .. "%#WinBar#", -- number
+    "%#Boolean#" .. "" .. "%#WinBar#", -- boolean
+    "%#Array#" .. "" .. "%#WinBar#", -- array
+    "%#Class#" .. "" .. "%#WinBar#", -- object
     "", -- package
     "󰟢", -- null
     "", -- enum-member
-    "%#Struct#" .. "" .. "%#Normal#", -- struct
+    "%#Struct#" .. "" .. "%#WinBar#", -- struct
     "", -- event
     "", -- operator
     "󰅲", -- type-parameter
@@ -118,7 +118,7 @@ local function lsp_callback(err, symbols, ctx, config)
             if devicons_ok then
                 local icon, icon_hl = devicons.get_icon(component)
                 if icon and icon_hl then
-                    iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#Normal#"
+                    iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#WinBar#"
                 end
             end
             table.insert(breadcrumbs, iconstr .. " " .. component)
