@@ -52,6 +52,9 @@ function M.edit()
   local argseditor = vim.api.nvim_create_buf(false, true)
   local filetype = "argseditor"
   vim.api.nvim_set_option_value("filetype", filetype, { buf = argseditor })
+  vim.api.nvim_set_option_value("buftype", "acwrite", { buf = argseditor })
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = argseditor })
+  vim.api.nvim_set_option_value("swapfile", false, { buf = argseditor })
 
   -- Create centered floating window
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
@@ -78,12 +81,22 @@ function M.edit()
   end, { buffer = argseditor, desc = "Go to file under cursor" })
 
   -- Write new arglist and close argseditor
-  vim.keymap.set("n", "<M-w>", function()
+  vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
     vim.cmd("%argd")
     vim.cmd.arga(table.concat(to_write, " "))
     vim.api.nvim_buf_delete(argseditor, { force = true })
   end, { buffer = argseditor, desc = "Update arglist" })
+
+  vim.api.nvim_create_autocmd("BufWriteCmd" ,{
+    buffer = argseditor,
+    callback = function()
+      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
+      vim.cmd("%argd")
+      vim.cmd.arga(table.concat(to_write, " "))
+      vim.api.nvim_set_option_value("modified", false, { buf = argseditor })
+    end
+  })
 end
 
 function M.setup(opts)
