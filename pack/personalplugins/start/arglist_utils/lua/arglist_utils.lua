@@ -10,9 +10,7 @@ function M.get_display_text()
     if name == "" then
       name = vim.fn.fnamemodify(name .. ".", ":h:t")
     end
-    if name == "" then
-      name = "~No~Name~"
-    end
+    if name == "" then name = "~No~Name~" end
     if i == vim.fn.argidx() + 1 then
       res = res .. " [" .. name .. "]"
     else
