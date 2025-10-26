@@ -1,29 +1,28 @@
-local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
-local folder_icon = "%#Conditional#" .. "󰉋" .. "%#Normal#"
+local folder_icon = "󰉋"
 local kind_icons = {
-    "%#File#" .. "󰈙" .. "%#Normal#", -- file
-    "%#Module#" .. "" .. "%#Normal#", -- module
-    "%#Structure#" .. "" .. "%#Normal#", -- namespace
-    "%#Keyword#" .. "󰌋" .. "%#Normal#", -- keyword
-    "%#Class#" .. "󰠱" .. "%#Normal#", -- class
-    "%#Method#" .. "󰆧" .. "%#Normal#", -- method
-    "%#Property#" .. "󰜢" .. "%#Normal#", -- property
-    "%#Field#" .. "󰇽" .. "%#Normal#", -- field
-    "%#Function#" .. "" .. "%#Normal#", -- constructor
-    "%#Enum#" .. "" .. "%#Normal#", -- enum
-    "%#Type#" .. "" .. "%#Normal#", -- interface
-    "%#Function#" .. "󰊕" .. "%#Normal#", -- function
-    "%#None#" .. "󰂡" .. "%#Normal#", -- variable
-    "%#Constant#" .. "󰏿" .. "%#Normal#", -- constant
-    "%#String#" .. "" .. "%#Normal#", -- string
-    "%#Number#" .. "" .. "%#Normal#", -- number
-    "%#Boolean#" .. "" .. "%#Normal#", -- boolean
-    "%#Array#" .. "" .. "%#Normal#", -- array
-    "%#Class#" .. "" .. "%#Normal#", -- object
+    "󰈙", -- file
+    "", -- module
+    "", -- namespace
+    "󰌋", -- keyword
+    "󰠱", -- class
+    "󰆧", -- method
+    "󰜢", -- property
+    "󰇽", -- field
+    "", -- constructor
+    "", -- enum
+    "", -- interface
+    "󰊕", -- function
+    "󰂡", -- variable
+    "󰏿", -- constant
+    "", -- string
+    "", -- number
+    "", -- boolean
+    "", -- array
+    "", -- object
     "", -- package
     "󰟢", -- null
     "", -- enum-member
-    "%#Struct#" .. "" .. "%#Normal#", -- struct
+    "", -- struct
     "", -- event
     "", -- operator
     "󰅲", -- type-parameter
@@ -114,14 +113,7 @@ local function lsp_callback(err, symbols, ctx, config)
     local num_components = #path_components
     for i, component in ipairs(path_components) do
         if i == num_components then
-            local iconstr = kind_icons[1]
-            if devicons_ok then
-                local icon, icon_hl = devicons.get_icon(component)
-                if icon and icon_hl then
-                    iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#Normal#"
-                end
-            end
-            table.insert(breadcrumbs, iconstr .. " " .. component)
+            table.insert(breadcrumbs, kind_icons[1] .. " " .. component)
         else
             table.insert(breadcrumbs, folder_icon .. " " .. component)
         end
@@ -129,7 +121,7 @@ local function lsp_callback(err, symbols, ctx, config)
 
     find_symbol_path(symbols, cursor_line, cursor_char, breadcrumbs)
 
-    local breadcrumb_string = table.concat(breadcrumbs, " > ")
+    local breadcrumb_string = "%#Normal#" .. table.concat(breadcrumbs, " > ")
 
     if breadcrumb_string ~= "" then
         vim.wo.winbar = breadcrumb_string
