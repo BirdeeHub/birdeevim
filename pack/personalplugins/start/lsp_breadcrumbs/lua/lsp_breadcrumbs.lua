@@ -2,39 +2,48 @@ local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
 local folder_icon = "%#File#" .. "󰉋" .. "%#WinBar#"
 local file_icon = "%#File#" .. "󰈙" .. "%#WinBar#"
 local kind_icons = {
-    file_icon, -- file
-    "%#Module#" .. "" .. "%#WinBar#", -- module
-    "%#Structure#" .. "" .. "%#WinBar#", -- namespace
-    "%#Keyword#" .. "󰌋" .. "%#WinBar#", -- keyword
-    "%#Class#" .. "󰠱" .. "%#WinBar#", -- class
-    "%#Method#" .. "󰆧" .. "%#WinBar#", -- method
-    "%#Property#" .. "󰜢" .. "%#WinBar#", -- property
-    "%#Field#" .. "󰇽" .. "%#WinBar#", -- field
-    "%#Function#" .. "" .. "%#WinBar#", -- constructor
-    "%#Enum#" .. "" .. "%#WinBar#", -- enum
-    "%#Type#" .. "" .. "%#WinBar#", -- interface
-    "%#Function#" .. "󰊕" .. "%#WinBar#", -- function
-    "%#None#" .. "󰂡" .. "%#WinBar#", -- variable
-    "%#Constant#" .. "󰏿" .. "%#WinBar#", -- constant
-    "%#String#" .. "" .. "%#WinBar#", -- string
-    "%#Number#" .. "" .. "%#WinBar#", -- number
-    "%#Boolean#" .. "" .. "%#WinBar#", -- boolean
-    "%#Array#" .. "" .. "%#WinBar#", -- array
-    "%#Class#" .. "" .. "%#WinBar#", -- object
-    "", -- package
-    "󰟢", -- null
-    "", -- enum-member
+    file_icon, -- File
+    "%#Module#" .. "" .. "%#WinBar#", -- Module
+    "%#Structure#" .. "" .. "%#WinBar#", -- Namespace
+    "%#Keyword#" .. "󰌋" .. "%#WinBar#", -- Keyword
+    "%#Class#" .. "󰠱" .. "%#WinBar#", -- Class
+    "%#Method#" .. "󰆧" .. "%#WinBar#", -- Method
+    "%#Property#" .. "󰜢" .. "%#WinBar#", -- Property
+    "%#Field#" .. "" .. "%#WinBar#", -- Field
+    "%#Function#" .. "" .. "%#WinBar#", -- Constructor
+    "%#Enum#" .. "" .. "%#WinBar#", -- Enum
+    "%#Type#" .. "" .. "%#WinBar#", -- Interface
+    "%#Function#" .. "󰊕" .. "%#WinBar#", -- Function
+    "%#None#" .. "󰀫" .. "%#WinBar#", -- Variable
+    "%#Constant#" .. "󰏿" .. "%#WinBar#", -- Constant
+    "%#String#" .. "" .. "%#WinBar#", -- String
+    "%#Number#" .. "" .. "%#WinBar#", -- Number
+    "%#Boolean#" .. "󰨙 " .. "%#WinBar#", -- Boolean
+    "%#Array#" .. "" .. "%#WinBar#", -- Array
+    "%#Class#" .. "" .. "%#WinBar#", -- Object
+    "", -- Package
+    "󰟢", -- Null
+    "", -- EnumMember
     "%#Structure#" .. "" .. "%#WinBar#", -- struct
-    "", -- event
-    "", -- operator
-    "󰅲", -- type-parameter
+    "", -- Event
+    "󰆕", -- Operator
+    "", -- TypeParameter
     "",
     "",
     "󰎠",
     "",
+    "󰅲",
     "󰏘",
+    "",
+    "󰆼",
     "",
+    "",
+    "󰑭",
+    "󰙅",
+    "󰂡",
     "󰉋",
+    "",
+    "󰇽",
 }
 
 local function range_contains_pos(range, line, char)
