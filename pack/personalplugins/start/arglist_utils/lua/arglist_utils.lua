@@ -94,9 +94,8 @@ function M.edit()
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
     vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-    if to_write[1] and to_write[1]:match("^%s*$") == nil then
-      vim.cmd.argadd(table.concat(to_write, " "))
-    end
+    local res = table.concat(to_write, " ")
+    if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
     vim.api.nvim_win_close(winid, true)
   end, { buffer = argseditor, desc = "Update arglist" })
 
@@ -105,9 +104,8 @@ function M.edit()
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
       vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-      if to_write[1] and to_write[1]:match("^%s*$") == nil then
-        vim.cmd.argadd(table.concat(to_write, " "))
-      end
+      local res = table.concat(to_write, " ")
+      if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
     end
   })
 end
