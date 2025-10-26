@@ -33,16 +33,19 @@ function M.add(num_or_name)
     range = { arglen, arglen },
   })
   if not ok then
-    vim.notify(err, vim.log.levels.ERROR)
+    vim.notify(err, vim.log.levels.WARN)
   end
   vim.cmd.argdedupe()
 end
 
 function M.go(num)
-  if num > 0 and vim.fn.argc(-1) >= num then
+  local arglen = vim.fn.argc(-1)
+  if num > 0 and arglen >= num then
     vim.cmd.argument(num)
-  else
+  elseif arglen > 0 then
     vim.cmd.argument(vim.fn.argidx() + 1)
+  else
+    vim.notify("No args to go to!", vim.log.levels.WARN)
   end
 end
 
@@ -55,7 +58,7 @@ function M.rm(num_or_name)
   else
     local ok, err = pcall(vim.cmd.argdelete, "%")
     if not ok then
-      vim.notify(err, vim.log.levels.ERROR)
+      vim.notify(err, vim.log.levels.WARN)
     end
   end
 end
@@ -100,7 +103,7 @@ function M.edit()
   -- Write new arglist and close argseditor
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-    vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
+    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
     local ok, err = pcall(vim.cmd.argadd, table.concat(to_write, " "))
     if not ok then
       vim.notify(err, vim.log.levels.ERROR)
@@ -113,7 +116,7 @@ function M.edit()
     buffer = argseditor,
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-      vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
+      pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
       local ok, err = pcall(vim.cmd.argadd, table.concat(to_write, " "))
       if not ok then
         vim.notify(err, vim.log.levels.ERROR)
