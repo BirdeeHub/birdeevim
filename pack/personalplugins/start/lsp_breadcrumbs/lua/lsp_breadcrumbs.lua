@@ -111,7 +111,7 @@ return function(enable)
         breadcrumbs_enabled = not breadcrumbs_enabled
     end
     if breadcrumbs_enabled then
-        breadcrumbs_augroup = vim.api.nvim_create_augroup("Breadcrumbs", { clear = true })
+        breadcrumbs_augroup = vim.api.nvim_create_augroup("LspBreadcrumbs", { clear = true })
         vim.api.nvim_create_autocmd("CursorMoved", {
             group = breadcrumbs_augroup,
             callback = breadcrumbs_set,
