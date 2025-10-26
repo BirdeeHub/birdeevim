@@ -224,23 +224,24 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
     ];
     mass_find_and_replace = {
       scooter = [
-        (pkgs.runCommand "scooter-w-cfg" {
-            nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-            scootcfg = builtins.toFile "config.toml" /*toml*/''
-              [editor_open]
-              command = "${name} --server $NVIM --remote-send '<cmd>lua require('birdee.plugins.scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
-            '';
-          } ''
-          mkdir -p "$out/bin"
-          mkdir -p "$out/share/bundled_config"
-          cp "$scootcfg" "$out/share/bundled_config/config.toml"
-          makeWrapper ${pkgs.lib.escapeShellArgs [
-            "${inputs.scooter.packages.${pkgs.system}.default}/bin/scooter"
-            "${placeholder "out"}/bin/scooter" "--inherit-argv0"
-            "--add-flag" "--config-dir" "--add-flag"
-            "${placeholder "out"}/share/bundled_config"
-          ]}
-        '')
+        (pkgs.symlinkJoin {
+          name = "scooter-w-cfg";
+          paths = [ inputs.scooter.packages.${pkgs.system}.default ];
+          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+          scootcfg = builtins.toFile "config.toml" /*toml*/''
+            [editor_open]
+            command = "${name} --server $NVIM --remote-send '<cmd>lua require('birdee.plugins.scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
+          '';
+          postBuild = ''
+            mkdir -p "$out/share/bundled_config"
+            cp "$scootcfg" "$out/share/bundled_config/config.toml"
+            wrapProgram ${pkgs.lib.escapeShellArgs [
+              "${placeholder "out"}/bin/scooter" "--inherit-argv0"
+              "--add-flag" "--config-dir" "--add-flag"
+              "${placeholder "out"}/share/bundled_config"
+            ]}
+          '';
+        })
       ];
     };
   };
