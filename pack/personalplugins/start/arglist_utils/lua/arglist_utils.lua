@@ -28,10 +28,13 @@ function M.add(num_or_name)
   elseif argtype ~= "string" then
     num_or_name = "%"
   end
-  vim.cmd.argadd {
+  local ok, err = pcall(vim.cmd.argadd, {
     args = { num_or_name },
     range = { arglen, arglen },
-  }
+  })
+  if not ok then
+    vim.notify(err, vim.log.levels.ERROR)
+  end
   vim.cmd.argdedupe()
 end
 
