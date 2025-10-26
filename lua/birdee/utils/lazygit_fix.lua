@@ -6,8 +6,10 @@ return function (path, line)
       vim.cmd.edit(path)
       local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
-        if buf then vim.api.nvim_set_current_buf(buf) end
-        vim.api.nvim_win_set_cursor(0, { line or 0, 0})
+        if buf then
+          vim.cmd.buffer(buf)
+          vim.api.nvim_win_set_cursor(0, { line or 0, 0})
+        end
       end)
     end)
   else
@@ -15,7 +17,9 @@ return function (path, line)
       vim.cmd.edit(path)
       local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
-        if buf then vim.api.nvim_set_current_buf(buf) end
+        if buf then
+          vim.cmd.buffer(buf)
+        end
       end)
     end)
   end
