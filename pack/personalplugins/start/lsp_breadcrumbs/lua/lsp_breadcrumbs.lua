@@ -129,9 +129,7 @@ return function(enable)
     else
         vim.api.nvim_clear_autocmds({ group = breadcrumbs_augroup })
         for _, win in ipairs(vim.api.nvim_list_wins()) do
-            vim.api.nvim_win_call(win, function()
-                vim.wo.winbar = nil
-            end)
+            vim.api.nvim_set_option_value("winbar", nil, { win = win })
         end
         vim.notify("Breadcrumbs disabled", vim.log.levels.INFO)
     end
