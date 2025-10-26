@@ -94,7 +94,6 @@ function M.edit()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
       vim.cmd("%argd")
       vim.cmd.arga(table.concat(to_write, " "))
-      vim.api.nvim_set_option_value("modified", false, { buf = argseditor })
     end
   })
 end
