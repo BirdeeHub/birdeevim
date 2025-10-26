@@ -24,8 +24,13 @@ end
 function M.add(num_or_name)
   local arglen = vim.fn.argc(-1)
   local argtype = type(num_or_name)
+  if argtype == "number" then
+    num_or_name = num_or_name < 1 and "%" or vim.fn.bufname(num_or_name)
+  elseif argtype ~= "string" then
+    num_or_name = "%"
+  end
   vim.cmd.argadd {
-    args = { (argtype == "string" and num_or_name) or (argtype == "number" and num_or_name > 0 and vim.fn.bufname(num_or_name)) or "%" },
+    args = { num_or_name },
     range = { arglen, arglen },
   }
   vim.cmd.argdedupe()
