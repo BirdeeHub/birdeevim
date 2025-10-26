@@ -109,10 +109,10 @@ return {
           config = {
             os = {
               editPreset = "nvim-remote",
-              edit = nixCats.packageBinPath .. [=[ --server $NVIM --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
-              editAtLine = nixCats.packageBinPath .. [=[ --server $NVIM --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
+              edit = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
+              editAtLine = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
               editAtLineAndWait = nixCats.packageBinPath .. " +{{line}} {{filename}}",
-              openDirInEditor = nixCats.packageBinPath .. [=[ --server $NVIM --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
+              openDirInEditor = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
             },
           },
         },
