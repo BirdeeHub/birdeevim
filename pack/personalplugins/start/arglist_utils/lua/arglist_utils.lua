@@ -100,7 +100,7 @@ function M.edit()
     vim.api.nvim_win_close(winid, true)
   end, { buffer = argseditor, desc = "Update arglist and exit" })
 
-  vim.api.nvim_create_autocmd("BufWriteCmd" ,{
+  vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = argseditor,
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
