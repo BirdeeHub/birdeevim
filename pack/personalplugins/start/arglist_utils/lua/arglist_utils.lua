@@ -53,7 +53,10 @@ function M.rm(num_or_name)
   elseif atype == "string" then
     vim.cmd.argdelete(num_or_name)
   else
-    pcall(vim.cmd.argdelete, "%")
+    local ok, err = pcall(vim.cmd.argdelete, "%")
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
   end
 end
 
