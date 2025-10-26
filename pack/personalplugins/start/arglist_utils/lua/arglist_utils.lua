@@ -2,7 +2,6 @@ local M = {}
 
 function M.get_display_text()
   local res = ""
-  local current = vim.api.nvim_buf_get_name(0)
   local arglist = vim.fn.argv(-1)
   arglist = type(arglist) == "table" and arglist or { arglist }
   ---@cast arglist string[]
