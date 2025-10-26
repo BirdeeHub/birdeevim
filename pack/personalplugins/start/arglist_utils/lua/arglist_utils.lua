@@ -98,7 +98,7 @@ function M.edit()
     if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
     vim.cmd.argdedupe()
     vim.api.nvim_win_close(winid, true)
-  end, { buffer = argseditor, desc = "Update arglist" })
+  end, { buffer = argseditor, desc = "Update arglist and exit" })
 
   vim.api.nvim_create_autocmd("BufWriteCmd" ,{
     buffer = argseditor,
