@@ -3,7 +3,7 @@ local M = {}
 function M.get_display_text()
   local res = ""
   local current = vim.api.nvim_buf_get_name(0)
-  local arglist = vim.fn.argv()
+  local arglist = vim.fn.argv(-1)
   arglist = type(arglist) == "table" and arglist or { arglist }
   ---@cast arglist string[]
   for i = 1, #arglist do
@@ -18,7 +18,7 @@ function M.get_display_text()
 end
 
 function M.add(num_or_name)
-  local arglen = vim.fn.argc()
+  local arglen = vim.fn.argc(-1)
   vim.cmd.argadd {
     args = { type(num_or_name) == "string" and num_or_name or vim.fn.bufname(num_or_name or 0) },
     range = { arglen, arglen },
@@ -27,14 +27,14 @@ function M.add(num_or_name)
 end
 
 function M.go(num)
-  if num > 0 and vim.fn.argc() >= num then
+  if num > 0 and vim.fn.argc(-1) >= num then
     vim.cmd.argu(num)
   end
 end
 
 function M.rm(num_or_name)
   local atype = type(num_or_name)
-  if atype == "number" and num_or_name > 0 and vim.fn.argc() >= num_or_name then
+  if atype == "number" and num_or_name > 0 and vim.fn.argc(-1) >= num_or_name then
     vim.cmd.argdel { range = { num_or_name, num_or_name } }
   elseif atype == "string" then
     vim.cmd.argdelete(num_or_name)
@@ -63,7 +63,7 @@ function M.edit()
     height = abs_height,
     width = math.ceil(cols * rel_width),
     row = math.ceil(rows / 2 - abs_height / 2),
-    col = math.ceil(cols / 2 - cols * rel_width / 2),
+    col = math.min(vim.fn.argc(-1) ,math.ceil(cols / 2 - cols * rel_width / 2)),
     border = "single",
     title = filetype,
   })
