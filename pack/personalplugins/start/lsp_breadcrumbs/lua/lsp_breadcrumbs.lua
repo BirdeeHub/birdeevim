@@ -1,6 +1,5 @@
 local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
 local folder_icon = "%#Conditional#" .. "󰉋" .. "%#Normal#"
-
 local kind_icons = {
     "%#File#" .. "󰈙" .. "%#Normal#", -- file
     "%#Module#" .. "" .. "%#Normal#", -- module
