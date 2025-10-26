@@ -68,7 +68,6 @@ local function lsp_callback(err, symbols, ctx, config)
         end
     end
 
-
     local breadcrumbs = { relative_path }
 
     find_symbol_path(symbols, cursor_line, cursor_char, breadcrumbs)
