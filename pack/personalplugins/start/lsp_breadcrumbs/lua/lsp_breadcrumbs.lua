@@ -40,7 +40,7 @@ local function lsp_callback(err, symbols, ctx, config)
         return
     end
     if err or not symbols then
-        vim.wo.winbar = " "
+        vim.wo.winbar = nil
         return
     end
 
@@ -78,7 +78,7 @@ local function lsp_callback(err, symbols, ctx, config)
     if breadcrumb_string ~= "" then
         vim.wo.winbar = breadcrumb_string
     else
-        vim.wo.winbar = " "
+        vim.wo.winbar = nil
     end
 end
 
