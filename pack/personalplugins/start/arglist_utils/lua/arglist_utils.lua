@@ -70,7 +70,7 @@ function M.edit()
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
   local winid = vim.api.nvim_open_win(argseditor, true, {
     relative = "editor",
-    height = math.min(vim.fn.argc(-1), abs_height),
+    height = math.min(vim.fn.argc(-1) + 2, abs_height),
     width = math.ceil(cols * rel_width),
     row = math.ceil(rows / 2 - abs_height / 2),
     col = math.ceil(cols / 2 - cols * rel_width / 2),
