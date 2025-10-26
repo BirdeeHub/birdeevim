@@ -38,6 +38,8 @@ end
 function M.go(num)
   if num > 0 and vim.fn.argc(-1) >= num then
     vim.cmd.argument(num)
+  else
+    vim.cmd.argument(vim.fn.argidx() + 1)
   end
 end
 
