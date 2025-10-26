@@ -99,10 +99,12 @@ function M.edit()
 
   -- Write new arglist and close argseditor
   vim.keymap.set("n", "q", function()
-    local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
+    local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
     vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-    local res = table.concat(to_write, " ")
-    if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
+    local ok, err = pcall(vim.cmd.argadd, table.concat(to_write, " "))
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
     vim.cmd.argdedupe()
     vim.api.nvim_win_close(winid, true)
   end, { buffer = argseditor, desc = "Update arglist and exit" })
@@ -110,10 +112,12 @@ function M.edit()
   vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = argseditor,
     callback = function()
-      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true)
+      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
       vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
-      local res = table.concat(to_write, " ")
-      if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
+      local ok, err = pcall(vim.cmd.argadd, table.concat(to_write, " "))
+      if not ok then
+        vim.notify(err, vim.log.levels.ERROR)
+      end
       vim.cmd.argdedupe()
     end
   })
@@ -121,7 +125,7 @@ function M.edit()
   vim.api.nvim_create_autocmd({ "WinLeave", "BufWinLeave", "BufLeave" } ,{
     buffer = argseditor,
     callback = function()
-      vim.api.nvim_win_close(winid, true)
+      pcall(vim.api.nvim_win_close, winid, true)
     end
   })
 end
