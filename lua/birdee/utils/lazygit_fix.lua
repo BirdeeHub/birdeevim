@@ -4,7 +4,7 @@ return function (path, line)
   if line then
     vim.api.nvim_buf_call(prev, function()
       vim.cmd.edit(path)
-      local buf = vim.fn.bufnr(path)
+      local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
         if buf then vim.api.nvim_set_current_buf(buf) end
         vim.api.nvim_win_set_cursor(0, { line or 0, 0})
@@ -13,7 +13,7 @@ return function (path, line)
   else
     vim.api.nvim_buf_call(prev, function()
       vim.cmd.edit(path)
-      local buf = vim.fn.bufnr(path)
+      local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
         if buf then vim.api.nvim_set_current_buf(buf) end
       end)
