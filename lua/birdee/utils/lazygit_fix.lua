@@ -1,5 +1,6 @@
 return function (path, line)
   local prev = vim.fn.bufnr("#")
+  local prev_win = vim.fn.bufwinid(prev)
   vim.api.nvim_feedkeys("q", "n", false)
   if line then
     vim.api.nvim_buf_call(prev, function()
@@ -7,7 +8,7 @@ return function (path, line)
       local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
         if buf then
-          vim.cmd.buffer(buf)
+          vim.api.nvim_win_set_buf(prev_win, buf)
           vim.api.nvim_win_set_cursor(0, { line or 0, 0})
         end
       end)
@@ -18,7 +19,7 @@ return function (path, line)
       local buf = vim.api.nvim_get_current_buf()
       vim.schedule(function()
         if buf then
-          vim.cmd.buffer(buf)
+          vim.api.nvim_win_set_buf(prev_win, buf)
         end
       end)
     end)
