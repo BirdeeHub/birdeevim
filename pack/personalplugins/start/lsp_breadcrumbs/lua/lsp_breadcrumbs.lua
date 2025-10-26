@@ -115,16 +115,14 @@ local function lsp_callback(err, symbols, ctx, config)
     local num_components = #path_components
     for i, component in ipairs(path_components) do
         if i == num_components then
+            local iconstr = kind_icons[1]
             if devicons_ok then
                 local icon, icon_hl = devicons.get_icon(component)
                 if icon and icon_hl then
-                    table.insert(breadcrumbs, "%#" .. icon_hl .. "#" .. icon .. "%#Normal#" .. " " .. component)
-                else
-                    table.insert(breadcrumbs, kind_icons[1] .. " " .. component)
+                    iconstr = "%#" .. icon_hl .. "#" .. icon .. "%#Normal#"
                 end
-            else
-                table.insert(breadcrumbs, kind_icons[1] .. " " .. component)
             end
+            table.insert(breadcrumbs, iconstr .. " " .. component)
         else
             table.insert(breadcrumbs, folder_icon .. " " .. component)
         end
