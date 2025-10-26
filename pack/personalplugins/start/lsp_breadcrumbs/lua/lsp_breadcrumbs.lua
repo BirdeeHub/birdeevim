@@ -117,6 +117,15 @@ return function(enable)
             callback = breadcrumbs_set,
             desc = "Set breadcrumbs.",
         })
+        vim.api.nvim_create_autocmd("BufLeave", {
+            group = breadcrumbs_augroup,
+            callback = function(ctx)
+                vim.api.nvim_buf_call(ctx.buf or 0, function()
+                    vim.wo.winbar = nil
+                end)
+            end,
+            desc = "Clear breadcrumbs on hidden buffers.",
+        })
         vim.notify("Breadcrumbs enabled", vim.log.levels.INFO)
     else
         vim.api.nvim_clear_autocmds({ group = breadcrumbs_augroup })
