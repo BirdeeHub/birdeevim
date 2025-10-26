@@ -96,6 +96,7 @@ function M.edit()
     vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
     local res = table.concat(to_write, " ")
     if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
+    vim.cmd.argdedupe()
     vim.api.nvim_win_close(winid, true)
   end, { buffer = argseditor, desc = "Update arglist" })
 
@@ -106,6 +107,7 @@ function M.edit()
       vim.cmd.argdelete { range = { 1, vim.fn.argc(-1) } }
       local res = table.concat(to_write, " ")
       if res:match("^%s*$") == nil then vim.cmd.argadd(res) end
+      vim.cmd.argdedupe()
     end
   })
 end
