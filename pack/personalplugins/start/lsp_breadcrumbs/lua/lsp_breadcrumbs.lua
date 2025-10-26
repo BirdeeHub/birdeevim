@@ -119,9 +119,7 @@ return function(enable)
         vim.api.nvim_create_autocmd("BufLeave", {
             group = breadcrumbs_augroup,
             callback = function(ctx)
-                vim.api.nvim_buf_call(ctx.buf or 0, function()
-                    vim.wo.winbar = nil
-                end)
+                vim.api.nvim_set_option_value("winbar", nil, { win = vim.fn.bufwinid(ctx.buf or 0) })
             end,
             desc = "Clear breadcrumbs on hidden buffers.",
         })
