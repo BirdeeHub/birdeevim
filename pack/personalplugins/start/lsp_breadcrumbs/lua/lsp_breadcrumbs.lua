@@ -81,7 +81,6 @@ local function lsp_callback(err, symbols, ctx, config)
         vim.wo.winbar = nil
         return
     end
-    vim.api.nvim_set_hl(0, "WinBar", { link = "Normal" })
 
     local pos = vim.api.nvim_win_get_cursor(0)
     local cursor_line = pos[1] - 1
@@ -161,13 +160,14 @@ end
 
 local breadcrumbs_augroup = nil
 
-return function(enable)
+return function(enable, winbar_highlight)
     if type(enable) == "boolean" then
         breadcrumbs_enabled = enable
     else
         breadcrumbs_enabled = not breadcrumbs_enabled
     end
     if breadcrumbs_enabled then
+        vim.api.nvim_set_hl(0, "WinBar", winbar_highlight or { link = "Normal" })
         breadcrumbs_augroup = vim.api.nvim_create_augroup("LspBreadcrumbs", { clear = true })
         vim.api.nvim_create_autocmd("CursorMoved", {
             group = breadcrumbs_augroup,
