@@ -110,6 +110,7 @@ function M.edit()
     col = math.ceil(cols / 2 - cols * rel_width / 2),
     border = "single",
     title = filetype,
+    title_pos = "center",
   })
   vim.api.nvim_set_option_value("number", false, { win = winid })
   vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
