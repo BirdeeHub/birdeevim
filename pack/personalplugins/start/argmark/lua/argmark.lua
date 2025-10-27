@@ -199,13 +199,15 @@ local function overwrite_argslist(bufnr, tar_win_id)
 end
 
 ---@param tar_win_id? number
-function M.edit(tar_win_id)
-  -- TODO: make it so that you can customize the keybindings for the popup window
+---@param opts? table
+function M.edit(tar_win_id, opts)
+  opts = opts or {}
+  local keys = opts.keys or {}
   -- TODO: make it so that you can cycle through all the arglists
   tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
   local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, M.get_arglist_display_text(tar_win_id))
 
-  vim.keymap.set("n", "<CR>", function()
+  vim.keymap.set("n", keys.go or "<CR>", function()
     local f = vim.fn.getline(".")
     vim.api.nvim_win_close(winid, true)
     vim.cmd.edit(f)
@@ -217,7 +219,7 @@ function M.edit(tar_win_id)
     buffer = argseditor,
     callback = function() overwrite_argslist(argseditor, tar_win_id) end,
   })
-  vim.keymap.set("n", "q", function()
+  vim.keymap.set("n", keys.quit or "q", function()
     overwrite_argslist(argseditor, tar_win_id)
     pcall(vim.api.nvim_win_close, winid, true)
   end, {
@@ -233,7 +235,8 @@ function M.edit(tar_win_id)
 end
 
 function M.setup(opts)
-  local keys = (opts or {}).keys or {}
+  opts = opts or {}
+  local keys = opts.keys or {}
   if keys.rm ~= false then
     vim.keymap.set("n", keys.rm or "<leader><leader>x", function()
       local ok, err = pcall(M.rm, vim.v.count)
@@ -253,7 +256,9 @@ function M.setup(opts)
     end, { silent = true, desc = "Go to buffer at count in arglist" })
   end
   if keys.edit ~= false then
-    vim.keymap.set("n", keys.edit or "<leader><leader>e", M.edit, { silent = true, desc = "edit arglist in floating window"})
+    vim.keymap.set("n", keys.edit or "<leader><leader>e", function()
+      M.edit(nil, opts.edit_opts)
+    end, { silent = true, desc = "edit arglist in floating window"})
   end
   if keys.clear ~= false then
     vim.keymap.set("n", keys.clear or "<leader><leader>X", function()
