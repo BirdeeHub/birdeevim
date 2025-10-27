@@ -201,7 +201,7 @@ end
 ---@param tar_win_id? number
 function M.edit(tar_win_id)
   -- TODO: make it so that you can customize the keybindings for the popup window
-  -- TODO: make it so that you can cycle through all the arglists in edit
+  -- TODO: make it so that you can cycle through all the arglists
   tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
   local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, M.get_arglist_display_text(tar_win_id))
 
