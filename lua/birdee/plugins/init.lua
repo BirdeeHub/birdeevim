@@ -21,6 +21,8 @@ require("arglist_utils").setup {
     go = "<leader><leader><leader>",
     add = "<leader><leader>a",
     edit = "<leader><leader>e",
+    clear = "<leader><leader>X",
+    add_windows = "<leader><leader>A",
   }
 }
 
