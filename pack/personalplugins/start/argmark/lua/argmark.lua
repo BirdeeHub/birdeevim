@@ -1,5 +1,6 @@
 local M = {}
 
+---@return string
 function M.get_display_text()
   local res = ""
   local arglist = vim.fn.argv(-1)
@@ -20,16 +21,21 @@ function M.get_display_text()
   return res
 end
 
-function M.add(num_or_name)
+---@param num_or_name_s? number|string|string[]
+function M.add(num_or_name_s)
   local arglen = vim.fn.argc(-1)
-  local argtype = type(num_or_name)
+  local argtype = type(num_or_name_s)
+  local to_add = {}
   if argtype == "number" then
-    num_or_name = num_or_name < 1 and "%" or vim.fn.bufname(num_or_name)
+    to_add[1] = vim.fn.bufname(num_or_name_s)
+    if to_add[1] == "" then to_add[1] = "%" end
+  elseif argtype == "table" then
+    to_add = num_or_name_s
   elseif argtype ~= "string" then
-    num_or_name = "%"
+    to_add[1] = "%"
   end
   local ok, err = pcall(vim.cmd.argadd, {
-    args = { num_or_name },
+    args = to_add,
     range = { arglen, arglen },
   })
   if not ok then
@@ -38,6 +44,7 @@ function M.add(num_or_name)
   vim.cmd.argdedupe()
 end
 
+---@param num? number
 function M.go(num)
   local arglen = vim.fn.argc(-1)
   if num > 0 and arglen >= num then
@@ -49,18 +56,34 @@ function M.go(num)
   end
 end
 
-function M.rm(num_or_name)
+---@param num_or_name? number|string|string[]
+---@param num? number
+function M.rm(num_or_name, num)
   local atype = type(num_or_name)
-  if atype == "number" and num_or_name > 0 and vim.fn.argc(-1) >= num_or_name then
-    vim.cmd.argdelete { range = { num_or_name, num_or_name } }
+  local arglen = vim.fn.argc(-1)
+  if atype == "number" and num_or_name > 0 and arglen >= num_or_name then
+    if type(num) == "number" and num > 0 and arglen >= num then
+      pcall(vim.cmd.argdelete, { range = { num_or_name, num } })
+    else
+      pcall(vim.cmd.argdelete, { range = { num_or_name, num_or_name } })
+    end
   elseif atype == "string" then
-    vim.cmd.argdelete(num_or_name)
+    pcall(vim.cmd.argdelete, num_or_name)
+  elseif atype == "table" then
+    pcall(vim.cmd.argdelete, { args = num_or_name })
   else
     local ok, err = pcall(vim.cmd.argdelete, "%")
     if not ok then
       vim.notify(err, vim.log.levels.WARN)
     end
   end
+end
+
+function M.add_windows()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(win)))
+  end
+  vim.cmd.argdedupe()
 end
 
 function M.edit()
@@ -145,17 +168,6 @@ function M.edit()
   })
 end
 
-function M.clear()
-  pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
-end
-
-function M.add_windows()
-  for _, wins in ipairs(vim.api.nvim_list_wins()) do
-    vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(wins)))
-  end
-  vim.cmd.argdedupe()
-end
-
 function M.setup(opts)
   local keys = (opts or {}).keys or {}
   if keys.rm ~= false then
@@ -177,7 +189,9 @@ function M.setup(opts)
     vim.keymap.set("n", keys.edit or "<leader><leader>e", M.edit, { silent = true, desc = "edit arglist in floating window"})
   end
   if keys.clear ~= false then
-    vim.keymap.set("n", keys.clear or "<leader><leader>X", M.clear, { desc = "Clear arglist" })
+    vim.keymap.set("n", keys.clear or "<leader><leader>X", function()
+      M.rm(1, vim.fn.argc(-1))
+    end, { desc = "Clear arglist" })
   end
   if keys.add_windows ~= false then
     vim.keymap.set("n", keys.add_windows or "<leader><leader>A", M.add_windows, { desc = "Add current buffers for all windows to arglist" })
