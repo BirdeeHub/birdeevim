@@ -180,6 +180,8 @@ function M.edit()
   -- TODO: make it so that you can customize the keybindings for the popup window
   -- TODO: make it so that you can cycle through all the arglists in edit
   -- and when you do don't lose changes in other tabs until you exit
+  -- This means you have to save the editable buffer contents
+  -- per edited arglist while the window is open
   local tar_win_id = vim.api.nvim_get_current_win()
   local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, make_tab_bar(tar_win_id))
 
