@@ -1,10 +1,12 @@
 local M = {}
 
+---@param tar_win_id? number
 ---@return string
-function M.get_display_text()
-  local lid = vim.fn.arglistid()
+function M.get_display_text(tar_win_id)
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or nil
+  local lid = not tar_win_id and vim.fn.arglistid() or tar_win_id >= 0 and vim.fn.arglistid(tar_win_id) or 0
   local res = lid == 0 and "" or "L"..lid..":"
-  local arglist = vim.fn.argv(-1)
+  local arglist = vim.fn.argv(-1, tar_win_id)
   ---@cast arglist string[] -- -1 as arg returns a list
   for i = 1, #arglist do
     local name = vim.fn.fnamemodify(arglist[i], ":t")
@@ -12,7 +14,11 @@ function M.get_display_text()
       name = vim.fn.fnamemodify(name .. ".", ":h:t")
     end
     if name == "" then name = "~No~Name~" end
-    if i == vim.fn.argidx() + 1 then
+    if
+      i == ((not tar_win_id or tar_win_id < 0) and (vim.fn.argidx() + 1)
+      ---@diagnostic disable-next-line: param-type-mismatch
+      or (vim.api.nvim_win_call(tar_win_id, vim.fn.argidx) + 1))
+    then
       res = res .. " [" .. name .. "]"
     else
       res = res .. " " .. name
@@ -21,9 +27,44 @@ function M.get_display_text()
   return res
 end
 
+---@param tar_win_id? number
+---@return string
+function M.get_arglist_display_text(tar_win_id)
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or vim.api.nvim_get_current_win()
+  local temp = {}
+  local titlelist = { (tar_win_id < 0 or vim.fn.arglistid(tar_win_id) == 0) and "[Global]" or "Global" }
+  local wins = vim.api.nvim_list_wins()
+  for i = 1, #wins do
+    local c = wins[i]
+    local lid = vim.fn.arglistid(c)
+    temp[lid] = temp[lid] or {}
+    table.insert(temp[lid], c)
+    if lid ~= 0 then
+      if c == tar_win_id then
+        temp[lid].str = " [L:" .. lid .. "]"
+      else
+        temp[lid].str = temp[lid].str or (" L:" .. lid)
+      end
+    end
+  end
+  local lids = {}
+  for lid, t in pairs(temp) do
+    if t.str then
+      table.insert(lids, lid)
+    end
+  end
+  table.sort(lids)
+  for _, lid in ipairs(lids) do
+    table.insert(titlelist, temp[lid].str)
+  end
+  return table.concat(titlelist)
+end
+
 ---@param num_or_name_s? number|string|string[]
-function M.add(num_or_name_s)
-  local arglen = vim.fn.argc()
+---@param tar_win_id? number
+function M.add(num_or_name_s, tar_win_id)
+  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  local arglen = vim.fn.argc(tar_win_id)
   local argtype = type(num_or_name_s)
   local to_add = {}
   if argtype == "number" and num_or_name_s > 0 and arglen >= num_or_name_s then
@@ -34,56 +75,66 @@ function M.add(num_or_name_s)
   elseif argtype ~= "string" then
     to_add[1] = "%"
   end
-  local ok, err = pcall(vim.cmd.argadd, {
-    args = to_add,
-    range = { arglen, arglen },
-  })
-  if not ok then
-    vim.notify(err, vim.log.levels.WARN)
-  end
-  vim.cmd.argdedupe()
+  vim.api.nvim_win_call(tar_win_id, function()
+    vim.cmd.argadd {
+      args = to_add,
+      range = { arglen, arglen },
+    }
+    vim.cmd.argdedupe()
+  end)
 end
 
 ---@param num? number
-function M.go(num)
-  local arglen = vim.fn.argc()
+---@param tar_win_id? number
+function M.go(num, tar_win_id)
+  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  local arglen = vim.fn.argc(tar_win_id)
   if num > 0 and arglen >= num then
-    vim.cmd.argument(num)
+    vim.api.nvim_win_call(tar_win_id, function()
+      vim.cmd.argument(num)
+    end)
   elseif arglen > 0 then
-    vim.cmd.argument(vim.fn.argidx() + 1)
+    vim.api.nvim_win_call(tar_win_id, function()
+      vim.cmd.argument(vim.fn.argidx() + 1)
+    end)
   else
-    vim.notify("No args to go to!", vim.log.levels.WARN)
+    error("No args to go to!")
   end
 end
 
 ---@param num_or_name? number|string|string[]
 ---@param num? number
-function M.rm(num_or_name, num)
+---@param tar_win_id? number
+function M.rm(num_or_name, num, tar_win_id)
+  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
   local atype = type(num_or_name)
-  local arglen = vim.fn.argc()
-  if atype == "number" and num_or_name > 0 and arglen >= num_or_name then
-    if type(num) == "number" and num > 0 and arglen >= num then
-      pcall(vim.cmd.argdelete, { range = { num_or_name, num } })
+  local arglen = vim.fn.argc(tar_win_id)
+  vim.api.nvim_win_call(tar_win_id, function()
+    if atype == "number" and num_or_name > 0 and arglen >= num_or_name then
+      if type(num) == "number" and num > 0 and arglen >= num then
+        vim.cmd.argdelete { range = { num_or_name, num } }
+      else
+        vim.cmd.argdelete { range = { num_or_name, num_or_name } }
+      end
+    elseif atype == "string" then
+      vim.cmd.argdelete(num_or_name)
+    elseif atype == "table" then
+      vim.cmd.argdelete { args = num_or_name }
     else
-      pcall(vim.cmd.argdelete, { range = { num_or_name, num_or_name } })
+      vim.cmd.argdelete "%"
     end
-  elseif atype == "string" then
-    pcall(vim.cmd.argdelete, num_or_name)
-  elseif atype == "table" then
-    pcall(vim.cmd.argdelete, { args = num_or_name })
-  else
-    local ok, err = pcall(vim.cmd.argdelete, "%")
-    if not ok then
-      vim.notify(err, vim.log.levels.WARN)
-    end
-  end
+  end)
 end
 
-function M.add_windows()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(win)))
-  end
-  vim.cmd.argdedupe()
+---@param tar_win_id? number
+function M.add_windows(tar_win_id)
+  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  vim.api.nvim_win_call(tar_win_id or vim.api.nvim_get_current_win(), function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(win)))
+    end
+    vim.cmd.argdedupe()
+  end)
 end
 
 ---@param bufnr number
@@ -93,9 +144,10 @@ end
 ---@return number bufnr
 ---@return number winid
 local function setup_window(bufnr, winid, tar_win_id, title)
+  tar_win_id = (type(tar_win_id) == "number") and tar_win_id or vim.api.nvim_get_current_win()
   local abs_height, rel_width = 15, 0.7
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
-  local lid = vim.fn.arglistid(tar_win_id)
+  local lid = tar_win_id >= 0 and vim.fn.arglistid(tar_win_id) or 0
   local filetype = "ArglistEditor"
   vim.api.nvim_buf_set_name(bufnr, "ArglistEditor")
   vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
@@ -128,9 +180,9 @@ local function setup_window(bufnr, winid, tar_win_id, title)
 end
 
 ---@param bufnr number
----@param tar_win_id number
+---@param tar_win_id? number
 local function overwrite_argslist(bufnr, tar_win_id)
-  vim.api.nvim_win_call(tar_win_id, function()
+  vim.api.nvim_win_call((type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win(), function()
     local to_write = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true) or {}
     for i = #to_write, 1, -1 do
       if to_write[i]:match("^%s*$") then
@@ -146,37 +198,8 @@ local function overwrite_argslist(bufnr, tar_win_id)
   end)
 end
 
-local function make_tab_bar(tar_win_id)
-  local temp = {}
-  local titlelist = { vim.fn.arglistid(tar_win_id) == 0 and "[Global]" or "Global" }
-  local wins = vim.api.nvim_list_wins()
-  for i = 1, #wins do
-    local c = wins[i]
-    local lid = vim.fn.arglistid(c)
-    temp[lid] = temp[lid] or {}
-    table.insert(temp[lid], c)
-    if lid ~= 0 then
-      if c == tar_win_id then
-        temp[lid].str = " [L:" .. lid .. "]"
-      else
-        temp[lid].str = temp[lid].str or (" L:" .. lid)
-      end
-    end
-  end
-  local lids = {}
-  for lid, t in pairs(temp) do
-    if t.str then
-      table.insert(lids, lid)
-    end
-  end
-  table.sort(lids)
-  for _, lid in ipairs(lids) do
-    table.insert(titlelist, temp[lid].str)
-  end
-  return table.concat(titlelist)
-end
-
-function M.edit()
+---@param tar_win_id? number
+function M.edit(tar_win_id)
   -- TODO: make it so that you can customize the keybindings for the popup window
   -- TODO: make it so that you can cycle through all the arglists in edit
   -- and when you do don't lose changes in other tabs until you exit
@@ -184,14 +207,17 @@ function M.edit()
   -- per edited arglist while the window is open.
   -- You need to save them when they swap to the new one,
   -- so that you save their changes.
-  local tar_win_id = vim.api.nvim_get_current_win()
-  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, make_tab_bar(tar_win_id))
+  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, M.get_arglist_display_text(tar_win_id))
 
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
     vim.api.nvim_win_close(winid, true)
     vim.cmd.edit(f)
-  end, { buffer = argseditor, desc = "Go to file under cursor" })
+  end, {
+    buffer = argseditor,
+    desc = "Go to file under cursor",
+  })
   vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = argseditor,
     callback = function() overwrite_argslist(argseditor, tar_win_id) end,
@@ -199,7 +225,10 @@ function M.edit()
   vim.keymap.set("n", "q", function()
     overwrite_argslist(argseditor, tar_win_id)
     pcall(vim.api.nvim_win_close, winid, true)
-  end, { buffer = argseditor, desc = "Update arglist and exit" })
+  end, {
+    buffer = argseditor,
+    desc = "Update arglist and exit",
+  })
   vim.api.nvim_create_autocmd({ "WinLeave", "BufWinLeave", "BufLeave" } ,{
     buffer = argseditor,
     callback = function()
@@ -212,17 +241,20 @@ function M.setup(opts)
   local keys = (opts or {}).keys or {}
   if keys.rm ~= false then
     vim.keymap.set("n", keys.rm or "<leader><leader>x", function()
-      M.rm(vim.v.count)
+      local ok, err = pcall(M.rm, vim.v.count)
+      if not ok then vim.notify(err, vim.log.levels.WARN) end
     end, { silent = true, desc = "Remove buffer at count (or current) from arglist"})
   end
   if keys.add ~= false then
     vim.keymap.set("n", keys.add or "<leader><leader>a", function()
-      M.add(vim.v.count)
+      local ok, err = pcall(M.add, vim.v.count)
+      if not ok then vim.notify(err, vim.log.levels.ERROR) end
     end, { silent = true, desc = "Add buffer (count or current) to arglist" })
   end
   if keys.go ~= false then
     vim.keymap.set("n", keys.go or "<leader><leader><leader>", function()
-      M.go(vim.v.count)
+      local ok, err = pcall(M.go, vim.v.count)
+      if not ok then vim.notify(err, vim.log.levels.WARN) end
     end, { silent = true, desc = "Go to buffer at count in arglist" })
   end
   if keys.edit ~= false then
@@ -230,7 +262,8 @@ function M.setup(opts)
   end
   if keys.clear ~= false then
     vim.keymap.set("n", keys.clear or "<leader><leader>X", function()
-      M.rm(1, vim.fn.argc())
+      local ok, err = pcall(M.rm, 1, vim.fn.argc())
+      if not ok then vim.notify(err, vim.log.levels.WARN) end
     end, { desc = "Clear arglist" })
   end
   if keys.add_windows ~= false then
