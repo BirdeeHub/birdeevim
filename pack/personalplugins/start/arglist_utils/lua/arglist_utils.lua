@@ -133,6 +133,17 @@ function M.edit()
   })
 end
 
+function M.clear()
+  pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
+end
+
+function M.add_windows()
+  for _, wins in ipairs(vim.api.nvim_list_wins()) do
+    vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(wins)))
+  end
+  vim.cmd.argdedupe()
+end
+
 function M.setup(opts)
   local keys = (opts or {}).keys or {}
   if keys.rm ~= false then
@@ -152,6 +163,12 @@ function M.setup(opts)
   end
   if keys.edit ~= false then
     vim.keymap.set("n", keys.edit or "<leader><leader>e", M.edit, { silent = true, desc = "edit arglist in floating window"})
+  end
+  if keys.clear ~= false then
+    vim.keymap.set("n", keys.clear or "<leader><leader>X", M.clear, { desc = "Clear arglist" })
+  end
+  if keys.add_windows ~= false then
+    vim.keymap.set("n", keys.add_windows or "<leader><leader>A", M.add_windows, { desc = "Add currently visible buffers to arglist" })
   end
 end
 
