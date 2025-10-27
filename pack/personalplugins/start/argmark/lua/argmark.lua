@@ -123,7 +123,7 @@ local function setup_window(bufnr, winid, tar_win_id, title)
   vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
   -- argv(-1) is always a list
   ---@diagnostic disable-next-line: param-type-mismatch
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.argv(-1, tar_win_id))
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.argv(-1, lid == 0 and -1 or tar_win_id))
   return bufnr, winid
 end
 
