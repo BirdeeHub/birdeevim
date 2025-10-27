@@ -88,6 +88,7 @@ end
 
 ---@param bufnr number
 ---@param winid? number
+---@param tar_win_id? number
 ---@return number bufnr
 ---@return number winid
 local function setup_window(bufnr, winid, tar_win_id)
