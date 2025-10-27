@@ -23,7 +23,7 @@ end
 
 ---@param num_or_name_s? number|string|string[]
 function M.add(num_or_name_s)
-  local arglen = vim.fn.argc(-1)
+  local arglen = vim.fn.argc()
   local argtype = type(num_or_name_s)
   local to_add = {}
   if argtype == "number" and num_or_name_s > 0 and arglen >= num_or_name_s then
@@ -46,7 +46,7 @@ end
 
 ---@param num? number
 function M.go(num)
-  local arglen = vim.fn.argc(-1)
+  local arglen = vim.fn.argc()
   if num > 0 and arglen >= num then
     vim.cmd.argument(num)
   elseif arglen > 0 then
@@ -60,7 +60,7 @@ end
 ---@param num? number
 function M.rm(num_or_name, num)
   local atype = type(num_or_name)
-  local arglen = vim.fn.argc(-1)
+  local arglen = vim.fn.argc()
   if atype == "number" and num_or_name > 0 and arglen >= num_or_name then
     if type(num) == "number" and num > 0 and arglen >= num then
       pcall(vim.cmd.argdelete, { range = { num_or_name, num } })
@@ -104,7 +104,7 @@ function M.edit()
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
   local winid = vim.api.nvim_open_win(argseditor, true, {
     relative = "editor",
-    height = math.min(vim.fn.argc(-1) + 2, abs_height),
+    height = math.min(vim.fn.argc() + 2, abs_height),
     width = math.ceil(cols * rel_width),
     row = math.ceil(rows / 2 - abs_height / 2),
     col = math.ceil(cols / 2 - cols * rel_width / 2),
@@ -133,7 +133,7 @@ function M.edit()
         table.remove(to_write, i)
       end
     end
-    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
+    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
     if #to_write > 0 then
       local ok, err = pcall(vim.cmd.argadd, { args = to_write })
       if not ok then vim.notify(err, vim.log.levels.ERROR) end
@@ -179,7 +179,7 @@ function M.setup(opts)
   end
   if keys.clear ~= false then
     vim.keymap.set("n", keys.clear or "<leader><leader>X", function()
-      M.rm(1, vim.fn.argc(-1))
+      M.rm(1, vim.fn.argc())
     end, { desc = "Clear arglist" })
   end
   if keys.add_windows ~= false then
