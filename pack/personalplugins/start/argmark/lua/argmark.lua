@@ -90,10 +90,10 @@ end
 ---@param winid? number
 ---@return number bufnr
 ---@return number winid
-local function setup_window(bufnr, winid)
+local function setup_window(bufnr, winid, tar_win_id)
   local abs_height, rel_width = 15, 0.7
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
-  local lid = vim.fn.arglistid()
+  local lid = vim.fn.arglistid(tar_win_id)
   local filetype = "ArglistEditor"
   vim.api.nvim_buf_set_name(bufnr, "ArglistEditor")
   vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
@@ -102,7 +102,7 @@ local function setup_window(bufnr, winid)
   vim.api.nvim_set_option_value("swapfile", false, { buf = bufnr })
   local winconfig = {
     relative = "editor",
-    height = math.min(vim.fn.argc() + 2, abs_height),
+    height = math.min(vim.fn.argc(lid == 0 and -1 or tar_win_id) + 2, abs_height),
     width = math.ceil(cols * rel_width),
     row = math.ceil(rows / 2 - abs_height / 2),
     col = math.ceil(cols / 2 - cols * rel_width / 2),
@@ -119,12 +119,12 @@ local function setup_window(bufnr, winid)
   vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
   -- argv(-1) is always a list
   ---@diagnostic disable-next-line: param-type-mismatch
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.argv(-1))
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.argv(-1, tar_win_id))
   return bufnr, winid
 end
 
 function M.edit()
-  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil)
+  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, nil)
 
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
