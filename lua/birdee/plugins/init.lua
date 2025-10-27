@@ -15,7 +15,7 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-require("arglist_utils").setup {
+require("argmark").setup {
   keys = {
     rm = "<leader><leader>x",
     go = "<leader><leader><leader>",

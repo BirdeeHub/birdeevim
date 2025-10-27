@@ -103,7 +103,7 @@ return {
           },
           lualine_c = {},
           lualine_b = { 'lsp_progress', },
-          lualine_x = { require("arglist_utils").get_display_text },
+          lualine_x = { require("argmark").get_display_text },
           lualine_y = { 'grapple', },
           lualine_z = { 'tabs' }
         },
