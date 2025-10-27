@@ -86,40 +86,46 @@ function M.add_windows()
   vim.cmd.argdedupe()
 end
 
-function M.edit()
-  -- Set dimensions
-  local abs_height = 15
-  local rel_width = 0.7
-
-  -- Create buf
-  local argseditor = vim.api.nvim_create_buf(false, true)
-  local filetype = "ArglistEditor"
-  vim.api.nvim_buf_set_name(argseditor, "ArglistEditor")
-  vim.api.nvim_set_option_value("filetype", filetype, { buf = argseditor })
-  vim.api.nvim_set_option_value("buftype", "acwrite", { buf = argseditor })
-  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = argseditor })
-  vim.api.nvim_set_option_value("swapfile", false, { buf = argseditor })
-
-  -- Create centered floating window
+---@param bufnr number
+---@param winid? number
+---@return number bufnr
+---@return number winid
+local function setup_window(bufnr, winid)
+  local abs_height, rel_width = 15, 0.7
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
-  local winid = vim.api.nvim_open_win(argseditor, true, {
+  local lid = vim.fn.arglistid()
+  local filetype = "ArglistEditor"
+  vim.api.nvim_buf_set_name(bufnr, "ArglistEditor")
+  vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
+  vim.api.nvim_set_option_value("buftype", "acwrite", { buf = bufnr })
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = bufnr })
+  vim.api.nvim_set_option_value("swapfile", false, { buf = bufnr })
+  local winconfig = {
     relative = "editor",
     height = math.min(vim.fn.argc() + 2, abs_height),
     width = math.ceil(cols * rel_width),
     row = math.ceil(rows / 2 - abs_height / 2),
     col = math.ceil(cols / 2 - cols * rel_width / 2),
     border = "single",
-    title = filetype,
+    title = "ArglistEditor" .. (lid ~= 0 and " L:"..lid or ""),
     title_pos = "center",
-  })
+  }
+  if type(winid) == "number" and vim.api.nvim_win_is_valid(winid) then
+    vim.api.nvim_win_set_config(winid, winconfig)
+  else
+    winid = vim.api.nvim_open_win(bufnr, true, winconfig)
+  end
   vim.api.nvim_set_option_value("number", false, { win = winid })
   vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
-
   -- argv(-1) is always a list
   ---@diagnostic disable-next-line: param-type-mismatch
-  vim.api.nvim_buf_set_lines(argseditor, 0, -1, false, vim.fn.argv(-1))
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.argv(-1))
+  return bufnr, winid
+end
 
-  -- Go to file under cursor
+function M.edit()
+  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil)
+
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
     vim.api.nvim_win_close(winid, true)
