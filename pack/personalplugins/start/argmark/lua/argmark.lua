@@ -89,9 +89,10 @@ end
 ---@param bufnr number
 ---@param winid? number
 ---@param tar_win_id? number
+---@param title? string
 ---@return number bufnr
 ---@return number winid
-local function setup_window(bufnr, winid, tar_win_id)
+local function setup_window(bufnr, winid, tar_win_id, title)
   local abs_height, rel_width = 15, 0.7
   local rows, cols = vim.opt.lines._value, vim.opt.columns._value
   local lid = vim.fn.arglistid(tar_win_id)
@@ -108,8 +109,10 @@ local function setup_window(bufnr, winid, tar_win_id)
     row = math.ceil(rows / 2 - abs_height / 2),
     col = math.ceil(cols / 2 - cols * rel_width / 2),
     border = "single",
-    title = "ArglistEditor" .. (lid ~= 0 and " L:"..lid or ""),
+    footer = "ArglistEditor" .. (lid ~= 0 and " L:"..lid or ""),
+    footer_pos = "center",
     title_pos = "center",
+    title = title or "",
   }
   if type(winid) == "number" and vim.api.nvim_win_is_valid(winid) then
     vim.api.nvim_win_set_config(winid, winconfig)
