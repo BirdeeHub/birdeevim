@@ -128,7 +128,12 @@ local function setup_window(bufnr, winid, tar_win_id, title)
 end
 
 function M.edit()
-  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, nil)
+  -- TODO: make it so that you can customize the keybindings for the popup window
+  -- TODO: make it so that you can cycle through all the arglists in edit
+  -- Display which one you are on in the title
+  -- don't lose changes in tabs until you exit
+  local tar_win_id = vim.api.nvim_get_current_win()
+  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, "")
 
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
@@ -137,18 +142,20 @@ function M.edit()
   end, { buffer = argseditor, desc = "Go to file under cursor" })
 
   local function overwrite_argslist()
-    local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-    for i = #to_write, 1, -1 do
-      if to_write[i]:match("^%s*$") then
-        table.remove(to_write, i)
+    vim.api.nvim_win_call(tar_win_id, function()
+      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
+      for i = #to_write, 1, -1 do
+        if to_write[i]:match("^%s*$") then
+          table.remove(to_write, i)
+        end
       end
-    end
-    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
-    if #to_write > 0 then
-      local ok, err = pcall(vim.cmd.argadd, { args = to_write })
-      if not ok then vim.notify(err, vim.log.levels.ERROR) end
-      vim.cmd.argdedupe()
-    end
+      pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
+      if #to_write > 0 then
+        local ok, err = pcall(vim.cmd.argadd, { args = to_write })
+        if not ok then vim.notify(err, vim.log.levels.ERROR) end
+        vim.cmd.argdedupe()
+      end
+    end)
   end
   vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = argseditor,
