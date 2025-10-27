@@ -174,7 +174,7 @@ function M.setup(opts)
     vim.keymap.set("n", keys.clear or "<leader><leader>X", M.clear, { desc = "Clear arglist" })
   end
   if keys.add_windows ~= false then
-    vim.keymap.set("n", keys.add_windows or "<leader><leader>A", M.add_windows, { desc = "Add currently visible buffers to arglist" })
+    vim.keymap.set("n", keys.add_windows or "<leader><leader>A", M.add_windows, { desc = "Add current buffers for all windows to arglist" })
   end
 end
 
