@@ -127,6 +127,25 @@ local function setup_window(bufnr, winid, tar_win_id, title)
   return bufnr, winid
 end
 
+---@param bufnr number
+---@param tar_win_id number
+local function overwrite_argslist(bufnr, tar_win_id)
+  vim.api.nvim_win_call(tar_win_id, function()
+    local to_write = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true) or {}
+    for i = #to_write, 1, -1 do
+      if to_write[i]:match("^%s*$") then
+        table.remove(to_write, i)
+      end
+    end
+    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
+    if #to_write > 0 then
+      local ok, err = pcall(vim.cmd.argadd, { args = to_write })
+      if not ok then vim.notify(err, vim.log.levels.ERROR) end
+      vim.cmd.argdedupe()
+    end
+  end)
+end
+
 function M.edit()
   -- TODO: make it so that you can customize the keybindings for the popup window
   -- TODO: make it so that you can cycle through all the arglists in edit
@@ -140,32 +159,14 @@ function M.edit()
     vim.api.nvim_win_close(winid, true)
     vim.cmd.edit(f)
   end, { buffer = argseditor, desc = "Go to file under cursor" })
-
-  local function overwrite_argslist()
-    vim.api.nvim_win_call(tar_win_id, function()
-      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-      for i = #to_write, 1, -1 do
-        if to_write[i]:match("^%s*$") then
-          table.remove(to_write, i)
-        end
-      end
-      pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
-      if #to_write > 0 then
-        local ok, err = pcall(vim.cmd.argadd, { args = to_write })
-        if not ok then vim.notify(err, vim.log.levels.ERROR) end
-        vim.cmd.argdedupe()
-      end
-    end)
-  end
   vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = argseditor,
-    callback = overwrite_argslist
+    callback = function() overwrite_argslist(argseditor, tar_win_id) end,
   })
   vim.keymap.set("n", "q", function()
-    overwrite_argslist()
+    overwrite_argslist(argseditor, tar_win_id)
     pcall(vim.api.nvim_win_close, winid, true)
   end, { buffer = argseditor, desc = "Update arglist and exit" })
-
   vim.api.nvim_create_autocmd({ "WinLeave", "BufWinLeave", "BufLeave" } ,{
     buffer = argseditor,
     callback = function()
