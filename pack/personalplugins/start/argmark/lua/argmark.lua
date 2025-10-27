@@ -26,7 +26,7 @@ function M.add(num_or_name_s)
   local arglen = vim.fn.argc(-1)
   local argtype = type(num_or_name_s)
   local to_add = {}
-  if argtype == "number" then
+  if argtype == "number" and num_or_name_s > 0 and arglen >= num_or_name_s then
     to_add[1] = vim.fn.bufname(num_or_name_s)
     if to_add[1] == "" then to_add[1] = "%" end
   elseif argtype == "table" then
@@ -93,7 +93,8 @@ function M.edit()
 
   -- Create buf
   local argseditor = vim.api.nvim_create_buf(false, true)
-  local filetype = "argseditor"
+  local filetype = "ArglistEditor"
+  vim.api.nvim_buf_set_name(argseditor, "ArglistEditor")
   vim.api.nvim_set_option_value("filetype", filetype, { buf = argseditor })
   vim.api.nvim_set_option_value("buftype", "acwrite", { buf = argseditor })
   vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = argseditor })
@@ -125,40 +126,28 @@ function M.edit()
     vim.cmd.edit(f)
   end, { buffer = argseditor, desc = "Go to file under cursor" })
 
-  -- Write new arglist and close argseditor
-  vim.keymap.set("n", "q", function()
+  local function overwrite_argslist()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
     for i = #to_write, 1, -1 do
       if to_write[i]:match("^%s*$") then
         table.remove(to_write, i)
       end
     end
+    pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
     if #to_write > 0 then
       local ok, err = pcall(vim.cmd.argadd, { args = to_write })
       if not ok then vim.notify(err, vim.log.levels.ERROR) end
-    end
-    vim.cmd.argdedupe()
-    vim.api.nvim_win_close(winid, true)
-  end, { buffer = argseditor, desc = "Update arglist and exit" })
-
-  vim.api.nvim_create_autocmd("BufWriteCmd", {
-    buffer = argseditor,
-    callback = function()
-      local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
-      pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
-      for i = #to_write, 1, -1 do
-        if to_write[i]:match("^%s*$") then
-          table.remove(to_write, i)
-        end
-      end
-      if #to_write > 0 then
-        local ok, err = pcall(vim.cmd.argadd, { args = to_write })
-        if not ok then vim.notify(err, vim.log.levels.ERROR) end
-      end
       vim.cmd.argdedupe()
     end
+  end
+  vim.api.nvim_create_autocmd("BufWriteCmd", {
+    buffer = argseditor,
+    callback = overwrite_argslist
   })
+  vim.keymap.set("n", "q", function()
+    overwrite_argslist()
+    pcall(vim.api.nvim_win_close, winid, true)
+  end, { buffer = argseditor, desc = "Update arglist and exit" })
 
   vim.api.nvim_create_autocmd({ "WinLeave", "BufWinLeave", "BufLeave" } ,{
     buffer = argseditor,
