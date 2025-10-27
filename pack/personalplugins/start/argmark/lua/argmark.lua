@@ -104,12 +104,14 @@ function M.edit()
   vim.keymap.set("n", "q", function()
     local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
     pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
-    local res = table.concat(to_write, " ")
-    if not res:match("^%s*$") then
-      local ok, err = pcall(vim.cmd.argadd, res)
-      if not ok then
-        vim.notify(err, vim.log.levels.ERROR)
+    for i = #to_write, 1, -1 do
+      if to_write[i]:match("^%s*$") then
+        table.remove(to_write, i)
       end
+    end
+    if #to_write > 0 then
+      local ok, err = pcall(vim.cmd.argadd, { args = to_write })
+      if not ok then vim.notify(err, vim.log.levels.ERROR) end
     end
     vim.cmd.argdedupe()
     vim.api.nvim_win_close(winid, true)
@@ -120,12 +122,14 @@ function M.edit()
     callback = function()
       local to_write = vim.api.nvim_buf_get_lines(argseditor, 0, -1, true) or {}
       pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc(-1) } })
-      local res = table.concat(to_write, " ")
-      if not res:match("^%s*$") then
-        local ok, err = pcall(vim.cmd.argadd, res)
-        if not ok then
-          vim.notify(err, vim.log.levels.ERROR)
+      for i = #to_write, 1, -1 do
+        if to_write[i]:match("^%s*$") then
+          table.remove(to_write, i)
         end
+      end
+      if #to_write > 0 then
+        local ok, err = pcall(vim.cmd.argadd, { args = to_write })
+        if not ok then vim.notify(err, vim.log.levels.ERROR) end
       end
       vim.cmd.argdedupe()
     end
