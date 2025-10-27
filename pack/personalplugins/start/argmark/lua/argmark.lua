@@ -2,7 +2,8 @@ local M = {}
 
 ---@return string
 function M.get_display_text()
-  local res = ""
+  local lid = vim.fn.arglistid()
+  local res = lid == 0 and "" or "L"..lid..":"
   local arglist = vim.fn.argv(-1)
   arglist = type(arglist) == "table" and arglist or { arglist }
   ---@cast arglist string[]
