@@ -5,8 +5,7 @@ function M.get_display_text()
   local lid = vim.fn.arglistid()
   local res = lid == 0 and "" or "L"..lid..":"
   local arglist = vim.fn.argv(-1)
-  arglist = type(arglist) == "table" and arglist or { arglist }
-  ---@cast arglist string[]
+  ---@cast arglist string[] -- -1 as arg returns a list
   for i = 1, #arglist do
     local name = vim.fn.fnamemodify(arglist[i], ":t")
     if name == "" then
@@ -115,10 +114,9 @@ function M.edit()
   vim.api.nvim_set_option_value("number", false, { win = winid })
   vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
 
-  -- Put current arglist
-  local arglist = vim.fn.argv(-1)
-  local to_read = type(arglist) == "table" and arglist or { arglist }
-  vim.api.nvim_buf_set_lines(argseditor, 0, -1, false, to_read)
+  -- argv(-1) is always a list
+  ---@diagnostic disable-next-line: param-type-mismatch
+  vim.api.nvim_buf_set_lines(argseditor, 0, -1, false, vim.fn.argv(-1))
 
   -- Go to file under cursor
   vim.keymap.set("n", "<CR>", function()
