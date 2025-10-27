@@ -146,13 +146,42 @@ local function overwrite_argslist(bufnr, tar_win_id)
   end)
 end
 
+local function make_tab_bar(tar_win_id)
+  local temp = {}
+  local titlelist = { vim.fn.arglistid(tar_win_id) == 0 and "[Global]" or "Global" }
+  local wins = vim.api.nvim_list_wins()
+  for i = 1, #wins do
+    local c = wins[i]
+    local lid = vim.fn.arglistid(c)
+    temp[lid] = temp[lid] or {}
+    table.insert(temp[lid], c)
+    if lid ~= 0 then
+      if c == tar_win_id then
+        temp[lid].str = " [L:" .. lid .. "]"
+      else
+        temp[lid].str = temp[lid].str or (" L:" .. lid)
+      end
+    end
+  end
+  local lids = {}
+  for lid, t in pairs(temp) do
+    if t.str then
+      table.insert(lids, lid)
+    end
+  end
+  table.sort(lids)
+  for _, lid in ipairs(lids) do
+    table.insert(titlelist, temp[lid].str)
+  end
+  return table.concat(titlelist)
+end
+
 function M.edit()
   -- TODO: make it so that you can customize the keybindings for the popup window
   -- TODO: make it so that you can cycle through all the arglists in edit
-  -- Display which one you are on in the title
-  -- don't lose changes in tabs until you exit
+  -- and when you do don't lose changes in other tabs until you exit
   local tar_win_id = vim.api.nvim_get_current_win()
-  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, "")
+  local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, make_tab_bar(tar_win_id))
 
   vim.keymap.set("n", "<CR>", function()
     local f = vim.fn.getline(".")
