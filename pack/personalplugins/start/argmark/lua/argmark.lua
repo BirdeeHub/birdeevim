@@ -87,6 +87,8 @@ function M.edit()
     border = "single",
     title = filetype,
   })
+  vim.api.nvim_set_option_value("number", false, { win = winid })
+  vim.api.nvim_set_option_value("relativenumber", false, { win = winid })
 
   -- Put current arglist
   local arglist = vim.fn.argv(-1)
