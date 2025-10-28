@@ -15,16 +15,18 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-require("argmark").setup {
-  keys = {
-    rm = "<leader><leader>x",
-    go = "<leader><leader><leader>",
-    add = "<leader><leader>a",
-    edit = "<leader><leader>e",
-    clear = "<leader><leader>X",
-    add_windows = "<leader><leader>A",
+if nixCats('general') then
+  require("argmark").setup {
+    keys = {
+      rm = "<leader><leader>x",
+      go = "<leader><leader><leader>",
+      add = "<leader><leader>a",
+      edit = "<leader><leader>e",
+      clear = "<leader><leader>X",
+      add_windows = "<leader><leader>A",
+    }
   }
-}
+end
 
 if nixCats('mass_find_and_replace.scooter') then
   vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })

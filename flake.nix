@@ -45,6 +45,10 @@
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    plugins-argmark = {
+      url = "github:BirdeeHub/argmark";
+      flake = false;
+    };
     plugins-rustaceanvim = {
       url = "github:mrcjkb/rustaceanvim";
       flake = false;

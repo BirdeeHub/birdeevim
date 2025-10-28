@@ -267,6 +267,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       mini-nvim
       pkgs.neovimPlugins.snacks-nvim
       nvim-ts-autotag
+      pkgs.neovimPlugins.argmark
     ];
     other = [
       tomlua
