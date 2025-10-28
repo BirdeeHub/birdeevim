@@ -63,7 +63,7 @@ end
 ---@param num_or_name_s? number|string|string[]
 ---@param tar_win_id? number
 function M.add(num_or_name_s, tar_win_id)
-  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or vim.api.nvim_get_current_win()
   local arglen = vim.fn.argc(tar_win_id)
   local argtype = type(num_or_name_s)
   local to_add = {}
@@ -75,41 +75,49 @@ function M.add(num_or_name_s, tar_win_id)
   elseif argtype ~= "string" then
     to_add[1] = "%"
   end
-  vim.api.nvim_win_call(tar_win_id, function()
+  vim.api.nvim_win_call(tar_win_id < 0 and vim.api.nvim_get_current_win() or tar_win_id, function()
+    local needs_force_global = tar_win_id < 0 and vim.fn.arglistid() ~= 0
+    if needs_force_global then vim.cmd.argglobal() end
     vim.cmd.argadd {
       args = to_add,
       range = { arglen, arglen },
     }
     vim.cmd.argdedupe()
+    if needs_force_global then vim.cmd.arglocal() end
   end)
 end
 
 ---@param num? number
 ---@param tar_win_id? number
 function M.go(num, tar_win_id)
-  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or vim.api.nvim_get_current_win()
+  local needs_force_global = tar_win_id < 0 and vim.fn.arglistid() ~= 0
+  if needs_force_global then vim.cmd.argglobal() end
   local arglen = vim.fn.argc(tar_win_id)
   if num > 0 and arglen >= num then
     vim.api.nvim_win_call(tar_win_id, function()
       vim.cmd.argument(num)
     end)
   elseif arglen > 0 then
-    vim.api.nvim_win_call(tar_win_id, function()
+    vim.api.nvim_win_call(tar_win_id < 0 and vim.api.nvim_get_current_win() or tar_win_id, function()
       vim.cmd.argument(vim.fn.argidx() + 1)
     end)
   else
     error("No args to go to!")
   end
+  if needs_force_global then vim.cmd.arglocal() end
 end
 
 ---@param num_or_name? number|string|string[]
 ---@param num? number
 ---@param tar_win_id? number
 function M.rm(num_or_name, num, tar_win_id)
-  tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or vim.api.nvim_get_current_win()
   local atype = type(num_or_name)
   local arglen = vim.fn.argc(tar_win_id)
-  vim.api.nvim_win_call(tar_win_id, function()
+  vim.api.nvim_win_call(tar_win_id < 0 and vim.api.nvim_get_current_win() or tar_win_id, function()
+    local needs_force_global = tar_win_id < 0 and vim.fn.arglistid() ~= 0
+    if needs_force_global then vim.cmd.argglobal() end
     if atype == "number" and num_or_name > 0 and arglen >= num_or_name then
       if type(num) == "number" and num > 0 and arglen >= num then
         vim.cmd.argdelete { range = { num_or_name, num } }
@@ -123,6 +131,7 @@ function M.rm(num_or_name, num, tar_win_id)
     else
       vim.cmd.argdelete "%"
     end
+    if needs_force_global then vim.cmd.arglocal() end
   end)
 end
 
@@ -130,10 +139,13 @@ end
 function M.add_windows(tar_win_id)
   tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
   vim.api.nvim_win_call(tar_win_id or vim.api.nvim_get_current_win(), function()
+    local needs_force_global = tar_win_id < 0 and vim.fn.arglistid() ~= 0
+    if needs_force_global then vim.cmd.argglobal() end
     for _, win in ipairs(vim.api.nvim_list_wins()) do
       vim.cmd.argadd(vim.fn.bufname(vim.api.nvim_win_get_buf(win)))
     end
     vim.cmd.argdedupe()
+    if needs_force_global then vim.cmd.arglocal() end
   end)
 end
 
@@ -182,20 +194,48 @@ end
 ---@param bufnr number
 ---@param tar_win_id? number
 local function overwrite_argslist(bufnr, tar_win_id)
-  vim.api.nvim_win_call((type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win(), function()
+  tar_win_id = type(tar_win_id) == "number" and tar_win_id or vim.api.nvim_get_current_win()
+  vim.api.nvim_win_call(tar_win_id >= 0 and tar_win_id or vim.api.nvim_get_current_win(), function()
     local to_write = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true) or {}
     for i = #to_write, 1, -1 do
       if to_write[i]:match("^%s*$") then
         table.remove(to_write, i)
       end
     end
+    local needs_force_global = tar_win_id < 0 and vim.fn.arglistid() ~= 0
+    if needs_force_global then vim.cmd.argglobal() end
     pcall(vim.cmd.argdelete, { range = { 1, vim.fn.argc() } })
     if #to_write > 0 then
       local ok, err = pcall(vim.cmd.argadd, { args = to_write })
       if not ok then vim.notify(err, vim.log.levels.ERROR) end
       vim.cmd.argdedupe()
     end
+    if needs_force_global then vim.cmd.arglocal() end
   end)
+end
+
+local function get_arglist_list()
+  local result = {}
+  local temp = {}
+  local wins = vim.api.nvim_list_wins()
+  for i = 1, #wins do
+    local c = wins[i]
+    local lid = vim.fn.arglistid(c)
+    temp[lid] = temp[lid] or { id = lid, wins = {} }
+    table.insert(temp[lid].wins, c)
+  end
+  local lids = {}
+  for lid, _ in pairs(temp) do
+    table.insert(lids, lid)
+  end
+  table.sort(lids)
+  for i = 1, #lids do
+    table.insert(result, temp[lids[i]])
+  end
+  if result[1].id ~= 0 then
+    table.insert(result, 1, { id = 0, wins = { -1 } })
+  end
+  return result
 end
 
 ---@param tar_win_id? number
@@ -205,8 +245,48 @@ function M.edit(tar_win_id, opts)
   local keys = opts.keys or {}
   tar_win_id = (type(tar_win_id) == "number" and tar_win_id >= 0) and tar_win_id or vim.api.nvim_get_current_win()
   local argseditor, winid = setup_window(vim.api.nvim_create_buf(false, true), nil, tar_win_id, M.get_arglist_display_text(tar_win_id))
+  local arglist_list = get_arglist_list()
 
-  -- TODO: make it so that you can cycle through all the arglists
+  vim.keymap.set("n", keys.cycle_right or "<leader><leader>n", function()
+    local lid = vim.fn.arglistid(tar_win_id)
+    local found = nil
+    for i = 1, #arglist_list do
+      if arglist_list[i].id == lid then
+        found = i
+      end
+    end
+    if found == nil then
+      tar_win_id = arglist_list[#arglist_list > 1 and 2 or 1].wins[1]
+    elseif found >= #arglist_list then
+      tar_win_id = arglist_list[1].wins[1]
+    else
+      tar_win_id = arglist_list[found + 1].wins[1]
+    end
+    setup_window(argseditor, winid, tar_win_id, M.get_arglist_display_text(tar_win_id))
+  end, {
+    buffer = argseditor,
+    desc = "Cycle right through arglist choices",
+  })
+  vim.keymap.set("n", keys.cycle_left or "<leader><leader>p", function()
+    local lid = vim.fn.arglistid(tar_win_id)
+    local found = nil
+    for i = #arglist_list, 1, -1 do
+      if arglist_list[i].id == lid then
+        found = i
+      end
+    end
+    if found == nil then
+      tar_win_id = arglist_list[#arglist_list].wins[1]
+    elseif found <= 1 then
+      tar_win_id = arglist_list[#arglist_list].wins[1]
+    else
+      tar_win_id = arglist_list[found - 1].wins[1]
+    end
+    setup_window(argseditor, winid, tar_win_id, M.get_arglist_display_text(tar_win_id))
+  end, {
+    buffer = argseditor,
+    desc = "Cycle left through arglist choices",
+  })
 
   vim.keymap.set("n", keys.go or "<CR>", function()
     local f = vim.fn.getline(".")
