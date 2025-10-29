@@ -729,11 +729,11 @@
     "plugins-argmark": {
       "flake": false,
       "locked": {
-        "lastModified": 1761691551,
-        "narHash": "sha256-6TCCT+qXJug7Huuha8qlIKmSP9suseZXygjuz2X3Phs=",
+        "lastModified": 1761728366,
+        "narHash": "sha256-lq7QLxkrrTIHJ+EL+Zt5N1V4vftXvGgd8zBmwv374wg=",
         "owner": "BirdeeHub",
         "repo": "argmark",
-        "rev": "8166fafddf30e2e0c27caff3dbcea3b2ad608b66",
+        "rev": "c4dedbdf2107662387af35be3454d3bc555d548b",
         "type": "github"
       },
       "original": {
