@@ -21,7 +21,17 @@ return {
       if not require('nixCatsUtils').isNixCats then
         colorschemer = 'onedark'
       end
+      -- local has_printed = false
       -- local components = {
+      --   function(config, is_focused)
+      --     -- in tabline, is_focused == 3 always, otherwise it is a boolean?
+      --     -- Or whatever non-nil value that gets passed to require('lualine').statusline(any_arg) ? For some reason ?
+      --     print(is_focused)
+      --     if not has_printed then
+      --       print(vim.inspect(config))
+      --       has_printed = true
+      --     end
+      --   end,
       --   python_env = {
       --     function()
       --       if vim.bo.filetype == "python" then
