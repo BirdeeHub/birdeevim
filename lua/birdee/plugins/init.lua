@@ -15,7 +15,22 @@ if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-if nixCats('general') then require("argmark").setup {} end
+if nixCats('general') then
+  require("argmark").setup {}
+  vim.keymap.set('n', '<leader><leader>n', function()
+    vim.cmd.next()
+  end, { desc = "Arglist next" })
+  vim.keymap.set('n', '<leader><leader>N', function()
+    vim.cmd.prev()
+  end, { desc = "Arglist prev" })
+  vim.keymap.set('n', '<leader><leader>t', function()
+    if vim.fn.arglistid() == 0 then
+      vim.cmd.arglocal()
+    else
+      vim.cmd.argglobal()
+    end
+  end, { desc = "Arglist local/global toggle" })
+end
 
 if nixCats('mass_find_and_replace.scooter') then
   vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
