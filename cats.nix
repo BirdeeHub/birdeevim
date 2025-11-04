@@ -104,7 +104,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       ];
     };
     roc = [
-      inputs.roc.packages.${system}.lang-server
+      inputs.roc.packages.${stdenv.hostPlatform.system}.lang-server
     ];
     java = [
       jdt-language-server
@@ -133,7 +133,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
     ];
     web = {
       templ = with inputs; [
-        templ.packages.${system}.templ
+        templ.packages.${stdenv.hostPlatform.system}.templ
       ];
       tailwindcss = [
         tailwindcss-language-server
@@ -151,7 +151,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       ];
     };
     rust = [
-      (extra.rust.toolchain or inputs.fenix.packages.${system}.latest.toolchain)
+      (extra.rust.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
       rustup
       llvmPackages.bintools
       lldb
@@ -226,7 +226,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       scooter = [
         (pkgs.symlinkJoin {
           name = "scooter-w-cfg";
-          paths = [ inputs.scooter.packages.${pkgs.system}.default ];
+          paths = [ inputs.scooter.packages.${pkgs.stdenv.hostPlatform.system}.default ];
           nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
           scootcfg = builtins.toFile "config.toml" /*toml*/''
             [editor_open]

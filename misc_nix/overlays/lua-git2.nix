@@ -21,7 +21,7 @@ importName: inputs: let
       };
     };
   overlay = self: super: let
-    pkgs = import inputs.nixpkgs {  inherit (self) system; };
+    pkgs = import inputs.nixpkgs {  inherit (self.stdenv.hostPlatform) system; };
   in {
     # will create pkgs.${importName}
     ${importName} = pkgs.callPackage luagit2 { src = inputs.luagit2-src; };

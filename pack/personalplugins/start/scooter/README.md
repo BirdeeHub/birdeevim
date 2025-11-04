@@ -11,7 +11,7 @@ end, { desc = 'Search selected text in scooter' })
 ```nix
 (pkgs.symlinkJoin {
   name = "scooter-w-cfg";
-  paths = [ inputs.scooter.packages.${pkgs.system}.default ];
+  paths = [ inputs.scooter.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
   scootcfg = builtins.toFile "config.toml" /*toml*/''
     [editor_open]

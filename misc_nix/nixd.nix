@@ -19,15 +19,15 @@ nixpkgs: type: path: let
   allTargets = {
     nixos = [
       [ "outputs" "nixosConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.system}" "nixosConfigurations" ]
+      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "nixosConfigurations" ]
     ];
     home-manager = [
       [ "outputs" "homeConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.system}" "homeConfigurations" ]
+      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "homeConfigurations" ]
     ];
     darwin = [
       [ "outputs" "darwinConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.system}" "darwinConfigurations" ]
+      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "darwinConfigurations" ]
     ];
   };
   targetFlake = with builtins; getFlake "path:${toString path}";
