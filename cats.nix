@@ -316,7 +316,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       nvim-dap-go
     ];
     fennel = [
-      conjure
+      (conjure.overrideAttrs { doCheck = false; })
       cmp-conjure
     ];
     java = [
