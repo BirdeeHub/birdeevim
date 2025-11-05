@@ -812,6 +812,22 @@
         "type": "github"
       }
     },
+    "plugins-tmux-navigate": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1665505688,
+        "narHash": "sha256-Rn/rIbFx2zCyzvLZmbf7q1nF97Yi9dONUDv1QDcscxo=",
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "rev": "27c83cd229bceff55e6318cce7945995623a6106",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sunaku",
+        "repo": "tmux-navigate",
+        "type": "github"
+      }
+    },
     "plugins-visual-whitespace": {
       "flake": false,
       "locked": {
@@ -869,6 +885,7 @@
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
         "plugins-snacks.nvim": "plugins-snacks.nvim",
+        "plugins-tmux-navigate": "plugins-tmux-navigate",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",
         "scooter": "scooter",

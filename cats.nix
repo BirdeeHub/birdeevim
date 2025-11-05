@@ -268,6 +268,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       pkgs.neovimPlugins.snacks-nvim
       nvim-ts-autotag
       pkgs.neovimPlugins.argmark
+      pkgs.neovimPlugins.tmux-navigate
     ];
     other = [
       tomlua

@@ -103,6 +103,10 @@
       url = "github:NickvanDyke/opencode.nvim";
       flake = false;
     };
+    "plugins-tmux-navigate" = {
+      url = "github:sunaku/tmux-navigate";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
