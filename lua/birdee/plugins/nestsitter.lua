@@ -12,7 +12,7 @@ return {
     for_cat = "general.core",
     -- cmd = { "" },
     event = "DeferredUIEnter",
-    dep_of = { "treesj", "otter.nvim", "codecompanion.nvim", "hlargs", "render-markdown", "neorg" },
+    dep_of = { "treesj", "otter.nvim", "codecompanion.nvim", "render-markdown", "neorg" },
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",

@@ -369,18 +369,6 @@ return {
     end,
   },
   {
-    "hlargs",
-    for_cat = "other",
-    event = "DeferredUIEnter",
-    after = function(_)
-      require('hlargs').setup({
-        color = '#32a88f',
-      })
-      vim.cmd([[hi clear @lsp.type.parameter]])
-      vim.cmd([[hi link @lsp.type.parameter Hlargs]])
-    end,
-  },
-  {
     "vim-sleuth",
     for_cat = "general.core",
     event = "DeferredUIEnter",

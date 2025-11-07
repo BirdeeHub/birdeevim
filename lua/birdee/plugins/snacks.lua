@@ -3,7 +3,11 @@
 -- also we still need to require bigfile from the main one
 -- because it tries to index the Snacks global unsafely...
 
--- also shut up I dont care
+-- NOTE: you really don't need to do this though...
+-- I'm being silly
+
+vim.api.nvim_set_hl(0, "SnacksIndent", { fg = require("birdee.icons").arggreen })
+
 ---@diagnostic disable-next-line: invisible
 require('snacks').bigfile.setup()
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -121,11 +125,11 @@ return {
         scope = {},
         indent = {
           scope = {
-            hl = 'Hlargs',
+            hl = 'SnacksIndent',
           },
           chunk = {
             -- enabled = true,
-            hl = 'Hlargs',
+            hl = 'SnacksIndent',
           }
         },
         statuscolumn = {

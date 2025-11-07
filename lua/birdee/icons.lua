@@ -1,4 +1,5 @@
 local M = {
+	arggreen = "#32a88f",
 	misc = {
 		dots = "󰇘",
 	},

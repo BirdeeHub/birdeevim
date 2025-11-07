@@ -355,7 +355,6 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       eyeliner-nvim
       todo-comments-nvim
       vim-startuptime
-      pkgs.neovimPlugins.hlargs
       pkgs.neovimPlugins.visual-whitespace
     ];
     markdown = [

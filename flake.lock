@@ -652,22 +652,6 @@
         "type": "github"
       }
     },
-    "plugins-hlargs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1758619418,
-        "narHash": "sha256-WjmVefR0qk2ANWgyHSuYMTuCfzlVTF7tqzAL+uatKkc=",
-        "owner": "m-demare",
-        "repo": "hlargs.nvim",
-        "rev": "0b29317c944fb1f76503ce4540d6dceffbb5ccd2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "m-demare",
-        "repo": "hlargs.nvim",
-        "type": "github"
-      }
-    },
     "plugins-lze": {
       "flake": false,
       "locked": {
@@ -875,7 +859,6 @@
         "nixpkgs": "nixpkgs_7",
         "plugins-argmark": "plugins-argmark",
         "plugins-fn_finder": "plugins-fn_finder",
-        "plugins-hlargs": "plugins-hlargs",
         "plugins-lze": "plugins-lze",
         "plugins-lzextras": "plugins-lzextras",
         "plugins-nvim-aider": "plugins-nvim-aider",

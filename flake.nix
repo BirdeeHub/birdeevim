@@ -74,10 +74,6 @@
       # url = "git+file:/home/birdee/Projects/fn_finder";
       flake = false;
     };
-    "plugins-hlargs" = {
-      url = "github:m-demare/hlargs.nvim";
-      flake = false;
-    };
     "plugins-nvim-aider" = {
       url = "github:GeorgesAlkhouri/nvim-aider";
       flake = false;
