@@ -122,6 +122,7 @@ in {
       bash = true;
       C = true;
       rust = true;
+      go = true;
     };
     extra = birdeevim_extra args // {
       javaExtras = null;
