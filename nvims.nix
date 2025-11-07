@@ -42,8 +42,8 @@ inputs: let
     };
   };
   birdeevim_categories = { pkgs, ... }@misc: {
-    AI.windsurf = true;
-    AI.opencode = true;
+    mass_find_and_replace.scooter = true;
+    mass_find_and_replace.spectre = true;
     vimagePreview = true;
     lspDebugMode = false;
     other = true;
@@ -52,23 +52,23 @@ inputs: let
     customPlugins = true;
     general = true;
     otter = true;
-    bash = true;
-    roc = true;
     neonixdev = true;
     markdown = true;
+    typst = true;
+    bash = true;
+    C = true;
+    rust = true;
+    AI.windsurf = true;
+    AI.opencode = true;
+    roc = true;
     java = true;
     web = true;
     go = true;
     kotlin = true;
     python = true;
-    rust = true;
     SQL = true;
-    C = true;
     fennel = true;
     zig = true;
-    typst = true;
-    mass_find_and_replace.scooter = true;
-    mass_find_and_replace.spectre = true;
   };
   birdeevim_extra = { pkgs, ... }@misc: {
     colorscheme = "onedark";
@@ -100,16 +100,32 @@ in {
     extra = birdeevim_extra args // {
     };
   };
-  nightlytest = { pkgs, ... }@args: {
+  tempvim = { pkgs, ... }@args: {
     settings = birdeevim_settings args // {
-      wrapRc = false;
-      aliases = [ "tvim" ];
+      aliases = [ "vi" ];
     };
-    categories = birdeevim_categories args // {
-      test = true;
-      lspDebugMode = true;
+    categories = {
+      portableExtras = true;
+      mass_find_and_replace.scooter = true;
+      mass_find_and_replace.spectre = true;
+      vimagePreview = true;
+      lspDebugMode = false;
+      other = true;
+      theme = true;
+      debug = true;
+      customPlugins = true;
+      general = true;
+      otter = true;
+      neonixdev = true;
+      markdown = true;
+      typst = true;
+      bash = true;
+      C = true;
+      rust = true;
     };
     extra = birdeevim_extra args // {
+      javaExtras = null;
+      bitwarden_uuids = null;
     };
   };
   testvim = args: {
