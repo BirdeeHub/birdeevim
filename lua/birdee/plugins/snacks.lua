@@ -6,7 +6,7 @@
 -- NOTE: you really don't need to do this though...
 -- I'm being silly
 
-vim.api.nvim_set_hl(0, "SnacksIndent", { fg = require("birdee.icons").arggreen })
+vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = require("birdee.icons").arggreen })
 
 ---@diagnostic disable-next-line: invisible
 require('snacks').bigfile.setup()
@@ -125,11 +125,11 @@ return {
         scope = {},
         indent = {
           scope = {
-            hl = 'SnacksIndent',
+            hl = 'MySnacksIndent',
           },
           chunk = {
             -- enabled = true,
-            hl = 'SnacksIndent',
+            hl = 'MySnacksIndent',
           }
         },
         statuscolumn = {
