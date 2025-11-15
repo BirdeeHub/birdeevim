@@ -93,6 +93,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
         fd
         ast-grep
         lazygit
+        jq
       ];
     };
     AI = {
