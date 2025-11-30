@@ -71,7 +71,7 @@ inputs: let
     zig = true;
   };
   birdeevim_extra = { pkgs, ... }@misc: {
-    colorscheme = "onedark";
+    colorscheme = "moonfly";
     javaExtras = {
       java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
       java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;

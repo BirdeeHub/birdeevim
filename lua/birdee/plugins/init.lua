@@ -4,13 +4,6 @@ local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
 if not catUtils.isNixCats then
   colorschemer = 'onedark'
 end
-if colorschemer == 'onedark' then
-  require('onedark').setup {
-    -- Set a style preset. 'dark' is default.
-    style = 'darker', -- dark, darker, cool, deep, warm, warmer, light
-  }
-  require('onedark').load()
-end
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end

@@ -249,9 +249,13 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
 
   startupPlugins = with pkgs.vimPlugins; {
     theme = builtins.getAttr (extra.colorscheme or "onedark") {
-      "onedark" = onedark-nvim;
+      "onedark" = onedarkpro-nvim;
+      "onedark_dark" = onedarkpro-nvim;
+      "onedark_vivid" = onedarkpro-nvim;
+      "onelight" = onedarkpro-nvim;
       "catppuccin" = catppuccin-nvim;
       "catppuccin-mocha" = catppuccin-nvim;
+      "moonfly" = vim-moonfly-colors;
       "tokyonight" = tokyonight-nvim;
       "tokyonight-day" = tokyonight-nvim;
     };
