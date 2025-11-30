@@ -15,6 +15,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgsLocked.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
