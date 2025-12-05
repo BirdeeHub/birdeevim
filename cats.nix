@@ -229,7 +229,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       scooter = [
         (inputs.wrappers.lib.wrapPackage {
           inherit pkgs;
-          package = inputs.scooter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          package = pkgs.scooter;
           flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
           drv.passAsFile = [ "scootcfg" ];
           drv.scootcfg = /*toml*/''

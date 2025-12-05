@@ -40,7 +40,7 @@
     #   flake = false;
     # };
 
-    scooter.url = "github:thomasschafer/scooter";
+    # scooter.url = "github:thomasschafer/scooter";
     roc.url = "github:roc-lang/roc";
     fenix.url = "github:nix-community/fenix";
     nix-appimage.url = "github:ralismark/nix-appimage";
