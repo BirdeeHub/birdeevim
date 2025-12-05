@@ -1,7 +1,7 @@
 return {
   {
     "nvim-dap-python",
-    for_cat = { cat = 'debug.python', default = false },
+    for_cat = { cat = 'python', default = false },
     on_plugin = { "nvim-dap", },
     after = function(_)
       require('dap-python').setup(vim.g.python3_host_prog)
@@ -9,7 +9,7 @@ return {
   },
   {
     "nvim-dap-go",
-    for_cat = { cat = 'debug.go', default = false },
+    for_cat = { cat = 'go', default = false },
     on_plugin = { "nvim-dap", },
     after = function(_)
       require("dap-go").setup()

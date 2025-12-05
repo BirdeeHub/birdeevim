@@ -58,6 +58,7 @@ inputs: let
     bash = true;
     C = true;
     rust = true;
+    rustToolchain = true;
     AI.windsurf = true;
     AI.opencode = true;
     roc = true;
@@ -120,9 +121,9 @@ in {
       markdown = true;
       typst = true;
       bash = true;
-      C = true;
+      C = false;
       rust = true;
-      go = true;
+      go = false;
     };
     extra = birdeevim_extra args // {
       javaExtras = null;

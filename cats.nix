@@ -151,8 +151,10 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
         prettier
       ];
     };
-    rust = [
+    rustToolchain = [
       (extra.rust.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
+    ];
+    rust = [
       rustup
       llvmPackages.bintools
       lldb
