@@ -227,22 +227,18 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
     ];
     mass_find_and_replace = {
       scooter = [
-        (pkgs.symlinkJoin {
-          name = "scooter-w-cfg";
-          paths = [ inputs.scooter.packages.${pkgs.stdenv.hostPlatform.system}.default ];
-          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-          scootcfg = builtins.toFile "config.toml" /*toml*/''
+        (inputs.wrappers.lib.wrapPackage {
+          inherit pkgs;
+          package = inputs.scooter.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs { meta.mainProgram = "scooter"; }; # override temporary to remove warning until PR happens
+          flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
+          drv.passAsFile = [ "scootcfg" ];
+          drv.scootcfg = /*toml*/''
             [editor_open]
             command = "${name} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
           '';
-          postBuild = ''
+          drv.postBuild = ''
             mkdir -p "$out/share/bundled_config"
-            cp "$scootcfg" "$out/share/bundled_config/config.toml"
-            wrapProgram ${pkgs.lib.escapeShellArgs [
-              "${placeholder "out"}/bin/scooter" "--inherit-argv0"
-              "--add-flag" "--config-dir" "--add-flag"
-              "${placeholder "out"}/share/bundled_config"
-            ]}
+            { [ -e "$scootcfgPath" ] && cat "$scootcfgPath" || echo "$scootcfg"; } > "$out/share/bundled_config/config.toml"
           '';
         })
       ];
