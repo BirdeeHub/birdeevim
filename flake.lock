@@ -975,11 +975,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1766976099,
-        "narHash": "sha256-izriiWoQtqDMOJ9amvXnC48GbmYQYH9+WmgKI0cu7Ls=",
+        "lastModified": 1766980506,
+        "narHash": "sha256-E2nXys96LtwZEiH6aKyAed7SWCudmq/JFwV3i0YHWCU=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "b6ae23ffb12e60a4a4eb27a323dd95a0fe55162d",
+        "rev": "afcc0ed4aa6058f83bb4ff059d32680e6c12e422",
         "type": "github"
       },
       "original": {
