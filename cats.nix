@@ -101,7 +101,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
         bitwarden-cli
       ];
       opencode = [
-        (inputs.wrappers.wrapperModules.opencode.wrap {
+        (inputs.wrappers.wrappedModules.opencode.wrap {
           inherit pkgs;
           settings = {
             "$schema" = "https://opencode.ai/config.json";
