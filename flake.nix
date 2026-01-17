@@ -40,6 +40,12 @@
     #   flake = false;
     # };
 
+    # Until nixpkgs also fetches from its main branch
+    plugins-treesitter-textobjects = {
+      url = "github:nvim-treesitter/nvim-treesitter-textobjects/main";
+      flake = false;
+    };
+
     # scooter.url = "github:thomasschafer/scooter";
     roc.url = "github:roc-lang/roc";
     fenix.url = "github:nix-community/fenix";

@@ -204,7 +204,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       nil
       lua-language-server
       nixd
-      nixfmt-rfc-style
+      nixfmt
     ];
     vimagePreview = [
       imagemagick
@@ -345,8 +345,11 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       nvim-dap-go
     ];
     fennel = [
-      (conjure.overrideAttrs { doCheck = false; })
-      cmp-conjure
+      (cmp-conjure.overrideAttrs {
+        dependencies = [
+          (conjure.overrideAttrs (prev: { doCheck = false; nvimSkipModules = (prev.nvimSkipModules or []) ++ [ "conjure-spec.process_spec" ]; }))
+        ];
+      })
     ];
     java = [
       nvim-jdtls
@@ -390,7 +393,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
       markdown-preview-nvim
     ];
     general = with pkgs.neovimPlugins; {
-      blink = with pkgs.vimPlugins; [
+      blink = [
         luasnip
         cmp-cmdline
         blink-cmp
@@ -398,7 +401,7 @@ in { pkgs, settings, categories, name, extra, mkPlugin, ... }@packageDef: {
         colorful-menu-nvim
       ];
       core = [
-        nvim-treesitter-textobjects
+        pkgs.neovimPlugins.treesitter-textobjects
         nvim-treesitter.withAllGrammars
         vim-rhubarb
         vim-fugitive
