@@ -9,7 +9,7 @@ return {
       local windsurfDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
       local windsurfAuthFile = windsurfDir .. '/' .. 'config.json'
       local windsurfAuthInvalid = vim.fn.filereadable(windsurfAuthFile) == 0
-      require('birdee.utils').get_auths({
+      nixInfo.utils.get_auths({
         windsurf = {
           enable = nixInfo.utils.isNix and windsurfAuthInvalid and bitwardenAuths.windsurf or false,
           cache = false, -- <- this one is cached by its action

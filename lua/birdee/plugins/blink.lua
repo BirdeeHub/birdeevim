@@ -137,7 +137,7 @@ return {
           end,
         },
         sources = {
-          default = require("birdee.utils").insert_many(
+          default = nixInfo.utils.insert_many(
             { 'lsp', 'path', 'snippets', 'buffer', 'omni' },
             hasMinuet and 'minuet' or nil,
             hasWindsurf and 'windsurf' or nil

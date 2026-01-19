@@ -81,7 +81,7 @@ local function terminal_exists(window_id)
     -- This has to be done this way because tmux has-session does not give
     -- updated results
     for _, line in pairs(window_list) do
-        local window_info = require("birdee.utils").split_string(line, "@")[2]
+        local window_info = nixInfo.utils.split_string(line, "@")[2]
 
         if string.find(window_info, string.sub(window_id, 2)) then
             exists = true

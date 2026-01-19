@@ -17,7 +17,7 @@
 ]]
 -- NOTE: in before of lsps I had the following
 --[[
-  if nixCats('nvim-cmp') then
+  if nixInfo.utils.get_nix_plugin_path('nvim-cmp') then
     local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     vim.lsp.config('*', {
@@ -101,7 +101,7 @@ return {
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
 
-      local T_C = nixCats('tabCompletionKeys')
+      local T_C = nixInfo(false, 'info', 'tabCompletionKeys')
       local key_mappings = {
         ['<C-p>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'c', 'i' }),
         ['<C-n>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'c', 'i' }),

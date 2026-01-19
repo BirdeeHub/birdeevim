@@ -8,8 +8,8 @@
       if desc then desc = 'LSP: ' .. desc end
       vim.keymap.set(mode or 'n', keys, func, { buffer = bufnr, desc = desc })
     end
-    if nixCats('telescope') then
-      local tele_builtin = require('birdee.utils').lazy_require_funcs('telescope.builtin')
+    if nixInfo.utils.get_nix_plugin_path('telescope') then
+      local tele_builtin = nixInfo.utils.lazy_require_funcs('telescope.builtin')
       map('gr', tele_builtin.lsp_references, '[G]oto [R]eferences')
       map('gI', tele_builtin.lsp_implementations, '[G]oto [I]mplementation')
       map('<leader>ds', tele_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -64,7 +64,7 @@ local function live_grep_git_root()
   end
 end
 
-local tele_builtin = require('birdee.utils').lazy_require_funcs('telescope.builtin')
+local tele_builtin = nixInfo.utils.lazy_require_funcs('telescope.builtin')
 
 return {
   {
