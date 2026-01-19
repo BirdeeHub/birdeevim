@@ -22,6 +22,7 @@ in
   config.binName = "nvim";
   config.settings.aliases = [ "vi" ];
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+  config.env.NVIM_APPNAME = "birdeevim";
 
   config.specMods =
     { parentSpec, ... }:
