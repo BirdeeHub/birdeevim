@@ -10,7 +10,7 @@ return {
     after = function (_)
       require('which-key').setup({})
       local leaderCmsg
-      if nixInfo(nil, "plugins", "lazy", "opencode-nvim") then
+      if nixInfo.utils.get_nix_plugin_path("opencode-nvim") then
         leaderCmsg = "[c]olor [p]icker (and [c]lippy)"
       else
         leaderCmsg = "[c]olor [p]icker"
