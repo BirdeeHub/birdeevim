@@ -35,7 +35,7 @@ if vim.g.vscode == nil then
         require("fn_finder").fnl.install {
             search_opts = { nvim = true },
             -- hack: a unique value (will be hashed into bytecode cache for invalidation)
-            [nixInfo(nil, "wrapper_drv")] = nixInfo(vim.g.nix_info_plugin_name)(nil, "wrapper_drv"),
+            [nixInfo(nil, "wrapper_drv")] = nixInfo(nil, "wrapper_drv"),
         }
     end
     require('birdee')
