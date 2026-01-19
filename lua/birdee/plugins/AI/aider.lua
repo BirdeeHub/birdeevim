@@ -1,6 +1,5 @@
 return {
   "nvim-aider",
-  for_cat = { cat = 'AI.aider', default = false },
   cmd = "Aider",
   -- Example key mappings for common actions:
   keys = {

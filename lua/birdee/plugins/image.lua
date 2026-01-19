@@ -1,7 +1,6 @@
 return {
   {
     "image.nvim",
-    for_cat = { cat = "vimagePreview", default = false },
     ft = { "norg", "markdown", --[[ "html", "css" ]] },
     -- cmd = { "" },
     -- event = "DeferredUIEnter",
@@ -47,7 +46,6 @@ return {
   },
   {
     "img-clip.nvim",
-    for_cat = "other",
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     -- event = "",
     -- ft = "",

@@ -1,7 +1,6 @@
 return {
   "minuet-ai.nvim",
   event = "InsertEnter",
-  for_cat = { cat = 'AI.minuet', default = false },
   cmd = { "Minuet" },
   after = function()
     require('minuet').setup {
@@ -10,7 +9,7 @@ return {
         enable_auto_complete = false,
       },
       blink = {
-        enable_auto_complete = nixCats('general.blink') or false,
+        enable_auto_complete = true,
       },
       n_completions = 1, -- recommend for local model for resource saving
       context_ratio = 0.75,

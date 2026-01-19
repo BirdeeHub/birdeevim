@@ -1,5 +1,5 @@
 -- vim.api.nvim_create_autocmd('LspAttach', {
---   group = vim.api.nvim_create_augroup('nixCats-lsp-attach', { clear = true }),
+--   group = vim.api.nvim_create_augroup('my-lsp-attach', { clear = true }),
 --   callback = function(event)
 --     require('birdee.LSPs.on_attach')(vim.lsp.get_client_by_id(event.data.client_id), event.buf)
 --   end,

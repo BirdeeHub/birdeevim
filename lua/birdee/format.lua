@@ -1,6 +1,5 @@
 return {
   "conform.nvim",
-  for_cat = "general.core",
   -- cmd = { "" },
   -- event = "",
   -- ft = "",

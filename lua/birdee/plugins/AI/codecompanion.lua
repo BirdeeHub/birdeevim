@@ -1,6 +1,5 @@
 return {
   "codecompanion.nvim",
-  for_cat = { cat = 'AI.companion', default = false },
   cmd = {
     "CodeCompanion",
     "CodeCompanionCmd",

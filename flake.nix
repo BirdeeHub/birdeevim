@@ -1,7 +1,5 @@
-# Copyright (c) 2023 BirdeeHub
-# Licensed under the MIT license
 {
-  description = "my neovim config using nixCats";
+  description = "Flake exporting a configured package using wlib.evalModule";
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
@@ -12,16 +10,14 @@
   };
   # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html#examples
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgsLocked.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixCats.url = "git+file:/home/birdee/Projects/nixCats-nvim";
     # neovim-src = { url = "github:BirdeeHub/neovim/pack_add_spec_passthru"; flake = false; };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -111,47 +107,44 @@
       flake = false;
     };
   };
-
-  # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats, ... }@inputs: let
-    inherit (nixCats) utils;
-    luaPath = ./.;
-    forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
-    extra_pkg_config = {
-      allowUnfree = true;
-      doCheck = false; # <- seriously, python stuff runs 10 years of tests its not worth it.
-    };
-    dependencyOverlays = import ./misc_nix/overlays inputs;
-    categoryDefinitions = import ./cats.nix inputs;
-    packageDefinitions = import ./nvims.nix inputs;
-    defaultPackageName = "birdeevim";
-
-    module_args = {
-      moduleNamespace = [ defaultPackageName ];
-      inherit nixpkgs defaultPackageName dependencyOverlays
-        luaPath categoryDefinitions packageDefinitions;
-    };
-    nixosModule = utils.mkNixosModules module_args;
-    homeModule = utils.mkHomeModules module_args;
-    overlays = utils.makeOverlaysWithMultiDefault luaPath {
-      inherit nixpkgs dependencyOverlays extra_pkg_config;
-    } categoryDefinitions packageDefinitions defaultPackageName;
-  in
-    forEachSystem (system: let
-      nixCatsBuilder = utils.baseBuilder luaPath {
-        inherit nixpkgs system dependencyOverlays extra_pkg_config;
-      } categoryDefinitions packageDefinitions;
-      defaultPackage = nixCatsBuilder defaultPackageName;
-    in {
-      packages = utils.mkAllWithDefault defaultPackage;
-      # legacyPackages = utils.mkAllWithDefault (defaultPackage.overrideAttrs { nativeBuildInputs = [ (inputs.nixpkgs.legacyPackages.${system}.callPackage inputs.makeBinWrap {}) ];});
-      app-images = let bundler = inputs.nix-appimage.bundlers.${system}.default; in {
-        portableVim = bundler (nixCatsBuilder "portableVim");
+  outputs =
+    {
+      self,
+      nixpkgs,
+      wrappers,
+      ...
+    }@inputs:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
+      module = nixpkgs.lib.modules.importApply ./module.nix inputs;
+      wrapper = wrappers.lib.evalModule module;
+    in
+    {
+      overlays = {
+        default = final: prev: { neovim = wrapper.config.wrap { pkgs = final; }; };
+        neovim = self.overlays.default;
       };
-    }
-  ) // {
-    inherit utils overlays nixosModule homeModule;
-    nixosModules.default = nixosModule;
-    homeModules.default = homeModule;
-  };
+      wrapperModules = {
+        default = module;
+        neovim = self.wrapperModules.default;
+      };
+      wrappedModules = {
+        default = wrapper.config;
+        neovim = self.wrappedModules.default;
+      };
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            config.doCheck = false;
+          };
+        in
+        {
+          default = wrapper.config.wrap { inherit pkgs; };
+          neovim = self.packages.${system}.default;
+        }
+      );
+    };
 }

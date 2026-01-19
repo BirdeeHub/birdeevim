@@ -1,6 +1,5 @@
 return {
   'opencode-nvim',
-  for_cat = { cat = 'AI.opencode', default = false },
   keys = {
     -- opencode.nvim exposes a general, flexible API — customize it to your workflow!
     -- But here are some examples to get you started :)

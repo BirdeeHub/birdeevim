@@ -1,6 +1,5 @@
 return {
   "nvim-lint",
-  for_cat = "general.core",
   -- cmd = { "" },
   event = "FileType",
   -- ft = "",

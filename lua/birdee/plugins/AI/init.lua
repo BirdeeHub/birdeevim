@@ -1,18 +1,18 @@
 local MP = ...
-local isNixCats = require('nixCatsUtils')
+local isNix = vim.g.nix_info_plugin_name ~= nil
 return {
   {
     "AI_auths",
-    enabled = isNixCats and (nixCats("AI.windsurf") or nixCats("AI.minuet") or nixCats("AI.aider")) or false,
+    enabled = isNix and nixInfo(false, "info", "bitwarden_uuids"),
     dep_of = { "windsurf.nvim", "minuet-ai.nvim", "nvim-aider", "opencode.nvim" },
     load = function(_)
-      local bitwardenAuths = nixCats.extra('bitwarden_uuids')
+      local bitwardenAuths = nixInfo(nil, "info", "bitwarden_uuids")
       local windsurfDir = vim.fn.stdpath('cache') .. '/' .. 'codeium'
       local windsurfAuthFile = windsurfDir .. '/' .. 'config.json'
       local windsurfAuthInvalid = vim.fn.filereadable(windsurfAuthFile) == 0
       require('birdee.utils').get_auths({
         windsurf = {
-          enable = isNixCats and windsurfAuthInvalid and bitwardenAuths.windsurf and nixCats("AI.windsurf") or false,
+          enable = isNix and windsurfAuthInvalid and bitwardenAuths.windsurf or false,
           cache = false, -- <- this one is cached by its action
           bw_id = bitwardenAuths.windsurf,
           localpath = (os.getenv("HOME") or "~") .. "/.secrets/windsurf",
@@ -35,7 +35,7 @@ return {
           end,
         },
         gemini = {
-          enable = isNixCats and bitwardenAuths.gemini and (nixCats("AI.minuet") or nixCats("AI.aider") or nixCats("AI.opencode")) or false,
+          enable = isNix and bitwardenAuths.gemini or false,
           cache = true,
           bw_id = bitwardenAuths.gemini,
           localpath = (os.getenv("HOME") or "~") .. "/.secrets/gemini",
@@ -47,25 +47,20 @@ return {
       local function mkClear(cmd, file)
         vim.api.nvim_create_user_command(cmd, function(_) os.remove(file) end, {})
       end
-      if nixCats("AI.windsurf") then
-        mkClear("ClearWindsurfAuth", windsurfAuthFile)
-      end
-      if nixCats("AI.minuet") then
-        mkClear("ClearGeminiAuth", (os.getenv("HOME") or "~") .. "/.secrets/gemini")
-      end
+      mkClear("ClearWindsurfAuth", windsurfAuthFile)
+      mkClear("ClearGeminiAuth", (os.getenv("HOME") or "~") .. "/.secrets/gemini")
       mkClear("ClearBitwardenData", vim.fn.stdpath('config') .. [[/../Bitwarden\ CLI/data.json]])
     end
   },
   {
     "windsurf.nvim",
-    for_cat = { cat = 'AI.windsurf', default = false },
     event = "InsertEnter",
     after = function (_)
       require("codeium").setup({ enable_chat = false, })
     end,
   },
-  { import = MP:relpath "minuet", enabled = nixCats("AI.minuet") or false, },
-  { import = MP:relpath "aider", enabled = nixCats("AI.aider") or false, },
-  { import = MP:relpath "opencode", enabled = nixCats("AI.opencode") or false, },
-  { import = MP:relpath "codecompanion", enabled = nixCats("AI.companion") or false, },
+  { import = MP:relpath "opencode", enabled = true, },
+  { import = MP:relpath "minuet", enabled = false, },
+  { import = MP:relpath "aider", enabled = false, },
+  { import = MP:relpath "codecompanion", enabled = false, },
 }

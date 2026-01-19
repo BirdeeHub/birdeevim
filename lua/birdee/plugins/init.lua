@@ -1,55 +1,47 @@
 local MP = ...
-local catUtils = require('nixCatsUtils')
-local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
-if not catUtils.isNixCats then
-  colorschemer = 'onedark'
-end
+local colorschemer = nixInfo("onedark", "info", 'colorscheme') -- also schemes lualine
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-if nixCats('general') then
-  require("argmark").setup {}
-  vim.keymap.set('n', '<leader><leader>n', function()
-    vim.cmd.next()
-  end, { desc = "Arglist next" })
-  vim.keymap.set('n', '<leader><leader>N', function()
-    vim.cmd.prev()
-  end, { desc = "Arglist prev" })
-  vim.keymap.set('n', '<leader><leader>t', function()
-    if vim.fn.arglistid() == 0 then
-      vim.cmd.arglocal()
-    else
-      vim.cmd.argglobal()
-    end
-  end, { desc = "Arglist local/global toggle" })
-end
+require("argmark").setup {}
+vim.keymap.set('n', '<leader><leader>n', function()
+  vim.cmd.next()
+end, { desc = "Arglist next" })
+vim.keymap.set('n', '<leader><leader>N', function()
+  vim.cmd.prev()
+end, { desc = "Arglist prev" })
+vim.keymap.set('n', '<leader><leader>t', function()
+  if vim.fn.arglistid() == 0 then
+    vim.cmd.arglocal()
+  else
+    vim.cmd.argglobal()
+  end
+end, { desc = "Arglist local/global toggle" })
 
-if nixCats('mass_find_and_replace.scooter') then
-  vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
-  vim.keymap.set('v', '<leader>rr',
-    function()
-        local selection = vim.fn.getreg('"')
-        vim.cmd('normal! "ay')
-        require('scooter').open_scooter_with_text(vim.fn.getreg('a'))
-        vim.fn.setreg('"', selection)
-    end,
-    { desc = 'Search selected text in scooter' })
-end
-if nixCats('mass_find_and_replace.spectre') then
-  vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
-    desc = "Toggle Spectre"
-  })
-  vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-    desc = "Search current word"
-  })
-  vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current word"
-  })
-  vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-    desc = "Search on current file"
-  })
-end
+vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
+vim.keymap.set('v', '<leader>rr',
+  function()
+      local selection = vim.fn.getreg('"')
+      vim.cmd('normal! "ay')
+      require('scooter').open_scooter_with_text(vim.fn.getreg('a'))
+      vim.fn.setreg('"', selection)
+  end,
+  { desc = 'Search selected text in scooter' })
+
+vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+  desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+  desc = "Search on current file"
+})
+
 -- NOTE: This is already lazy. It doesnt require it until you use the keybinding
 vim.keymap.set({ 'n', }, "<leader>cpc", function() require("color_picker").rgbPicker() end, { desc = "color_picker rgb" })
 vim.keymap.set({ 'n', }, "<leader>cph", function() require("color_picker").hsvPicker() end, { desc = "color_picker hsv" })
@@ -58,37 +50,35 @@ vim.keymap.set({ 'n', }, "<leader>cpg", function() require("color_picker").rgbGr
 vim.keymap.set({ 'n', }, "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, { desc = "color_picker hsv gradient" })
 vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGradientPicker() end, { desc = "color_picker hsl gradient"})
 
-if nixCats('general') then
-  -- No need to copy this inside `setup()`. Will be used automatically.
-  require("mini.sessions").setup {
-    -- Whether to read default session if Neovim opened without file arguments
-    autoread = true,
+-- No need to copy this inside `setup()`. Will be used automatically.
+require("mini.sessions").setup {
+  -- Whether to read default session if Neovim opened without file arguments
+  autoread = true,
 
-    -- Whether to write currently read session before leaving it
-    autowrite = true,
+  -- Whether to write currently read session before leaving it
+  autowrite = true,
 
-    -- Directory where global sessions are stored (use `''` to disable)
-    directory = vim.fn.stdpath('data') .. "/sessions",
+  -- Directory where global sessions are stored (use `''` to disable)
+  directory = vim.fn.stdpath('data') .. "/sessions",
 
-    -- File for local session (use `''` to disable)
-    file = 'Session.vim',
+  -- File for local session (use `''` to disable)
+  file = 'Session.vim',
 
-    -- Whether to force possibly harmful actions (meaning depends on function)
-    force = { read = false, write = true, delete = false },
+  -- Whether to force possibly harmful actions (meaning depends on function)
+  force = { read = false, write = true, delete = false },
 
-    -- Hook functions for actions. Default `nil` means 'do nothing'.
-    hooks = {
-      -- Before successful action
-      pre = { read = nil, write = nil, delete = nil },
-      -- After successful action
-      post = { read = nil, write = nil, delete = nil },
-    },
+  -- Hook functions for actions. Default `nil` means 'do nothing'.
+  hooks = {
+    -- Before successful action
+    pre = { read = nil, write = nil, delete = nil },
+    -- After successful action
+    post = { read = nil, write = nil, delete = nil },
+  },
 
-    -- Whether to print session path after action
-    verbose = { read = false, write = true, delete = true },
-  }
-  require(MP:relpath 'oil')
-end
+  -- Whether to print session path after action
+  verbose = { read = false, write = true, delete = true },
+}
+require(MP:relpath 'oil')
 
 return {
   { import = MP:relpath "snacks", },
@@ -103,7 +93,6 @@ return {
   { import = MP:relpath "AI", },
   {
     "treesj",
-    for_cat = "general.core",
     cmd = { "TSJToggle" },
     keys = { { "<leader>Ft", ":TSJToggle<CR>", mode = { "n" }, desc = "treesj split/join" }, },
     after = function(_)
@@ -188,7 +177,6 @@ return {
   },
   {
     "markdown-preview.nvim",
-    for_cat = "markdown",
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
     keys = {
@@ -202,7 +190,6 @@ return {
   },
   {
     "render-markdown.nvim",
-    for_cat = "markdown",
     ft = "markdown",
     after = function(_)
       require('render-markdown').setup({})
@@ -210,7 +197,6 @@ return {
   },
   {
     "otter.nvim",
-    for_cat = "otter",
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
@@ -254,7 +240,6 @@ return {
   },
   {
     "dial.nvim",
-    for_cat = "general.core",
     keys = {
       { "<C-a>", function() require("dial.map").manipulate("increment", "normal") end, mode = "n", desc = "Increment" },
       { "<C-x>", function() require("dial.map").manipulate("decrement", "normal") end, mode = "n", desc = "Decrement" },
@@ -285,7 +270,6 @@ return {
   },
   {
     "undotree",
-    for_cat = "general.core",
     cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
     keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" }, },
     before = function(_)
@@ -295,7 +279,6 @@ return {
   },
   {
     "todo-comments.nvim",
-    for_cat = "other",
     event = "DeferredUIEnter",
     after = function(_)
       require("todo-comments").setup({ signs = false })
@@ -303,7 +286,6 @@ return {
   },
   {
     "visual-whitespace",
-    for_cat = "other",
     event = "DeferredUIEnter",
     after = function(_)
       require('visual-whitespace').setup({
@@ -316,17 +298,15 @@ return {
   },
   {
     "vim-startuptime",
-    for_cat = "other",
     cmd = { "StartupTime" },
     before = function(_)
       vim.g.startuptime_event_width = 0
       vim.g.startuptime_tries = 10
-      vim.g.startuptime_exe_path = nixCats.packageBinPath
+      vim.g.startuptime_exe_path = nixInfo.progpath
     end,
   },
   {
     "nvim-surround",
-    for_cat = "general.core",
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(_)
@@ -335,7 +315,6 @@ return {
   },
   {
     "eyeliner.nvim",
-    for_cat = "other",
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(_)
@@ -348,7 +327,6 @@ return {
   },
   {
     "vim-dadbod",
-    for_cat = "SQL",
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
     load = function(name)
@@ -363,12 +341,10 @@ return {
   },
   {
     "vim-sleuth",
-    for_cat = "general.core",
     event = "DeferredUIEnter",
   },
   {
     "nvim-highlight-colors",
-    for_cat = "other",
     event = "DeferredUIEnter",
     -- ft = "",
     after = function(_)

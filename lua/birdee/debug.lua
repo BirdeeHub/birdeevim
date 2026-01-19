@@ -1,7 +1,6 @@
 return {
   {
     "nvim-dap-python",
-    for_cat = { cat = 'python', default = false },
     on_plugin = { "nvim-dap", },
     after = function(_)
       require('dap-python').setup(vim.g.python3_host_prog)
@@ -9,7 +8,6 @@ return {
   },
   {
     "nvim-dap-go",
-    for_cat = { cat = 'go', default = false },
     on_plugin = { "nvim-dap", },
     after = function(_)
       require("dap-go").setup()
@@ -17,7 +15,6 @@ return {
   },
   {
     "nvim-dap",
-    for_cat = "debug",
     -- cmd = { "" },
     -- event = "",
     -- ft = "",
@@ -123,50 +120,46 @@ return {
       }
 
       -- Install other lang specific config
-      if nixCats('elixir') then
-        -- dont know if this works
-        dap.adapters.elixir = {
-            type = 'executable',
-            command = vim.fn.exepath('elixir-debug-adapter')
-        }
+      -- dont know if this works
+      dap.adapters.elixir = {
+          type = 'executable',
+          command = vim.fn.exepath('elixir-debug-adapter')
+      }
 
-        dap.configurations.elixir = {
-            {
-                name = "Launch Elixir Debugger",
-                type = "elixir",
-                request = "launch",
-                program = "${file}",
-                cwd = "${fileDirname}",
-                env = {},
-                args = {},
-            }
-        }
-      end
-      if nixCats('bash') then
-        -- doesnt work
-        dap.adapters.sh = {
-            type = 'executable',
-            command = vim.fn.exepath('bashdb')
-        }
+      dap.configurations.elixir = {
+          {
+              name = "Launch Elixir Debugger",
+              type = "elixir",
+              request = "launch",
+              program = "${file}",
+              cwd = "${fileDirname}",
+              env = {},
+              args = {},
+          }
+      }
 
-        dap.configurations.sh = {
-            {
-                name = "Launch Bash Debugger",
-                type = "sh",
-                request = "launch",
-                program = "${file}",
-                cwd = "${fileDirname}",
-                pathBashdb = vim.fn.exepath('bashdb'),
-                pathBashdbLib = vim.fn.fnamemodify(vim.fn.exepath('bashdb'), ":h") .. "/../share/bashdb",
-                pathBash = "bash",
-                pathCat = "cat",
-                pathMkfifo = "mkfifo",
-                pathPkill = "pkill",
-                env = {},
-                args = {},
-            }
-        }
-      end
+      -- doesnt work
+      dap.adapters.sh = {
+          type = 'executable',
+          command = vim.fn.exepath('bashdb')
+      }
+      dap.configurations.sh = {
+          {
+              name = "Launch Bash Debugger",
+              type = "sh",
+              request = "launch",
+              program = "${file}",
+              cwd = "${fileDirname}",
+              pathBashdb = vim.fn.exepath('bashdb'),
+              pathBashdbLib = vim.fn.fnamemodify(vim.fn.exepath('bashdb'), ":h") .. "/../share/bashdb",
+              pathBash = "bash",
+              pathCat = "cat",
+              pathMkfifo = "mkfifo",
+              pathPkill = "pkill",
+              env = {},
+              args = {},
+          }
+      }
 
     end,
   },

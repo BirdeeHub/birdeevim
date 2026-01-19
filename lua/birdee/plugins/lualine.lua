@@ -4,7 +4,6 @@ vim.keymap.set("n", "<leader>lb", function() require("lsp_breadcrumbs")() end, {
 return {
   {
     "lualine.nvim",
-    for_cat = "general.core",
     -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",
@@ -17,10 +16,7 @@ return {
       }
     end,
     after = function (_)
-      local colorschemer = nixCats.extra('colorscheme') -- also schemes lualine
-      if not require('nixCatsUtils').isNixCats then
-        colorschemer = 'onedark'
-      end
+      local colorschemer = nixInfo("onedark", "info", 'colorscheme') -- also schemes lualine
       -- local has_printed = false
       -- local components = {
       --   function(config, is_focused)
