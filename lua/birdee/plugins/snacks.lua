@@ -40,7 +40,7 @@ return {
       { "<leader>sn", pickpick("notifications"), desc = "Notification History" },
       -- find
       { "<leader>fb", pickpick("buffers"), desc = "Buffers" },
-      { "<leader>fc", pickpick("files", { cwd = nixInfo.settings.unwrapped_config or nixInfo.settings.config_directory }), desc = "Find Config File" },
+      { "<leader>fc", pickpick("files", { cwd = nixInfo(nil, "settings", "unwrapped_config") or nixInfo(vim.fn.stdpath('config'), "settings", "config_directory") }), desc = "Find Config File" },
       { "<leader>ff", pickpick("files"), desc = "Find Files" },
       { "<leader>fg", pickpick("git_files"), desc = "Find Git Files" },
       { "<leader>fp", pickpick("projects"), desc = "Projects" },
@@ -115,10 +115,10 @@ return {
           config = {
             os = {
               editPreset = "nvim-remote",
-              edit = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
-              editAtLine = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
-              editAtLineAndWait = nixInfo.progpath .. " +{{line}} {{filename}}",
-              openDirInEditor = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
+              edit = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
+              editAtLine = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
+              editAtLineAndWait = nixInfo(vim.v.progpath, "progpath") .. " +{{line}} {{filename}}",
+              openDirInEditor = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
             },
           },
         },

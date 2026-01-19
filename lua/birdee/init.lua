@@ -1,5 +1,5 @@
 local MP = ...
-if not nixInfo then
+do
   local ok
   ok, _G.nixInfo = pcall(require, vim.g.nix_info_plugin_name)
   if not ok then
@@ -8,8 +8,8 @@ if not nixInfo then
     -- TODO: this in another file and require here.
     -- require('birdee.non_nix_download').setup({ your plugins })
   end
+  nixInfo.utils = require(MP:relpath 'utils')
 end
-nixInfo.utils = require(MP:relpath 'utils')
 
 -- vim.g.lze = {
 --   load = vim.cmd.packadd,

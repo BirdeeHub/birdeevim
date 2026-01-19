@@ -24,8 +24,6 @@ if not table.pack then
   end
 end
 
-_G.nixInfo = require(vim.g.nix_info_plugin_name)
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.loader.enable()
@@ -35,7 +33,7 @@ if vim.g.vscode == nil then
     require("fn_finder").fnl.install {
         search_opts = { nvim = true },
         -- hack: a unique value (will be hashed into bytecode cache for invalidation)
-        [nixInfo(nil, "wrapper_drv")] = nixInfo(nil, "settings", "config_directory"),
+        [require(vim.g.nix_info_plugin_name)(nil, "wrapper_drv")] = require(vim.g.nix_info_plugin_name)(nil, "wrapper_drv"),
     }
     require('birdee')
 end
