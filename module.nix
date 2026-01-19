@@ -14,13 +14,21 @@ in
     wlib.wrapperModules.neovim
     ./nvim-lib.nix
   ];
-  config.settings.config_directory = ./.;
+  options.settings.wrapRc = lib.mkOption {
+    type = lib.types.bool;
+    default = true;
+  };
+  config.settings.config_directory = if config.settings.wrapRc then config.settings.wrapped_config else config.settings.unwrapped_config;
+  options.settings.wrapped_config = lib.mkOption {
+    type = wlib.types.stringable;
+    default = ./.;
+  };
   options.settings.unwrapped_config = lib.mkOption {
     type = wlib.types.nonEmptyline;
     default = "/home/birdee/.birdeevim";
   };
-  config.binName = "nvim";
-  config.settings.aliases = [ "vi" ];
+  config.binName = if config.settings.wrapRc then "nvim" else "vim";
+  config.settings.aliases = lib.mkIf config.settings.wrapRc [ "vi" ];
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
   config.env.NVIM_APPNAME = "birdeevim";
 
