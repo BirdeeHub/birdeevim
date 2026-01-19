@@ -4,7 +4,7 @@ if colorschemer and colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
 
-if nixInfo.utils.get_nix_plugin_path("argmark") then
+if nixInfo.utils.get_nix_plugin_path "argmark" then
   require("argmark").setup {}
   vim.keymap.set('n', '<leader><leader>n', function()
     vim.cmd.next()
@@ -32,7 +32,7 @@ vim.keymap.set('v', '<leader>rr',
   end,
   { desc = 'Search selected text in scooter' })
 
-if nixInfo.utils.get_nix_plugin_path("nvim-spectre") then
+if nixInfo.utils.get_nix_plugin_path "nvim-spectre" then
   vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
     desc = "Toggle Spectre"
   })
@@ -55,7 +55,7 @@ vim.keymap.set({ 'n', }, "<leader>cpg", function() require("color_picker").rgbGr
 vim.keymap.set({ 'n', }, "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, { desc = "color_picker hsv gradient" })
 vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGradientPicker() end, { desc = "color_picker hsl gradient"})
 
-if nixInfo.utils.get_nix_plugin_path("mini.nvim") then
+if nixInfo.utils.get_nix_plugin_path "mini.nvim" then
   require("mini.sessions").setup {
     -- Whether to read default session if Neovim opened without file arguments
     autoread = true,
@@ -85,7 +85,7 @@ if nixInfo.utils.get_nix_plugin_path("mini.nvim") then
   }
 end
 
-if nixInfo.utils.get_nix_plugin_path("oil.nvim") then
+if nixInfo.utils.get_nix_plugin_path "oil.nvim" then
   require(MP:relpath 'oil')
 end
 

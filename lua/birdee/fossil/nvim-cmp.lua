@@ -17,7 +17,7 @@
 ]]
 -- NOTE: in before of lsps I had the following
 --[[
-  if nixInfo.utils.get_nix_plugin_path('nvim-cmp') then
+  if nixInfo.utils.get_nix_plugin_path 'nvim-cmp' then
     local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     vim.lsp.config('*', {

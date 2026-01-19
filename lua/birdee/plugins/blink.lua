@@ -30,8 +30,8 @@ return {
     auto_enable = true,
     event = "DeferredUIEnter",
     after = function (plugin)
-      local hasWindsurf = nixInfo(nil, "plugins", "lazy", "windsurf.nvim") or nixInfo(nil, "plugins", "start", "windsurf.nvim")
-      local hasMinuet = nixInfo(nil, "plugins", "lazy", "minuet-ai.nvim") or nixInfo(nil, "plugins", "start", "minuet-ai.nvim")
+      local hasWindsurf = nixInfo.utils.get_nix_plugin_path "windsurf.nvim"
+      local hasMinuet = nixInfo.utils.get_nix_plugin_path "minuet-ai.nvim"
       require("blink.cmp").setup({
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
         -- See :h blink-cmp-config-keymap for configuring keymaps

@@ -12,7 +12,7 @@ do
   nixInfo.icons = require(MP:relpath 'icons')
 end
 
-if nixInfo.utils.get_nix_plugin_path("fn_finder") then
+if nixInfo.utils.get_nix_plugin_path "fn_finder" then
   -- NOTE: <c-k>*l is λ
   require("fn_finder").fnl.install {
       search_opts = { nvim = true },

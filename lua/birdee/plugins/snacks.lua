@@ -6,7 +6,7 @@
 -- NOTE: you really don't need to do this though...
 -- I'm being silly
 
-if nixInfo.utils.get_nix_plugin_path("snacks.nvim") then
+if nixInfo.utils.get_nix_plugin_path "snacks.nvim" then
   vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = nixInfo.icons.arggreen })
 
   ---@diagnostic disable-next-line: invisible

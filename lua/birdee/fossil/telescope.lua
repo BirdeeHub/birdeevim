@@ -8,7 +8,7 @@
       if desc then desc = 'LSP: ' .. desc end
       vim.keymap.set(mode or 'n', keys, func, { buffer = bufnr, desc = desc })
     end
-    if nixInfo.utils.get_nix_plugin_path('telescope') then
+    if nixInfo.utils.get_nix_plugin_path 'telescope' then
       local tele_builtin = nixInfo.utils.lazy_require_funcs('telescope.builtin')
       map('gr', tele_builtin.lsp_references, '[G]oto [R]eferences')
       map('gI', tele_builtin.lsp_implementations, '[G]oto [I]mplementation')
