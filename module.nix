@@ -103,6 +103,12 @@ in
     typescript-language-server
     eslint
     prettier
+    clang-tools
+    valgrind
+    cmake-language-server
+    cpplint
+    cmake
+    cmake-format
     bitwarden-cli
     (inputs.wrappers.wrappedModules.opencode.wrap {
       inherit pkgs;
@@ -130,31 +136,6 @@ in
         };
       };
     })
-
-    (python311Packages.python-lsp-server.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    (python311Packages.debugpy.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    (python311Packages.pytest.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    clang-tools
-    valgrind
-    cmake-language-server
-    cpplint
-    cmake
-    cmake-format
     (inputs.wrappers.lib.wrapPackage [
       { inherit pkgs; }
       ({ pkgs, ... }: {
@@ -173,6 +154,24 @@ in
         '';
       })
     ])
+    (python311Packages.python-lsp-server.overrideAttrs {
+      doCheck = false;
+      doInstallCheck = false;
+      pytestCheckPhase = "";
+      installCheckPhase = "";
+    })
+    (python311Packages.debugpy.overrideAttrs {
+      doCheck = false;
+      doInstallCheck = false;
+      pytestCheckPhase = "";
+      installCheckPhase = "";
+    })
+    (python311Packages.pytest.overrideAttrs {
+      doCheck = false;
+      doInstallCheck = false;
+      pytestCheckPhase = "";
+      installCheckPhase = "";
+    })
   ];
 
   config.info.javaExtras = {
