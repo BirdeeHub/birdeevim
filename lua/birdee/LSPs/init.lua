@@ -1,4 +1,5 @@
 local MP = ...
+-- TODO: figure out how to conditionally enable lsps and other programs (such as scooter)
 return {
   {
     "mason.nvim",

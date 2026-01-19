@@ -6,16 +6,18 @@
 -- NOTE: you really don't need to do this though...
 -- I'm being silly
 
-vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = require("birdee.icons").arggreen })
+if nixInfo.utils.get_nix_plugin_path("snacks.nvim") then
+  vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = require("birdee.icons").arggreen })
 
----@diagnostic disable-next-line: invisible
-require('snacks').bigfile.setup()
----@diagnostic disable-next-line: duplicate-set-field
-vim.notify = function(msg, level, o)
-  vim.notify = Snacks.notifier.notify
-  return Snacks.notifier.notify(msg, level, o)
+  ---@diagnostic disable-next-line: invisible
+  require('snacks').bigfile.setup()
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.notify = function(msg, level, o)
+    vim.notify = Snacks.notifier.notify
+    return Snacks.notifier.notify(msg, level, o)
+  end
+  vim.keymap.set({ 'n' }, '<Esc>', function() Snacks.notifier.hide() end, { desc = 'dismiss notify popup' })
 end
-vim.keymap.set({ 'n' }, '<Esc>', function() Snacks.notifier.hide() end, { desc = 'dismiss notify popup' })
 
 local pickpick = function(name, args) return function() Snacks.picker[name](args) end end
 
