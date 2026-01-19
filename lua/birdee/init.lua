@@ -8,12 +8,12 @@
 --   without_default_handlers = false,
 -- }
 local MP = ...
-local utils = require(MP:relpath 'utils')
+nixInfo.utils = require(MP:relpath 'utils')
 require('lze').register_handlers {
     require('lzextras').lsp,
-    utils.auto_enable_handler,
+    nixInfo.utils.auto_enable_handler,
 }
-require('lze').h.lsp.set_ft_fallback(utils.lsp_ft_fallback)
+require('lze').h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
 require('lze').load {
     { import = MP:relpath "plugins" },
     { import = MP:relpath "LSPs" },
