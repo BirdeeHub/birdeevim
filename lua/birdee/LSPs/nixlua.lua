@@ -82,14 +82,14 @@ return {
   },
   {
     "rnix",
-    enabled = not vim.g.nix_info_plugin_name,
+    enabled = not nixInfo.utils.isNix,
     lsp = {
       filetypes = { "nix" },
     },
   },
   {
     "nil_ls",
-    enabled = not vim.g.nix_info_plugin_name,
+    enabled = not nixInfo.utils.isNix,
     lsp = {
       filetypes = { "nix" },
     },

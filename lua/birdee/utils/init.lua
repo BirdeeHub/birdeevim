@@ -293,4 +293,6 @@ function M.debug_display(input)
     end
 end
 
+M.isNix = vim.g.nix_info_plugin_name ~= nil
+
 return M

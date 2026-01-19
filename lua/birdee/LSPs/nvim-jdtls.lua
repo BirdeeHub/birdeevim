@@ -1,6 +1,6 @@
 local M ={}
 function M.setupJDTLS()
-  if vim.g.vscode ~= nil or not vim.g.nix_info_plugin_name or not nixInfo.utils.get_nix_plugin_path("nvim-jdtls") then
+  if vim.g.vscode ~= nil or not nixInfo.utils.isNix or not nixInfo.utils.get_nix_plugin_path("nvim-jdtls") then
     return
   end
   vim.cmd([[packadd nvim-jdtls]])
