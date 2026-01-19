@@ -200,6 +200,7 @@ function M.extend_many(dst, ...)
 end
 
 function M.get_nix_plugin_path(name)
+  local nixInfo = require(vim.g.nix_info_plugin_name)
   return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
 end
 
