@@ -27,6 +27,7 @@ in
     type = wlib.types.nonEmptyline;
     default = "/home/birdee/.birdeevim";
   };
+  config.settings.dont_link = config.binName != "nvim";
   config.binName = if config.settings.wrapRc then "nvim" else "vim";
   config.settings.aliases = lib.mkIf config.settings.wrapRc [ "vi" ];
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
