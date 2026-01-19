@@ -29,11 +29,14 @@ vim.g.maplocalleader = ' '
 vim.loader.enable()
 vim.o.exrc = true
 if vim.g.vscode == nil then
-    -- NOTE: <c-k>*l is λ
-    require("fn_finder").fnl.install {
-        search_opts = { nvim = true },
-        -- hack: a unique value (will be hashed into bytecode cache for invalidation)
-        [require(vim.g.nix_info_plugin_name)(nil, "wrapper_drv")] = require(vim.g.nix_info_plugin_name)(nil, "wrapper_drv"),
-    }
+    local ok, nixInfo = pcall(require, vim.g.nix_info_plugin_name)
+    if ok and nixInfo(nil, "plugins", "start", "fn_finder") then
+        -- NOTE: <c-k>*l is λ
+        require("fn_finder").fnl.install {
+            search_opts = { nvim = true },
+            -- hack: a unique value (will be hashed into bytecode cache for invalidation)
+            [nixInfo(nil, "wrapper_drv")] = nixInfo(vim.g.nix_info_plugin_name)(nil, "wrapper_drv"),
+        }
+    end
     require('birdee')
 end
