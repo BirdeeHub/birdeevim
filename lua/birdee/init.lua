@@ -1,5 +1,15 @@
--- TODO: this in another file and require here.
--- require('birdee.non_nix_download').setup({ your plugins })
+local MP = ...
+if not nixInfo then
+  local ok
+  ok, _G.nixInfo = pcall(require, vim.g.nix_info_plugin_name)
+  if not ok then
+    -- TODO: non-nix compat
+    _G.nixInfo = {}
+    -- TODO: this in another file and require here.
+    -- require('birdee.non_nix_download').setup({ your plugins })
+  end
+end
+nixInfo.utils = require(MP:relpath 'utils')
 
 -- vim.g.lze = {
 --   load = vim.cmd.packadd,
@@ -7,8 +17,6 @@
 --   default_priority = 50,
 --   without_default_handlers = false,
 -- }
-local MP = ...
-nixInfo.utils = require(MP:relpath 'utils')
 require('lze').register_handlers {
     require('lzextras').lsp,
     nixInfo.utils.auto_enable_handler,
