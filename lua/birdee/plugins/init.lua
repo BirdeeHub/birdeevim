@@ -85,7 +85,7 @@ if nixInfo.utils.get_nix_plugin_path("mini.nvim") then
   }
 end
 
-if nixInfo.utils.get_nix_plugin_path("snacks.nvim") then
+if nixInfo.utils.get_nix_plugin_path("oil.nvim") then
   require(MP:relpath 'oil')
 end
 
