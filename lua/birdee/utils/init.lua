@@ -160,7 +160,7 @@ function M.nix_table()
 end
 
 function M.lsp_ft_fallback(name)
-  local nvimlspcfg = nixCats.pawsible({ "allPlugins", "opt", "nvim-lspconfig" }) or nixCats.pawsible({ "allPlugins", "start", "nvim-lspconfig" })
+  local nvimlspcfg = nixInfo(nil, "plugins", "lazy", "nvim-lspconfig") or nixInfo(nil, "plugins", "start", "nvim-lspconfig")
   if not nvimlspcfg then
     local matches = vim.api.nvim_get_runtime_file("pack/*/*/nvim-lspconfig", false)
     nvimlspcfg = assert(matches[1], "nvim-lspconfig not found!")

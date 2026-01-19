@@ -1,6 +1,6 @@
 local M ={}
 function M.setupJDTLS()
-  if vim.g.vscode ~= nil or not require('nixCatsUtils').isNixCats then
+  if vim.g.vscode ~= nil or not vim.g.nix_info_plugin_name then
     return
   end
   vim.cmd([[packadd nvim-jdtls]])
@@ -24,9 +24,9 @@ function M.setupJDTLS()
     jda_server_jar = vim.fn.glob(jda_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
   else
     jdtls_path = vim.fn.exepath('jdtls')
-    if nixCats.extra("javaExtras") then
-      jt_path = nixCats.extra("javaExtras.java-test")
-      jda_path = nixCats.extra("javaExtras.java-debug-adapter")
+    if nixInfo(nil, "info", "javaExtras") then
+      jt_path = nixInfo(nil, "info", "javaExtras", "java-test")
+      jda_path = nixInfo(nil, "info", "javaExtras", "java-debug-adapter")
       if jt_path and jda_path then
         jt_server_jars = vim.fn.glob(jt_path .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
         jda_server_jar = vim.fn.glob(jda_path .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")

@@ -69,7 +69,6 @@ local tele_builtin = require('birdee.utils').lazy_require_funcs('telescope.built
 return {
   {
     "telescope.nvim",
-    for_cat = "telescope",
     cmd = { "Telescope", "TodoTelescope", "LiveGrepGitRoot" },
     dep_of = { "nvim-neoclip.lua", "neorg" },
     on_require = { "telescope", },

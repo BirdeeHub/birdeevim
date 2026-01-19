@@ -22,7 +22,6 @@ local pickpick = function(name, args) return function() Snacks.picker[name](args
 return {
   {
     "snacks.nvim",
-    for_cat = "general",
     event = { 'DeferredUIEnter' },
     dep_of = { "nvim-aider", "opencode.nvim" },
     load = function()end,
@@ -38,7 +37,7 @@ return {
       { "<leader>sn", pickpick("notifications"), desc = "Notification History" },
       -- find
       { "<leader>fb", pickpick("buffers"), desc = "Buffers" },
-      { "<leader>fc", pickpick("files", { cwd = nixCats.settings.unwrappedCfgPath or nixCats.configDir }), desc = "Find Config File" },
+      { "<leader>fc", pickpick("files", { cwd = nixInfo.settings.unwrapped_config or nixInfo.settings.config_directory }), desc = "Find Config File" },
       { "<leader>ff", pickpick("files"), desc = "Find Files" },
       { "<leader>fg", pickpick("git_files"), desc = "Find Git Files" },
       { "<leader>fp", pickpick("projects"), desc = "Projects" },
@@ -113,10 +112,10 @@ return {
           config = {
             os = {
               editPreset = "nvim-remote",
-              edit = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
-              editAtLine = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
-              editAtLineAndWait = nixCats.packageBinPath .. " +{{line}} {{filename}}",
-              openDirInEditor = nixCats.packageBinPath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
+              edit = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}})<CR>']=],
+              editAtLine = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{filename}}, {{line}})<CR>']=],
+              editAtLineAndWait = nixInfo.progpath .. " +{{line}} {{filename}}",
+              openDirInEditor = nixInfo.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("birdee.utils.lazygit_fix")({{dir}})<CR>']=],
             },
           },
         },

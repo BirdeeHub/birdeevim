@@ -9,7 +9,6 @@
 -- }
 local MP = ...
 require('lze').register_handlers {
-    require("nixCatsUtils.lzUtils").for_cat,
     require('lzextras').lsp,
 }
 require('lze').h.lsp.set_ft_fallback(require(MP:relpath 'utils').lsp_ft_fallback)

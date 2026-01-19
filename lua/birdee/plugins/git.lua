@@ -1,7 +1,6 @@
 return {
   {
     "vim-fugitive",
-    for_cat = "general.core",
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
       "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
       "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
@@ -20,7 +19,6 @@ return {
   },
   {
     "gitsigns.nvim",
-    for_cat = "general.core",
     event = "DeferredUIEnter",
     -- cmd = { "" },
     -- ft = "",

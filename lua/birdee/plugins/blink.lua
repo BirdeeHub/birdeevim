@@ -2,18 +2,15 @@ local load_w_after = require("lzextras").loaders.with_after
 return {
   {
     "cmp-cmdline",
-    for_cat = "general.blink",
     on_plugin = { "blink.cmp" },
     load = load_w_after,
   },
   {
     "blink.compat",
-    for_cat = "general.blink",
     dep_of = { "cmp-cmdline", "cmp-conjure" },
   },
   {
     "luasnip",
-    for_cat = "general.blink",
     dep_of = { "blink.cmp" },
     after = function (_)
       require('birdee.snippets')
@@ -21,18 +18,18 @@ return {
   },
   {
     "colorful-menu.nvim",
-    for_cat = "general.blink",
     on_plugin = { "blink.cmp" },
   },
   {
     "blink.cmp",
-    for_cat = "general.blink",
     event = "DeferredUIEnter",
     after = function (plugin)
+      local hasWindsurf = nixInfo(nil, "plugins", "opt", "windsurf.nvim") or nixInfo(nil, "plugins", "start", "windsurf.nvim")
+      local hasMinuet = nixInfo(nil, "plugins", "opt", "minuet-ai.nvim") or nixInfo(nil, "plugins", "start", "minuet-ai.nvim")
       require("blink.cmp").setup({
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
         -- See :h blink-cmp-config-keymap for configuring keymaps
-        keymap = nixCats('tabCompletionKeys') and { preset = 'super-tab' } or {
+        keymap = {
           preset = 'none',
           ['<M-c>'] = { 'show', 'show_documentation', 'hide_documentation' },
           ['<M-h>'] = { 'hide' },
@@ -61,7 +58,7 @@ return {
             return {}
           end,
           keymap = {
-            preset = nixCats('tabCompletionKeys') and 'cmdline' or 'inherit',
+            preset = 'inherit',
             ['<Tab>'] = { 'select_next', 'fallback_to_mappings' },
             ['<S-Tab>'] = {'select_prev','fallback_to_mappings' },
           },
@@ -137,8 +134,8 @@ return {
         sources = {
           default = require("birdee.utils").insert_many(
             { 'lsp', 'path', 'snippets', 'buffer', 'omni' },
-            nixCats('AI.minuet') and 'minuet' or nil,
-            nixCats('AI.windsurf') and 'windsurf' or nil
+            hasMinuet and 'minuet' or nil,
+            hasWindsurf and 'windsurf' or nil
           ),
           per_filetype = {
             codecompanion = { "codecompanion" },
@@ -153,14 +150,14 @@ return {
             snippets = {
               score_offset = 40,
             },
-            minuet = nixCats('AI.minuet') and {
+            minuet = hasMinuet and {
               name = 'minuet',
               module = 'minuet.blink',
               async = true,
               timeout_ms = 3000, -- minuet.config.request_timeout * 1000,
               score_offset = 50,
             } or nil,
-            windsurf = nixCats('AI.windsurf') and {
+            windsurf = hasWindsurf and {
               name = 'windsurf',
               module = 'blink.compat.source',
               opts = {

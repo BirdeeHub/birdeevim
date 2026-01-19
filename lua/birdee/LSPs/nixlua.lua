@@ -1,23 +1,20 @@
-local catUtils = require('nixCatsUtils')
-local get_nixd_opts = nixCats.extra("nixdExtras.get_configs")
+local get_nixd_opts = nixInfo(nil, "info", "nixdExtras", "get_configs")
 return {
   {
     "lazydev.nvim",
-    for_cat = "neonixdev",
     cmd = { "LazyDev" },
     ft = "lua",
     after = function(_)
       require('lazydev').setup({
         library = {
-          { words = { "uv", "vim%.uv", "vim%.loop" }, path = (nixCats.pawsible({"allPlugins", "start", "luvit-meta"}) or "luvit-meta") .. "/library" },
-          { words = { "nixCats" }, path = (nixCats.nixCatsPath or "") .. '/lua' },
+          { words = { "uv", "vim%.uv", "vim%.loop" }, path = nixInfo("luvit-meta", "plugins", "start", "luvit-meta") .. "/library" },
+          { words = { "nixInfo" }, path = nixInfo("", "info_plugin_path") .. '/lua' },
         },
       })
     end,
   },
   {
     "lua_ls",
-    enabled = nixCats('lua') or nixCats('neonixdev'),
     lsp = {
       filetypes = { 'lua' },
       settings = {
@@ -28,7 +25,7 @@ return {
           },
           signatureHelp = { enabled = true },
           diagnostics = {
-            globals = { "nixCats", "vim", "make_test" },
+            globals = { "vim", "make_test" },
             disable = { },
           },
           workspace = {
@@ -48,7 +45,6 @@ return {
   },
   {
     "nixd",
-    enabled = catUtils.isNixCats and (nixCats('nix') or nixCats('neonixdev')),
     after = function(_)
       vim.api.nvim_create_user_command("StartNilLSP", function()
         vim.lsp.start(vim.lsp.config.nil_ls)
@@ -59,8 +55,7 @@ return {
       settings = {
         nixd = {
           nixpkgs = {
-            -- ''import ${pkgs.path} {}''
-            expr = nixCats.extra("nixdExtras.nixpkgs") or "import <nixpkgs> {}",
+            expr = nixInfo("import <nixpkgs> {}", "info", "nixdExtras", "nixpkgs"),
           },
           formatting = {
             command = { "nixfmt" }
@@ -68,11 +63,11 @@ return {
           options = {
             -- (builtins.getFlake "path:${builtins.toString <path_to_system_flake>}").legacyPackages.<system>.nixosConfigurations."<user@host>".options
             nixos = {
-              expr = get_nixd_opts and get_nixd_opts("nixos", nixCats.extra("nixdExtras.flake-path"))
+              expr = get_nixd_opts and get_nixd_opts("nixos", nixInfo(nil, "info", "nixdExtras", "flake-path"))
             },
             -- (builtins.getFlake "path:${builtins.toString <path_to_system_flake>}").legacyPackages.<system>.homeConfigurations."<user@host>".options
             ["home-manager"] = {
-              expr = get_nixd_opts and get_nixd_opts("home-manager", nixCats.extra("nixdExtras.flake-path")) -- <-  if flake-path is nil it will be lsp root dir
+              expr = get_nixd_opts and get_nixd_opts("home-manager", nixInfo(nil, "info", "nixdExtras", "flake-path")) -- <-  if flake-path is nil it will be lsp root dir
             }
           },
           diagnostic = {
@@ -86,14 +81,14 @@ return {
   },
   {
     "rnix",
-    enabled = not catUtils.isNixCats,
+    enabled = not vim.g.nix_info_plugin_name,
     lsp = {
       filetypes = { "nix" },
     },
   },
   {
     "nil_ls",
-    enabled = not catUtils.isNixCats,
+    enabled = not vim.g.nix_info_plugin_name,
     lsp = {
       filetypes = { "nix" },
     },

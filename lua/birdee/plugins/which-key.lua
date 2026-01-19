@@ -2,7 +2,6 @@ return {
   {
     "which-key.nvim",
     -- cmd = { "" },
-    for_cat = "other",
     event = "DeferredUIEnter",
     -- ft = "",
     -- keys = "",
@@ -10,7 +9,7 @@ return {
     after = function (_)
       require('which-key').setup({})
       local leaderCmsg
-      if nixCats('AI') then
+      if nixInfo(nil, "plugins", "lazy", "opencode-nvim") then
         leaderCmsg = "[c]olor [p]icker (and [c]lippy)"
       else
         leaderCmsg = "[c]olor [p]icker"
