@@ -29,5 +29,5 @@ vim.g.maplocalleader = ' '
 vim.loader.enable()
 vim.o.exrc = true
 if vim.g.vscode == nil then
-    require('birdee')
+  require('birdee')
 end
