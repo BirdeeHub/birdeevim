@@ -1,3 +1,4 @@
+local MP = ...
 local load_w_after = require("lzextras").loaders.with_after
 return {
   {
@@ -16,7 +17,7 @@ return {
     auto_enable = true,
     dep_of = { "blink.cmp" },
     after = function (_)
-      require('birdee.snippets')
+      require(MP:relpath "snippets")
     end,
   },
   {

@@ -9,6 +9,7 @@ do
     -- require('birdee.non_nix_download').setup({ your plugins })
   end
   nixInfo.utils = require(MP:relpath 'utils')
+  nixInfo.icons = require(MP:relpath 'icons')
 end
 
 if nixInfo.utils.get_nix_plugin_path("fn_finder") then

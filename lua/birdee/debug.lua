@@ -59,7 +59,7 @@ return {
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-      local birdee_icons = require('birdee.icons')
+      local birdee_icons = nixInfo.icons
       vim.fn.sign_define('DapBreakpoint', { text = birdee_icons.dap.Breakpoint, texthl = 'DiagnosticSignError' })
       vim.fn.sign_define('DapBreakpointCondition', { text = birdee_icons.dap.BreakpointCondition, texthl = 'DiagnosticSignInfo' })
       vim.fn.sign_define('DapBreakpointRejected', { text = birdee_icons.dap.BreakpointRejected[1], texthl = birdee_icons.dap.BreakpointRejected[2] })

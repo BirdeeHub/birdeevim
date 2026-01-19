@@ -67,9 +67,9 @@ return {
             {
               "diff",
               symbols = {
-                added = require("birdee.icons").git.added,
-                modified = require("birdee.icons").git.modified,
-                removed = require("birdee.icons").git.removed,
+                added = nixInfo.icons.git.added,
+                modified = nixInfo.icons.git.modified,
+                removed = nixInfo.icons.git.removed,
               },
             },
             'diagnostics',

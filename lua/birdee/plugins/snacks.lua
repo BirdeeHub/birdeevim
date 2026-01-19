@@ -7,7 +7,7 @@
 -- I'm being silly
 
 if nixInfo.utils.get_nix_plugin_path("snacks.nvim") then
-  vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = require("birdee.icons").arggreen })
+  vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = nixInfo.icons.arggreen })
 
   ---@diagnostic disable-next-line: invisible
   require('snacks').bigfile.setup()
