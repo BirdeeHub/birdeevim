@@ -60,8 +60,8 @@ return {
       require("codeium").setup({ enable_chat = false, })
     end,
   },
-  { import = MP:relpath "opencode", enabled = true, },
-  { import = MP:relpath "minuet", enabled = false, },
-  { import = MP:relpath "aider", enabled = false, },
-  { import = MP:relpath "codecompanion", enabled = false, },
+  { import = MP:relpath "opencode", },
+  { import = MP:relpath "minuet", },
+  { import = MP:relpath "aider", },
+  { import = MP:relpath "codecompanion", },
 }
