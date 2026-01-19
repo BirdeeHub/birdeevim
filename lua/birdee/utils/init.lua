@@ -228,69 +228,67 @@ M.auto_enable_handler = {
   end,
 }
 
-local function basic_lua_popup(input)
-    local function mk_popup(text)
-        local contents = {}
-        for line in text:gmatch("[^\r\n]+") do
-            table.insert(contents, line)
-        end
-        local bufnr = vim.api.nvim_create_buf(false, true)
-        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
-        vim.bo[bufnr].modifiable = false
-        vim.bo[bufnr].readonly = true
-        vim.bo[bufnr].filetype = "lua"
-
-        -- Get maximum width of text
-        local width = 0
-        for _, line in ipairs(contents) do
-            width = math.max(width, #line)
-        end
-
-        -- cap to screen size with margin
-        local height = #contents
-        local win_width = math.min(width + 2, vim.o.columns - 4)
-        local win_height = math.min(height + 2, vim.o.lines - 4)
-        local popopts = {
-            relative = "editor",
-            width = win_width,
-            height = win_height,
-            row = (vim.o.lines - win_height) / 2,
-            col = (vim.o.columns - win_width) / 2,
-            style = "minimal",
-            border = "rounded",
-        }
-
-        -- make the window
-        local win_id = vim.api.nvim_open_win(bufnr, true, popopts)
-        vim.wo[win_id].signcolumn = "no"
-        vim.wo[win_id].number = false
-        vim.wo[win_id].relativenumber = false
-
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "q", "<Cmd>close<CR>", { noremap = true, silent = true })
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "<Esc>", "<Cmd>close<CR>", { noremap = true, silent = true })
-
-        vim.api.nvim_create_autocmd("BufLeave", {
-            buffer = bufnr,
-            once = true,
-            callback = function()
-                vim.api.nvim_win_close(win_id, true)
-            end,
-        })
-    end
-    local ok, msg = pcall(mk_popup, input)
-    if not ok then
-        print("Popup failed to open due to error: " .. msg)
-        print("Falling back to print()")
-        print(input)
-    end
-end
-
 function M.debug_display(input)
-    if vim.g.nixcats_debug_ui ~= false then
-        basic_lua_popup(vim.inspect(input))
-    else
-        print(vim.inspect(input))
+  local filetype = type(input) ~= "string" and "lua" or nil
+  if filetype then
+    input = vim.inspect(input)
+  end
+  local function mk_popup(text)
+    local contents = {}
+    for line in text:gmatch("[^\r\n]+") do
+        table.insert(contents, line)
     end
+    local bufnr = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
+    vim.bo[bufnr].modifiable = false
+    vim.bo[bufnr].readonly = true
+    if filetype then
+      vim.bo[bufnr].filetype = filetype
+    end
+
+    -- Get maximum width of text
+    local width = 0
+    for _, line in ipairs(contents) do
+        width = math.max(width, #line)
+    end
+
+    -- cap to screen size with margin
+    local height = #contents
+    local win_width = math.min(width + 2, vim.o.columns - 4)
+    local win_height = math.min(height + 2, vim.o.lines - 4)
+    local popopts = {
+        relative = "editor",
+        width = win_width,
+        height = win_height,
+        row = (vim.o.lines - win_height) / 2,
+        col = (vim.o.columns - win_width) / 2,
+        style = "minimal",
+        border = "rounded",
+    }
+
+    -- make the window
+    local win_id = vim.api.nvim_open_win(bufnr, true, popopts)
+    vim.wo[win_id].signcolumn = "no"
+    vim.wo[win_id].number = false
+    vim.wo[win_id].relativenumber = false
+
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "q", "<Cmd>close<CR>", { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<Esc>", "<Cmd>close<CR>", { noremap = true, silent = true })
+
+    vim.api.nvim_create_autocmd("BufLeave", {
+        buffer = bufnr,
+        once = true,
+        callback = function()
+            vim.api.nvim_win_close(win_id, true)
+        end,
+    })
+  end
+  local ok, msg = pcall(mk_popup, input)
+  if not ok then
+    print("Popup failed to open due to error: " .. msg)
+    print("Falling back to print()")
+    print(input)
+  end
 end
 
 M.isNix = vim.g.nix_info_plugin_name ~= nil
