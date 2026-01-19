@@ -138,7 +138,6 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            config.doCheck = false;
           };
         in
         {
