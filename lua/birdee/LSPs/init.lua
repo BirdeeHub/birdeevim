@@ -12,6 +12,7 @@ return {
   },
   {
     "nvim-lspconfig",
+    auto_enable = true,
     lsp = function(plugin)
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
@@ -26,6 +27,7 @@ return {
   { import = MP:relpath "nixlua", },
   {
     "clangd_extensions.nvim",
+    auto_enable = true,
     dep_of = { "nvim-lspconfig", "blink.cmp", },
   },
   {
@@ -50,6 +52,7 @@ return {
   },
   {
     "vim-cmake",
+    auto_enable = true,
     ft = { "cmake" },
     cmd = {
       "CMakeGenerate", "CMakeClean", "CMakeBuild", "CMakeInstall",

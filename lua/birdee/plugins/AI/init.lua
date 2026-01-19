@@ -54,6 +54,7 @@ return {
   },
   {
     "windsurf.nvim",
+    auto_enable = true,
     event = "InsertEnter",
     after = function (_)
       require("codeium").setup({ enable_chat = false, })

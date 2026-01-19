@@ -1,6 +1,11 @@
 return {
   {
     "vim-fugitive",
+    auto_enable = {
+      "vim-fugitive",
+      "vim-rhubarb",
+      "diffview.nvim",
+    },
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
       "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",
       "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles",
@@ -19,6 +24,7 @@ return {
   },
   {
     "gitsigns.nvim",
+    auto_enable = true,
     event = "DeferredUIEnter",
     -- cmd = { "" },
     -- ft = "",

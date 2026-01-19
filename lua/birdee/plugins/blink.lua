@@ -2,15 +2,18 @@ local load_w_after = require("lzextras").loaders.with_after
 return {
   {
     "cmp-cmdline",
+    auto_enable = true,
     on_plugin = { "blink.cmp" },
     load = load_w_after,
   },
   {
     "blink.compat",
+    auto_enable = true,
     dep_of = { "cmp-cmdline", "cmp-conjure" },
   },
   {
     "luasnip",
+    auto_enable = true,
     dep_of = { "blink.cmp" },
     after = function (_)
       require('birdee.snippets')
@@ -18,10 +21,12 @@ return {
   },
   {
     "colorful-menu.nvim",
+    auto_enable = true,
     on_plugin = { "blink.cmp" },
   },
   {
     "blink.cmp",
+    auto_enable = true,
     event = "DeferredUIEnter",
     after = function (plugin)
       local hasWindsurf = nixInfo(nil, "plugins", "lazy", "windsurf.nvim") or nixInfo(nil, "plugins", "start", "windsurf.nvim")

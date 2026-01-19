@@ -1,5 +1,6 @@
 return {
   "conform.nvim",
+  auto_enable = true,
   -- cmd = { "" },
   -- event = "",
   -- ft = "",

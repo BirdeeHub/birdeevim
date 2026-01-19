@@ -1,6 +1,7 @@
 return {
   {
     "grapple.nvim",
+    auto_enable = true,
     -- cmd = { "" },
     event = "DeferredUIEnter",
     dep_of = { "lualine.nvim" },

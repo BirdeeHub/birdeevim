@@ -2,6 +2,7 @@ local get_nixd_opts = nixInfo(nil, "info", "nixdExtras", "get_configs")
 return {
   {
     "lazydev.nvim",
+    auto_enable = true,
     cmd = { "LazyDev" },
     ft = "lua",
     after = function(_)

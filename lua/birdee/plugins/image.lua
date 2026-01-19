@@ -1,6 +1,7 @@
 return {
   {
     "image.nvim",
+    auto_enable = true,
     ft = { "norg", "markdown", --[[ "html", "css" ]] },
     -- cmd = { "" },
     -- event = "DeferredUIEnter",
@@ -46,6 +47,7 @@ return {
   },
   {
     "img-clip.nvim",
+    auto_enable = true,
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     -- event = "",
     -- ft = "",

@@ -1,6 +1,7 @@
 return {
   {
     "nvim-dap-python",
+    auto_enable = true,
     on_plugin = { "nvim-dap", },
     after = function(_)
       require('dap-python').setup(vim.g.python3_host_prog)
@@ -8,6 +9,7 @@ return {
   },
   {
     "nvim-dap-go",
+    auto_enable = true,
     on_plugin = { "nvim-dap", },
     after = function(_)
       require("dap-go").setup()
@@ -15,6 +17,7 @@ return {
   },
   {
     "nvim-dap",
+    auto_enable = true,
     -- cmd = { "" },
     -- event = "",
     -- ft = "",

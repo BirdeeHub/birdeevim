@@ -2,6 +2,7 @@
 return {
   {
     "nvim-treesitter",
+    auto_enable = true,
     lazy = false,
     after = function(plugin)
       ---@param buf integer
@@ -46,6 +47,7 @@ return {
   },
   {
     "treesitter-textobjects",
+    auto_enable = true,
     lazy = false,
     before = function(plugin)
       -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/tree/main?tab=readme-ov-file#using-a-package-manager
@@ -180,6 +182,7 @@ return {
   },
   {
     "nvim-ts-autotag",
+    auto_enable = true,
     lazy = false,
     after = function (plugin)
       require('nvim-ts-autotag').setup({

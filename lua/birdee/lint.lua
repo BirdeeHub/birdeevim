@@ -1,5 +1,6 @@
 return {
   "nvim-lint",
+  auto_enable = true,
   -- cmd = { "" },
   event = "FileType",
   -- ft = "",

@@ -22,6 +22,7 @@ local pickpick = function(name, args) return function() Snacks.picker[name](args
 return {
   {
     "snacks.nvim",
+    auto_enable = true,
     event = { 'DeferredUIEnter' },
     dep_of = { "nvim-aider", "opencode.nvim" },
     load = function()end,

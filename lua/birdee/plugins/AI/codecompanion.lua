@@ -1,5 +1,6 @@
 return {
   "codecompanion.nvim",
+  auto_enable = true,
   cmd = {
     "CodeCompanion",
     "CodeCompanionCmd",

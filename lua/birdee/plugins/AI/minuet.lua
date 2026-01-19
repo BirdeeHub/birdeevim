@@ -1,5 +1,6 @@
 return {
   "minuet-ai.nvim",
+  auto_enable = true,
   event = "InsertEnter",
   cmd = { "Minuet" },
   after = function()

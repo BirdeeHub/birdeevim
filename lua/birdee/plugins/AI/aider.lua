@@ -1,5 +1,6 @@
 return {
   "nvim-aider",
+  auto_enable = true,
   cmd = "Aider",
   -- Example key mappings for common actions:
   keys = {

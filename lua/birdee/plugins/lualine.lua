@@ -4,6 +4,7 @@ vim.keymap.set("n", "<leader>lb", function() require("lsp_breadcrumbs")() end, {
 return {
   {
     "lualine.nvim",
+    auto_enable = true,
     -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",

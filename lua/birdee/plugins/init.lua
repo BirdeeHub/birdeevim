@@ -93,6 +93,7 @@ return {
   { import = MP:relpath "AI", },
   {
     "treesj",
+    auto_enable = true,
     cmd = { "TSJToggle" },
     keys = { { "<leader>Ft", ":TSJToggle<CR>", mode = { "n" }, desc = "treesj split/join" }, },
     after = function(_)
@@ -127,6 +128,7 @@ return {
   },
   {
     "typst-preview.nvim",
+    auto_enable = true,
     ft = "typst",
     after = function()
       require 'typst-preview'.setup {
@@ -177,6 +179,7 @@ return {
   },
   {
     "markdown-preview.nvim",
+    auto_enable = true,
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
     keys = {
@@ -190,6 +193,7 @@ return {
   },
   {
     "render-markdown.nvim",
+    auto_enable = true,
     ft = "markdown",
     after = function(_)
       require('render-markdown').setup({})
@@ -197,6 +201,7 @@ return {
   },
   {
     "otter.nvim",
+    auto_enable = true,
     -- event = "DeferredUIEnter",
     on_require = { "otter" },
     -- ft = { "markdown", "norg", "templ", "nix", "javascript", "html", "typescript", },
@@ -240,6 +245,7 @@ return {
   },
   {
     "dial.nvim",
+    auto_enable = true,
     keys = {
       { "<C-a>", function() require("dial.map").manipulate("increment", "normal") end, mode = "n", desc = "Increment" },
       { "<C-x>", function() require("dial.map").manipulate("decrement", "normal") end, mode = "n", desc = "Decrement" },
@@ -270,6 +276,7 @@ return {
   },
   {
     "undotree",
+    auto_enable = true,
     cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
     keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" }, },
     before = function(_)
@@ -279,6 +286,7 @@ return {
   },
   {
     "todo-comments.nvim",
+    auto_enable = true,
     event = "DeferredUIEnter",
     after = function(_)
       require("todo-comments").setup({ signs = false })
@@ -286,6 +294,7 @@ return {
   },
   {
     "visual-whitespace",
+    auto_enable = true,
     event = "DeferredUIEnter",
     after = function(_)
       require('visual-whitespace').setup({
@@ -298,6 +307,7 @@ return {
   },
   {
     "vim-startuptime",
+    auto_enable = true,
     cmd = { "StartupTime" },
     before = function(_)
       vim.g.startuptime_event_width = 0
@@ -307,6 +317,7 @@ return {
   },
   {
     "nvim-surround",
+    auto_enable = true,
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(_)
@@ -315,6 +326,7 @@ return {
   },
   {
     "eyeliner.nvim",
+    auto_enable = true,
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(_)
@@ -327,6 +339,11 @@ return {
   },
   {
     "vim-dadbod",
+    auto_enable = {
+      "vim-dadbod",
+      "vim-dadbod-ui",
+      "vim-dadbod-completion",
+    },
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
     load = function(name)
@@ -341,10 +358,12 @@ return {
   },
   {
     "vim-sleuth",
+    auto_enable = true,
     event = "DeferredUIEnter",
   },
   {
     "nvim-highlight-colors",
+    auto_enable = true,
     event = "DeferredUIEnter",
     -- ft = "",
     after = function(_)
