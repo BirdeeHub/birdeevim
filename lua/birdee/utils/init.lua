@@ -199,6 +199,8 @@ function M.extend_many(dst, ...)
   return dst
 end
 
+M.isNix = vim.g.nix_info_plugin_name ~= nil
+
 function M.get_nix_plugin_path(name)
   local nixInfo = require(vim.g.nix_info_plugin_name)
   return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
@@ -208,20 +210,22 @@ M.auto_enable_handler = {
   spec_field = "auto_enable",
   set_lazy = false,
   modify = function(plugin)
-    if type(plugin.auto_enable) == "table" then
-      for _, name in pairs(plugin.auto_enable) do
-        if not M.get_nix_plugin_path(name) then
-          plugin.enabled = false
-          break
+    if M.isNix then
+      if type(plugin.auto_enable) == "table" then
+        for _, name in pairs(plugin.auto_enable) do
+          if not M.get_nix_plugin_path(name) then
+            plugin.enabled = false
+            break
+          end
         end
-      end
-    elseif type(plugin.auto_enable) == "string" then
-      if not M.get_nix_plugin_path(plugin.auto_enable) then
-        plugin.enabled = false
-      end
-    elseif type(plugin.auto_enable) == "boolean" and plugin.auto_enable then
-      if not M.get_nix_plugin_path(plugin.name) then
-        plugin.enabled = false
+      elseif type(plugin.auto_enable) == "string" then
+        if not M.get_nix_plugin_path(plugin.auto_enable) then
+          plugin.enabled = false
+        end
+      elseif type(plugin.auto_enable) == "boolean" and plugin.auto_enable then
+        if not M.get_nix_plugin_path(plugin.name) then
+          plugin.enabled = false
+        end
       end
     end
     return plugin
@@ -290,7 +294,5 @@ function M.debug_display(input)
     print(input)
   end
 end
-
-M.isNix = vim.g.nix_info_plugin_name ~= nil
 
 return M
