@@ -17,7 +17,7 @@ return {
     auto_enable = true,
     dep_of = { "blink.cmp" },
     after = function (_)
-      require(MP:relpath "snippets")
+      require(MP:relpath("snippets", 1))
     end,
   },
   {
