@@ -303,6 +303,7 @@ in
     ];
   };
 
+  config.hosts.ruby.gemdir = ./misc_nix/ruby_provider;
   config.hosts.python3.withPackages = py: [
     (py.debugpy.overrideAttrs {
       doCheck = false;
@@ -330,14 +331,5 @@ in
       pytestCheckPhase = "";
       installCheckPhase = "";
     })
-  ];
-
-  config.hosts.ruby.overrides = [
-    {
-      type = "override";
-      data = {
-        gemdir = ./misc_nix/ruby_provider;
-      };
-    }
   ];
 }
