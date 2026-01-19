@@ -18,7 +18,8 @@ in
     type = lib.types.bool;
     default = true;
   };
-  config.settings.config_directory = if config.settings.wrapRc then config.settings.wrapped_config else config.settings.unwrapped_config;
+  config.settings.config_directory =
+    if config.settings.wrapRc then config.settings.wrapped_config else config.settings.unwrapped_config;
   options.settings.wrapped_config = lib.mkOption {
     type = wlib.types.stringable;
     default = ./.;
@@ -154,20 +155,24 @@ in
     cpplint
     cmake
     cmake-format
-    (inputs.wrappers.lib.wrapPackage {
-      inherit pkgs;
-      package = pkgs.scooter;
-      flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
-      drv.passAsFile = [ "scootcfg" ];
-      drv.scootcfg = /* toml */ ''
-        [editor_open]
-        command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'"
-      '';
-      drv.postBuild = ''
-        mkdir -p "$out/share/bundled_config"
-        { [ -e "$scootcfgPath" ] && cat "$scootcfgPath" || echo "$scootcfg"; } > "$out/share/bundled_config/config.toml"
-      '';
-    })
+    (inputs.wrappers.lib.wrapPackage [
+      { inherit pkgs; }
+      ({ pkgs, ... }: {
+        package = pkgs.scooter;
+        flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
+        drv.configJSON = builtins.toJSON {
+          editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+        };
+        drv.passAsFile = [ "configJSON" ];
+        drv.nativeBuildInputs = [ pkgs.remarshal ];
+        drv.buildPhase = ''
+          runHook preBuild
+          mkdir -p "$out/share/bundled_config"
+          json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
+          runHook postBuild
+        '';
+      })
+    ])
   ];
 
   config.info.javaExtras = {
