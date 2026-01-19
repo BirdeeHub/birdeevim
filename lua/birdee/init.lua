@@ -11,6 +11,15 @@ do
   nixInfo.utils = require(MP:relpath 'utils')
 end
 
+if nixInfo.utils.get_nix_plugin_path("fn_finder") then
+  -- NOTE: <c-k>*l is λ
+  require("fn_finder").fnl.install {
+      search_opts = { nvim = true },
+      -- hack: a unique value (will be hashed into bytecode cache for invalidation)
+      [nixInfo(nil, "wrapper_drv")] = nixInfo(nil, "wrapper_drv"),
+  }
+end
+
 -- vim.g.lze = {
 --   load = vim.cmd.packadd,
 --   verbose = true,
