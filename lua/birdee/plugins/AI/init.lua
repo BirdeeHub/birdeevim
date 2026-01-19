@@ -3,7 +3,7 @@ local isNix = vim.g.nix_info_plugin_name ~= nil
 return {
   {
     "AI_auths",
-    enabled = isNix and nixInfo(false, "info", "bitwarden_uuids"),
+    enabled = false, -- isNix and nixInfo(false, "info", "bitwarden_uuids"),
     dep_of = { "windsurf.nvim", "minuet-ai.nvim", "nvim-aider", "opencode.nvim" },
     load = function(_)
       local bitwardenAuths = nixInfo(nil, "info", "bitwarden_uuids")
