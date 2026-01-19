@@ -29,8 +29,8 @@ in
     default = "/home/birdee/.birdeevim";
   };
   config.settings.dont_link = config.binName != "nvim";
-  config.binName = if config.settings.wrapRc then "nvim" else "vim";
-  config.settings.aliases = lib.mkIf config.settings.wrapRc [ "vi" ];
+  config.binName = lib.mkIf (!config.settings.wrapRc) "vim";
+  config.settings.aliases = lib.mkIf (config.binName == "nvim") [ "vi" ];
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
   config.env.NVIM_APPNAME = "birdeevim";
 
