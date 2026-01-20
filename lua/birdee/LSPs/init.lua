@@ -1,5 +1,4 @@
 local MP = ...
--- TODO: figure out how to conditionally enable lsps and other programs (such as scooter)
 return {
   {
     "mason.nvim",
@@ -33,12 +32,14 @@ return {
   },
   {
     "cmake",
+    for_cat = "C",
     lsp = {
       filetypes = { "cmake" },
     },
   },
   {
     "clangd",
+    for_cat = "C",
     lsp = {
       filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
       -- unneded thanks to clangd_extensions-nvim I think
@@ -68,18 +69,21 @@ return {
   },
   {
     "gopls",
+    for_cat = "go",
     lsp = {
       filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", },
     },
   },
   {
     "fennel_ls",
+    for_cat = "fennel",
     lsp = {
       filetypes = { "fennel" },
     },
   },
   {
     "elixirls",
+    for_cat = "elixir",
     lsp = {
       filetypes = { "elixir", "eelixir", "heex", "surface" },
       cmd = { "elixir-ls" },
@@ -87,24 +91,28 @@ return {
   },
   {
     "tinymist",
+    for_cat = "typst",
     lsp = {
       filetypes = { 'typst', },
     }
   },
   {
     "jdtls",
+    for_cat = "jvm",
     lsp = {
       filetypes = { 'java', },
     }
   },
   {
     "zls",
+    for_cat = "zig",
     lsp = {
       filetypes = { 'zig', 'zir' },
     }
   },
   {
     "gradle_ls",
+    for_cat = "jvm",
     lsp = {
       filetypes = { "kotlin", "java" },
       root_pattern = { "settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw' },
@@ -113,6 +121,7 @@ return {
   },
   {
     "bashls",
+    for_cat = "bash",
     lsp = {
       filetypes = { "bash", "sh" },
     },
@@ -120,6 +129,7 @@ return {
   -- {"pyright", lsp = {}, },
   {
     "pylsp",
+    for_cat = "python",
     lsp = {
       filetypes = { "python" },
       settings = {
@@ -146,18 +156,21 @@ return {
   },
   {
     "marksman",
+    for_cat = "markdown",
     lsp = {
       filetypes = { "markdown", "markdown.mdx" },
     },
   },
   {
     "roc_ls",
+    for_cat = "roc",
     lsp = {
       filetypes = { "roc" },
     },
   },
   {
     "harper_ls",
+    for_cat = "markdown",
     lsp = {
       filetypes = { "markdown", "norg" },
       settings = {
@@ -167,12 +180,14 @@ return {
   },
   -- {
   --   "kotlin_lsp",
+  --   for_cat = "jvm",
   --   lsp = {
   --     filetypes = { 'kotlin' },
   --   }
   -- },
   {
     "kotlin_language_server",
+    for_cat = "jvm",
     lsp = {
       filetypes = { 'kotlin' },
       -- root_pattern = {"settings.gradle", "settings.gradle.kts", 'gradlew', 'mvnw'},

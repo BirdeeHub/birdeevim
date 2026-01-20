@@ -122,47 +122,51 @@ return {
         -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
       }
 
-      -- Install other lang specific config
-      -- dont know if this works
-      dap.adapters.elixir = {
-          type = 'executable',
-          command = vim.fn.exepath('elixir-debug-adapter')
-      }
+      if nixInfo(false, "info", "cats", "elixir") then
+        -- Install other lang specific config
+        -- dont know if this works
+        dap.adapters.elixir = {
+            type = 'executable',
+            command = vim.fn.exepath('elixir-debug-adapter')
+        }
 
-      dap.configurations.elixir = {
-          {
-              name = "Launch Elixir Debugger",
-              type = "elixir",
-              request = "launch",
-              program = "${file}",
-              cwd = "${fileDirname}",
-              env = {},
-              args = {},
-          }
-      }
+        dap.configurations.elixir = {
+            {
+                name = "Launch Elixir Debugger",
+                type = "elixir",
+                request = "launch",
+                program = "${file}",
+                cwd = "${fileDirname}",
+                env = {},
+                args = {},
+            }
+        }
+      end
 
-      -- doesnt work
-      dap.adapters.sh = {
-          type = 'executable',
-          command = vim.fn.exepath('bashdb')
-      }
-      dap.configurations.sh = {
-          {
-              name = "Launch Bash Debugger",
-              type = "sh",
-              request = "launch",
-              program = "${file}",
-              cwd = "${fileDirname}",
-              pathBashdb = vim.fn.exepath('bashdb'),
-              pathBashdbLib = vim.fn.fnamemodify(vim.fn.exepath('bashdb'), ":h") .. "/../share/bashdb",
-              pathBash = "bash",
-              pathCat = "cat",
-              pathMkfifo = "mkfifo",
-              pathPkill = "pkill",
-              env = {},
-              args = {},
-          }
-      }
+      if nixInfo(false, "info", "cats", "bash") then
+        -- doesnt work
+        dap.adapters.sh = {
+            type = 'executable',
+            command = vim.fn.exepath('bashdb')
+        }
+        dap.configurations.sh = {
+            {
+                name = "Launch Bash Debugger",
+                type = "sh",
+                request = "launch",
+                program = "${file}",
+                cwd = "${fileDirname}",
+                pathBashdb = vim.fn.exepath('bashdb'),
+                pathBashdbLib = vim.fn.fnamemodify(vim.fn.exepath('bashdb'), ":h") .. "/../share/bashdb",
+                pathBash = "bash",
+                pathCat = "cat",
+                pathMkfifo = "mkfifo",
+                pathPkill = "pkill",
+                env = {},
+                args = {},
+            }
+        }
+      end
 
     end,
   },

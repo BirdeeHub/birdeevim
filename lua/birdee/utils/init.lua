@@ -202,7 +202,6 @@ end
 M.isNix = vim.g.nix_info_plugin_name ~= nil
 
 function M.get_nix_plugin_path(name)
-  local nixInfo = require(vim.g.nix_info_plugin_name)
   return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
 end
 
@@ -226,6 +225,21 @@ M.auto_enable_handler = {
         if not M.get_nix_plugin_path(plugin.name) then
           plugin.enabled = false
         end
+      end
+    end
+    return plugin
+  end,
+}
+
+M.for_cat_handler = {
+  spec_field = "for_cat",
+  set_lazy = false,
+  modify = function(plugin)
+    if M.isNix then
+      if type(plugin.for_cat) == "table" then
+        plugin.enabled = nixInfo(plugin.for_cat.default, "info", "cats", plugin.for_cat.cat)
+      elseif type(plugin.for_cat) == "string" then
+        plugin.enabled = nixInfo(false, "info", "cats", plugin.for_cat)
       end
     end
     return plugin

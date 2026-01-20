@@ -30,6 +30,7 @@ end
 require('lze').register_handlers {
     require('lzextras').lsp,
     nixInfo.utils.auto_enable_handler,
+    nixInfo.utils.for_cat_handler,
 }
 require('lze').h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
 require('lze').load {

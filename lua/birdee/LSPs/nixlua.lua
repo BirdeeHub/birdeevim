@@ -16,6 +16,7 @@ return {
   },
   {
     "lua_ls",
+    for_cat = "lua",
     lsp = {
       filetypes = { 'lua' },
       settings = {
@@ -46,6 +47,7 @@ return {
   },
   {
     "nixd",
+    for_cat = "nix",
     after = function(_)
       vim.api.nvim_create_user_command("StartNilLSP", function()
         vim.lsp.start(vim.lsp.config.nil_ls)
