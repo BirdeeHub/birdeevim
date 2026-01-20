@@ -57,24 +57,6 @@ in
       lazygit
       imagemagick
       ueberzugpp
-      (wlib.wrapPackage [
-        { inherit pkgs; }
-        ({ pkgs, ... }: {
-          package = pkgs.scooter;
-          flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
-          drv.configJSON = builtins.toJSON {
-            editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
-          };
-          drv.passAsFile = [ "configJSON" ];
-          drv.nativeBuildInputs = [ pkgs.remarshal ];
-          drv.buildPhase = ''
-            runHook preBuild
-            mkdir -p "$out/share/bundled_config"
-            json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
-            runHook postBuild
-          '';
-        })
-      ])
     ];
     data = with pkgs.vimPlugins; [
       neovimPlugins.lze
@@ -140,6 +122,30 @@ in
       treesj
       dial-nvim
       vim-sleuth
+    ];
+  };
+
+  config.specs.scooter = {
+    data = null;
+    postpkgs = [
+      (wlib.wrapPackage [
+        { inherit pkgs; }
+        ({ pkgs, ... }: {
+          package = pkgs.scooter;
+          flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
+          drv.configJSON = builtins.toJSON {
+            editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+          };
+          drv.passAsFile = [ "configJSON" ];
+          drv.nativeBuildInputs = [ pkgs.remarshal ];
+          drv.buildPhase = ''
+            runHook preBuild
+            mkdir -p "$out/share/bundled_config"
+            json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
+            runHook postBuild
+          '';
+        })
+      ])
     ];
   };
 
