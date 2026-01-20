@@ -282,7 +282,7 @@ in
       blink-cmp
       blink-compat
       colorful-menu-nvim
-      neovimPlugins.treesitter-textobjects
+      nvim-treesitter-textobjects
       nvim-treesitter.withAllGrammars
       vim-rhubarb
       vim-fugitive

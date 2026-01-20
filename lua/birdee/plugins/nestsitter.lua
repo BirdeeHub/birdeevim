@@ -46,7 +46,7 @@ return {
     end,
   },
   {
-    "treesitter-textobjects",
+    "nvim-treesitter-textobjects",
     auto_enable = true,
     lazy = false,
     before = function(plugin)
