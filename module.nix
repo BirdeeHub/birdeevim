@@ -12,7 +12,7 @@ in
 {
   imports = [
     wlib.wrapperModules.neovim
-    ./nvim-lib.nix
+    ./nix/nvim-lib.nix
   ];
   options.settings.wrapRc = lib.mkOption {
     type = lib.types.bool;
@@ -41,7 +41,7 @@ in
     };
 
   config.settings.nvim_lua_env = lp: with lp; [ fennel ];
-  config.hosts.ruby.gemdir = ./misc_nix/ruby_provider;
+  config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
   config.info.cats = builtins.mapAttrs (_: v: v.enable) config.specs;
 
@@ -241,7 +241,7 @@ in
     nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
     get_configs =
       lib.generators.mkLuaInline # lua
-        ''function(type, path) return [[import ${./misc_nix/nixd.nix} ${
+        ''function(type, path) return [[import ${./nix/nixd.nix} ${
           builtins.path { path = pkgs.path; }
         } "]] .. type .. [[" ]] .. (path or "./.") end'';
   };
