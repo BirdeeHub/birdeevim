@@ -30,10 +30,12 @@
     options.prepkgs = lib.mkOption {
       type = lib.types.listOf wlib.types.stringable;
       default = [ ];
+      description = "a prepkgs spec field to put packages to prefix to the PATH";
     };
     options.postpkgs = lib.mkOption {
       type = lib.types.listOf wlib.types.stringable;
       default = [ ];
+      description = "a postpkgs spec field to put packages to suffix to the PATH";
     };
   };
   config.prefixVar =
