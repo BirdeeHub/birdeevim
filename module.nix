@@ -178,7 +178,6 @@ in
     ];
   };
   config.specs.AI = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       windsurf-nvim
@@ -217,7 +216,6 @@ in
   };
 
   config.specs.typst = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       typst-preview-nvim
@@ -230,7 +228,6 @@ in
     ];
   };
   config.specs.markdown = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       render-markdown-nvim
@@ -252,7 +249,6 @@ in
         } "]] .. type .. [[" ]] .. (path or "./.") end'';
   };
   config.specs.nix = {
-    enable = true;
     data = null;
     postpkgs = with pkgs; [
       nix-doc
@@ -264,7 +260,6 @@ in
     ];
   };
   config.specs.lua = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       lazydev-nvim
@@ -274,21 +269,18 @@ in
     ];
   };
   config.specs.bash = {
-    enable = true;
     data = null;
     postpkgs = with pkgs; [
       nodePackages.bash-language-server
     ];
   };
   config.specs.elixir = {
-    enable = true;
     data = null;
     postpkgs = with pkgs; [
       elixir-ls
     ];
   };
   config.specs.zig = {
-    enable = true;
     data = null;
     postpkgs = with pkgs; [
       zls
@@ -297,7 +289,6 @@ in
     ];
   };
   config.specs.fennel = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       { data = neovimPlugins.fn_finder; lazy = false; }
@@ -316,14 +307,12 @@ in
     ];
   };
   config.specs.roc = {
-    enable = true;
     data = null;
     postpkgs = with pkgs; [
       inputs.roc.packages.${stdenv.hostPlatform.system}.lang-server
     ];
   };
   config.specs.rust = {
-    enable = true;
     data = with pkgs.vimPlugins; [
       neovimPlugins.rustaceanvim
     ];
@@ -335,7 +324,6 @@ in
     ];
   };
   config.specs.C = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       vim-cmake
@@ -351,7 +339,6 @@ in
     ];
   };
   config.specs.web = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
     ];
@@ -398,7 +385,6 @@ in
     })
   ];
   config.specs.python = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       nvim-dap-python
@@ -426,7 +412,6 @@ in
   };
 
   config.specs.go = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       nvim-dap-go
@@ -448,7 +433,6 @@ in
     gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
   };
   config.specs.jvm = {
-    enable = true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       nvim-jdtls
