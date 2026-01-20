@@ -27,18 +27,18 @@
       ];
   };
   config.specMods = {
-    options.postpkgs = lib.mkOption {
-      type = lib.types.listOf wlib.types.stringable;
-      default = [ ];
-    };
     options.prepkgs = lib.mkOption {
       type = lib.types.listOf wlib.types.stringable;
       default = [ ];
     };
+    options.postpkgs = lib.mkOption {
+      type = lib.types.listOf wlib.types.stringable;
+      default = [ ];
+    };
   };
-  config.suffixVar =
+  config.prefixVar =
     let
-      autodeps = config.specCollect (acc: v: acc ++ (v.postpkgs or [ ])) [ ];
+      autodeps = config.specCollect (acc: v: acc ++ (v.prepkgs or [ ])) [ ];
     in
     lib.optional (autodeps != [ ]) {
       name = "PREPKGS_ADDITIONS";
@@ -48,9 +48,9 @@
         "${lib.makeBinPath (lib.unique autodeps)}"
       ];
     };
-  config.prefixVar =
+  config.suffixVar =
     let
-      autodeps = config.specCollect (acc: v: acc ++ (v.prepkgs or [ ])) [ ];
+      autodeps = config.specCollect (acc: v: acc ++ (v.postpkgs or [ ])) [ ];
     in
     lib.optional (autodeps != [ ]) {
       name = "POSTPKGS_ADDITIONS";
