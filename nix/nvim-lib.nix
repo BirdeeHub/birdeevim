@@ -5,6 +5,11 @@
   ...
 }:
 {
+  options.settings.cats = lib.mkOption {
+    readOnly = true;
+    type = lib.types.attrsOf lib.types.raw;
+    default = builtins.mapAttrs (_: v: v.enable) config.specs;
+  };
   options.nvim-lib.pluginsFromPrefix = lib.mkOption {
     type = lib.types.raw;
     readOnly = true;
