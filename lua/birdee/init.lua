@@ -3,10 +3,11 @@ do
   local ok
   ok, _G.nixInfo = pcall(require, vim.g.nix_info_plugin_name)
   if not ok then
-    -- TODO: non-nix compat
-    _G.nixInfo = setmetatable({}, { __call = function (_, default) return default end })
-    -- TODO: this in another file and require here.
-    -- require('birdee.non_nix_download').setup({ your plugins })
+    package.loaded[vim.g.nix_info_plugin_name] = setmetatable({}, {
+      __call = function (_, default) return default end
+    })
+    _G.nixInfo = require(vim.g.nix_info_plugin_name)
+    -- TODO: vim.pack.add in another file and require here.
   end
   nixInfo.utils = require(MP:relpath 'utils')
   nixInfo.icons = require(MP:relpath 'icons')
