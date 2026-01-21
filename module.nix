@@ -36,12 +36,6 @@ inputs:
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
   config.env.NVIM_APPNAME = "birdeevim";
 
-  config.specMods =
-    { parentSpec, ... }:
-    {
-      config.collateGrammars = lib.mkDefault (parentSpec.collateGrammars or true);
-    };
-
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
