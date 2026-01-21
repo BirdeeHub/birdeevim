@@ -48,15 +48,12 @@ in
   config.specs.general = {
     postpkgs = with pkgs; [
       tree-sitter
-      stylua
       universal-ctags
       ripgrep
       fd
       ast-grep
       jq
       lazygit
-      imagemagick
-      ueberzugpp
     ];
     data = with pkgs.vimPlugins; [
       neovimPlugins.lze
@@ -84,16 +81,20 @@ in
   config.specs.lazy = {
     lazy = true;
     after = [ "general" ];
+    postpkgs = with pkgs; [
+      imagemagick
+      ueberzugpp
+    ];
     data = with pkgs.vimPlugins; [
+      image-nvim
+      img-clip-nvim
       vim-dadbod
       vim-dadbod-ui
       vim-dadbod-completion
-      image-nvim
       otter-nvim
       nvim-dap
       nvim-dap-ui
       nvim-dap-virtual-text
-      img-clip-nvim
       nvim-highlight-colors
       which-key-nvim
       eyeliner-nvim
@@ -253,7 +254,6 @@ in
     postpkgs = with pkgs; [
       nix-doc
       nil
-      lua-language-server
       nixd
       nixfmt
       alejandra
@@ -266,6 +266,7 @@ in
     ];
     postpkgs = with pkgs; [
       lua-language-server
+      stylua
     ];
   };
   config.specs.bash = {
@@ -336,6 +337,8 @@ in
       cpplint
       cmake
       cmake-format
+      llvmPackages.bintools
+      lldb
     ];
   };
   config.specs.web = {
