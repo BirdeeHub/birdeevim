@@ -5,7 +5,6 @@ return {
     auto_enable = true,
     on_plugin = { "conjure" },
     load = nixInfo.lze.loaders.with_after,
-    ---@module 'lzextras'
   },
   {
     "conjure",

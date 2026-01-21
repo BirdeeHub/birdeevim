@@ -362,7 +362,6 @@ return {
         "vim-dadbod-ui",
       }
       nixInfo.lze.loaders.with_after("vim-dadbod-completion")
-      ---@module 'lzextras'
     end,
     after = function(_)
     end,

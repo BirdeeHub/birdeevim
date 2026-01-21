@@ -20,7 +20,6 @@ return {
         "vim-rhubarb",
         "diffview.nvim",
       }
-      ---@module 'lzextras'
     end,
   },
   {

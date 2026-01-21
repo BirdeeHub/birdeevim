@@ -10,6 +10,8 @@ return {
         library = {
           { words = { "uv", "vim%.uv", "vim%.loop" }, path = nixInfo("luvit-meta", "plugins", "start", "luvit-meta") .. "/library" },
           { words = { "nixInfo" }, path = nixInfo("", "info_plugin_path") .. '/lua' },
+          { words = { "nixInfo%.lze" }, path = nixInfo("lze", "plugins", "start", "lze") .. '/lua' },
+          { words = { "nixInfo%.lze" }, path = nixInfo("lzextras", "plugins", "start", "lzextras") .. '/lua' },
         },
       })
     end,

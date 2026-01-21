@@ -8,7 +8,6 @@ return {
       nixInfo.lze.loaders.multi { name, "mason-lspconfig.nvim" }
       require('mason').setup()
       require('mason-lspconfig').setup { automatic_installation = true, }
-      ---@module 'lzextras'
     end,
   },
   {
