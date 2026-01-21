@@ -32,7 +32,7 @@ return {
       { "<F7>", desc = "Debug: See last session result." },
     },
     load = function (name)
-      require("lzextras").loaders.multi {
+      nixInfo.lze.loaders.multi {
         name,
         "nvim-dap-ui",
         "nvim-dap-virtual-text",

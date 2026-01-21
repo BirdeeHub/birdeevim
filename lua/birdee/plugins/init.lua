@@ -357,11 +357,11 @@ return {
     cmd = { "DB", "DBUI", "DBUIAddConnection", "DBUIClose",
       "DBUIToggle", "DBUIFindBuffer", "DBUILastQueryInfo", "DBUIRenameBuffer", },
     load = function(name)
-      require("lzextras").loaders.multi {
+      nixInfo.lze.loaders.multi {
         name,
         "vim-dadbod-ui",
       }
-      require("lzextras").loaders.with_after("vim-dadbod-completion")
+      nixInfo.lze.loaders.with_after("vim-dadbod-completion")
     end,
     after = function(_)
     end,

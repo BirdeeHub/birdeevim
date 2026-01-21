@@ -104,7 +104,7 @@ return {
     },
     -- colorscheme = "",
     load = function (name)
-      require('lzextras').loaders.multi {
+      nixInfo.lze.loaders.multi {
         name,
         "telescope-fzf-native.nvim",
         "vim-fugitive",

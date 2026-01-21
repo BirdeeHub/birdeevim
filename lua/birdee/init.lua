@@ -12,6 +12,8 @@ do
   nixInfo.isNix = vim.g.nix_info_plugin_name ~= nil
   nixInfo.utils = require(MP:relpath 'utils')
   nixInfo.icons = require(MP:relpath 'icons')
+  ---@type lzextras | table
+  nixInfo.lze = setmetatable(require('lze'), getmetatable(require('lzextras')))
 end
 
 if nixInfo.utils.get_nix_plugin_path "fn_finder" then
@@ -29,13 +31,13 @@ end
 --   default_priority = 50,
 --   without_default_handlers = false,
 -- }
-require('lze').register_handlers {
-    require('lzextras').lsp,
+nixInfo.lze.register_handlers {
+    nixInfo.lze.lsp,
     nixInfo.utils.auto_enable_handler,
     nixInfo.utils.for_cat_handler,
 }
-require('lze').h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
-require('lze').load {
+nixInfo.lze.h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
+nixInfo.lze.load {
     { import = MP:relpath "plugins" },
     { import = MP:relpath "LSPs" },
     { import = MP:relpath "debug" },

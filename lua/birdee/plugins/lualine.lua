@@ -11,7 +11,7 @@ return {
     -- keys = "",
     -- colorscheme = "",
     load = function (name)
-      require("lzextras").loaders.multi {
+      nixInfo.lze.loaders.multi {
         name,
         "lualine-lsp-progress",
       }

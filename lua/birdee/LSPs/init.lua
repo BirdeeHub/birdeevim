@@ -5,7 +5,7 @@ return {
     enabled = not nixInfo.isNix,
     on_plugin = { "nvim-lspconfig" },
     load = function(name)
-      require('lzextras').loaders.multi { name, "mason-lspconfig.nvim" }
+      nixInfo.lze.loaders.multi { name, "mason-lspconfig.nvim" }
       require('mason').setup()
       require('mason-lspconfig').setup { automatic_installation = true, }
     end,

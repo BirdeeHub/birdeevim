@@ -1,5 +1,5 @@
 local MP = ...
-local load_w_after = require("lzextras").loaders.with_after
+local load_w_after = nixInfo.lze.loaders.with_after
 return {
   {
     "cmp-cmdline",
