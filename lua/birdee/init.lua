@@ -7,7 +7,7 @@ do
       __call = function (_, default) return default end
     })
     _G.nixInfo = require(vim.g.nix_info_plugin_name)
-    -- TODO: vim.pack.add in another file and require here.
+    -- TODO: for non-nix compat, vim.pack.add in another file and require here.
   end
   nixInfo.utils = require(MP:relpath 'utils')
   nixInfo.icons = require(MP:relpath 'icons')
