@@ -1,11 +1,11 @@
-local load_w_after = nixInfo.lze.loaders.with_after
 local MP = ...
 return {
   {
     "cmp-conjure",
     auto_enable = true,
     on_plugin = { "conjure" },
-    load = load_w_after,
+    load = nixInfo.lze.loaders.with_after,
+    ---@module 'lzextras'
   },
   {
     "conjure",
