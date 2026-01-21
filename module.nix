@@ -77,7 +77,6 @@ in
 
   config.specs.lazy = {
     lazy = true;
-    after = [ "general" ];
     data = with pkgs.vimPlugins; [
       img-clip-nvim
       vim-dadbod
@@ -119,6 +118,7 @@ in
   };
 
   config.specs.images = {
+    lazy = true;
     data = pkgs.vimPlugins.image-nvim;
     postpkgs = with pkgs; [
       imagemagick
