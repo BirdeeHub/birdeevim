@@ -6,14 +6,16 @@ inputs:
   pkgs,
   ...
 }:
-let
-  neovimPlugins = config.nvim-lib.pluginsFromPrefix "plugins-" inputs;
-in
 {
   imports = [
     wlib.wrapperModules.neovim
     ./nix/nvim-lib.nix
   ];
+  options.nvim-lib.neovimPlugins = lib.mkOption {
+    type = lib.types.raw;
+    readOnly = true;
+    default = config.nvim-lib.pluginsFromPrefix "plugins-" inputs;
+  };
   options.settings.test_mode = lib.mkOption {
     type = lib.types.bool;
     default = false;
@@ -54,22 +56,22 @@ in
       lazygit
     ];
     data = with pkgs.vimPlugins; [
-      neovimPlugins.lze
-      neovimPlugins.lzextras
+      config.nvim-lib.neovimPlugins.lze
+      config.nvim-lib.neovimPlugins.lzextras
       oil-nvim
       vim-repeat
-      neovimPlugins.nvim-luaref
+      config.nvim-lib.neovimPlugins.nvim-luaref
       nvim-nio
       nui-nvim
       nvim-web-devicons
       plenary-nvim
       mini-nvim
-      neovimPlugins."snacks.nvim"
+      config.nvim-lib.neovimPlugins."snacks.nvim"
       nvim-ts-autotag
-      neovimPlugins.argmark
-      neovimPlugins.tmux-navigate
+      config.nvim-lib.neovimPlugins.argmark
+      config.nvim-lib.neovimPlugins.tmux-navigate
       inputs.tomlua.packages.${pkgs.stdenv.hostPlatform.system}.vimPlugins-tomlua
-      neovimPlugins.shelua
+      config.nvim-lib.neovimPlugins.shelua
       nvim-spectre
       luvit-meta
     ];
@@ -91,7 +93,7 @@ in
       eyeliner-nvim
       todo-comments-nvim
       vim-startuptime
-      neovimPlugins.visual-whitespace
+      config.nvim-lib.neovimPlugins.visual-whitespace
       luasnip
       cmp-cmdline
       blink-cmp
@@ -101,7 +103,7 @@ in
       nvim-treesitter.withAllGrammars
       vim-rhubarb
       vim-fugitive
-      neovimPlugins.nvim-lspconfig
+      config.nvim-lib.neovimPlugins.nvim-lspconfig
       lualine-lsp-progress
       lualine-nvim
       gitsigns-nvim
@@ -182,7 +184,7 @@ in
     lazy = true;
     data = with pkgs.vimPlugins; [
       windsurf-nvim
-      neovimPlugins.opencode-nvim
+      config.nvim-lib.neovimPlugins.opencode-nvim
     ];
     postpkgs = with pkgs; [
       bitwarden-cli
@@ -292,7 +294,7 @@ in
   config.specs.fennel = {
     lazy = true;
     data = with pkgs.vimPlugins; [
-      { data = neovimPlugins.fn_finder; lazy = false; }
+      { data = config.nvim-lib.neovimPlugins.fn_finder; lazy = false; }
       (cmp-conjure.overrideAttrs {
         dependencies = [
           (conjure.overrideAttrs (prev: {
@@ -315,7 +317,7 @@ in
   };
   config.specs.rust = {
     data = with pkgs.vimPlugins; [
-      neovimPlugins.rustaceanvim
+      config.nvim-lib.neovimPlugins.rustaceanvim
     ];
     postpkgs = with pkgs; [
       (config.info.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
