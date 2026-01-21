@@ -72,7 +72,6 @@ in
       neovimPlugins.shelua
       nvim-spectre
       luvit-meta
-      luvit-meta
     ];
   };
 
