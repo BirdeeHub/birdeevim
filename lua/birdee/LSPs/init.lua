@@ -2,7 +2,7 @@ local MP = ...
 return {
   {
     "mason.nvim",
-    enabled = not nixInfo.utils.isNix,
+    enabled = not nixInfo.isNix,
     on_plugin = { "nvim-lspconfig" },
     load = function(name)
       require('lzextras').loaders.multi { name, "mason-lspconfig.nvim" }

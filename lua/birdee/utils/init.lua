@@ -1,4 +1,9 @@
 local M = {}
+
+local nixInfo = _G.nixInfo or setmetatable({ isNix = false }, {
+  __call = function (_, default) return default end
+})
+
 function M.write_file(opts, filename, content)
   local file = io.open(filename, opts.append and "a" or "w")
   if not file then return nil end
@@ -199,8 +204,6 @@ function M.extend_many(dst, ...)
   return dst
 end
 
-M.isNix = vim.g.nix_info_plugin_name ~= nil
-
 function M.get_nix_plugin_path(name)
   return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
 end
@@ -209,7 +212,7 @@ M.auto_enable_handler = {
   spec_field = "auto_enable",
   set_lazy = false,
   modify = function(plugin)
-    if M.isNix then
+    if nixInfo.isNix then
       if type(plugin.auto_enable) == "table" then
         for _, name in pairs(plugin.auto_enable) do
           if not M.get_nix_plugin_path(name) then
@@ -235,7 +238,7 @@ M.for_cat_handler = {
   spec_field = "for_cat",
   set_lazy = false,
   modify = function(plugin)
-    if M.isNix then
+    if nixInfo.isNix then
       if type(plugin.for_cat) == "table" then
         plugin.enabled = nixInfo(plugin.for_cat.default, "info", "cats", plugin.for_cat.cat)
       elseif type(plugin.for_cat) == "string" then

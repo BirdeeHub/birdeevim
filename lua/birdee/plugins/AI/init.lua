@@ -2,7 +2,7 @@ local MP = ...
 return {
   {
     "AI_auths",
-    enabled = false, -- nixInfo.utils.isNix and nixInfo(false, "info", "bitwarden_uuids"),
+    enabled = false, -- nixInfo.isNix and nixInfo(false, "info", "bitwarden_uuids"),
     dep_of = { "windsurf.nvim", "minuet-ai.nvim", "nvim-aider", "opencode.nvim" },
     load = function(_)
       local bitwardenAuths = nixInfo(nil, "info", "bitwarden_uuids")
@@ -11,7 +11,7 @@ return {
       local windsurfAuthInvalid = vim.fn.filereadable(windsurfAuthFile) == 0
       nixInfo.utils.get_auths({
         windsurf = {
-          enable = nixInfo.utils.isNix and windsurfAuthInvalid and bitwardenAuths.windsurf or false,
+          enable = nixInfo.isNix and windsurfAuthInvalid and bitwardenAuths.windsurf or false,
           cache = false, -- <- this one is cached by its action
           bw_id = bitwardenAuths.windsurf,
           localpath = (os.getenv("HOME") or "~") .. "/.secrets/windsurf",
@@ -34,7 +34,7 @@ return {
           end,
         },
         gemini = {
-          enable = nixInfo.utils.isNix and bitwardenAuths.gemini or false,
+          enable = nixInfo.isNix and bitwardenAuths.gemini or false,
           cache = true,
           bw_id = bitwardenAuths.gemini,
           localpath = (os.getenv("HOME") or "~") .. "/.secrets/gemini",

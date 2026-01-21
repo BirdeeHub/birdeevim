@@ -84,14 +84,14 @@ return {
   },
   {
     "rnix",
-    enabled = not nixInfo.utils.isNix,
+    enabled = not nixInfo.isNix,
     lsp = {
       filetypes = { "nix" },
     },
   },
   {
     "nil_ls",
-    enabled = not nixInfo.utils.isNix,
+    enabled = not nixInfo.isNix,
     lsp = {
       filetypes = { "nix" },
     },
