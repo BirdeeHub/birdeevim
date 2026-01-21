@@ -12,8 +12,9 @@ do
   nixInfo.isNix = vim.g.nix_info_plugin_name ~= nil
   nixInfo.utils = require(MP:relpath 'utils')
   nixInfo.icons = require(MP:relpath 'icons')
-  ---@type lzextras | table
-  nixInfo.lze = setmetatable(require('lze'), getmetatable(require('lzextras')))
+  local lzex = require('lzextras')
+  ---@type lzextras | lze
+  nixInfo.lze = setmetatable(require('lze'), getmetatable(lzex))
 end
 
 if nixInfo.utils.get_nix_plugin_path "fn_finder" then
