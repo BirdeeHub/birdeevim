@@ -85,12 +85,7 @@ in
   config.specs.lazy = {
     lazy = true;
     after = [ "general" ];
-    postpkgs = with pkgs; [
-      imagemagick
-      ueberzugpp
-    ];
     data = with pkgs.vimPlugins; [
-      image-nvim
       img-clip-nvim
       vim-dadbod
       vim-dadbod-ui
@@ -127,6 +122,14 @@ in
       treesj
       dial-nvim
       vim-sleuth
+    ];
+  };
+
+  config.specs.images = {
+    data = pkgs.vimPlugins.image-nvim;
+    postpkgs = with pkgs; [
+      imagemagick
+      ueberzugpp
     ];
   };
 
