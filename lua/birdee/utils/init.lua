@@ -1,6 +1,6 @@
 local M = {}
 
-local nixInfo = _G.nixInfo or function (_, default, ...) return default end
+local nixInfo = _G.nixInfo or function (default, ...) return default end
 
 function M.write_file(opts, filename, content)
   local file = io.open(filename, opts.append and "a" or "w")
