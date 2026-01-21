@@ -14,12 +14,12 @@ in
     wlib.wrapperModules.neovim
     ./nix/nvim-lib.nix
   ];
-  options.settings.wrapRc = lib.mkOption {
+  options.settings.test_mode = lib.mkOption {
     type = lib.types.bool;
     default = true;
   };
   config.settings.config_directory =
-    if config.settings.wrapRc then config.settings.wrapped_config else config.settings.unwrapped_config;
+    if config.settings.test_mode then config.settings.unwrapped_config else config.settings.wrapped_config;
   options.settings.wrapped_config = lib.mkOption {
     type = wlib.types.stringable;
     default = ./.;
@@ -29,7 +29,7 @@ in
     default = "/home/birdee/.birdeevim";
   };
   config.settings.dont_link = config.binName != "nvim";
-  config.binName = lib.mkIf (!config.settings.wrapRc) "vim";
+  config.binName = lib.mkIf config.settings.test_mode "vim";
   config.settings.aliases = lib.mkIf (config.binName == "nvim") [ "vi" ];
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
   config.env.NVIM_APPNAME = "birdeevim";
