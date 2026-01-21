@@ -9,6 +9,7 @@ do
     _G.nixInfo = require(vim.g.nix_info_plugin_name)
     -- TODO: for non-nix compat, vim.pack.add in another file and require here.
   end
+  nixInfo.isNix = vim.g.nix_info_plugin_name ~= nil
   nixInfo.utils = require(MP:relpath 'utils')
   nixInfo.icons = require(MP:relpath 'icons')
 end
