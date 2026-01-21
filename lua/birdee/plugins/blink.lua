@@ -131,7 +131,10 @@ return {
             if snippet.in_snippet() and not blink.is_visible() then
               return true
             else
-              if not snippet.in_snippet() and vim.fn.mode() == "n" then snippet.unlink_current() end
+              if not snippet.in_snippet() and vim.fn.mode() == "n" then
+                snippet.unlink_current()
+                vim.snippet.stop()
+              end
               return false
             end
           end,
