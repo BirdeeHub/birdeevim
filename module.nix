@@ -168,7 +168,7 @@ in
     );
   };
 
-  config.info.bitwarden_uuids = {
+  config.info.bitwarden_uuids = lib.mkIf config.specs.AI.enable {
     gemini = [
       "notes"
       "bcd197b5-ba11-4c86-8969-b2bd01506654"
@@ -241,7 +241,7 @@ in
     ];
   };
 
-  config.info.nixdExtras = {
+  config.info.nixdExtras = lib.mkIf config.specs.nix.enable {
     nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
     get_configs =
       lib.generators.mkLuaInline # lua
@@ -359,7 +359,7 @@ in
     ];
   };
 
-  config.hosts.python3.withPackages = py: [
+  config.hosts.python3.withPackages = lib.mkIf config.specs.python.enable (py: [
     (py.debugpy.overrideAttrs {
       doCheck = false;
       doInstallCheck = false;
@@ -386,7 +386,7 @@ in
       pytestCheckPhase = "";
       installCheckPhase = "";
     })
-  ];
+  ]);
   config.specs.python = {
     lazy = true;
     data = with pkgs.vimPlugins; [
@@ -430,7 +430,7 @@ in
       inputs.templ.packages.${stdenv.hostPlatform.system}.templ
     ];
   };
-  config.info.javaExtras = {
+  config.info.javaExtras = lib.mkIf config.specs.jvm.enable {
     java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
     java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
     gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
