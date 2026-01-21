@@ -21,7 +21,7 @@ if nixInfo.utils.get_nix_plugin_path "argmark" then
   end, { desc = "Arglist local/global toggle" })
 end
 
-if nixInfo(false, "info", "cats", "scooter") then
+if nixInfo(false, "settings", "cats", "scooter") then
   vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
   vim.keymap.set('v', '<leader>rr',
     function()

@@ -122,7 +122,7 @@ return {
         -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
       }
 
-      if nixInfo(false, "info", "cats", "elixir") then
+      if nixInfo(false, "settings", "cats", "elixir") then
         -- Install other lang specific config
         -- dont know if this works
         dap.adapters.elixir = {
@@ -143,7 +143,7 @@ return {
         }
       end
 
-      if nixInfo(false, "info", "cats", "bash") then
+      if nixInfo(false, "settings", "cats", "bash") then
         -- doesnt work
         dap.adapters.sh = {
             type = 'executable',

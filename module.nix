@@ -43,7 +43,11 @@ in
   config.settings.nvim_lua_env = lp: with lp; [ fennel ];
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
-  config.info.cats = builtins.mapAttrs (_: v: v.enable) config.specs;
+  options.settings.cats = lib.mkOption {
+    readOnly = true;
+    type = lib.types.attrsOf lib.types.raw;
+    default = builtins.mapAttrs (_: v: v.enable) config.specs;
+  };
 
   config.specs.general = {
     postpkgs = with pkgs; [

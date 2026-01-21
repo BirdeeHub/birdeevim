@@ -238,9 +238,9 @@ M.for_cat_handler = {
   modify = function(plugin)
     if vim.g.nix_info_plugin_name then
       if type(plugin.for_cat) == "table" then
-        plugin.enabled = nixInfo(plugin.for_cat.default, "info", "cats", plugin.for_cat.cat)
+        plugin.enabled = nixInfo(plugin.for_cat.default, "settings", "cats", plugin.for_cat.cat)
       elseif type(plugin.for_cat) == "string" then
-        plugin.enabled = nixInfo(false, "info", "cats", plugin.for_cat)
+        plugin.enabled = nixInfo(false, "settings", "cats", plugin.for_cat)
       end
     end
     return plugin
