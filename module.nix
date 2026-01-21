@@ -16,7 +16,7 @@ in
   ];
   options.settings.test_mode = lib.mkOption {
     type = lib.types.bool;
-    default = true;
+    default = false;
   };
   config.settings.config_directory =
     if config.settings.test_mode then config.settings.unwrapped_config else config.settings.wrapped_config;
