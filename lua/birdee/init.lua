@@ -32,9 +32,9 @@ end
 --   without_default_handlers = false,
 -- }
 nixInfo.lze.register_handlers {
-    nixInfo.lze.lsp,
     nixInfo.utils.auto_enable_handler,
     nixInfo.utils.for_cat_handler,
+    nixInfo.lze.lsp,
 }
 nixInfo.lze.h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
 nixInfo.lze.load {

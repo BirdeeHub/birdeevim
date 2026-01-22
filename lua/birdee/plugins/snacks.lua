@@ -115,10 +115,10 @@ return {
           config = {
             os = {
               editPreset = "nvim-remote",
-              edit = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{filename}})<CR>']=],
-              editAtLine = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{filename}}, {{line}})<CR>']=],
+              edit = vim.v.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{filename}})<CR>']=],
+              editAtLine = vim.v.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{filename}}, {{line}})<CR>']=],
+              openDirInEditor = vim.v.progpath .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{dir}})<CR>']=],
               editAtLineAndWait = nixInfo(vim.v.progpath, "progpath") .. " +{{line}} {{filename}}",
-              openDirInEditor = nixInfo(vim.v.progpath, "progpath") .. [=[ --server "$NVIM" --remote-send '<cmd>lua require("lazygit_fix")({{dir}})<CR>']=],
             },
           },
         },

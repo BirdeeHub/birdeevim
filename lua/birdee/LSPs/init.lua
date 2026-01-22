@@ -2,17 +2,17 @@ local MP = ...
 return {
   {
     "mason.nvim",
-    enabled = not nixInfo.isNix,
+    auto_enable = true,
+    priority = 55,
     on_plugin = { "nvim-lspconfig" },
-    load = function(name)
-      nixInfo.lze.loaders.multi { name, "mason-lspconfig.nvim" }
-      require('mason').setup()
-      require('mason-lspconfig').setup { automatic_installation = true, }
+    lsp = function(plugin)
+      vim.cmd.MasonInstall(plugin.name)
     end,
   },
   {
     "nvim-lspconfig",
     auto_enable = true,
+    priority = 50,
     lsp = function(plugin)
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)

@@ -51,7 +51,7 @@ inputs:
     ];
     data = with pkgs.vimPlugins; [
       config.nvim-lib.neovimPlugins.lze
-      # "/home/birdee/Projects/lze"
+      # { name = "lzextras"; data = "/home/birdee/Projects/lzextras"; }
       config.nvim-lib.neovimPlugins.lzextras
       oil-nvim
       vim-repeat
