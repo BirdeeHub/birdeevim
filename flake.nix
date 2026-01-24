@@ -122,7 +122,7 @@
         default = module;
         neovim = self.wrapperModules.default;
       };
-      wrappedModules = {
+      wrappers = {
         default = wrapper.config;
         neovim = self.wrappedModules.default;
       };
