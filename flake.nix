@@ -13,6 +13,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
@@ -21,6 +23,7 @@
     # neovim-src = { url = "github:BirdeeHub/neovim/pack_add_spec_passthru"; flake = false; };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
+      inputs.flake-parts.follows = "flake-parts";
       # inputs.neovim-src.follows = "neovim-src";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -106,38 +109,27 @@
       self,
       nixpkgs,
       wrappers,
+      flake-parts,
       ...
     }@inputs:
-    let
-      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
-      module = nixpkgs.lib.modules.importApply ./module.nix inputs;
-      wrapper = wrappers.lib.evalModule module;
-    in
-    {
-      overlays = {
-        default = final: prev: { neovim = wrapper.config.wrap { pkgs = final; }; };
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ wrappers.flakeModules.wrappers ];
+      systems = nixpkgs.lib.platforms.all;
+      flake.overlays = {
+        default = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
         neovim = self.overlays.default;
       };
-      wrapperModules = {
-        default = module;
+      flake.wrappers = {
+        default = nixpkgs.lib.modules.importApply ./module.nix inputs;
         neovim = self.wrapperModules.default;
       };
-      wrappers = {
-        default = wrapper.config;
-        neovim = self.wrappers.default;
-      };
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs {
+      perSystem =
+        { system, ... }:
+        {
+          _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-        in
-        {
-          default = wrapper.config.wrap { inherit pkgs; };
-          neovim = self.packages.${system}.default;
-        }
-      );
+        };
     };
 }
