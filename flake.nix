@@ -44,7 +44,7 @@
     fenix.url = "github:nix-community/fenix";
     nix-appimage.url = "github:ralismark/nix-appimage";
     templ.url = "github:a-h/templ";
-    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    # neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     plugins-argmark = {
       url = "github:BirdeeHub/argmark";
       # url = "git+file:/home/birdee/Projects/argmark";
