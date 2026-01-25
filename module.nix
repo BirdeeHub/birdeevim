@@ -27,7 +27,7 @@ inputs:
     default = ./.;
   };
   options.settings.unwrapped_config = lib.mkOption {
-    type = wlib.types.nonEmptyline;
+    type = wlib.types.nonEmptyLine;
     default = "/home/birdee/.birdeevim";
   };
   config.settings.dont_link = config.binName != "nvim";
