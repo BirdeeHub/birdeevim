@@ -20,6 +20,10 @@ inputs:
     type = lib.types.bool;
     default = false;
   };
+  options.settings.minimal = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+  };
   config.settings.config_directory =
     if config.settings.test_mode then config.settings.unwrapped_config else config.settings.wrapped_config;
   options.settings.wrapped_config = lib.mkOption {
@@ -36,10 +40,15 @@ inputs:
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
   config.env.NVIM_APPNAME = "birdeevim";
 
+  config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
+    config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
+  });
+
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
   config.specs.general = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
       tree-sitter
       universal-ctags
@@ -74,6 +83,7 @@ inputs:
   };
 
   config.specs.lazy = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
     data = with pkgs.vimPlugins; [
       img-clip-nvim
@@ -150,6 +160,7 @@ inputs:
 
   config.info.colorscheme = "moonfly";
   config.specs.colorscheme = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = builtins.getAttr (config.info.colorscheme or "onedark") (
       with pkgs.vimPlugins;
       {
@@ -248,6 +259,7 @@ inputs:
         } "]] .. type .. [[" ]] .. (path or "./.") end'';
   };
   config.specs.nix = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
     postpkgs = with pkgs; [
       nix-doc
@@ -258,6 +270,7 @@ inputs:
     ];
   };
   config.specs.lua = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
     data = with pkgs.vimPlugins; [
       lazydev-nvim
