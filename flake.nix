@@ -116,12 +116,12 @@
       imports = [ wrappers.flakeModules.wrappers ];
       systems = nixpkgs.lib.platforms.all;
       flake.overlays = {
-        default = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
-        neovim = self.overlays.default;
+        neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
+        default = self.overlays.neovim;
       };
       flake.wrappers = {
-        default = nixpkgs.lib.modules.importApply ./module.nix inputs;
-        neovim = self.wrapperModules.default;
+        neovim = nixpkgs.lib.modules.importApply ./module.nix inputs;
+        default = self.wrapperModules.neovim;
       };
       perSystem =
         { system, config, ... }:
@@ -130,8 +130,8 @@
             inherit system;
             config.allowUnfree = true;
           };
-          packages.minimal = config.packages.default.wrap { settings.minimal = true; };
-          packages.testing = config.packages.default.wrap { settings.test_mode = true; };
+          packages.minimal = config.packages.neovim.wrap { settings.minimal = true; };
+          packages.testing = config.packages.neovim.wrap { settings.test_mode = true; };
         };
     };
 }
