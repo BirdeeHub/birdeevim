@@ -18,6 +18,7 @@ return {
           -- remove tmux:// prefix
           local name = string.sub(path, 8)
           -- if integer, will go to window id, otherwise, you may put any valid tmux pane identifier such as tmux://{right-of}
+          -- TODO: maybe? IDK I haven't tried this in years
           require("birdee.fossil.tmux").grapple_tmux(name)
         else
           vim.cmd.edit(path)
