@@ -358,9 +358,7 @@ inputs:
     ];
     postpkgs = with pkgs; [
       htmx-lsp
-      htmx-lsp
       vscode-langservers-extracted
-      typescript-language-server
       eslint
       prettier
       tailwindcss-language-server
