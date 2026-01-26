@@ -124,12 +124,14 @@
         neovim = self.wrapperModules.default;
       };
       perSystem =
-        { system, ... }:
+        { system, config, ... }:
         {
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
+          packages.minimal = config.packages.default.wrap { settings.minimal = true; };
+          packages.testing = config.packages.default.wrap { settings.test_mode = true; };
         };
     };
 }
