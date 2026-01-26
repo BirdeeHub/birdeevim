@@ -329,7 +329,7 @@ inputs:
       config.nvim-lib.neovimPlugins.rustaceanvim
     ];
     postpkgs = with pkgs; [
-      (config.info.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
+      (config.info.rust.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
       rustup
       llvmPackages.bintools
       lldb
