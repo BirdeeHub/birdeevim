@@ -362,22 +362,6 @@
         "type": "github"
       }
     },
-    "plugins-nvim-aider": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1761640116,
-        "narHash": "sha256-LHSDfn9I+Ff83u8DZlom7fgZNwqSZ1h72y6NJq0eKTw=",
-        "owner": "GeorgesAlkhouri",
-        "repo": "nvim-aider",
-        "rev": "c8a4f952937d54f17dc23bd378e9e3b373f502b2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "GeorgesAlkhouri",
-        "repo": "nvim-aider",
-        "type": "github"
-      }
-    },
     "plugins-nvim-lspconfig": {
       "flake": false,
       "locked": {
@@ -538,7 +522,6 @@
         "plugins-fn_finder": "plugins-fn_finder",
         "plugins-lze": "plugins-lze",
         "plugins-lzextras": "plugins-lzextras",
-        "plugins-nvim-aider": "plugins-nvim-aider",
         "plugins-nvim-lspconfig": "plugins-nvim-lspconfig",
         "plugins-nvim-luaref": "plugins-nvim-luaref",
         "plugins-opencode-nvim": "plugins-opencode-nvim",

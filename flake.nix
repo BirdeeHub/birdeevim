@@ -74,10 +74,10 @@
       # url = "git+file:/home/birdee/Projects/fn_finder";
       flake = false;
     };
-    "plugins-nvim-aider" = {
-      url = "github:GeorgesAlkhouri/nvim-aider";
-      flake = false;
-    };
+    # "plugins-nvim-aider" = {
+    #   url = "github:GeorgesAlkhouri/nvim-aider";
+    #   flake = false;
+    # };
     "plugins-nvim-lspconfig" = {
       url = "github:neovim/nvim-lspconfig";
       flake = false;
