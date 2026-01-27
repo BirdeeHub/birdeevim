@@ -289,7 +289,7 @@ M.wk_handler = {
       wkstate.wk_spec = plugin.wk
       return
     end
-    local wk = M.try_get_mod("which-key")
+    local wk = M.try_get_mod "which-key"
     if wk then
       wk.add(plugin.wk)
     else
@@ -298,12 +298,12 @@ M.wk_handler = {
   end,
   -- after all the specs, try again
   post_def = function()
-    local wk = M.try_get_mod("which-key")
+    local wk = M.try_get_mod "which-key"
     if wk then
       loadstate(wk, wkstate)
     elseif wkstate.wk_spec then
       if not wkstate.called then
-        local lze = require('lze')
+        local lze = require 'lze'
         if lze.state(wkstate.wk_spec) ~= false then
           wkstate.called = true
           lze.load {
