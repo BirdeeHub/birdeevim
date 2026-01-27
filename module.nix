@@ -19,19 +19,23 @@ inputs:
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
 
   options.settings.test_mode = lib.mkOption {
-    type = lib.types.enum [ true false "dynamic" ];
+    type = lib.types.enum [
+      true
+      false
+      "dynamic"
+    ];
     default = false;
   };
   config.settings.config_directory =
-    let
-      toLua = lib.generators.toLua { };
-    in
-    if config.settings.test_mode == "dynamic"
-      then lib.generators.mkLuaInline
-        "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) == 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
-    else if config.settings.test_mode == true
-      then config.settings.unwrapped_config
-    else config.settings.wrapped_config;
+    if config.settings.test_mode == "dynamic" then
+      let
+        toLua = lib.generators.toLua { };
+      in
+      lib.generators.mkLuaInline "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) == 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
+    else if config.settings.test_mode == true then
+      config.settings.unwrapped_config
+    else
+      config.settings.wrapped_config;
 
   options.settings.wrapped_config = lib.mkOption {
     type = lib.types.either wlib.types.stringable lib.types.luaInline;
@@ -49,9 +53,12 @@ inputs:
     type = lib.types.bool;
     default = false;
   };
-  config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
-    config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
-  });
+  config.specMods = lib.mkIf config.settings.minimal (
+    { parentSpec, ... }:
+    {
+      config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
+    }
+  );
 
   config.env.NVIM_APPNAME = "birdeevim";
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
@@ -149,21 +156,24 @@ inputs:
     postpkgs = [
       (wlib.wrapPackage [
         { inherit pkgs; }
-        ({ pkgs, ... }: {
-          package = pkgs.scooter;
-          flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
-          drv.configJSON = builtins.toJSON {
-            editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
-          };
-          drv.passAsFile = [ "configJSON" ];
-          drv.nativeBuildInputs = [ pkgs.remarshal ];
-          drv.buildPhase = ''
-            runHook preBuild
-            mkdir -p "$out/share/bundled_config"
-            json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
-            runHook postBuild
-          '';
-        })
+        (
+          { pkgs, ... }:
+          {
+            package = pkgs.scooter;
+            flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
+            drv.configJSON = builtins.toJSON {
+              editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+            };
+            drv.passAsFile = [ "configJSON" ];
+            drv.nativeBuildInputs = [ pkgs.remarshal ];
+            drv.buildPhase = ''
+              runHook preBuild
+              mkdir -p "$out/share/bundled_config"
+              json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
+              runHook postBuild
+            '';
+          }
+        )
       ])
     ];
   };
@@ -317,7 +327,10 @@ inputs:
   config.specs.fennel = {
     lazy = true;
     data = with pkgs.vimPlugins; [
-      { data = config.nvim-lib.neovimPlugins.fn_finder; lazy = false; }
+      {
+        data = config.nvim-lib.neovimPlugins.fn_finder;
+        lazy = false;
+      }
       (cmp-conjure.overrideAttrs {
         dependencies = [
           (conjure.overrideAttrs (prev: {
