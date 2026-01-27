@@ -1,24 +1,8 @@
 local MP = ...
+-- TODO: do your colorscheme like you did it in the template
 local colorschemer = nixInfo("onedark", "info", 'colorscheme') -- also schemes lualine
 if colorschemer and colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
-end
-
-if nixInfo.utils.get_nix_plugin_path "argmark" then
-  require("argmark").setup {}
-  vim.keymap.set('n', '<leader><leader>n', function()
-    vim.cmd.next()
-  end, { desc = "Arglist next" })
-  vim.keymap.set('n', '<leader><leader>N', function()
-    vim.cmd.prev()
-  end, { desc = "Arglist prev" })
-  vim.keymap.set('n', '<leader><leader>t', function()
-    if vim.fn.arglistid() == 0 then
-      vim.cmd.arglocal()
-    else
-      vim.cmd.argglobal()
-    end
-  end, { desc = "Arglist local/global toggle" })
 end
 
 if nixInfo(false, "settings", "cats", "scooter") then
@@ -33,22 +17,7 @@ if nixInfo(false, "settings", "cats", "scooter") then
     { desc = 'Search selected text in scooter' })
 end
 
-if nixInfo.utils.get_nix_plugin_path "nvim-spectre" then
-  vim.keymap.set('n', '<leader>rs', '<cmd>lua require("spectre").toggle()<CR>', {
-    desc = "Toggle Spectre"
-  })
-  vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-    desc = "Search current word"
-  })
-  vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current word"
-  })
-  vim.keymap.set('n', '<leader>rf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-    desc = "Search on current file"
-  })
-end
-
--- NOTE: This is already lazy. It doesnt require it until you use the keybinding
+-- NOTE: This is in my config and I never intend to publish it. No need to conditionally do anything with it.
 vim.keymap.set({ 'n', }, "<leader>cpc", function() require("color_picker").rgbPicker() end, { desc = "color_picker rgb" })
 vim.keymap.set({ 'n', }, "<leader>cph", function() require("color_picker").hsvPicker() end, { desc = "color_picker hsv" })
 vim.keymap.set({ 'n', }, "<leader>cps", function() require("color_picker").hslPicker() end, { desc = "color_picker hsl" })
@@ -56,42 +25,9 @@ vim.keymap.set({ 'n', }, "<leader>cpg", function() require("color_picker").rgbGr
 vim.keymap.set({ 'n', }, "<leader>cpd", function() require("color_picker").hsvGradientPicker() end, { desc = "color_picker hsv gradient" })
 vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGradientPicker() end, { desc = "color_picker hsl gradient"})
 
-if nixInfo.utils.get_nix_plugin_path "mini.nvim" then
-  require("mini.sessions").setup {
-    -- Whether to read default session if Neovim opened without file arguments
-    autoread = true,
-
-    -- Whether to write currently read session before leaving it
-    autowrite = true,
-
-    -- Directory where global sessions are stored (use `''` to disable)
-    directory = vim.fn.stdpath('data') .. "/sessions",
-
-    -- File for local session (use `''` to disable)
-    file = 'Session.vim',
-
-    -- Whether to force possibly harmful actions (meaning depends on function)
-    force = { read = false, write = true, delete = false },
-
-    -- Hook functions for actions. Default `nil` means 'do nothing'.
-    hooks = {
-      -- Before successful action
-      pre = { read = nil, write = nil, delete = nil },
-      -- After successful action
-      post = { read = nil, write = nil, delete = nil },
-    },
-
-    -- Whether to print session path after action
-    verbose = { read = false, write = true, delete = true },
-  }
-end
-
-if nixInfo.utils.get_nix_plugin_path "oil.nvim" then
-  require(MP:relpath 'oil')
-end
-
 return {
   { import = MP:relpath "snacks", },
+  { import = MP:relpath "oil", },
   { import = MP:relpath "nestsitter", },
   { import = MP:relpath "blink", },
   { import = MP:relpath "conjure", },
@@ -100,6 +36,50 @@ return {
   { import = MP:relpath "git", },
   { import = MP:relpath "image", },
   { import = MP:relpath "AI", },
+  {
+    "mini.nvim",
+    auto_enable = true,
+    lazy = false,
+    after = function()
+      require("mini.sessions").setup {
+        -- Whether to read default session if Neovim opened without file arguments
+        autoread = true,
+
+        -- Whether to write currently read session before leaving it
+        autowrite = true,
+
+        -- Directory where global sessions are stored (use `''` to disable)
+        directory = vim.fn.stdpath('data') .. "/sessions",
+
+        -- File for local session (use `''` to disable)
+        file = 'Session.vim',
+
+        -- Whether to force possibly harmful actions (meaning depends on function)
+        force = { read = false, write = true, delete = false },
+
+        -- Hook functions for actions. Default `nil` means 'do nothing'.
+        hooks = {
+          -- Before successful action
+          pre = { read = nil, write = nil, delete = nil },
+          -- After successful action
+          post = { read = nil, write = nil, delete = nil },
+        },
+
+        -- Whether to print session path after action
+        verbose = { read = false, write = true, delete = true },
+      }
+    end,
+  },
+  {
+    "nvim-spectre",
+    auto_enable = true,
+    keys = {
+      { '<leader>rs', function() require("spectre").toggle() end, mode = { 'n' }, desc = "Toggle Spectre", },
+      { '<leader>rw', function() require("spectre").open_visual({select_word=true}) end, mode = { 'n' }, desc = "Search current word", },
+      { '<leader>rw', function() require("spectre").open_visual() end, mode = { 'v' }, desc = "Search current word", },
+      { '<leader>rf', function() require("spectre").open_file_search({select_word=true}) end, mode = { 'n' }, desc = "Search on current file", },
+    },
+  },
   {
     "treesj",
     auto_enable = true,

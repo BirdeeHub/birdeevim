@@ -3,6 +3,31 @@
 vim.keymap.set("n", "<leader>lb", function() require("lsp_breadcrumbs")() end, { desc = "Toggle [l]sp [b]readcrumbs" })
 return {
   {
+    "argmark",
+    auto_enable = true,
+    -- cmd = { "" },
+    event = "DeferredUIEnter",
+    -- ft = "",
+    -- keys = "",
+    -- colorscheme = "",
+    after = function()
+      require("argmark").setup {}
+      vim.keymap.set('n', '<leader><leader>n', function()
+        vim.cmd.next()
+      end, { desc = "Arglist next" })
+      vim.keymap.set('n', '<leader><leader>N', function()
+        vim.cmd.prev()
+      end, { desc = "Arglist prev" })
+      vim.keymap.set('n', '<leader><leader>t', function()
+        if vim.fn.arglistid() == 0 then
+          vim.cmd.arglocal()
+        else
+          vim.cmd.argglobal()
+        end
+      end, { desc = "Arglist local/global toggle" })
+    end,
+  },
+  {
     "lualine.nvim",
     auto_enable = true,
     -- cmd = { "" },
