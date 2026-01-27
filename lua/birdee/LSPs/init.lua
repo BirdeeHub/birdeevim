@@ -16,8 +16,6 @@ return {
     wk = {
       { "<leader>r", group = "[R]ename" },
       { "<leader>r_", hidden = true },
-      { "<leader>d", group = "[D]ocument" },
-      { "<leader>d_", hidden = true },
       { "<leader>w", group = "[W]orkspace" },
       { "<leader>w_", hidden = true },
     },

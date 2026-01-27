@@ -31,6 +31,8 @@ return {
     wk = {
       { "<leader>g", group = "[G]it" },
       { "<leader>g_", hidden = true },
+      { "<leader>d", group = "[D]ocument" },
+      { "<leader>d_", hidden = true },
       { "<leader>s", group = "[S]earch" },
       { "<leader>s_", hidden = true },
       { "<leader>f", group = "[f]ind" },
