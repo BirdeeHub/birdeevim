@@ -159,10 +159,14 @@ inputs:
     ];
   };
 
-  config.info.colorscheme = "moonfly";
+  options.settings.colorscheme = lib.mkOption {
+    type = lib.types.str;
+    default = "moonfly";
+  };
   config.specs.colorscheme = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
-    data = builtins.getAttr (config.info.colorscheme or "onedark") (
+    lazy = true;
+    data = builtins.getAttr (config.settings.colorscheme or "onedark") (
       with pkgs.vimPlugins;
       {
         "onedark" = onedarkpro-nvim;

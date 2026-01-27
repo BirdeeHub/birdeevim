@@ -1,10 +1,6 @@
 local MP = ...
--- TODO: do your colorscheme like you did it in the template
-local colorschemer = nixInfo("onedark", "info", 'colorscheme') -- also schemes lualine
-if colorschemer and colorschemer ~= "" then
-  vim.cmd.colorscheme(colorschemer)
-end
-
+-- NOTE: this is not a plugin.
+-- and it doesnt need to be lazily loaded.
 if nixInfo(false, "settings", "cats", "scooter") then
   vim.keymap.set('n', '<leader>rr', function() require('scooter').open_scooter() end, { desc = 'Open scooter' })
   vim.keymap.set('v', '<leader>rr',
@@ -26,6 +22,30 @@ vim.keymap.set({ 'n', }, "<leader>cpd", function() require("color_picker").hsvGr
 vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGradientPicker() end, { desc = "color_picker hsl gradient"})
 
 return {
+  {
+    "trigger_colorscheme",
+    event = "VimEnter",
+    load = function()
+      -- schedule so it runs after VimEnter
+      vim.schedule(function()
+        vim.cmd.colorscheme(nixInfo("onedark_dark", "settings", "colorscheme"))
+        vim.schedule(function()
+          -- I like this color. Use vim.schedule again to set it after the colorscheme is finished
+          vim.cmd([[hi LineNr guifg=#bb9af7]])
+        end)
+      end)
+    end
+  },
+  {
+    "onedarkpro.nvim",
+    auto_enable = true,
+    colorscheme = { "onedark", "onedark_dark", "onedark_vivid", "onelight" },
+  },
+  {
+    "vim-moonfly-colors",
+    auto_enable = true,
+    colorscheme = "moonfly",
+  },
   { import = MP:relpath "snacks", },
   { import = MP:relpath "oil", },
   { import = MP:relpath "nestsitter", },
