@@ -28,7 +28,7 @@ inputs:
     in
     if config.settings.test_mode == "dynamic"
       then lib.generators.mkLuaInline
-        "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) ~= 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
+        "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) == 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
     else if config.settings.test_mode == true
       then config.settings.unwrapped_config
     else config.settings.wrapped_config;
