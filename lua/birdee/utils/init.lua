@@ -307,10 +307,12 @@ M.wk_handler = {
             allow_again = true,
             lazy = true,
             load = function()
-              wk = try_load_wk(true)
-              if wk then
-                loadstate(wk, wkstate)
-              end
+              vim.schedule(function()
+                wk = try_load_wk(true)
+                if wk then
+                  loadstate(wk, wkstate)
+                end
+              end)
             end,
           }
         else
