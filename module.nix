@@ -29,8 +29,8 @@ inputs:
     default = ./.;
   };
   options.settings.unwrapped_config = lib.mkOption {
-    type = wlib.types.nonEmptyLine;
-    default = "/home/birdee/.birdeevim";
+    type = lib.types.either wlib.types.stringable lib.types.luaInline;
+    default = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/.birdeevim'";
   };
   config.settings.dont_link = config.binName != "nvim";
   config.binName = lib.mkIf config.settings.test_mode (lib.mkDefault "vim");
