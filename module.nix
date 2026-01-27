@@ -21,11 +21,6 @@ inputs:
   options.settings.test_mode = lib.mkOption {
     type = lib.types.enum [ true false "dynamic" ];
     default = false;
-    description = ''
-      If true, use impure config instead for fast edits
-
-      Both versions of the package may be installed simultaneously
-    '';
   };
   config.settings.config_directory =
     let
