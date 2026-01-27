@@ -22,12 +22,6 @@ return {
         { "<leader><leader>_", hidden = true },
         { "<leader>c", group = leaderCmsg },
         { "<leader>c_", hidden = true },
-        { "<leader>d", group = "[D]ocument" },
-        { "<leader>d_", hidden = true },
-        { "<leader>r", group = "[R]ename" },
-        { "<leader>r_", hidden = true },
-        { "<leader>w", group = "[W]orkspace" },
-        { "<leader>w_", hidden = true },
         { "<leader>t", group = "[T]oggle" },
         { "<leader>t_", hidden = true },
       }
