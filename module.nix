@@ -18,7 +18,6 @@ inputs:
   };
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
 
-  config.settings.compile_generated_lua = false;
   options.settings.test_mode = lib.mkOption {
     type = lib.types.enum [ true false "dynamic" ];
     default = false;
