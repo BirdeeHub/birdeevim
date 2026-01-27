@@ -276,6 +276,7 @@ local wkstate = {
 }
 M.wk_handler = {
   spec_field = "wk",
+  set_lazy = false,
   add = function(plugin)
     if not plugin.wk then
       return
