@@ -307,6 +307,7 @@ M.wk_handler = {
             allow_again = true,
             lazy = true,
             load = function()
+              -- load it after the after function instead of before just in case
               vim.schedule(function()
                 wk = try_load_wk(true)
                 if wk then
