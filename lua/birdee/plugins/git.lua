@@ -30,6 +30,10 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
+    wk = {
+      { "<leader>g", group = "[G]it" },
+      { "<leader>g_", hidden = true },
+    },
     after = function (_)
       require('gitsigns').setup({
         -- See `:help gitsigns.txt`

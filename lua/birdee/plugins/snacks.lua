@@ -28,6 +28,14 @@ return {
     event = { 'DeferredUIEnter' },
     dep_of = { "nvim-aider", "opencode.nvim" },
     load = function()end,
+    wk = {
+      { "<leader>g", group = "[G]it" },
+      { "<leader>g_", hidden = true },
+      { "<leader>s", group = "[S]earch" },
+      { "<leader>s_", hidden = true },
+      { "<leader>f", group = "[f]ind" },
+      { "<leader>f_", hidden = true },
+    },
     keys = {
       {'<c-\\>', function() Snacks.terminal() end, mode = {'n'}, desc = 'open snacks terminal' },
       {"<leader>_", function() Snacks.lazygit.open() end, mode = {"n"}, desc = 'LazyGit' },

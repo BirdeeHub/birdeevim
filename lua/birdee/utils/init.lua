@@ -247,4 +247,87 @@ M.for_cat_handler = {
   end,
 }
 
+local try_load_wk = function(force)
+  local wk = package.loaded["which-key"]
+  if not force then
+    return wk
+  end
+  if not wk then
+    local ok
+    ok, wk = pcall(require, "which-key")
+    if not ok then
+      vim.schedule(function() vim.notify("failed to load which-key", vim.log.levels.WARN, { title = "lze wk handler", }) end)
+      return nil
+    end
+  end
+  return wk
+end
+local loadstate = function(wk, state)
+  for _, def in pairs(state.wk_deferred) do
+    wk.add(def)
+  end
+  state.wk_deferred = {}
+  state.called = false
+end
+local wkstate = {
+  wk_deferred = {},
+  wk_spec = nil,
+  called = false,
+}
+M.wk_handler = {
+  spec_field = "wk",
+  add = function(plugin)
+    if not plugin.wk then
+      return
+    end
+    if type(plugin.wk) == "string" then
+      wkstate.wk_spec = plugin.wk
+      return
+    end
+    local wk = try_load_wk()
+    if wk then
+      wk.add(plugin.wk)
+    else
+      table.insert(wkstate.wk_deferred, plugin.wk)
+    end
+  end,
+  -- after all the specs, try again
+  post_def = function()
+    local wk = try_load_wk()
+    if wk then
+      loadstate(wk, wkstate)
+    elseif wkstate.wk_spec then
+      local lze = require('lze')
+      if not wkstate.called then
+        if lze.state(wkstate.wk_spec) ~= false then
+          wkstate.called = true
+          lze.load {
+            "WHICH_KEY_ADD_CALLS",
+            on_plugin = wkstate.wk_spec,
+            allow_again = true,
+            lazy = true,
+            load = function()
+              wk = try_load_wk(true)
+              if wk then
+                loadstate(wk, wkstate)
+              end
+            end,
+          }
+        else
+          wk = try_load_wk(true)
+          if wk then
+            loadstate(wk, wkstate)
+          end
+        end
+      end
+    end
+  end,
+  -- if the handler is unregistered
+  cleanup = function()
+    wkstate.wk_deferred = {}
+    wkstate.called = false
+    wkstate.wk_spec = nil
+  end,
+}
+
 return M

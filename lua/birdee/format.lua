@@ -7,6 +7,10 @@ return {
   keys = {
     { "<leader>FF", desc = "[F]ormat [F]ile" },
   },
+  wk = {
+    { "<leader>F", group = "[F]ormat" },
+    { "<leader>F_", hidden = true },
+  },
   -- colorscheme = "",
   after = function (_)
     local conform = require("conform")

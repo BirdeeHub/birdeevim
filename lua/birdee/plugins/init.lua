@@ -192,6 +192,10 @@ return {
     auto_enable = true,
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
+    wk = {
+      { "<leader>m", group = "[M]arkdown" },
+      { "<leader>m_", hidden = true },
+    },
     keys = {
       {"<leader>mp", "<cmd>MarkdownPreview <CR>", mode = {"n"}, noremap = true, desc = "markdown preview"},
       {"<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = {"n"}, noremap = true, desc = "markdown preview stop"},

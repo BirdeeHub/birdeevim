@@ -8,6 +8,10 @@ return {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
+    wk = {
+      { "<leader>h", group = "[H]arpoon" },
+      { "<leader>h_", hidden = true },
+    },
     after = function (_)
       local function grapple_default_select(path)
         if vim.startswith(path, "oil://") then

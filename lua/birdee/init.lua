@@ -34,6 +34,7 @@ end
 nixInfo.lze.register_handlers {
     nixInfo.utils.auto_enable_handler,
     nixInfo.utils.for_cat_handler,
+    nixInfo.utils.wk_handler,
     nixInfo.lze.lsp,
 }
 nixInfo.lze.h.lsp.set_ft_fallback(nixInfo.utils.lsp_ft_fallback)
