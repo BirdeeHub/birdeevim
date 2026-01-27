@@ -247,22 +247,26 @@ M.for_cat_handler = {
   end,
 }
 
-local try_load_wk = function(force)
-  local wk = package.loaded["which-key"]
+function M.try_get_mod(name, force)
+  local mod = package.loaded[name]
   if not force then
-    return wk
+    return mod
   end
-  if not wk then
+  if not mod then
     local ok
-    ok, wk = pcall(require, "which-key")
+    ok, mod = pcall(require, name)
     if not ok then
-      vim.schedule(function() vim.notify("failed to load which-key", vim.log.levels.WARN, { title = "lze wk handler", }) end)
       return nil
     end
   end
-  return wk
+  return mod
 end
+
 local loadstate = function(wk, state)
+  if not wk then
+    vim.schedule(function() vim.notify("failed to load which-key", vim.log.levels.WARN, { title = "lze wk handler", }) end)
+    return
+  end
   for _, def in pairs(state.wk_deferred) do
     wk.add(def)
   end
@@ -285,7 +289,7 @@ M.wk_handler = {
       wkstate.wk_spec = plugin.wk
       return
     end
-    local wk = try_load_wk()
+    local wk = M.try_get_mod("which-key")
     if wk then
       wk.add(plugin.wk)
     else
@@ -294,7 +298,7 @@ M.wk_handler = {
   end,
   -- after all the specs, try again
   post_def = function()
-    local wk = try_load_wk()
+    local wk = M.try_get_mod("which-key")
     if wk then
       loadstate(wk, wkstate)
     elseif wkstate.wk_spec then
@@ -310,18 +314,12 @@ M.wk_handler = {
             load = function()
               -- load it after the after function instead of before just in case
               vim.schedule(function()
-                wk = try_load_wk(true)
-                if wk then
-                  loadstate(wk, wkstate)
-                end
+                loadstate(M.try_get_mod("which-key", true), wkstate)
               end)
             end,
           }
         else
-          wk = try_load_wk(true)
-          if wk then
-            loadstate(wk, wkstate)
-          end
+          loadstate(M.try_get_mod("which-key", true), wkstate)
         end
       end
     end
