@@ -16,6 +16,7 @@ inputs:
     readOnly = true;
     default = config.nvim-lib.pluginsFromPrefix "plugins-" inputs;
   };
+  config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
 
   options.settings.test_mode = lib.mkOption {
     type = lib.types.bool;
@@ -34,6 +35,7 @@ inputs:
   config.settings.dont_link = config.binName != "nvim";
   config.binName = lib.mkIf config.settings.test_mode "vim";
   config.settings.aliases = lib.mkIf (config.binName == "nvim") [ "vi" ];
+  config.env.NVIM_APPNAME = "birdeevim";
 
   options.settings.minimal = lib.mkOption {
     type = lib.types.bool;
@@ -42,9 +44,6 @@ inputs:
   config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
     config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
   });
-
-  config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
-  config.env.NVIM_APPNAME = "birdeevim";
 
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
