@@ -252,7 +252,7 @@ function M.try_get_mod(name, force)
   if not force then
     return mod
   end
-  if not mod then
+  if mod == nil then
     local ok
     ok, mod = pcall(require, name)
     if not ok then
