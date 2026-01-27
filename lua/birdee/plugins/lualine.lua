@@ -43,7 +43,7 @@ return {
       }
     end,
     after = function (_)
-      local colorschemer = nixInfo("onedark_dark", "info", 'colorscheme') -- also schemes lualine
+      local colorschemer = nixInfo("onedark_dark", "settings", 'colorscheme') -- also schemes lualine
       -- local has_printed = false
       -- local components = {
       --   function(config, is_focused)

@@ -26,7 +26,8 @@ return {
     "trigger_colorscheme",
     -- dep_of = "lualine.nvim",
     -- event = "DeferredUIEnter",
-    lazy = false,
+    event = "VimEnter",
+    -- lazy = false,
     load = function()
       vim.schedule(function()
         vim.cmd.colorscheme(nixInfo("onedark_dark", "settings", "colorscheme"))
