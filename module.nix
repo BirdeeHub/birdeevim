@@ -16,6 +16,7 @@ inputs:
     readOnly = true;
     default = config.nvim-lib.pluginsFromPrefix "plugins-" inputs;
   };
+
   options.settings.test_mode = lib.mkOption {
     type = lib.types.bool;
     default = false;
