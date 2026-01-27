@@ -24,15 +24,14 @@ vim.keymap.set({ 'n', }, "<leader>cpb", function() require("color_picker").hslGr
 return {
   {
     "trigger_colorscheme",
-    event = "VimEnter",
+    -- dep_of = "lualine.nvim",
+    -- event = "DeferredUIEnter",
+    lazy = false,
     load = function()
-      -- schedule so it runs after VimEnter
+      vim.cmd.colorscheme(nixInfo("onedark_dark", "settings", "colorscheme"))
       vim.schedule(function()
-        vim.cmd.colorscheme(nixInfo("onedark_dark", "settings", "colorscheme"))
-        vim.schedule(function()
-          -- I like this color. Use vim.schedule again to set it after the colorscheme is finished
-          vim.cmd([[hi LineNr guifg=#bb9af7]])
-        end)
+        -- I like this color. Use vim.schedule to set it after the colorscheme is finished
+        vim.cmd([[hi LineNr guifg=#bb9af7]])
       end)
     end
   },

@@ -32,6 +32,7 @@ return {
     auto_enable = true,
     -- cmd = { "" },
     event = "DeferredUIEnter",
+    -- on_plugin = "trigger_colorscheme",
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
@@ -42,7 +43,7 @@ return {
       }
     end,
     after = function (_)
-      local colorschemer = nixInfo("onedark", "info", 'colorscheme') -- also schemes lualine
+      local colorschemer = nixInfo("onedark_dark", "info", 'colorscheme') -- also schemes lualine
       -- local has_printed = false
       -- local components = {
       --   function(config, is_focused)
