@@ -33,7 +33,7 @@ inputs:
     default = "/home/birdee/.birdeevim";
   };
   config.settings.dont_link = config.binName != "nvim";
-  config.binName = lib.mkIf config.settings.test_mode "vim";
+  config.binName = lib.mkIf config.settings.test_mode (lib.mkDefault "vim");
   config.settings.aliases = lib.mkIf (config.binName == "nvim") [ "vi" ];
 
   options.settings.minimal = lib.mkOption {
