@@ -297,8 +297,8 @@ M.wk_handler = {
     if wk then
       loadstate(wk, wkstate)
     elseif wkstate.wk_spec then
-      local lze = require('lze')
       if not wkstate.called then
+        local lze = require('lze')
         if lze.state(wkstate.wk_spec) ~= false then
           wkstate.called = true
           lze.load {
