@@ -16,7 +16,7 @@ return {
       else
         leaderCmsg = "[c]olor [p]icker"
       end
-      -- TODO: move more of these prefixes to wk spec values on the plugins
+      -- TODO: move more of these prefixes to wk spec values on the plugins?
       require('which-key').add {
         { "<leader><leader>", group = "buffer commands" },
         { "<leader><leader>_", hidden = true },
