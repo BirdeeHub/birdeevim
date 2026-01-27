@@ -18,14 +18,29 @@ inputs:
   };
   config.package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
 
+  config.settings.compile_generated_lua = false;
   options.settings.test_mode = lib.mkOption {
-    type = lib.types.bool;
+    type = lib.types.enum [ true false "dynamic" ];
     default = false;
+    description = ''
+      If true, use impure config instead for fast edits
+
+      Both versions of the package may be installed simultaneously
+    '';
   };
   config.settings.config_directory =
-    if config.settings.test_mode then config.settings.unwrapped_config else config.settings.wrapped_config;
+    let
+      toLua = lib.generators.toLua { };
+    in
+    if config.settings.test_mode == "dynamic"
+      then lib.generators.mkLuaInline
+        "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) ~= 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
+    else if config.settings.test_mode == true
+      then config.settings.unwrapped_config
+    else config.settings.wrapped_config;
+
   options.settings.wrapped_config = lib.mkOption {
-    type = wlib.types.stringable;
+    type = lib.types.either wlib.types.stringable lib.types.luaInline;
     default = ./.;
   };
   options.settings.unwrapped_config = lib.mkOption {
@@ -33,7 +48,7 @@ inputs:
     default = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/.birdeevim'";
   };
   config.settings.dont_link = config.binName != "nvim";
-  config.binName = lib.mkIf config.settings.test_mode (lib.mkDefault "vim");
+  config.binName = lib.mkIf (config.settings.test_mode == true) (lib.mkDefault "vim");
   config.settings.aliases = lib.mkIf (config.binName == "nvim") [ "vi" ];
 
   options.settings.minimal = lib.mkOption {
