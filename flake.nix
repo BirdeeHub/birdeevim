@@ -132,6 +132,7 @@
           };
           packages.minimal = config.packages.neovim.wrap { settings.minimal = true; };
           packages.testing = config.packages.neovim.wrap { settings.test_mode = true; };
+          packages.dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
         };
     };
 }
