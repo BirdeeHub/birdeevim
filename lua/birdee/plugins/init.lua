@@ -48,20 +48,20 @@ return {
     auto_enable = true,
     colorscheme = "moonfly",
   },
-  -- NOTE: this is 10ms faster... do I care?
-  -- { import = MP:relpath "snacks", },
-  -- { import = MP:relpath "oil", },
-  -- { import = MP:relpath "nestsitter", },
-  -- { import = MP:relpath "blink", },
-  -- { import = MP:relpath "conjure", },
-  -- { import = MP:relpath "grapple", },
-  -- { import = MP:relpath "lualine", },
-  -- { import = MP:relpath "git", },
-  -- { import = MP:relpath "image", },
-  -- { import = MP:relpath "AI", },
-  {
-    import = nixInfo.lze.mod_dir_to_spec(MP, function(name) return name ~= "snippets" and name ~= "init" end),
-  },
+  { import = MP:relpath "snacks", },
+  { import = MP:relpath "oil", },
+  { import = MP:relpath "nestsitter", },
+  { import = MP:relpath "blink", },
+  { import = MP:relpath "conjure", },
+  { import = MP:relpath "grapple", },
+  { import = MP:relpath "lualine", },
+  { import = MP:relpath "git", },
+  { import = MP:relpath "image", },
+  { import = MP:relpath "AI", },
+  -- NOTE: this is only 10ms slower... unfortunately I made a whole plugin to be fast so...
+  -- lze lets me avoid doing any directory searching outside of require itself.
+  -- This adds that back, but with the same performance hit (actually slightly less, lz.n does an extra search)
+  -- { import = nixInfo.lze.mod_dir_to_spec(MP, function(name) return name ~= "snippets" and name ~= "init" end), },
   {
     "mini.nvim",
     auto_enable = true,
