@@ -104,20 +104,13 @@ inputs:
     lazy = true;
     data = with pkgs.vimPlugins; [
       img-clip-nvim
-      {
-        data = vim-dadbod-ui;
-        pluginDeps = "lazy";
-      }
+      vim-dadbod
+      vim-dadbod-ui
       vim-dadbod-completion
       otter-nvim
-      {
-        data = nvim-dap-ui;
-        pluginDeps = "lazy";
-      }
-      {
-        data = nvim-dap-virtual-text;
-        pluginDeps = false;
-      }
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-virtual-text
       nvim-highlight-colors
       which-key-nvim
       eyeliner-nvim
@@ -331,30 +324,32 @@ inputs:
       zig-shell-completions
     ];
   };
-  config.specs.fennel = {
-    lazy = true;
-    data = with pkgs.vimPlugins; [
-      {
-        data = config.nvim-lib.neovimPlugins.fn_finder;
-        lazy = false;
-      }
-      {
-        pluginDeps = "lazy";
-        data = cmp-conjure.overrideAttrs {
-          dependencies = [
-            (conjure.overrideAttrs (prev: {
-              doCheck = false;
-              nvimSkipModules = (prev.nvimSkipModules or [ ]) ++ [ "conjure-spec.process_spec" ];
-            }))
-          ];
-        };
-      }
-    ];
-    postpkgs = with pkgs; [
-      fnlfmt
-      fennel-ls
-    ];
-  };
+  config.specs.fennel =
+    let
+      conjure_nocheck = (
+        pkgs.vimPlugins.conjure.overrideAttrs (prev: {
+          doCheck = false;
+          nvimSkipModules = (prev.nvimSkipModules or [ ]) ++ [ "conjure-spec.process_spec" ];
+        })
+      );
+    in
+    {
+      lazy = true;
+      data = with pkgs.vimPlugins; [
+        {
+          data = config.nvim-lib.neovimPlugins.fn_finder;
+          lazy = false;
+        }
+        conjure_nocheck
+        (cmp-conjure.overrideAttrs {
+          dependencies = [ conjure_nocheck ];
+        })
+      ];
+      postpkgs = with pkgs; [
+        fnlfmt
+        fennel-ls
+      ];
+    };
   config.specs.roc = {
     data = null;
     postpkgs = with pkgs; [
