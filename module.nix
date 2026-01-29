@@ -331,14 +331,17 @@ inputs:
         data = config.nvim-lib.neovimPlugins.fn_finder;
         lazy = false;
       }
-      (cmp-conjure.overrideAttrs {
-        dependencies = [
-          (conjure.overrideAttrs (prev: {
-            doCheck = false;
-            nvimSkipModules = (prev.nvimSkipModules or [ ]) ++ [ "conjure-spec.process_spec" ];
-          }))
-        ];
-      })
+      {
+        pluginDeps = "lazy";
+        data = cmp-conjure.overrideAttrs {
+          dependencies = [
+            (conjure.overrideAttrs (prev: {
+              doCheck = false;
+              nvimSkipModules = (prev.nvimSkipModules or [ ]) ++ [ "conjure-spec.process_spec" ];
+            }))
+          ];
+        };
+      }
     ];
     postpkgs = with pkgs; [
       fnlfmt
