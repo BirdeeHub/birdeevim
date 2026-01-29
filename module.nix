@@ -104,13 +104,20 @@ inputs:
     lazy = true;
     data = with pkgs.vimPlugins; [
       img-clip-nvim
-      vim-dadbod
-      vim-dadbod-ui
+      {
+        data = vim-dadbod-ui;
+        pluginDeps = "lazy";
+      }
       vim-dadbod-completion
       otter-nvim
-      nvim-dap
-      nvim-dap-ui
-      nvim-dap-virtual-text
+      {
+        data = nvim-dap-ui;
+        pluginDeps = "lazy";
+      }
+      {
+        data = nvim-dap-virtual-text;
+        pluginDeps = false;
+      }
       nvim-highlight-colors
       which-key-nvim
       eyeliner-nvim
