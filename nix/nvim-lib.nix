@@ -48,7 +48,7 @@
       description = "an optional mainInfo spec field to add to the main info plugin instead of the spec specific one";
     };
   };
-  config.info = lib.mkMerge (config.specCollect (acc: v: acc ++ lib.optional (v ? mainInfo) v.mainInfo) []);
+  config.info = lib.mkMerge (config.specCollect (acc: v: acc ++ lib.optional (v.mainInfo or { } != { }) v.mainInfo) []);
   config.prefixVar =
     let
       autodeps = config.specCollect (acc: v: acc ++ (v.prepkgs or [ ])) [ ];
