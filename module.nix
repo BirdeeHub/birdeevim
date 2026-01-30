@@ -201,17 +201,17 @@ inputs:
     );
   };
 
-  config.info.bitwarden_uuids = lib.mkIf config.specs.AI.enable {
-    gemini = [
-      "notes"
-      "bcd197b5-ba11-4c86-8969-b2bd01506654"
-    ];
-    windsurf = [
-      "notes"
-      "d9124a28-89ad-4335-b84f-b0c20135b048"
-    ];
-  };
   config.specs.AI = {
+    mainInfo.bitwarden_uuids = {
+      gemini = [
+        "notes"
+        "bcd197b5-ba11-4c86-8969-b2bd01506654"
+      ];
+      windsurf = [
+        "notes"
+        "d9124a28-89ad-4335-b84f-b0c20135b048"
+      ];
+    };
     lazy = true;
     data = with pkgs.vimPlugins; [
       windsurf-nvim
@@ -274,15 +274,15 @@ inputs:
     ];
   };
 
-  config.info.nixdExtras = lib.mkIf config.specs.nix.enable {
-    nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
-    get_configs =
-      lib.generators.mkLuaInline # lua
-        ''function(type, path) return [[import ${./nix/nixd.nix} ${
-          builtins.path { path = pkgs.path; }
-        } "]] .. type .. [[" ]] .. (path or "./.") end'';
-  };
   config.specs.nix = {
+    mainInfo.nixdExtras = {
+      nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
+      get_configs =
+        lib.generators.mkLuaInline # lua
+          ''function(type, path) return [[import ${./nix/nixd.nix} ${
+            builtins.path { path = pkgs.path; }
+          } "]] .. type .. [[" ]] .. (path or "./.") end'';
+    };
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
     postpkgs = with pkgs; [
@@ -471,12 +471,12 @@ inputs:
       inputs.templ.packages.${stdenv.hostPlatform.system}.templ
     ];
   };
-  config.info.javaExtras = lib.mkIf config.specs.jvm.enable {
-    java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
-    java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
-    gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
-  };
   config.specs.jvm = {
+    mainInfo.javaExtras = lib.mkIf config.specs.jvm.enable {
+      java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
+      java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+      gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
+    };
     lazy = true;
     data = with pkgs.vimPlugins; [
       nvim-jdtls
