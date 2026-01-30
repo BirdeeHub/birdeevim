@@ -65,7 +65,7 @@ inputs:
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
   config.specs.general = {
-    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    enable = lib.mkIf config.settings.minimal true;
     postpkgs = with pkgs; [
       tree-sitter
       universal-ctags
@@ -100,7 +100,7 @@ inputs:
   };
 
   config.specs.lazy = {
-    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    enable = lib.mkIf config.settings.minimal true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       img-clip-nvim
@@ -183,7 +183,7 @@ inputs:
     default = "moonfly";
   };
   config.specs.colorscheme = {
-    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    enable = lib.mkIf config.settings.minimal true;
     lazy = true;
     data = builtins.getAttr (config.settings.colorscheme or "onedark") (
       with pkgs.vimPlugins;
@@ -283,7 +283,7 @@ inputs:
             builtins.path { path = pkgs.path; }
           } "]] .. type .. [[" ]] .. (path or "./.") end'';
     };
-    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    enable = lib.mkIf config.settings.minimal true;
     data = null;
     postpkgs = with pkgs; [
       nix-doc
@@ -294,7 +294,7 @@ inputs:
     ];
   };
   config.specs.lua = {
-    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    enable = lib.mkIf config.settings.minimal true;
     lazy = true;
     data = with pkgs.vimPlugins; [
       lazydev-nvim
