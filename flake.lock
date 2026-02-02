@@ -349,11 +349,11 @@
     "plugins-lzextras": {
       "flake": false,
       "locked": {
-        "lastModified": 1770024573,
-        "narHash": "sha256-qBfvQn+uLm1BHNtXdKgv63CnS9PntgBWesih7n/h0Yc=",
+        "lastModified": 1770073207,
+        "narHash": "sha256-hWIN/wuDpSu8xwqPmdjQREKMbnPeo/nUybu3Z2q/emY=",
         "owner": "BirdeeHub",
         "repo": "lzextras",
-        "rev": "4d5b4760f967ab79dc1b54989ea75f19b91cca64",
+        "rev": "20bfe66fdfb1ee1a23994acec043191aa6d54e6e",
         "type": "github"
       },
       "original": {
