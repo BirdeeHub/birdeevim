@@ -472,7 +472,7 @@ inputs:
     ];
   };
   config.specs.jvm = {
-    mainInfo.javaExtras = lib.mkIf config.specs.jvm.enable {
+    mainInfo.javaExtras = {
       java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
       java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
       gradle-ls = pkgs.vscode-extensions.vscjava.vscode-gradle;
