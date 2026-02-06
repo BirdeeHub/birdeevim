@@ -15,6 +15,8 @@
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    # for stuff to follow
+    flake-utils.url = "github:numtide/flake-utils";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
@@ -42,10 +44,13 @@
 
     # scooter.url = "github:thomasschafer/scooter";
     roc.url = "github:roc-lang/roc";
+    # roc.inputs.nixpkgs.follows = "nixpkgs";
+    roc.inputs.flake-utils.follows = "flake-utils";
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.url = "github:ralismark/nix-appimage";
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
+    nix-appimage.inputs.flake-utils.follows = "flake-utils";
     templ.url = "github:a-h/templ";
     templ.inputs.nixpkgs.follows = "nixpkgs";
     templ.inputs.nixpkgs-unstable.follows = "nixpkgs";
