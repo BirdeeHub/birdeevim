@@ -368,7 +368,7 @@
         "type": "github"
       }
     },
-    "plugins-snacks.nvim": {
+    "plugins-snacks-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1763464072,
@@ -453,7 +453,7 @@
         "plugins-opencode-nvim": "plugins-opencode-nvim",
         "plugins-rustaceanvim": "plugins-rustaceanvim",
         "plugins-shelua": "plugins-shelua",
-        "plugins-snacks.nvim": "plugins-snacks.nvim",
+        "plugins-snacks-nvim": "plugins-snacks-nvim",
         "plugins-tmux-navigate": "plugins-tmux-navigate",
         "plugins-visual-whitespace": "plugins-visual-whitespace",
         "roc": "roc",

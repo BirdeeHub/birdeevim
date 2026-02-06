@@ -109,8 +109,11 @@ inputs:
       nvim-web-devicons
       plenary-nvim
       mini-nvim
-      # "/home/birdee/Projects/snacks.nvim"
-      config.nvim-lib.neovimPlugins."snacks.nvim"
+      {
+        pname = "snacks.nvim";
+        # data = "/home/birdee/Projects/snacks.nvim";
+        data = config.nvim-lib.neovimPlugins.snacks-nvim;
+      }
       nvim-ts-autotag
       config.nvim-lib.neovimPlugins.argmark
       config.nvim-lib.neovimPlugins.tmux-navigate
