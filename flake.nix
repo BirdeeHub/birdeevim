@@ -43,6 +43,9 @@
     # };
 
     # scooter.url = "github:thomasschafer/scooter";
+    # scooter.inputs.nixpkgs.follows = "nixpkgs";
+    # scooter.inputs.fenix.follows = "fenix";
+    # scooter.inputs.flake-utils.follows = "flake-utils";
     roc.url = "github:roc-lang/roc";
     # roc.inputs.nixpkgs.follows = "nixpkgs";
     roc.inputs.flake-utils.follows = "flake-utils";
