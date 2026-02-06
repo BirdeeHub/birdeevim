@@ -59,6 +59,11 @@ inputs:
       config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
     }
   );
+  config.hosts.python3.nvim-host.enable = !config.settings.minimal;
+  config.hosts.node.nvim-host.enable = !config.settings.minimal;
+  config.hosts.ruby.nvim-host.enable = !config.settings.minimal;
+  config.hosts.perl.nvim-host.enable = false;
+  config.hosts.neovide.nvim-host.enable = false;
 
   config.env.NVIM_APPNAME = "birdeevim";
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
