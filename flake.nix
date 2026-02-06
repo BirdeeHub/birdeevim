@@ -118,7 +118,10 @@
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ wrappers.flakeModules.wrappers ];
+      imports = [
+        wrappers.flakeModules.wrappers
+        inputs.flake-parts.flakeModules.bundlers
+      ];
       systems = nixpkgs.lib.platforms.all;
       flake.overlays = {
         neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
@@ -135,9 +138,14 @@
             inherit system;
             config.allowUnfree = true;
           };
-          packages.minimal = config.packages.neovim.wrap { settings.minimal = true; };
-          packages.testing = config.packages.neovim.wrap { settings.test_mode = true; };
-          packages.dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
+          packages = {
+            minimal = config.packages.neovim.wrap { settings.minimal = true; };
+            testing = config.packages.neovim.wrap { settings.test_mode = true; };
+            dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
+          };
+          # TODO: test this out and see if it warns about stuff thats in the main store but not chroot one
+          # then expose an option to have a package for that.
+          bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
         };
     };
 }
