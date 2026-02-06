@@ -59,7 +59,7 @@ inputs:
       config.enable = lib.mkOverride 999 (parentSpec.enable or false); # 999 is 1 higher than mkOptionDefault (1000)
     }
   );
-  config.hosts.python3.nvim-host.enable = !config.settings.minimal;
+  config.hosts.python3.nvim-host.enable = config.specs.python.enable;
   config.hosts.node.nvim-host.enable = !config.settings.minimal;
   config.hosts.ruby.nvim-host.enable = !config.settings.minimal;
   config.hosts.perl.nvim-host.enable = false;
