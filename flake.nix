@@ -48,6 +48,7 @@
     nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     templ.url = "github:a-h/templ";
     templ.inputs.nixpkgs.follows = "nixpkgs";
+    templ.inputs.nixpkgs-unstable.follows = "nixpkgs";
     # neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     plugins-argmark = {
       url = "github:BirdeeHub/argmark";
