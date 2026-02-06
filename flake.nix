@@ -142,9 +142,25 @@
             minimal = config.packages.neovim.wrap { settings.minimal = true; };
             testing = config.packages.neovim.wrap { settings.test_mode = true; };
             dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
+            bundle = config.packages.neovim.wrap (
+              { pkgs, ... }:
+              {
+                # the appimage needs extra stuff because its chroot shadows the store
+                extraPackages = with pkgs; [
+                  git
+                  nix
+                  wl-clipboard
+                  xclip
+                  xsel
+                ];
+              }
+            );
+            bundle-dyn = config.packages.bundle.wrap { settings.test_mode = "dynamic"; };
+            bundle-min = config.packages.bundle.wrap { settings.minimal = true; };
           };
-          # TODO: test this out and see if it warns about stuff thats in the main store but not chroot one
-          # then expose an option to have a package for that.
+          # nix bundle --bundler .\#default .\#bundle
+          # nix bundle --bundler .\#default .\#bundle-min
+          # nix bundle --bundler .\#default .\#bundle-dyn
           bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
         };
     };

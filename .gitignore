@@ -4,3 +4,4 @@
 **/repl-result-*
 **/.luarc.json
 **/.opencode
+*.AppImage
