@@ -25,7 +25,7 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.flake-parts.follows = "flake-parts";
       # inputs.neovim-src.follows = "neovim-src";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # kotlin-lsp = {
@@ -42,8 +42,11 @@
     # scooter.url = "github:thomasschafer/scooter";
     roc.url = "github:roc-lang/roc";
     fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
     nix-appimage.url = "github:ralismark/nix-appimage";
+    nix-appimage.inputs.nixpkgs.follows = "nixpkgs";
     templ.url = "github:a-h/templ";
+    templ.inputs.nixpkgs.follows = "nixpkgs";
     # neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
     plugins-argmark = {
       url = "github:BirdeeHub/argmark";
