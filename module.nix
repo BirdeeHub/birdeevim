@@ -69,6 +69,22 @@ inputs:
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
   config.hosts.ruby.gemdir = ./nix/ruby_provider;
 
+  options.settings.appimage = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+  };
+  # the appimage needs extra stuff because its chroot shadows the store
+  config.extraPackages = lib.mkIf config.settings.appimage (
+    with pkgs;
+    [
+      git
+      nix
+      wl-clipboard
+      xclip
+      xsel
+    ]
+  );
+
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal true;
     postpkgs = with pkgs; [
