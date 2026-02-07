@@ -8,11 +8,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1770361936,
-        "narHash": "sha256-vHZIldWqzXPZykvbjQ9w0DoBa1zWO968PogoMdL4Y4s=",
+        "lastModified": 1770447430,
+        "narHash": "sha256-smrRbWhvJF6BATB6pXbD8Cp04HRrVcYQkXqOhUF81nk=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "2d4752f3646f724a5c18468d3c842bde938d3bce",
+        "rev": "e1b28f6ca0d1722edceec1f2f3501558988d1aed",
         "type": "github"
       },
       "original": {
@@ -123,11 +123,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770336287,
-        "narHash": "sha256-czvrg8uyf2VWRmbobsthTAIJCg1GH4mEekyW01AvHco=",
+        "lastModified": 1770422685,
+        "narHash": "sha256-iiYLm2JrIPtahwOEv+0/dFnkKziiJQectkGvdJxFnT0=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "1cd999cdf20536ac6a6d1aa17ba0242eefd2312b",
+        "rev": "f64796929ddee4ba1159ea5d1ab6b1bfc1d523e9",
         "type": "github"
       },
       "original": {
@@ -139,11 +139,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1770334851,
-        "narHash": "sha256-FvT3T0l8eNr1Hv+D1Sj1jM/2vLkonLxpadTk6gdYHAo=",
+        "lastModified": 1770402523,
+        "narHash": "sha256-BuljN+J1f1vVRUV1FqOwhHUdp+V2VX150JsSORiN9gA=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "db133879b2a115cdf982b2899f154f1851d59a60",
+        "rev": "7720e52a0b4aa973540934ab6dcf4703dbde3b9f",
         "type": "github"
       },
       "original": {
@@ -178,11 +178,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770169770,
-        "narHash": "sha256-awR8qIwJxJJiOmcEGgP2KUqYmHG4v/z8XpL9z8FnT1A=",
+        "lastModified": 1770380644,
+        "narHash": "sha256-P7dWMHRUWG5m4G+06jDyThXO7kwSk46C1kgjEWcybkE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "aa290c9891fa4ebe88f8889e59633d20cc06a5f2",
+        "rev": "ae67888ff7ef9dff69b3cf0cc0fbfbcd3a722abe",
         "type": "github"
       },
       "original": {
@@ -275,11 +275,11 @@
     "plugins-nvim-lspconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1770245087,
-        "narHash": "sha256-OldwlRgCaH7S2vDC9WEvnSxok+l4GaBI2in8eZ3tsis=",
+        "lastModified": 1770384338,
+        "narHash": "sha256-0vh/+BF/BlGfyEaF3EtkiyuqNuLtjUec7tgmCMBhgZs=",
         "owner": "neovim",
         "repo": "nvim-lspconfig",
-        "rev": "0480b120318ec8bab27b530ffab6ee76a8c4d806",
+        "rev": "66fd02ad1c7ea31616d3ca678fa04e6d0b360824",
         "type": "github"
       },
       "original": {
@@ -307,11 +307,11 @@
     "plugins-opencode-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1770069362,
-        "narHash": "sha256-RzZGsKR9FFFz20mHFnYuLRRc1PuxNmHPDm8+Ay+jH2Q=",
+        "lastModified": 1770417731,
+        "narHash": "sha256-L2rJJeKH0tgMc4x009VKxHbcPvcZTvnlvo4CC1ZP54Q=",
         "owner": "NickvanDyke",
         "repo": "opencode.nvim",
-        "rev": "632ec5879295a3103fa39742b2e3f0639496c96f",
+        "rev": "a13db1c0364319d3ebde65030005dea9f8a198cc",
         "type": "github"
       },
       "original": {
@@ -410,11 +410,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1770274581,
-        "narHash": "sha256-z2RLJPQv0Xl4/kBosRO/T63jYRUd9JwLnOaM201JmFI=",
+        "lastModified": 1770384156,
+        "narHash": "sha256-M4wnfnjmOFGcTVZpvtF9FAPJVgoAbq4UjOhc1VnGZDk=",
         "owner": "roc-lang",
         "repo": "roc",
-        "rev": "ee4f17e2f49ac1c9acff9a1edd3ecb9845248f89",
+        "rev": "3d0fdde9ae6ffb5ef411f8c8c2fc2cdce22a74fe",
         "type": "github"
       },
       "original": {
@@ -576,11 +576,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770370849,
-        "narHash": "sha256-laCL8Of7IqZ2HJv0oIBt1N/H/VkF3jjAQi/3GtZok6c=",
+        "lastModified": 1770507082,
+        "narHash": "sha256-sa2iL5DjyOeWtPQvrNOkBb3jS/DU3MtjOL2M+oEawWk=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "852702ffdac6d4f35c5affc1a5786df6cd4996c8",
+        "rev": "858dc0b10ecd2ac013985432085125c71277926c",
         "type": "github"
       },
       "original": {
