@@ -4,7 +4,6 @@ return {
     auto_enable = {
       "vim-fugitive",
       "vim-rhubarb",
-      "diffview.nvim",
     },
     cmd = { "G", "Git", "Gdiffsplit", "Gvdiffsplit", "Gedit", "Gread", "Gwrite",
       "Ggrep", "GMove", "Glgrep", "GRename", "GDelete", "GRemove", "GBrowse",

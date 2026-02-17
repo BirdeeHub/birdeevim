@@ -118,6 +118,7 @@ return {
         -- toggle = {},
         -- rename = {},
         -- words = {},
+        -- git = {},
 
         picker = {},
         gitbrowse = {},
@@ -132,7 +133,6 @@ return {
             },
           },
         },
-        git = {},
         terminal = {},
         scope = {},
         indent = {
