@@ -110,7 +110,16 @@ inputs:
       nvim-web-devicons
       plenary-nvim
       mini-nvim
-      (pkgs.callPackage ./nix/juanlogs { inherit (inputs) juan-logs-src; })
+      (pkgs.rustPlatform.buildRustPackage {
+        pname = "juan-logs";
+        version = "main";
+        src = inputs.juan-logs-src;
+        cargoHash = "sha256-DlrFiJjE6wNLfMwpeI6iz32GxfOlTozKTTRT2LP88BQ=";
+        postInstall = ''
+          mv $out/lib $out/bin
+          cp -r $src/* $out
+        '';
+      })
       {
         pname = "snacks.nvim";
         # data = "/home/birdee/Projects/snacks.nvim";
