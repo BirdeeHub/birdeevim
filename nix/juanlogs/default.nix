@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage {
   src = juan-logs-src;
   cargoHash = "sha256-DlrFiJjE6wNLfMwpeI6iz32GxfOlTozKTTRT2LP88BQ=";
   postInstall = ''
-    cp -r $src/* $out
     mv $out/lib $out/bin
+    cp -r $src/* $out
   '';
 }
