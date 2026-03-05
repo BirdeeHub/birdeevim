@@ -110,6 +110,7 @@ inputs:
       nvim-web-devicons
       plenary-nvim
       mini-nvim
+      (pkgs.callPackage ./nix/juanlogs { inherit (inputs) juan-logs-src; })
       {
         pname = "snacks.nvim";
         # data = "/home/birdee/Projects/snacks.nvim";

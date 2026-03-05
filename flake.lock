@@ -112,6 +112,22 @@
         "type": "github"
       }
     },
+    "juan-logs-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772683929,
+        "narHash": "sha256-YWXKrr+0xFdSBrOaxyFJDqRFmGe25lU9w4Fyk6nlf+k=",
+        "owner": "minigian",
+        "repo": "juan-logs.nvim",
+        "rev": "dfbcbd237c78d8a3f060fa654df4c0496e667090",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minigian",
+        "repo": "juan-logs.nvim",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-parts": [
@@ -428,6 +444,7 @@
         "fenix": "fenix",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "juan-logs-src": "juan-logs-src",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-appimage": "nix-appimage",
         "nixpkgs": "nixpkgs",

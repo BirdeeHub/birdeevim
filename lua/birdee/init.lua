@@ -25,6 +25,17 @@ if nixInfo.utils.get_nix_plugin_path "fn_finder" then
   }
 end
 
+if nixInfo.utils.get_nix_plugin_path "juan-logs" then
+  require("juanlog").setup({
+      threshold_size = 1024 * 1024 * 100, -- 100MB
+      mode = "dynamic",
+      lazy = true, -- background indexing. prevents neovim from freezing on 50GB files
+      patterns = { "*.log", "*.txt", "*.csv", "*.json", "*.lock" }, -- Use the plugin for these filetypes
+      enable_custom_statuscol = true, -- fakes absolute line numbers
+      syntax = false -- set to true to enable native vim syntax (can be slow on huge files)
+  })
+end
+
 -- vim.g.lze = {
 --   load = vim.cmd.packadd,
 --   verbose = true,

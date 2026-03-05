@@ -31,6 +31,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    juan-logs-src = {
+      flake = false;
+      url = "github:minigian/juan-logs.nvim";
+    };
+
     # kotlin-lsp = {
     #   url = "https://download-cdn.jetbrains.com/kotlin-lsp/0.252.17811/kotlin-0.252.17811.zip";
     #   flake = false;
