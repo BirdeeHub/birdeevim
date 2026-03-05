@@ -203,7 +203,11 @@ function M.extend_many(dst, ...)
 end
 
 function M.get_nix_plugin_path(name)
-  return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
+  if vim.g.nix_info_plugin_name then
+    return nixInfo(nil, "plugins", "lazy", name) or nixInfo(nil, "plugins", "start", name)
+  else
+    return vim.api.nvim_get_runtime_file("pack/*/*/" .. name, false)[1]
+  end
 end
 
 M.auto_enable_handler = {
