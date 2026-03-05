@@ -51,7 +51,7 @@ return {
       on_attach = function(client, bufnr)
         require(MP:relpath 'on_attach')(client, bufnr)
         -- the stuff they were adding that was overriding my on_attach
-        -- In a pcall because I was too lazy to do non-nix compat properly in my get_nix_plugin_path helper.
+        -- In a pcall because I was too lazy to do non-nix compat properly in my get_nix_plugin_path helpers I added in my config
         pcall(function()
           dofile(nixInfo.utils.get_nix_plugin_path("nvim-lspconfig") .. "/lsp/clangd.lua").on_attach(client, bufnr)
         end)
