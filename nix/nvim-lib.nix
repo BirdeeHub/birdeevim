@@ -47,10 +47,10 @@
       default = { };
       description = "an optional mainInfo spec field to add to the main info plugin instead of the spec specific one";
     };
-    options.no-op = lib.mkOption {
+    options.settings = lib.mkOption {
       type = wlib.types.attrsRecursive;
       default = { };
-      description = "for putting stuff in a spec and grabbing it in that spec";
+      description = "no-op set for putting stuff in a spec and grabbing it in that spec in a way that acts like settings for that spec";
     };
   };
   config.info = lib.mkMerge (config.specCollect (acc: v: acc ++ lib.optional (v.mainInfo or { } != { }) v.mainInfo) []);

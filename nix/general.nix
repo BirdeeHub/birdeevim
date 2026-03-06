@@ -166,8 +166,8 @@
       windsurf-nvim
       config.nvim-lib.neovimPlugins.opencode-nvim
     ];
-    no-op = {
-      opencode-settings = {
+    settings = {
+      opencode = {
         "$schema" = "https://opencode.ai/config.json";
         provider = {
           ollama = {
@@ -196,7 +196,7 @@
       (wlib.evalPackage {
         imports = [ wlib.wrapperModules.opencode ];
         inherit pkgs;
-        settings = config.specs.AI.no-op.opencode-settings;
+        settings = config.specs.AI.settings.opencode;
       })
     ];
   };
