@@ -1,11 +1,12 @@
-{ roc, fenix, templ, ... }@inputs:
+inputs:
 {
   config,
   wlib,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   config.specs.typst = {
     lazy = true;
     data = with pkgs.vimPlugins; [

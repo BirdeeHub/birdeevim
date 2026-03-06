@@ -4,7 +4,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
@@ -28,7 +29,10 @@
       nvim-web-devicons
       plenary-nvim
       mini-nvim
-      config.nvim-lib.neovimPlugins.juan-logs
+      {
+        enable = !config.settings.minimal;
+        data = config.nvim-lib.neovimPlugins.juan-logs;
+      }
       {
         pname = "snacks.nvim";
         # data = "/home/birdee/Projects/snacks.nvim";
