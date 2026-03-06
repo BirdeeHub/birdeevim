@@ -9,11 +9,12 @@ inputs:
 {
   _file = ./default.nix;
   key = ./default.nix;
+  config._module.args.inputs = inputs;
   imports = [
     wlib.wrapperModules.neovim
     ./nvim-lib.nix
     ./general.nix
-    (import ./langs.nix inputs)
+    ./langs.nix
   ];
   options.nvim-lib.neovimPlugins = lib.mkOption {
     type = lib.types.raw;
