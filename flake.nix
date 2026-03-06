@@ -133,7 +133,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         wrappers.flakeModules.wrappers
-        inputs.flake-parts.flakeModules.bundlers
+        flake-parts.flakeModules.bundlers
       ];
       systems = nixpkgs.lib.platforms.all;
       flake.overlays = {
@@ -147,7 +147,7 @@
       perSystem =
         { system, config, ... }:
         {
-          _module.args.pkgs = import inputs.nixpkgs {
+          _module.args.pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
