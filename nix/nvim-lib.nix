@@ -2,6 +2,7 @@
   config,
   lib,
   wlib,
+  pkgs,
   ...
 }:
 {
@@ -52,6 +53,11 @@
       default = { };
       description = "no-op freeform submodule for putting stuff in a spec and grabbing it in that spec in a way that acts like settings for that spec";
     };
+    options.wrappers = lib.mkOption {
+      type = lib.types.attrsOf (wlib.types.subWrapperModule { inherit pkgs; });
+      default = { };
+      description = "attrs of wrapper modules to be installed with this spec";
+    };
   };
   config.info = lib.mkMerge (
     config.specCollect (acc: v: acc ++ lib.optional (v.mainInfo or { } != { }) v.mainInfo) [ ]
@@ -71,13 +77,21 @@
   config.suffixVar =
     let
       autodeps = config.specCollect (acc: v: acc ++ (v.postpkgs or [ ])) [ ];
+      wrappers =
+        lib.pipe
+          [ ]
+          [
+            (config.specCollect (acc: v: acc ++ [ (builtins.attrValues (v.wrappers or { })) ]))
+            lib.flatten
+            (map (v: v.wrapper))
+          ];
     in
     lib.optional (autodeps != [ ]) {
       name = "POSTPKGS_ADDITIONS";
       data = [
         "PATH"
         ":"
-        "${lib.makeBinPath (lib.unique autodeps)}"
+        "${lib.makeBinPath (wrappers ++ lib.unique autodeps)}"
       ];
     };
 }

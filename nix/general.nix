@@ -102,40 +102,28 @@
 
   config.specs.scooter = {
     data = null;
-    settings = {
-      options.package = lib.mkOption {
-        default.settings.editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
-        type = wlib.types.subWrapperModule [
-          { inherit pkgs; }
-          (
-            { config, pkgs, ... }:
-            {
-              imports = [ wlib.modules.default ];
-              options.settings = lib.mkOption {
-                type = lib.types.json;
-                default = { };
-              };
-              config.package = pkgs.scooter;
-              config.flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
-              config.drv.configJSON = builtins.toJSON (
-                lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings
-              );
-              config.drv.passAsFile = [ "configJSON" ];
-              config.drv.nativeBuildInputs = [ pkgs.remarshal ];
-              config.drv.buildPhase = ''
-                runHook preBuild
-                mkdir -p "$out/share/bundled_config"
-                json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
-                runHook postBuild
-              '';
-            }
-          )
-        ];
+    wrappers.scooter =
+      { config, pkgs, ... }:
+      {
+        imports = [ wlib.modules.default ];
+        options.settings = lib.mkOption {
+          type = lib.types.json;
+        };
+        config.settings.editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+        config.package = pkgs.scooter;
+        config.flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
+        config.drv.configJSON = builtins.toJSON (
+          lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings
+        );
+        config.drv.passAsFile = [ "configJSON" ];
+        config.drv.nativeBuildInputs = [ pkgs.remarshal ];
+        config.drv.buildPhase = ''
+          runHook preBuild
+          mkdir -p "$out/share/bundled_config"
+          json2toml "$configJSONPath" "$out/share/bundled_config/config.toml"
+          runHook postBuild
+        '';
       };
-    };
-    postpkgs = [
-      config.specs.scooter.settings.package.wrapper
-    ];
   };
 
   options.settings.colorscheme = lib.mkOption {
@@ -177,14 +165,9 @@
       windsurf-nvim
       config.nvim-lib.neovimPlugins.opencode-nvim
     ];
-    settings = {
-      options.opencode = lib.mkOption {
-        type = wlib.types.subWrapperModule [
-          wlib.wrapperModules.opencode
-          { inherit pkgs; }
-        ];
-      };
-      config.opencode.settings = {
+    wrappers.opencode = {
+      imports = [ wlib.wrapperModules.opencode ];
+      settings = {
         "$schema" = "https://opencode.ai/config.json";
         provider = {
           ollama = {
@@ -210,7 +193,6 @@
     };
     postpkgs = with pkgs; [
       bitwarden-cli
-      config.specs.AI.settings.opencode.wrapper
     ];
   };
 }
