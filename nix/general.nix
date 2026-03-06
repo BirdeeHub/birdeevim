@@ -134,7 +134,7 @@
       };
     };
     postpkgs = [
-      (config.specs.scooter.settings.package.wrapper)
+      config.specs.scooter.settings.package.wrapper
     ];
   };
 
