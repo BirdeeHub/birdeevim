@@ -6,7 +6,7 @@
   ...
 }: {
   config.specs.general = {
-    enable = lib.mkIf config.settings.minimal true;
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
       tree-sitter
       universal-ctags
@@ -45,7 +45,7 @@
   };
 
   config.specs.lazy = {
-    enable = lib.mkIf config.settings.minimal true;
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
     data = with pkgs.vimPlugins; [
       img-clip-nvim
@@ -128,7 +128,7 @@
     default = "moonfly";
   };
   config.specs.colorscheme = {
-    enable = lib.mkIf config.settings.minimal true;
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
     data = builtins.getAttr (config.settings.colorscheme or "onedark") (
       with pkgs.vimPlugins;

@@ -40,7 +40,7 @@
             builtins.path { path = pkgs.path; }
           } "]] .. type .. [[" ]] .. (path or "./.") end'';
     };
-    enable = lib.mkIf config.settings.minimal true;
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
     postpkgs = with pkgs; [
       nix-doc
@@ -51,7 +51,7 @@
     ];
   };
   config.specs.lua = {
-    enable = lib.mkIf config.settings.minimal true;
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
     data = with pkgs.vimPlugins; [
       lazydev-nvim
