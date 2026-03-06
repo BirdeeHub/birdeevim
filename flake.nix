@@ -141,7 +141,7 @@
         default = self.overlays.neovim;
       };
       flake.wrappers = {
-        neovim = nixpkgs.lib.modules.importApply ./module.nix inputs;
+        neovim = nixpkgs.lib.modules.importApply ./nix inputs;
         default = self.wrapperModules.neovim;
       };
       perSystem =
