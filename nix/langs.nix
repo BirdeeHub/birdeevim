@@ -7,6 +7,8 @@ inputs:
   ...
 }:
 {
+  _file = ./langs.nix;
+  key = ./langs.nix;
   config.specs.typst = {
     lazy = true;
     data = with pkgs.vimPlugins; [

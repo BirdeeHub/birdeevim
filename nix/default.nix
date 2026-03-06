@@ -7,11 +7,13 @@ inputs:
   ...
 }:
 {
+  _file = ./default.nix;
+  key = ./default.nix;
   imports = [
     wlib.wrapperModules.neovim
     ./nvim-lib.nix
     ./general.nix
-    (lib.modules.importApply ./langs.nix inputs)
+    (import ./langs.nix inputs)
   ];
   options.nvim-lib.neovimPlugins = lib.mkOption {
     type = lib.types.raw;
