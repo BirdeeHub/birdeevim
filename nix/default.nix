@@ -70,7 +70,7 @@ inputs:
   config.specMods = lib.mkIf config.settings.minimal (
     { parentSpec, ... }:
     {
-      config.enable = lib.mkOverride 1499 (parentSpec.enable or false); # 1499 is 1 higher than mkOptionDefault (1500)
+      config.enable = lib.mkOverride 1400 (parentSpec.enable or false); # 1400 is 100 higher than mkOptionDefault (1500)
     }
   );
   config.hosts.python3.nvim-host.enable = config.specs.python.enable;
