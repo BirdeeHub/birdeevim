@@ -19,8 +19,8 @@ The value of the second form is spliced into the first arg of the third, etc."
   x)
 
 (fn -?|> [val ?e ...]
-  "Nil-safe thread-first macro.
-Same as -> except will short-circuit with nil when it encounters a nil value."
+  "Nil-safe index method chain macro.
+Same as -|> except will short-circuit with nil when it encounters a nil value."
   (if (= nil ?e)
       val
       (not (idempotent-expr? val))
