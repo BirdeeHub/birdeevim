@@ -48,7 +48,7 @@ system: type: path: let
   };
   targetFlake = getFlake "path:${toString path}";
   getCfgs = atp: attrValues (attrByPath atp {} targetFlake);
-in pipe allTargets.${type} [
+in pipe (allTargets.${type} or []) [
   (map getCfgs)
   concatLists
   (foldl' recMergePickDeeper {})
