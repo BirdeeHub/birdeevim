@@ -109,7 +109,10 @@
         options.settings = lib.mkOption {
           type = lib.types.json;
         };
-        config.settings.editor_open.command = "${config.binName} --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+        # NOTE: this is a remote command, so it just needs to be sent to the right neovim.
+        # If it needed the wrapper path directly, we would use the name and rely on PATH resolution
+        # OR we would use the hosts feature
+        config.settings.editor_open.command = "${config.package}/bin/nvim --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
         config.package = pkgs.scooter;
         config.flags."--config-dir" = "${placeholder "out"}/share/bundled_config";
         config.drv.configJSON = builtins.toJSON (
