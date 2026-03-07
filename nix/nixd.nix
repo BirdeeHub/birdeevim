@@ -1,4 +1,19 @@
-nixpkgs: type: path: let
+system: type: path: let
+  pipe = builtins.foldl' (x: f: f x);
+  flip = f: a: b: f b a;
+  attrByPath =
+    attrPath: default: set:
+    let
+      lenAttrPath = builtins.length attrPath;
+      attrByPath' = n: s: (
+        if n == lenAttrPath then s
+        else (
+          let attr = builtins.elemAt attrPath n; in
+          if s ? ${attr} then attrByPath' (n + 1) s.${attr} else default
+        )
+      );
+    in
+    attrByPath' 0 set;
   recMergePickDeeper = with builtins; lhs: rhs: let
     pred = path: lh: rh: ! isAttrs lh || ! isAttrs rh;
     pick = path: l: r: if isAttrs l then l else r;
@@ -14,28 +29,26 @@ nixpkgs: type: path: let
       );
   in f [] [rhs lhs];
 
-  pkgs = import nixpkgs {};
-  inherit (pkgs) lib;
   allTargets = {
     nixos = [
       [ "outputs" "nixosConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "nixosConfigurations" ]
+      [ "outputs" "legacyPackages" system "nixosConfigurations" ]
     ];
     home-manager = [
       [ "outputs" "homeConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "homeConfigurations" ]
+      [ "outputs" "legacyPackages" system "homeConfigurations" ]
     ];
     darwin = [
       [ "outputs" "darwinConfigurations" ]
-      [ "outputs" "legacyPackages" "${pkgs.stdenv.hostPlatform.system}" "darwinConfigurations" ]
+      [ "outputs" "legacyPackages" system "darwinConfigurations" ]
     ];
   };
   targetFlake = with builtins; getFlake "path:${toString path}";
-  getCfgs = lib.flip lib.pipe [
-    (atp: lib.attrByPath atp {} targetFlake)
+  getCfgs = flip pipe [
+    (atp: attrByPath atp {} targetFlake)
     builtins.attrValues
   ];
-in lib.pipe type [
+in pipe type [
   (type: allTargets.${type})
   (map getCfgs)
   builtins.concatLists

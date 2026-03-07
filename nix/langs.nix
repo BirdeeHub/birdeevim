@@ -37,9 +37,7 @@
       nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
       get_configs =
         lib.generators.mkLuaInline # lua
-          ''function(type, path) return [[import ${./nixd.nix} ${
-            builtins.path { path = pkgs.path; }
-          } "]] .. type .. [[" ]] .. (path or "./.") end'';
+          ''function(type, path) return [[import ${./nixd.nix} "${pkgs.stdenv.hostPlatform.system}" "]] .. type .. [[" ]] .. (path or "./.") end'';
     };
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
