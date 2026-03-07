@@ -51,6 +51,6 @@ system: type: path: let
 in pipe (allTargets.${type} or []) [
   (map getCfgs)
   concatLists
+  (map (v: v.options or {}))
   (foldl' recMergePickDeeper {})
-  (v: v.options or {})
 ]
