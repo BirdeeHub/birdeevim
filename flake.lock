@@ -115,11 +115,11 @@
     "juan-logs-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1772683929,
-        "narHash": "sha256-YWXKrr+0xFdSBrOaxyFJDqRFmGe25lU9w4Fyk6nlf+k=",
+        "lastModified": 1772948352,
+        "narHash": "sha256-+Bq6f0SYy7JfxxYfQ3iKjR9T/DZvfEkBz1IDVO9CQJk=",
         "owner": "minigian",
         "repo": "juan-logs.nvim",
-        "rev": "dfbcbd237c78d8a3f060fa654df4c0496e667090",
+        "rev": "1f87d2360c1eea7b3a935b1568e2803a30c0ce7b",
         "type": "github"
       },
       "original": {

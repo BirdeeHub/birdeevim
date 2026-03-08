@@ -27,7 +27,6 @@ inputs:
         src = inputs.juan-logs-src;
         cargoHash = "sha256-DlrFiJjE6wNLfMwpeI6iz32GxfOlTozKTTRT2LP88BQ=";
         postInstall = ''
-          mv $out/lib $out/bin
           cp -r $src/* $out
         '';
       };
