@@ -149,11 +149,6 @@
           config.specs.python =
             {
               enable = false;
-              # This allows us to override fields other than mainField without setting it,
-              # even if the spec type does not allow function type submodules
-              # I really really need to add this to the docs.
-              # TODO: Add this to the nix-wrapper-modules docs
-              # or a helper for it like wlib.mkIgnoredMainField
               data = nixpkgs.lib.mkIf false null;
             };
         };
