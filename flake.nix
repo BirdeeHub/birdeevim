@@ -149,7 +149,7 @@
           config.specs.python =
             {
               enable = false;
-              data = nixpkgs.lib.mkIf false null;
+              data = wrappers.lib.ignoreSpecField;
             };
         };
         default = self.wrapperModules.neovim;
