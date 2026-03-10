@@ -146,11 +146,7 @@
           imports = [ (import ./nix inputs) ];
           # I will deal with this next time I have to do python.
           # lsp and stuff breaks all the time, driving me nuts
-          config.specs.python =
-            {
-              enable = false;
-              data = wrappers.lib.ignoreSpecField;
-            };
+          config.specs.python = { ... }: { enable = false; };
         };
         default = self.wrapperModules.neovim;
       };
