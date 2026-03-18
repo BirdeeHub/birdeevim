@@ -85,7 +85,8 @@ inputs:
   config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
   config.hosts.ruby.gemdir = ./ruby_provider;
   # config.settings.compile_generated_lua = false;
-  config.wrapperImplementation = "binary";
+  config.wrapperImplementation = "shell";
+  # config.wrapperImplementation = "binary";
 
   options.settings.appimage = lib.mkOption {
     type = lib.types.bool;
