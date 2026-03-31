@@ -11,6 +11,7 @@
     readOnly = true;
     type = lib.types.attrsOf lib.types.raw;
     default = builtins.mapAttrs (_: v: v.enable) config.specs;
+    description = "Puts which specs I have enabled into the generated info plugin";
   };
   options.nvim-lib.pluginsFromPrefix = lib.mkOption {
     type = lib.types.raw;
