@@ -109,23 +109,19 @@
         options.settings = lib.mkOption {
           type = lib.types.json;
         };
+        config.package = pkgs.scooter;
+        config.flags."--config-dir" = dirOf config.constructFiles.generatedConfig.path;
+        config.constructFiles.generatedConfig = {
+          relPath = "share/${config.binName}_config/config.toml";
+          builder = ''mkdir -p "$(dirname "$2")" && ${pkgs.remarshal}/bin/json2toml "$1" "$2"'';
+          content = builtins.toJSON (
+            lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings
+          );
+        };
         # NOTE: this is a remote command, so it just needs to be sent to the right neovim.
         # If it needed the wrapper path directly, we would use the name and rely on PATH resolution
         # OR we would use the hosts feature OR wrapperVariants
         config.settings.editor_open.command = "${config.package}/bin/nvim --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
-        config.package = pkgs.scooter;
-        config.flags."--config-dir" = "${placeholder config.outputName}/share/bundled_config";
-        config.drv.configJSON = builtins.toJSON (
-          lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings
-        );
-        config.drv.passAsFile = [ "configJSON" ];
-        config.drv.nativeBuildInputs = [ pkgs.remarshal ];
-        config.drv.buildPhase = ''
-          runHook preBuild
-          mkdir -p "${placeholder config.outputName}/share/bundled_config"
-          json2toml "$configJSONPath" "${placeholder config.outputName}/share/bundled_config/config.toml"
-          runHook postBuild
-        '';
       };
   };
 
