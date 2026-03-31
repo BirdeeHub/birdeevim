@@ -1,3 +1,4 @@
+# adds some spec fields, and some other useful things
 {
   config,
   lib,

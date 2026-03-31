@@ -1,3 +1,5 @@
+# This expression is called at runtime by the nixd language server.
+# I pass it in a generated lua function in my spec for nix in whatever file I have that in right now.
 system: type: path: let
   inherit (builtins) length head elemAt zipAttrsWith isAttrs attrValues concatLists foldl' getFlake;
   pipe = foldl' (x: f: f x);
