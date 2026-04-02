@@ -63,7 +63,7 @@
   config.specs.bash = {
     data = null;
     postpkgs = with pkgs; [
-      nodePackages.bash-language-server
+      bash-language-server
     ];
   };
   config.specs.elixir = {
