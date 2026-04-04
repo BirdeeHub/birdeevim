@@ -22,6 +22,7 @@ return {
         vim.o.foldlevel = 99
 
         -- enables treesitter based indentation
+        vim.b.did_indent = 1 -- this right here prevents built-in indent scripts from loading
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
         return true
