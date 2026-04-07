@@ -147,6 +147,9 @@
           # I will deal with this next time I have to do python.
           # lsp and stuff breaks all the time, driving me nuts
           config.specs.python = { ... }: { enable = false; };
+          # disable roc for now because I haven't been using it
+          # and it builds the lsp from source which is slow
+          config.specs.roc = { ... }: { enable = false; };
         };
         default = self.wrapperModules.neovim;
       };
