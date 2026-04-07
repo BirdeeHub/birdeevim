@@ -38,7 +38,6 @@
         # data = "/home/birdee/Projects/snacks.nvim";
         data = config.nvim-lib.neovimPlugins.snacks-nvim;
       }
-      nvim-ts-autotag
       config.nvim-lib.neovimPlugins.argmark
       config.nvim-lib.neovimPlugins.tmux-navigate
       config.nvim-lib.neovimPlugins.tomlua
@@ -71,8 +70,6 @@
       blink-cmp
       blink-compat
       colorful-menu-nvim
-      nvim-treesitter-textobjects
-      nvim-treesitter.withAllGrammars
       vim-rhubarb
       vim-fugitive
       config.nvim-lib.neovimPlugins.nvim-lspconfig
@@ -89,6 +86,26 @@
       dial-nvim
       vim-sleuth
     ];
+  };
+  config.specs.tree-sitter = {
+    enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    data =
+      with pkgs.vimPlugins;
+      [
+        {
+          data = pkgs.runCommand "nvim-treesitter" { src = nvim-treesitter; } ''
+            mkdir -p $out/lua/nvim-treesitter
+            ln -s $src/runtime/queries $out/
+            ln -s $src/lua/nvim-treesitter/indent.lua $out/lua/nvim-treesitter
+          '';
+          pname = "nvim-treesitter";
+        }
+        {
+          data = nvim-ts-autotag;
+          lazy = true;
+        }
+      ]
+      ++ builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
   };
 
   config.specs.images = {

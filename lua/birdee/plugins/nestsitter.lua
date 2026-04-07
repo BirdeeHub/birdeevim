@@ -23,12 +23,12 @@ return {
 
         -- enables treesitter based indentation
         vim.b.did_indent = 1 -- this right here prevents built-in indent scripts from loading
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter.indent'.get_indent(v:lnum)"
 
         return true
       end
 
-      local installable_parsers = require("nvim-treesitter").get_available()
+      local installable_parsers = nixInfo.isNix or require("nvim-treesitter").get_available()
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
           local buf, filetype = args.buf, args.match
@@ -37,7 +37,9 @@ return {
             return
           end
 
-          if not treesitter_try_attach(buf,language) then
+          if not treesitter_try_attach(buf,language) and not nixInfo.isNix then
+            -- we do something more interesting in nix and don't do this there
+            ---@cast installable_parsers string[]
             if vim.tbl_contains(installable_parsers, language) then
               -- not already installed, so try to install them via nvim-treesitter if possible
               require("nvim-treesitter").install(language):await(function()
