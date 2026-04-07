@@ -9,7 +9,6 @@
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
-      tree-sitter
       universal-ctags
       ripgrep
       fd
@@ -89,6 +88,9 @@
   };
   config.specs.tree-sitter = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
+    postpkgs = with pkgs; [
+      tree-sitter
+    ];
     data =
       with pkgs.vimPlugins;
       [
