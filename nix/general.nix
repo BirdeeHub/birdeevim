@@ -94,9 +94,9 @@
       [
         {
           data = pkgs.runCommand "nvim-treesitter" { src = nvim-treesitter; } ''
-            mkdir -p $out/lua/nvim-treesitter
+            mkdir -p $out/
             ln -s $src/runtime/queries $out/
-            ln -s $src/lua/nvim-treesitter/indent.lua $out/lua/nvim-treesitter
+            ln -s $src/* $out/
           '';
           pname = "nvim-treesitter";
         }
