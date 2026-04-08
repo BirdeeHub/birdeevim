@@ -137,10 +137,7 @@
         flake-parts.flakeModules.bundlers
       ];
       systems = nixpkgs.lib.platforms.all;
-      flake.overlays = {
-        neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
-        default = self.overlays.neovim;
-      };
+      flake.overlays.neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
       flake.wrappers = {
         neovim = {
           imports = [ (import ./nix inputs) ];
