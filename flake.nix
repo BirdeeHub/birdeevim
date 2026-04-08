@@ -153,24 +153,6 @@
         };
         default = self.wrapperModules.neovim;
       };
-      flake.nixosModules = {
-        default = self.nixosModules.neovim;
-        neovim = wrappers.lib.mkInstallModule {
-          name = "neovim";
-          value = self.wrapperModules.neovim;
-        };
-      };
-      flake.homeModules = {
-        default = self.homeModules.neovim;
-        neovim = wrappers.lib.mkInstallModule {
-          name = "neovim";
-          value = self.wrapperModules.neovim;
-          loc = [
-            "home"
-            "packages"
-          ];
-        };
-      };
       perSystem =
         { system, config, ... }:
         {
