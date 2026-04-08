@@ -146,10 +146,10 @@
           imports = [ (import ./nix inputs) ];
           # I will deal with this next time I have to do python.
           # lsp and stuff breaks all the time, driving me nuts
-          config.specs.python = { ... }: { enable = false; };
+          config.specs.python = _: { enable = false; };
           # disable roc for now because I haven't been using it
           # and it builds the lsp from source which is slow
-          config.specs.roc = { ... }: { enable = false; };
+          config.specs.roc = _: { enable = false; };
         };
         default = self.wrapperModules.neovim;
       };
