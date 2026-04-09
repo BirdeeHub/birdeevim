@@ -19,6 +19,7 @@ vim.filetype.add {
     ebnf = "EBNF",
     bnf = "EBNF",
     EBNF = "EBNF",
+    nvim = "lua",
   }
 }
 
