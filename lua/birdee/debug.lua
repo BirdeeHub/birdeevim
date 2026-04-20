@@ -168,6 +168,23 @@ return {
         }
       end
 
+      -- TODO: figure this out
+      dap.adapters.lldb = {
+        type = 'executable',
+        command = 'lldb-dap', -- make sure it's in PATH
+        args = {},
+        name = 'lldb'
+      }
+      dap.configurations.cpp = {
+        {
+          name = "Launch",
+          type = "lldb",
+          request = "launch",
+          program = vim.fn.getcwd() .. "/" .. vim.g.binaryArtifact,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
     end,
   },
 }
