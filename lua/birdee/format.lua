@@ -18,7 +18,7 @@ return {
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        nix = { "nixfmt" },
+        nix = { },
         go = { "gofmt", "golint" },
         templ = { "templ" },
         -- Conform will run multiple formatters sequentially
