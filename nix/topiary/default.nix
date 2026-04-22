@@ -3,8 +3,8 @@
   queryDir = ./queries;
   languages = {
     nix = {
-      extensions = [ ".nix" ];
-      grammar = "${pkgs.tree-sitter-grammars.tree-sitter-nix}/parser";
+      extensions = [ "nix" ];
+      grammar = pkgs.tree-sitter-grammars.tree-sitter-nix;
     };
   };
 }
