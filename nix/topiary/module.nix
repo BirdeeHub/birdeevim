@@ -55,14 +55,14 @@
           name: lang:
           let
             fields = [
-              "extensions | default = ${toNickelValue lang.extensions}"
-              "indent | default = ${toNickelValue lang.indent}"
+              "extensions = ${toNickelValue lang.extensions}"
+              "indent = ${toNickelValue lang.indent}"
             ]
             ++ [
               (
                 let
                   grammarFields = [
-                    "source.path | default = ${
+                    "source.path = ${
                       toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)
                     }"
                   ]
