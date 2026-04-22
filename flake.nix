@@ -148,6 +148,7 @@
           # and it builds the lsp from source which is slow
           config.specs.roc = _: { enable = false; };
         };
+        topiary = ./nix/topiary;
         default = self.wrapperModules.neovim;
       };
       perSystem =
