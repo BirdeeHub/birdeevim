@@ -21,7 +21,6 @@
   "with"
   "assert"
   "or"
-  (identifier)
 ] @prepend_space @append_space
 
 ; Don't format strings or comments
@@ -72,4 +71,14 @@
 )
 (function_expression
   body: (_) @prepend_spaced_softline
+)
+
+(list_expression
+  "[" @append_indent_start
+  (_)* @prepend_spaced_softline
+  "]" @prepend_indent_end
+)
+(list_expression
+  (_)* @append_spaced_softline
+  .
 )
