@@ -6,7 +6,7 @@
   "''" @prepend_indent_end
   .
 )
-(_ (string_fragment) @keep_whitespace @leaf .)
+(_ (string_fragment) @keep_whitespace .)
 (interpolation
   .
   "${" @append_antispace
