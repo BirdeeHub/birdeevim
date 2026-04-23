@@ -6,7 +6,6 @@
   "''" @prepend_indent_end
   .
 )
-(_ (string_expression) @leaf @multi_line_indent_all (_) .)
 (_ (string_fragment) @keep_whitespace @leaf .)
 (interpolation
   .
