@@ -132,9 +132,10 @@
 )
 (function_expression
   formals: (formals
+    "{" @append_indent_start
     "}" @prepend_indent_end @prepend_spaced_softline
     .
-  ) @prepend_indent_start
+  )
 )
 (function_expression body: (function_expression) @prepend_space)
 
