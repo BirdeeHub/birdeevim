@@ -31,7 +31,11 @@
   (string_expression)
   (indented_string_expression)
 ] @leaf
-(comment) @keep_whitespace @prepend_spaced_softline
+(comment) @keep_whitespace @prepend_space
+(
+  (comment) @append_hardline
+  (#match? @append_hardline "^#")
+)
 
 (parenthesized_expression
   "(" @append_antispace
@@ -101,12 +105,22 @@
 (function_expression
   formals: (formals
     formal: (formal)? @prepend_spaced_softline
-    ellipses: (ellipses)? @prepend_spaced_softline @append_spaced_softline
+    ellipses: (ellipses)? @prepend_spaced_softline
   )
 )
 (function_expression
   formals: (formals
-    "}" @prepend_indent_end
+    formal: (formal)*
+    formal: (formal) @append_delimiter
+    .
+    ","* @do_nothing
+    !ellipses
+    (#delimiter! ",")
+  )
+)
+(function_expression
+  formals: (formals
+    "}" @prepend_indent_end @prepend_spaced_softline
     .
   ) @prepend_indent_start
 )
