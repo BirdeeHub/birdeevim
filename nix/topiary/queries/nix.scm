@@ -22,6 +22,7 @@
 ; Don't format strings or comments?
 [
   (string_expression)
+  (indented_string_expression)
   (comment)
 ] @leaf
 
