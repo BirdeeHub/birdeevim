@@ -1,4 +1,4 @@
-; TODO: properly figure out strings?
+(string_fragment) @leaf @keep_whitespace
 
 (with_expression
   "with" @append_space @prepend_space
