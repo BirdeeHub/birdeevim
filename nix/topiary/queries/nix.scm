@@ -1,7 +1,5 @@
 [
-  "let"
   "inherit"
-  "in"
   "rec"
   "with"
   "assert"
@@ -14,6 +12,8 @@
   attrpath: (attrpath) @append_space
   expression: (_) @prepend_space
 )
+
+(let_expression (binding_set) @append_spaced_softline @prepend_spaced_softline body: (_) @prepend_space)
 
 ; Don't format strings or comments?
 [
