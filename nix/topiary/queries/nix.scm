@@ -1,11 +1,14 @@
-; TODO: properly figure out strings
-
+; TODO: properly figure out strings?
 [
   "rec"
   "with"
   "assert"
-  "?"
 ] @prepend_space @append_space
+
+(has_attr_expression
+  expression: (_) @append_space
+  attrpath: (attrpath) @prepend_space
+)
 
 (_) @allow_blank_line_before
 
