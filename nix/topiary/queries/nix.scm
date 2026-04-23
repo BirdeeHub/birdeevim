@@ -116,7 +116,7 @@
   expression: (_) @prepend_space
 )
 
-(let_expression "let" @append_spaced_softline (binding_set)* @do_nothing)
+(let_expression "let" @append_spaced_softline (binding_set)? @do_nothing)
 (let_expression
   (binding_set)? @append_spaced_softline @prepend_spaced_softline
   body: (_) @prepend_space
@@ -148,12 +148,15 @@
   condition: (_) @prepend_space @append_space
   "then" @append_indent_start @prepend_indent_end
   consequence: (_) @prepend_spaced_softline @append_spaced_softline
-  "else" @prepend_indent_end
+  "else" @prepend_indent_end @append_space
   alternative: (_) @append_space
 )
 (if_expression
   "else" @append_indent_start
-  alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline @append_indent_end
+  alternative: (_
+    (string_fragment)? @do_nothing
+    !condition !consequence !alternative
+  ) @prepend_spaced_softline @append_indent_end
 )
 
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
@@ -167,7 +170,7 @@
     formal: (formal)*
     formal: (formal) @append_delimiter
     .
-    ","* @do_nothing
+    ","? @do_nothing
     !ellipses
     (#delimiter! ",")
   )
@@ -184,7 +187,7 @@
 (binding
   (function_expression
     body: (_
-      (binding_set)* @do_nothing
+      (binding_set)? @do_nothing
       !formals !universal !body
     ) @prepend_indent_start @append_indent_end @prepend_spaced_softline
   )
