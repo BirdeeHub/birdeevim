@@ -40,7 +40,9 @@
         else
           toString val;
       # Convert a single language config to Nickel source with | default annotations
-      languageToNickel = name: lang: let
+      languageToNickel = name: lang:
+        assert (lang ? grammar);
+          let
         fields = [
           "extensions = ${toNickelValue lang.extensions}"
           "indent = ${toNickelValue lang.indent}"

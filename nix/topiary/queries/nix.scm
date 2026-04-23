@@ -5,7 +5,8 @@
   body: (_) @prepend_input_softline
 )
 (assert_expression
-  "assert" @append_space @prepend_spaced_softline
+  "assert" @append_space @prepend_spaced_softline @prepend_indent_start
+  condition: (_) @append_indent_end
   body: (_) @prepend_spaced_softline
 )
 (formal
