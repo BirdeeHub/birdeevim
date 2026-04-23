@@ -50,6 +50,12 @@
 (parenthesized_expression
   "(" @append_antispace
   ")" @prepend_antispace
+  (#single_line_only!)
+)
+(parenthesized_expression
+  "(" @append_empty_softline @append_indent_start
+  ")" @prepend_empty_softline @prepend_indent_end
+  (#multi_line_only!)
 )
 
 (apply_expression

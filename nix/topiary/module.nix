@@ -4,24 +4,26 @@
     type = wlib.types.stringable;
   };
   options.languages = lib.mkOption {
-    type = lib.types.attrsOf (lib.types.submodule {
-      options = {
-        extensions = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        options = {
+          extensions = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+          };
+          grammar = lib.mkOption {
+            type = wlib.types.stringable;
+          };
+          indent = lib.mkOption {
+            type = lib.types.str;
+            default = "  ";
+          };
+          symbol = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+          };
         };
-        grammar = lib.mkOption {
-          type = wlib.types.stringable;
-        };
-        indent = lib.mkOption {
-          type = lib.types.str;
-          default = "  ";
-        };
-        symbol = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-        };
-      };
-    });
+      }
+    );
     default = {};
   };
   config.package = pkgs.topiary;
@@ -42,16 +44,18 @@
       # Convert a single language config to Nickel source with | default annotations
       languageToNickel = name: lang:
         assert (lang ? grammar);
-          let
+      let
         fields = [
           "extensions = ${toNickelValue lang.extensions}"
           "indent = ${toNickelValue lang.indent}"
         ] ++ [
-          (let
-            grammarFields = [
-              "source.path = ${toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)}"
-            ] ++ lib.optional (builtins.isString lang.symbol) "symbol = ${toNickelValue lang.grammar.symbol}";
-          in "grammar = { ${lib.concatStringsSep ", " grammarFields} }")
+          (
+            let
+              grammarFields = [
+                "source.path = ${toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)}"
+              ] ++ lib.optional (builtins.isString lang.symbol) "symbol = ${toNickelValue lang.grammar.symbol}";
+            in "grammar = { ${lib.concatStringsSep ", " grammarFields} }"
+          )
         ];
       in "${name} = {\n      ${lib.concatStringsSep ",\n      " fields},\n    }";
     in ''

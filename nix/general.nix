@@ -138,17 +138,19 @@
   config.specs.colorscheme = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
-    data = builtins.getAttr (config.settings.colorscheme or "onedark") (with pkgs.vimPlugins; {
-      "onedark" = onedarkpro-nvim;
-      "onedark_dark" = onedarkpro-nvim;
-      "onedark_vivid" = onedarkpro-nvim;
-      "onelight" = onedarkpro-nvim;
-      "catppuccin" = catppuccin-nvim;
-      "catppuccin-mocha" = catppuccin-nvim;
-      "moonfly" = vim-moonfly-colors;
-      "tokyonight" = tokyonight-nvim;
-      "tokyonight-day" = tokyonight-nvim;
-    });
+    data = builtins.getAttr (config.settings.colorscheme or "onedark") (
+      with pkgs.vimPlugins; {
+        "onedark" = onedarkpro-nvim;
+        "onedark_dark" = onedarkpro-nvim;
+        "onedark_vivid" = onedarkpro-nvim;
+        "onelight" = onedarkpro-nvim;
+        "catppuccin" = catppuccin-nvim;
+        "catppuccin-mocha" = catppuccin-nvim;
+        "moonfly" = vim-moonfly-colors;
+        "tokyonight" = tokyonight-nvim;
+        "tokyonight-day" = tokyonight-nvim;
+      }
+    );
   };
 
   config.specs.AI = {
