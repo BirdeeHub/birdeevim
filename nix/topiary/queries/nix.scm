@@ -1,5 +1,12 @@
 ; TODO: still moves single line comments down inline in lists
-(_ (string_fragment) .) @keep_whitespace
+; And it is still kinda weird with string indentation
+(_ (string_fragment)? @leaf @multi_line_indent_all (string_fragment) @keep_whitespace .)
+(interpolation
+  .
+  "${" @append_antispace @append_indent_start
+  "}" @prepend_antispace @prepend_indent_end
+  .
+)
 
 (with_expression
   "with" @append_space @prepend_space
