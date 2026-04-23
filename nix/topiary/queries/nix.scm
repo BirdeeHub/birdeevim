@@ -50,11 +50,12 @@
   condition: (_) @prepend_spaced_softline @append_spaced_softline
   "then" @append_indent_start @prepend_indent_end
   consequence: (_) @prepend_spaced_softline @append_spaced_softline
-  "else" @append_indent_start @prepend_indent_end
-  alternative: (_) @append_indent_end
+  "else" @prepend_indent_end
+  alternative: (_)
 )
 (if_expression
-  alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline
+  "else" @append_indent_start
+  alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline @append_indent_end
 )
 
 (function_expression
