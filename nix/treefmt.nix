@@ -8,6 +8,7 @@
     default = {};
   };
   config.package = pkgs.treefmt;
+  config.wrapperImplementation = "binary";
   config.flags."--config-file" = config.constructFiles.configFile.path;
   config.constructFiles.configFile = {
     relPath = "${config.binName}-config.toml";
