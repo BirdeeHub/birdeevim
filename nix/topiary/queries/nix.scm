@@ -45,9 +45,9 @@
 
 (apply_expression
   function: (_) @append_space
-  (_)* @append_space
-  .
+  (_) @append_spaced_softline
   (_)
+  .
 )
 
 "!" @prepend_space @append_antispace
