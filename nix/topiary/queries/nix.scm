@@ -24,7 +24,7 @@
   default: (_) @prepend_space
 )
 
-(comment) @keep_whitespace @leaf @multi_line_indent_all
+(comment) @keep_whitespace @leaf @multi_line_indent_all @prepend_input_softline
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
