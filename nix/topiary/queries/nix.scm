@@ -55,7 +55,7 @@
 )
 (parenthesized_expression
   "(" @append_empty_softline @append_indent_start
-  ")" @prepend_empty_softline @prepend_indent_end
+  ")" @prepend_input_softline @prepend_indent_end
   (#multi_line_only!)
 )
 
