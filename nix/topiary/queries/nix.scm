@@ -8,6 +8,10 @@
   "assert" @append_space @prepend_spaced_softline
   body: (_) @prepend_spaced_softline
 )
+(formal
+  name: (_) @append_space
+  default: (_) @prepend_space
+)
 
 (has_attr_expression
   expression: (_) @append_space
