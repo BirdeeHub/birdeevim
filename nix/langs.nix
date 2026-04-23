@@ -1,11 +1,4 @@
-{
-  config,
-  wlib,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}: {
+{ config, wlib, lib, pkgs, inputs, ... }: {
   config.specs.typst = {
     lazy = true;
     data = with pkgs.vimPlugins; [

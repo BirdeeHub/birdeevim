@@ -1,11 +1,5 @@
 # adds some spec fields, and some other useful things
-  {
-  config,
-  lib,
-  wlib,
-  pkgs,
-  ...
-}: {
+  { config, lib, wlib, pkgs, ... }: {
   options.settings.cats = lib.mkOption {
     readOnly = true;
     type = lib.types.attrsOf lib.types.raw;

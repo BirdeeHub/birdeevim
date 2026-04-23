@@ -1,10 +1,4 @@
-{
-  config,
-  wlib,
-  lib,
-  pkgs,
-  ...
-}: {
+{ config, wlib, lib, pkgs, ... }: {
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
