@@ -24,7 +24,7 @@
   default: (_) @prepend_space
 )
 
-(comment) @keep_whitespace @multi_line_indent_all @prepend_spaced_softline
+(comment) @keep_whitespace @multi_line_indent_all @prepend_input_softline
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
@@ -66,7 +66,10 @@
   .
 )
 (binding_set) @prepend_indent_start @append_indent_end
-(binding_set (binding) @prepend_spaced_softline @append_input_softline (comment)? @append_spaced_softline)
+(binding_set (binding) @prepend_spaced_softline @append_input_softline)
+(binding_set (comment) @append_spaced_softline)
+(binding_set (inherit) @prepend_spaced_softline @append_input_softline)
+(binding_set (inherit_from) @prepend_spaced_softline @append_input_softline)
 (binding
   attrpath: (attrpath) @append_space
   expression: (_) @prepend_space
@@ -97,7 +100,7 @@
   ")" @prepend_antispace
   attrs: (_)
 )
-(inherited_attrs attr: (_)* @prepend_space)
+(inherited_attrs attr: (_)* @prepend_spaced_softline)
 
 (if_expression
   "if" @append_indent_start @prepend_space
