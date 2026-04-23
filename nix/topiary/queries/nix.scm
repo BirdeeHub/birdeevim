@@ -37,6 +37,10 @@
   (comment) @append_hardline
   (#match? @append_hardline "^#")
 )
+(
+  (comment) @prepend_indent_start @append_indent_end
+  (binding_set)
+)
 
 (parenthesized_expression
   "(" @append_antispace
