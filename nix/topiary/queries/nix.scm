@@ -49,11 +49,9 @@
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
 (list_expression
-  .
   "[" @append_indent_start
   (_)* @prepend_spaced_softline
   "]" @prepend_indent_end
-  .
 )
 (list_expression
   (_) @append_spaced_softline
