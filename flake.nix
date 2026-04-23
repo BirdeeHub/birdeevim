@@ -142,27 +142,13 @@
         };
         topiary = ./nix/topiary;
         default = self.wrapperModules.neovim;
-        treefmt = { pkgs, config, lib, wlib, ... }: {
-          imports = [ wlib.modules.default ];
-          config.extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
-          options.settings = lib.mkOption {
-            type = (pkgs.formats.toml {}).type;
-            default = {
-              formatter.nix = {
-                command = "topiary";
-                options = [ "format" ];
-                includes = [ "*.nix" ];
-              };
-            };
-          };
-          config.package = pkgs.treefmt;
-          config.binName = "treefmt";
-          config.exePath = "bin/${config.binName}";
-          config.flags."--config-file" = config.constructFiles.configFile.path;
-          config.constructFiles.configFile = {
-            relPath = "${config.binName}-config.toml";
-            content = builtins.toJSON config.settings;
-            builder = ''mkdir -p "$(dirname "$2")" && ${pkgs.remarshal}/bin/json2toml "$1" "$2"'';
+        treefmt = { pkgs, ... }: {
+          imports = [ ./nix/treefmt.nix ];
+          extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
+          settings.formatter.nix = {
+            command = "topiary";
+            options = [ "format" ];
+            includes = [ "*.nix" ];
           };
         };
       };
