@@ -47,7 +47,7 @@
 
 (if_expression
   "if" @append_indent_start
-  condition: (_) @prepend_spaced_softline @append_spaced_softline
+  condition: (_) @prepend_space @append_space
   "then" @append_indent_start @prepend_indent_end
   consequence: (_) @prepend_spaced_softline @append_spaced_softline
   "else" @prepend_indent_end
