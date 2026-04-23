@@ -105,8 +105,7 @@
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
 (function_expression
   formals: (formals
-    formal: (formal)? @prepend_spaced_softline
-    ellipses: (ellipses)? @prepend_spaced_softline
+    (_)? @prepend_spaced_softline
   )
 )
 (function_expression
