@@ -129,7 +129,6 @@
         wrappers.flakeModules.wrappers
         flake-parts.flakeModules.bundlers
       ];
-      flake.formatter = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all (system: self.packages.${system}.treefmt or null);
       systems = nixpkgs.lib.platforms.all;
       flake.overlays.neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
       flake.wrappers = {
@@ -169,6 +168,10 @@
         # nix bundle --bundler .\#default .\#bundle-min
         # nix bundle --bundler .\#default .\#bundle-dyn
         bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
+        # this doesn't build...
+        # formatter = config.packages.treefmt;
       };
+      # and yet this does?
+      flake.formatter = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all (system: self.packages.${system}.treefmt or null);
     };
 }

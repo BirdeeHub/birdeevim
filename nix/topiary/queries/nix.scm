@@ -45,6 +45,10 @@
   (comment) @prepend_indent_start @append_indent_end
   (binding_set)
 )
+(
+  (binding_set)
+  (comment) @prepend_indent_start @append_indent_end
+)
 
 (parenthesized_expression
   "(" @append_antispace
@@ -134,4 +138,11 @@
 )
 (function_expression body: (function_expression) @prepend_space)
 
-(binding (function_expression body: (_ (_ !binding) !formals !universal !body) @prepend_indent_start @append_indent_end @prepend_spaced_softline))
+(binding
+  (function_expression
+    body: (_
+      (binding_set)* @do_nothing
+      !formals !universal !body
+    ) @prepend_indent_start @append_indent_end @prepend_spaced_softline
+  )
+)
