@@ -81,7 +81,7 @@
   body: (_ !formals !universal !body) @prepend_spaced_softline
 )
 (function_expression
-  body: (_) @prepend_space
+  body: (function_expression) @prepend_space
 )
 
 (list_expression
