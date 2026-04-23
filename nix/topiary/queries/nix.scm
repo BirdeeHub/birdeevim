@@ -66,6 +66,7 @@
 (function_expression
   formals: (formals
     "}" @prepend_indent_end
+    .
   ) @prepend_indent_start
 )
 (function_expression
