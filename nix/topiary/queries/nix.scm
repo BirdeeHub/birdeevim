@@ -13,9 +13,6 @@
   "+"
   "-"
   "*"
-  "if"
-  "then"
-  "else"
   "let"
   "inherit"
   "in"
@@ -57,12 +54,12 @@
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
 (if_expression
-  "if" @append_indent_start
+  "if" @append_indent_start @prepend_space
   condition: (_) @prepend_space @append_space
   "then" @append_indent_start @prepend_indent_end
   consequence: (_) @prepend_spaced_softline @append_spaced_softline
   "else" @prepend_indent_end
-  alternative: (_)
+  alternative: (_) @append_space
 )
 (if_expression
   "else" @append_indent_start
