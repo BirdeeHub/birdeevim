@@ -31,11 +31,13 @@
 (parenthesized_expression
   "(" @append_antispace
   ")" @prepend_antispace
-) @prepend_space @append_space
+)
 
 (apply_expression
   function: (_) @append_space
   (_)* @append_space
+  .
+  (_)
 )
 
 [
