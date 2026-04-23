@@ -42,17 +42,17 @@
           toString val;
       # Convert a single language config to Nickel source with | default annotations
       languageToNickel = name: lang: let
-          fields = [
-            "extensions = ${toNickelValue lang.extensions}"
-            "indent = ${toNickelValue lang.indent}"
-          ] ++ [
-            (let
-              grammarFields = [
-                "source.path = ${toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)}"
-              ] ++ lib.optional (builtins.isString lang.symbol) "symbol = ${toNickelValue lang.grammar.symbol}";
-            in "grammar = { ${lib.concatStringsSep ", " grammarFields} }")
-          ];
-        in "${name} = {\n      ${lib.concatStringsSep ",\n      " fields},\n    }";
+        fields = [
+          "extensions = ${toNickelValue lang.extensions}"
+          "indent = ${toNickelValue lang.indent}"
+        ] ++ [
+          (let
+            grammarFields = [
+              "source.path = ${toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)}"
+            ] ++ lib.optional (builtins.isString lang.symbol) "symbol = ${toNickelValue lang.grammar.symbol}";
+          in "grammar = { ${lib.concatStringsSep ", " grammarFields} }")
+        ];
+      in "${name} = {\n      ${lib.concatStringsSep ",\n      " fields},\n    }";
     in ''
         {
           languages = {
