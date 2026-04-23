@@ -1,4 +1,5 @@
-(string_fragment) @leaf @keep_whitespace @multi_line_indent_all
+; TODO: still moves single line comments down inline in lists
+(_ (string_fragment) .) @keep_whitespace
 
 (with_expression
   "with" @append_space @prepend_space
