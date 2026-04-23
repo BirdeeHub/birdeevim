@@ -1,11 +1,15 @@
 [
   "=="
+  "!="
   "&&"
   "||"
   "="
   ">"
+  ">="
   "->"
   "<"
+  "?"
+  "<="
   "++"
   "//"
   "+"
@@ -26,6 +30,8 @@
   (comment)
 ] @leaf
 
+"!" @prepend_space @append_antispace
+
 [
   "."
   "@"
@@ -38,6 +44,7 @@
 
 (apply_expression
   function: (_) @append_space
+  (_)* @append_space
 )
 
 [
