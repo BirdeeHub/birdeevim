@@ -1,10 +1,16 @@
 ; TODO: still moves single line comments down inline in lists
 ; And it is still kinda weird with string indentation
-(_ (string_fragment)? @leaf @multi_line_indent_all (string_fragment) @keep_whitespace .)
+(indented_string_expression
+  .
+  "''" @append_indent_start
+  "''" @prepend_indent_end
+  .
+)
+(_ (string_fragment)? @keep_whitespace)
 (interpolation
   .
-  "${" @append_antispace @append_indent_start
-  "}" @prepend_antispace @prepend_indent_end
+  "${" @append_antispace
+  "}" @prepend_antispace
   .
 )
 
@@ -156,7 +162,15 @@
   alternative: (_
     (string_fragment)? @do_nothing
     !condition !consequence !alternative
-  ) @prepend_spaced_softline @append_indent_end
+  ) @prepend_empty_softline @append_indent_end
+)
+(if_expression
+  "else" @append_indent_start
+  alternative: (indented_string_expression) @append_indent_end
+)
+(if_expression
+  "else" @append_indent_start
+  alternative: (string_expression) @prepend_empty_softline @append_indent_end
 )
 
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
