@@ -48,9 +48,7 @@
           ] ++ [
             (let
               grammarFields = [
-                "source.path = ${
-                      toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)
-                    }"
+                "source.path = ${toNickelValue (if lang.grammar ? language then "${lang.grammar}/parser" else lang.grammar)}"
               ] ++ lib.optional (builtins.isString lang.symbol) "symbol = ${toNickelValue lang.grammar.symbol}";
             in "grammar = { ${lib.concatStringsSep ", " grammarFields} }")
           ];
