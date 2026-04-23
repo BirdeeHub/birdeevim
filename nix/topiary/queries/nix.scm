@@ -78,7 +78,10 @@
   ) @prepend_indent_start
 )
 (function_expression
-  body: (_) @prepend_spaced_softline
+  body: (_ !formals !universal !body) @prepend_spaced_softline
+)
+(function_expression
+  body: (_) @prepend_space
 )
 
 (list_expression
