@@ -1,15 +1,10 @@
-; TODO: interpolations and strings
-; Don't format strings?
-; Figure out how to format interpolations?
-[
-  (string_expression (interpolation)* @do_nothing)
-  (indented_string_expression (interpolation)* @do_nothing)
-] @leaf
+; TODO: properly figure out strings
 
 [
   "rec"
   "with"
   "assert"
+  "?"
 ] @prepend_space @append_space
 
 (_) @allow_blank_line_before
