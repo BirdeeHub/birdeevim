@@ -7,6 +7,7 @@
   .
 )
 (_ (string_fragment) @keep_whitespace .)
+(_ (string_fragment) @leaf)
 (interpolation
   .
   "${" @append_antispace
