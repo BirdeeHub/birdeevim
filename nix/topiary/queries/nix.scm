@@ -31,7 +31,8 @@
   (string_expression)
   (indented_string_expression)
 ] @leaf
-(comment) @keep_whitespace @prepend_space
+
+(comment) @keep_whitespace @leaf
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
