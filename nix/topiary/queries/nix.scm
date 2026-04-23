@@ -4,6 +4,8 @@
   "assert"
 ] @prepend_space @append_space
 
+(_) @allow_blank_line_before
+
 (binary_expression left: (_) @append_space right: (_) @prepend_space)
 
 (binding
