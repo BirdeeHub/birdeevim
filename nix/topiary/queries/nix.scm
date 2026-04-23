@@ -35,6 +35,13 @@
 ] @prepend_antispace @append_antispace
 
 [
+  "("
+] @append_antispace
+[
+  ")"
+] @prepend_antispace
+
+[
   ","
   ";"
   ":"
@@ -79,6 +86,6 @@
   "]" @prepend_indent_end
 )
 (list_expression
-  (_)* @append_spaced_softline
+  (_) @append_spaced_softline
   .
 )
