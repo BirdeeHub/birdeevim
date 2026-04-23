@@ -13,7 +13,11 @@
 
 (select_expression
   expression: (_) @append_antispace
-  attrpath: (attrpath) @append_space @prepend_antispace
+  attrpath: (attrpath) @prepend_antispace
+)
+(select_expression
+  expression: (_)
+  attrpath: (attrpath) @append_space
   default: (_) @prepend_space
 )
 
@@ -107,9 +111,5 @@
     .
   ) @prepend_indent_start
 )
-(function_expression
-  body: (_ !formals !universal !body) @prepend_spaced_softline
-)
-(function_expression
-  body: (function_expression) @prepend_space
-)
+(function_expression body: (_ !formals !universal !body) @prepend_spaced_softline)
+(function_expression body: (function_expression) @prepend_space)
