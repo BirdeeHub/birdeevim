@@ -50,6 +50,8 @@
 (binding_set) @prepend_indent_start @append_indent_end
 (binding_set (binding expression: (function_expression) @prepend_indent_start @append_indent_end))
 
+(attrset_expression) @prepend_space @append_space
+
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
 (if_expression
@@ -93,3 +95,4 @@
   (_) @append_spaced_softline
   .
 )
+(list_expression) @prepend_space @append_space
