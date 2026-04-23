@@ -1,9 +1,7 @@
 [
-  "inherit"
   "rec"
   "with"
   "assert"
-  "or"
 ] @prepend_space @append_space
 
 (binary_expression left: (_) @append_space right: (_) @prepend_space)
@@ -11,6 +9,15 @@
 (binding
   attrpath: (attrpath) @append_space
   expression: (_) @prepend_space
+)
+
+(select_expression
+  expression: (attrset_expression)
+  attrpath: (attrpath
+    attr: (identifier)) @append_space
+  default: (variable_expression
+    name: (identifier)
+  ) @prepend_space
 )
 
 (let_expression (binding_set) @append_spaced_softline @prepend_spaced_softline body: (_) @prepend_space)
@@ -50,6 +57,20 @@
 (binding_set (binding expression: (function_expression) @prepend_indent_start @append_indent_end))
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
+(list_expression
+  "[" @append_indent_start
+  (_)* @prepend_spaced_softline
+  "]" @prepend_indent_end
+)
+(list_expression
+  (_) @append_spaced_softline
+  .
+)
+(list_expression) @prepend_space @append_space
+
+"inherit" @append_space
+(inherited_attrs attr: (_)* @prepend_space)
+
 (if_expression
   "if" @append_indent_start @prepend_space
   condition: (_) @prepend_space @append_space
@@ -81,14 +102,3 @@
 (function_expression
   body: (function_expression) @prepend_space
 )
-
-(list_expression
-  "[" @append_indent_start
-  (_)* @prepend_spaced_softline
-  "]" @prepend_indent_end
-)
-(list_expression
-  (_) @append_spaced_softline
-  .
-)
-(list_expression) @prepend_space @append_space
