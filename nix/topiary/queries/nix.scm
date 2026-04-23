@@ -1,9 +1,13 @@
 ; TODO: properly figure out strings?
-[
-  "rec"
-  "with"
-  "assert"
-] @prepend_space @append_space
+
+(with_expression
+  "with" @append_space @prepend_space
+  body: (_) @prepend_input_softline
+)
+(assert_expression
+  "assert" @append_space @prepend_spaced_softline
+  body: (_) @prepend_spaced_softline
+)
 
 (has_attr_expression
   expression: (_) @append_space
@@ -65,6 +69,8 @@
   (_) @append_spaced_softline
   .
 )
+(let_attrset_expression "let" @append_space)
+(rec_attrset_expression "rec" @append_space)
 (rec_attrset_expression
   .
   (_) @prepend_spaced_softline
