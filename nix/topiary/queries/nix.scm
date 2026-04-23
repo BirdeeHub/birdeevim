@@ -31,6 +31,7 @@
   default: (_) @prepend_space
 )
 
+(let_expression "let" @append_space (binding_set)* @do_nothing)
 (let_expression
   (binding_set) @append_spaced_softline @prepend_spaced_softline
   body: (_) @prepend_space
