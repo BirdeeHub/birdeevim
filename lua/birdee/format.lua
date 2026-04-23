@@ -14,11 +14,36 @@ return {
   -- colorscheme = "",
   after = function (_)
     local conform = require("conform")
+    local ft_to_language = {
+      sh = "bash",
+      query = "tree_sitter_query",
+    }
+    conform.formatters.topiary = {
+      command = "topiary",
+      args = function(self, ctx)
+        local ft = vim.bo[ctx.buf].filetype
+        local language = self.options.languages[ft] or ft_to_language[ft] or ft
+        if not language then
+          return {}
+        end
+
+        return {
+          "format",
+          "--language",
+          language,
+        }
+      end,
+      stdin = true,
+      options = {
+        languages = {},
+      },
+    }
 
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        nix = { },
+        nix = { "topiary" },
+        bash = { "topiary" },
         go = { "gofmt", "golint" },
         templ = { "templ" },
         -- Conform will run multiple formatters sequentially
