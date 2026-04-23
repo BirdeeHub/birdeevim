@@ -1,3 +1,11 @@
+; TODO: interpolations and strings
+
+; Don't format strings?
+[
+  (string_expression)
+  (indented_string_expression)
+] @leaf
+
 [
   "rec"
   "with"
@@ -27,12 +35,6 @@
   (binding_set) @append_spaced_softline @prepend_spaced_softline
   body: (_) @prepend_space
 )
-
-; Don't format strings or comments?
-[
-  (string_expression)
-  (indented_string_expression)
-] @leaf
 
 (comment) @keep_whitespace @leaf @multi_line_indent_all
 (
