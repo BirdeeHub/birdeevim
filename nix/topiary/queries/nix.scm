@@ -41,12 +41,17 @@
   ":"
 ] @prepend_antispace @append_space
 
-(binding_set (binding) @prepend_spaced_softline @append_spaced_softline) @prepend_indent_start @append_indent_end
+(binding_set) @prepend_indent_start @append_indent_end
+
+(binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
 (if_expression
+  "if" @append_indent_start
   condition: (_) @prepend_spaced_softline @append_spaced_softline
+  "then" @append_indent_start @prepend_indent_end
   consequence: (_) @prepend_spaced_softline @append_spaced_softline
-  alternative: (_)
+  "else" @append_indent_start @prepend_indent_end
+  alternative: (_) @append_indent_end
 )
 (if_expression
   alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline
@@ -54,19 +59,15 @@
 
 (function_expression
   formals: (formals
-    formal: (formal) @prepend_spaced_softline @prepend_indent_start @append_indent_end
+    formal: (formal)? @prepend_spaced_softline
     ellipses: (ellipses)? @prepend_spaced_softline @append_spaced_softline
   )
 )
 (function_expression
-  universal: (identifier) @prepend_spaced_softline
-  .
-  formals: (formals)
-  body: (_) @prepend_spaced_softline
+  formals: (formals
+    "}" @prepend_indent_end
+  ) @prepend_indent_start
 )
 (function_expression
-  formals: (formals)
-  .
-  universal: (identifier)?
   body: (_) @prepend_spaced_softline
 )
