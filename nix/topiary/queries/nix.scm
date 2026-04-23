@@ -147,3 +147,8 @@
     ) @prepend_indent_start @append_indent_end @prepend_spaced_softline
   )
 )
+(function_expression
+  body: (function_expression
+    formals: (formals)
+  ) @prepend_hardline
+)
