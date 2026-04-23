@@ -15,7 +15,7 @@
   expression: (_) @prepend_space
 )
 
-; Don't format strings or comments
+; Don't format strings or comments?
 [
   (string_expression)
   (comment)
