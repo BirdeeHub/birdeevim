@@ -32,7 +32,7 @@
   (indented_string_expression)
 ] @leaf
 
-(comment) @keep_whitespace @leaf
+(comment) @keep_whitespace @leaf @multi_line_indent_all
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
