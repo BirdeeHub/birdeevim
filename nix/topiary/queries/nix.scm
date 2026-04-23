@@ -1,5 +1,3 @@
-; NOTE: This doesn't work btw but maybe I'll get to it eventually
-
 [
   "=="
   "&&"
