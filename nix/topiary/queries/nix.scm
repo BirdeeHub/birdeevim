@@ -66,9 +66,7 @@
   .
 )
 (binding_set) @prepend_indent_start @append_indent_end
-(binding_set (binding) @append_spaced_softline (comment)* @do_nothing)
-(binding_set (binding) @prepend_spaced_softline)
-(binding_set (binding) @prepend_spaced_softline @append_space (comment) @append_spaced_softline)
+(binding_set (binding)? @prepend_spaced_softline @append_spaced_softline (comment)? @append_spaced_softline)
 (binding
   attrpath: (attrpath) @append_space
   expression: (_) @prepend_space

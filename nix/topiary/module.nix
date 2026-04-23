@@ -38,7 +38,8 @@
         else if builtins.isAttrs val then
           "{ ${lib.concatStringsSep ", " (lib.mapAttrsToList (k: v: "${k} = ${toNickelValue v}") val)} }"
         else
-          toString val; # Convert a single language config to Nickel source with | default annotations
+          toString val;
+      # Convert a single language config to Nickel source with | default annotations
       languageToNickel = name: lang: let
         fields = [
           "extensions = ${toNickelValue lang.extensions}"
