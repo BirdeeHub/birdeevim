@@ -2,7 +2,7 @@
   imports = [ wlib.modules.default ];
   config.extraPackages = [];
   options.settings = lib.mkOption {
-    type = lib.types.json;
+    type = lib.types.json // { description = "TOML value"; };
     default = {};
   };
   config.package = pkgs.treefmt;
