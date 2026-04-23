@@ -1,6 +1,4 @@
-{ config, wlib, lib, pkgs, ... }: let
-  a = 1 + 2;
-in {
+{ config, wlib, lib, pkgs, ... }: {
   imports = [ wlib.modules.default ];
   options.queryDir = lib.mkOption {
     type = wlib.types.stringable;
