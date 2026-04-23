@@ -124,7 +124,7 @@
     };
   };
   outputs = { self, nixpkgs, wrappers, flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
       imports = [
         wrappers.flakeModules.wrappers
         flake-parts.flakeModules.bundlers
@@ -172,6 +172,6 @@
         # formatter = config.packages.treefmt;
       };
       # and yet this does?
-      flake.formatter = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all (system: self.packages.${system}.treefmt or null);
-    };
+      flake.formatter = nixpkgs.lib.genAttrs config.systems (system: self.packages.${system}.treefmt or null);
+    });
 }
