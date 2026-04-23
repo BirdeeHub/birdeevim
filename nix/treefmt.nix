@@ -1,7 +1,7 @@
 { pkgs, config, lib, wlib, ... }: {
   imports = [ wlib.modules.default ];
-  config.extraPackages = [];
   options.settings = lib.mkOption {
+    description = "Settings for treefmt config file";
     type = lib.types.json // {
       description = "TOML value";
     };
