@@ -57,6 +57,22 @@
   ":"
 ] @prepend_antispace @append_space
 
+(let_attrset_expression
+  .
+  (_) @prepend_spaced_softline
+)
+(let_attrset_expression
+  (_) @append_spaced_softline
+  .
+)
+(rec_attrset_expression
+  .
+  (_) @prepend_spaced_softline
+)
+(rec_attrset_expression
+  (_) @append_spaced_softline
+  .
+)
 (attrset_expression
   .
   (_) @prepend_spaced_softline
