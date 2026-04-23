@@ -33,12 +33,14 @@
   "@"
 ] @prepend_antispace @append_antispace
 
-[
-  "("
-] @append_antispace @prepend_space
-[
-  ")"
-] @prepend_antispace @append_space
+(parenthesized_expression
+  "(" @append_antispace
+  ")" @prepend_antispace
+) @prepend_space @append_space
+
+(apply_expression
+  function: (_) @append_space
+)
 
 [
   ","
@@ -48,9 +50,6 @@
 
 (binding_set) @prepend_indent_start @append_indent_end
 (binding_set (binding expression: (function_expression) @prepend_indent_start @append_indent_end))
-
-(attrset_expression) @prepend_space @append_space
-
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
 
 (if_expression
