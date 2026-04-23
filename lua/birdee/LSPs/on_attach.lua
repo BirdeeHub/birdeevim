@@ -31,6 +31,7 @@ return function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+  map('<leader>Fl', ":Format<CR>", '[F]ormat with [l]sp')
   -- The following two autocommands are used to highlight references of the
   -- word under your cursor when your cursor rests there for a little while.
   --    See `:help CursorHold` for information about when this is executed
