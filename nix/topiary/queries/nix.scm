@@ -44,6 +44,14 @@
   ":"
 ] @prepend_antispace @append_space
 
+(attrset_expression
+  .
+  (_) @prepend_spaced_softline
+)
+(attrset_expression
+  (_) @append_spaced_softline
+  .
+)
 (binding_set) @prepend_indent_start @append_indent_end
 (binding_set (binding expression: (function_expression) @prepend_indent_start @append_indent_end))
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
