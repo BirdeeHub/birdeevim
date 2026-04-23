@@ -1,4 +1,4 @@
-(string_fragment) @leaf @keep_whitespace
+(string_fragment) @keep_whitespace
 
 (with_expression
   "with" @append_space @prepend_space
