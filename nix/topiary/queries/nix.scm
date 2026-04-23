@@ -110,7 +110,6 @@
     .
   ) @prepend_indent_start
 )
-(function_expression body: (_ !formals !universal !body) @prepend_spaced_softline)
 (function_expression body: (function_expression) @prepend_space)
 
-(binding (function_expression body: (_ (_ !binding) !formals !universal !body) @prepend_indent_start @append_indent_end))
+(binding (function_expression body: (_ (_ !binding) !formals !universal !body) @prepend_indent_start @append_indent_end @prepend_spaced_softline))

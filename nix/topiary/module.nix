@@ -1,5 +1,4 @@
-{ config, wlib, lib, pkgs, ... }:
-{
+{ config, wlib, lib, pkgs, ... }: {
   imports = [ wlib.modules.default ];
   options.queryDir = lib.mkOption {
     type = wlib.types.stringable;
