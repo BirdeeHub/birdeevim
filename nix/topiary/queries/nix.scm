@@ -31,7 +31,7 @@
   (string_expression)
   (indented_string_expression)
 ] @leaf
-(comment) @keep_whitespace @append_spaced_softline @prepend_spaced_softline
+(comment) @keep_whitespace @prepend_spaced_softline
 
 (parenthesized_expression
   "(" @append_antispace
