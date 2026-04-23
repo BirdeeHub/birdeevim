@@ -32,6 +32,7 @@ return function(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
   map('<leader>Fl', ":Format<CR>", '[F]ormat with [l]sp')
+  map('<leader>FL', ":Format<CR>", '[F]ormat with [L]SP')
   -- The following two autocommands are used to highlight references of the
   -- word under your cursor when your cursor rests there for a little while.
   --    See `:help CursorHold` for information about when this is executed
