@@ -6,7 +6,8 @@
   "''" @prepend_indent_end
   .
 )
-(_ (_)* . (_) @keep_whitespace)
+(_ (string_expression) @leaf @multi_line_indent_all (_) .)
+(_ (_) @keep_whitespace @leaf .)
 (interpolation
   .
   "${" @append_antispace
