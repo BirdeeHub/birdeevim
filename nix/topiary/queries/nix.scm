@@ -1,20 +1,4 @@
 [
-  "=="
-  "!="
-  "&&"
-  "||"
-  "="
-  ">"
-  ">="
-  "->"
-  "<"
-  "?"
-  "<="
-  "++"
-  "//"
-  "+"
-  "-"
-  "*"
   "let"
   "inherit"
   "in"
@@ -23,6 +7,13 @@
   "assert"
   "or"
 ] @prepend_space @append_space
+
+(binary_expression left: (_) @append_space right: (_) @prepend_space)
+
+(binding
+  attrpath: (attrpath) @append_space
+  expression: (_) @prepend_space
+)
 
 ; Don't format strings or comments
 [
