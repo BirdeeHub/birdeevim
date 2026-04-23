@@ -16,11 +16,6 @@
 
 (binary_expression left: (_) @append_space right: (_) @prepend_space)
 
-(binding
-  attrpath: (attrpath) @append_space
-  expression: (_) @prepend_space
-)
-
 (select_expression
   expression: (_) @append_antispace
   attrpath: (attrpath) @prepend_antispace
@@ -29,12 +24,6 @@
   expression: (_)
   attrpath: (attrpath) @append_space
   default: (_) @prepend_space
-)
-
-(let_expression "let" @append_spaced_softline (binding_set)* @do_nothing)
-(let_expression
-  (binding_set)? @append_spaced_softline @prepend_spaced_softline
-  body: (_) @prepend_space
 )
 
 (comment) @keep_whitespace @leaf @multi_line_indent_all
@@ -80,6 +69,16 @@
 )
 (binding_set) @prepend_indent_start @append_indent_end
 (binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
+(binding
+  attrpath: (attrpath) @append_space
+  expression: (_) @prepend_space
+)
+
+(let_expression "let" @append_spaced_softline (binding_set)* @do_nothing)
+(let_expression
+  (binding_set)? @append_spaced_softline @prepend_spaced_softline
+  body: (_) @prepend_space
+)
 
 (list_expression
   "[" @append_indent_start
