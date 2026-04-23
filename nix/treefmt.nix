@@ -1,9 +1,9 @@
 { pkgs, config, lib, wlib, ... }: {
   imports = [ wlib.modules.default ];
-  config.extraPackages = [ ];
+  config.extraPackages = [];
   options.settings = lib.mkOption {
     type = lib.types.json;
-    default = { };
+    default = {};
   };
   config.package = pkgs.treefmt;
   config.flags."--config-file" = config.constructFiles.configFile.path;

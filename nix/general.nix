@@ -4,8 +4,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
@@ -91,23 +90,20 @@
     postpkgs = with pkgs; [
       tree-sitter
     ];
-    data =
-      with pkgs.vimPlugins;
-      [
-        {
-          data = pkgs.runCommand "nvim-treesitter" { src = nvim-treesitter; } ''
+    data = with pkgs.vimPlugins; [
+      {
+        data = pkgs.runCommand "nvim-treesitter" { src = nvim-treesitter; } ''
             mkdir -p $out/
             ln -s $src/runtime/queries $out/
             ln -s $src/* $out/
           '';
-          pname = "nvim-treesitter";
-        }
-        {
-          data = nvim-ts-autotag;
-          lazy = true;
-        }
-      ]
-      ++ builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
+        pname = "nvim-treesitter";
+      }
+      {
+        data = nvim-ts-autotag;
+        lazy = true;
+      }
+    ] ++ builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
   };
 
   config.specs.images = {
@@ -121,27 +117,23 @@
 
   config.specs.scooter = {
     data = null;
-    wrappers.scooter =
-      { config, pkgs, ... }:
-      {
-        imports = [ wlib.modules.default ];
-        options.settings = lib.mkOption {
-          type = lib.types.json;
-        };
-        config.package = pkgs.scooter;
-        config.flags."--config-dir" = dirOf config.constructFiles.generatedConfig.path;
-        config.constructFiles.generatedConfig = {
-          relPath = "share/${config.binName}_config/config.toml";
-          builder = ''mkdir -p "$(dirname "$2")" && ${pkgs.remarshal}/bin/json2toml "$1" "$2"'';
-          content = builtins.toJSON (
-            lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings
-          );
-        };
-        # NOTE: this is a remote command, so it just needs to be sent to the right neovim.
-        # If it needed the wrapper path directly, we would use the name and rely on PATH resolution
-        # OR we would use the hosts feature OR wrapperVariants
-        config.settings.editor_open.command = "${config.package}/bin/nvim --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+    wrappers.scooter = { config, pkgs, ... }: {
+      imports = [ wlib.modules.default ];
+      options.settings = lib.mkOption {
+        type = lib.types.json;
       };
+      config.package = pkgs.scooter;
+      config.flags."--config-dir" = dirOf config.constructFiles.generatedConfig.path;
+      config.constructFiles.generatedConfig = {
+        relPath = "share/${config.binName}_config/config.toml";
+        builder = ''mkdir -p "$(dirname "$2")" && ${pkgs.remarshal}/bin/json2toml "$1" "$2"'';
+        content = builtins.toJSON (lib.filterAttrsRecursive (n: v: v != null && !builtins.isFunction v) config.settings);
+      };
+      # NOTE: this is a remote command, so it just needs to be sent to the right neovim.
+      # If it needed the wrapper path directly, we would use the name and rely on PATH resolution
+      # OR we would use the hosts feature OR wrapperVariants
+      config.settings.editor_open.command = "${config.package}/bin/nvim --server $NVIM --remote-send '<cmd>lua require('scooter').EditLineFromScooter(\"%file\", %line)<CR>'";
+    };
   };
 
   options.settings.colorscheme = lib.mkOption {
@@ -151,20 +143,17 @@
   config.specs.colorscheme = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     lazy = true;
-    data = builtins.getAttr (config.settings.colorscheme or "onedark") (
-      with pkgs.vimPlugins;
-      {
-        "onedark" = onedarkpro-nvim;
-        "onedark_dark" = onedarkpro-nvim;
-        "onedark_vivid" = onedarkpro-nvim;
-        "onelight" = onedarkpro-nvim;
-        "catppuccin" = catppuccin-nvim;
-        "catppuccin-mocha" = catppuccin-nvim;
-        "moonfly" = vim-moonfly-colors;
-        "tokyonight" = tokyonight-nvim;
-        "tokyonight-day" = tokyonight-nvim;
-      }
-    );
+    data = builtins.getAttr (config.settings.colorscheme or "onedark") (with pkgs.vimPlugins; {
+      "onedark" = onedarkpro-nvim;
+      "onedark_dark" = onedarkpro-nvim;
+      "onedark_vivid" = onedarkpro-nvim;
+      "onelight" = onedarkpro-nvim;
+      "catppuccin" = catppuccin-nvim;
+      "catppuccin-mocha" = catppuccin-nvim;
+      "moonfly" = vim-moonfly-colors;
+      "tokyonight" = tokyonight-nvim;
+      "tokyonight-day" = tokyonight-nvim;
+    });
   };
 
   config.specs.AI = {

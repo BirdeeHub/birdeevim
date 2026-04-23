@@ -5,8 +5,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   config.specs.typst = {
     lazy = true;
     data = with pkgs.vimPlugins; [
@@ -35,9 +34,8 @@
   config.specs.nix = {
     mainInfo.nixdExtras = {
       nixpkgs = "import ${builtins.path { path = pkgs.path; }} {}";
-      get_configs =
-        lib.generators.mkLuaInline # lua
-          ''function(type, path) return [[import ${./nixd.nix} "${pkgs.stdenv.hostPlatform.system}" "]] .. type .. [[" ]] .. (path or "./.") end'';
+      get_configs = lib.generators.mkLuaInline # lua
+      ''function(type, path) return [[import ${./nixd.nix} "${pkgs.stdenv.hostPlatform.system}" "]] .. type .. [[" ]] .. (path or "./.") end'';
     };
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
@@ -80,32 +78,28 @@
       zig-shell-completions
     ];
   };
-  config.specs.fennel =
-    let
-      conjure_nocheck = (
-        pkgs.vimPlugins.conjure.overrideAttrs (prev: {
-          doCheck = false;
-          nvimSkipModules = (prev.nvimSkipModules or [ ]) ++ [ "conjure-spec.process_spec" ];
-        })
-      );
-    in
-    {
-      lazy = true;
-      data = with pkgs.vimPlugins; [
-        {
-          data = config.nvim-lib.neovimPlugins.fn_finder;
-          lazy = false;
-        }
-        conjure_nocheck
-        (cmp-conjure.overrideAttrs {
-          dependencies = [ conjure_nocheck ];
-        })
-      ];
-      postpkgs = with pkgs; [
-        fnlfmt
-        fennel-ls
-      ];
-    };
+  config.specs.fennel = let
+    conjure_nocheck = (pkgs.vimPlugins.conjure.overrideAttrs (prev: {
+      doCheck = false;
+      nvimSkipModules = (prev.nvimSkipModules or []) ++ [ "conjure-spec.process_spec" ];
+    }));
+  in {
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      {
+        data = config.nvim-lib.neovimPlugins.fn_finder;
+        lazy = false;
+      }
+      conjure_nocheck
+      (cmp-conjure.overrideAttrs {
+        dependencies = [ conjure_nocheck ];
+      })
+    ];
+    postpkgs = with pkgs; [
+      fnlfmt
+      fennel-ls
+    ];
+  };
   config.specs.roc = {
     data = null;
     postpkgs = with pkgs; [
@@ -142,8 +136,7 @@
   };
   config.specs.web = {
     lazy = true;
-    data = with pkgs.vimPlugins; [
-    ];
+    data = with pkgs.vimPlugins; [];
     postpkgs = with pkgs; [
       htmx-lsp
       vscode-langservers-extracted

@@ -4,8 +4,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [ ./module.nix ];
   queryDir = ./queries;
   languages = {

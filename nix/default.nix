@@ -1,12 +1,10 @@
-inputs:
-{
+inputs: {
   config,
   wlib,
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   _file = ./default.nix;
   key = ./default.nix;
   config._module.args.inputs = inputs;
@@ -42,16 +40,14 @@ inputs:
     ];
     default = false;
   };
-  config.settings.config_directory =
-    if config.settings.test_mode == "dynamic" then
-      let
-        toLua = lib.generators.toLua { };
-      in
-      lib.generators.mkLuaInline "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) == 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
-    else if config.settings.test_mode == true then
-      config.settings.unwrapped_config
-    else
-      config.settings.wrapped_config;
+  config.settings.config_directory = if config.settings.test_mode == "dynamic" then
+    let
+      toLua = lib.generators.toLua {};
+    in lib.generators.mkLuaInline "(vim.fn.isdirectory(${toLua config.settings.unwrapped_config}) == 1) and ${toLua config.settings.unwrapped_config} or ${toLua config.settings.wrapped_config}"
+  else if config.settings.test_mode == true then
+    config.settings.unwrapped_config
+  else
+    config.settings.wrapped_config;
 
   options.settings.wrapped_config = lib.mkOption {
     type = lib.types.either wlib.types.stringable lib.types.luaInline;
@@ -69,12 +65,9 @@ inputs:
     type = lib.types.bool;
     default = false;
   };
-  config.specMods = lib.mkIf config.settings.minimal (
-    { parentSpec, ... }:
-    {
-      config.enable = lib.mkOverride 1400 (parentSpec.enable or false); # 1400 is 100 higher than mkOptionDefault (1500)
-    }
-  );
+  config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
+    config.enable = lib.mkOverride 1400 (parentSpec.enable or false); # 1400 is 100 higher than mkOptionDefault (1500)
+  });
   config.hosts.python3.nvim-host.enable = config.specs.python.enable;
   config.hosts.node.nvim-host.enable = !config.settings.minimal;
   config.hosts.ruby.nvim-host.enable = !config.settings.minimal;
@@ -93,14 +86,11 @@ inputs:
     default = false;
   };
   # the appimage needs extra stuff because its chroot shadows the store
-  config.extraPackages = lib.mkIf config.settings.appimage (
-    with pkgs;
-    [
-      git
-      nix
-      wl-clipboard
-      xclip
-      xsel
-    ]
-  );
+  config.extraPackages = lib.mkIf config.settings.appimage (with pkgs; [
+    git
+    nix
+    wl-clipboard
+    xclip
+    xsel
+  ]);
 }

@@ -1,10 +1,9 @@
-importName: inputs:
-self: super: { 
+importName: inputs: self: super: {
   ${importName} = super.callPackage ({
     stdenv,
     makeBinaryWrapper,
     aider-chat-full,
-    lib
+    lib,
   }: let
     args = [
       "--add-flag"

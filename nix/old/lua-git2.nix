@@ -8,7 +8,7 @@
 # import ./thisfile.nix "lua-git2" inputs;
 
 importName: inputs: let
-  luagit2 = { src, buildLuarocksPackage, luaOlder }:
+  luagit2 = { src, buildLuarocksPackage, luaOlder, }:
     buildLuarocksPackage {
       pname = "lua-git2";
       version = "scm-0";
@@ -21,10 +21,9 @@ importName: inputs: let
       };
     };
   overlay = self: super: let
-    pkgs = import inputs.nixpkgs {  inherit (self.stdenv.hostPlatform) system; };
+    pkgs = import inputs.nixpkgs { inherit (self.stdenv.hostPlatform) system; };
   in {
     # will create pkgs.${importName}
     ${importName} = pkgs.callPackage luagit2 { src = inputs.luagit2-src; };
   };
-in
-overlay
+in overlay
