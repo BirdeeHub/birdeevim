@@ -8,6 +8,7 @@
   ">"
   "->"
   "<"
+  "++"
   "+"
   "-"
   "*"
@@ -36,10 +37,10 @@
 
 [
   "("
-] @append_antispace
+] @append_antispace @prepend_space
 [
   ")"
-] @prepend_antispace
+] @prepend_antispace @append_space
 
 [
   ","
