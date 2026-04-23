@@ -7,8 +7,7 @@
   .
 )
 (_ (string_expression) @leaf @multi_line_indent_all (_) .)
-(indented_string_expression (string_fragment) @keep_whitespace @leaf .)
-(string_expression (string_fragment) @keep_whitespace @leaf .)
+(_ (string_fragment) @keep_whitespace @leaf .)
 (interpolation
   .
   "${" @append_antispace
