@@ -129,11 +129,7 @@
         wrappers.flakeModules.wrappers
         flake-parts.flakeModules.bundlers
       ];
-      flake.formatter = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all (system: self.wrappers.treefmt.wrap {
-        pkgs = import nixpkgs {
-          inherit system; config.allowUnfree = true;
-        };
-      });
+      flake.formatter = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all (system: self.packages.${system}.treefmt or null);
       systems = nixpkgs.lib.platforms.all;
       flake.overlays.neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
       flake.wrappers = {
