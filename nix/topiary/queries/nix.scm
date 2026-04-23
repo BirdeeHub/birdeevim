@@ -12,12 +12,9 @@
 )
 
 (select_expression
-  expression: (attrset_expression)
-  attrpath: (attrpath
-    attr: (identifier)) @append_space
-  default: (variable_expression
-    name: (identifier)
-  ) @prepend_space
+  expression: (_) @append_antispace
+  attrpath: (attrpath) @append_space @prepend_antispace
+  default: (_) @prepend_space
 )
 
 (let_expression (binding_set) @append_spaced_softline @prepend_spaced_softline body: (_) @prepend_space)
@@ -27,13 +24,6 @@
   (string_expression)
   (comment)
 ] @leaf
-
-"!" @prepend_space @append_antispace
-
-[
-  "."
-  "@"
-] @prepend_antispace @append_antispace
 
 (parenthesized_expression
   "(" @append_antispace
@@ -47,6 +37,7 @@
   (_)
 )
 
+"!" @prepend_space @append_antispace
 [
   ","
   ";"
@@ -68,7 +59,12 @@
 )
 (list_expression) @prepend_space @append_space
 
-"inherit" @append_space
+(inherit_from
+  "(" @append_antispace @prepend_space
+  expression: (_)
+  ")" @prepend_antispace
+  attrs: (_)
+)
 (inherited_attrs attr: (_)* @prepend_space)
 
 (if_expression
@@ -84,6 +80,7 @@
   alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline @append_indent_end
 )
 
+(function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
 (function_expression
   formals: (formals
     formal: (formal)? @prepend_spaced_softline
