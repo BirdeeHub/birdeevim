@@ -1,9 +1,9 @@
 ; TODO: interpolations and strings
-
 ; Don't format strings?
+; Figure out how to format interpolations?
 [
-  (string_expression)
-  (indented_string_expression)
+  (string_expression (interpolation)* @do_nothing)
+  (indented_string_expression (interpolation)* @do_nothing)
 ] @leaf
 
 [
