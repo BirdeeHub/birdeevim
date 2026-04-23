@@ -41,15 +41,32 @@
   ":"
 ] @prepend_antispace @append_space
 
-(attrset_expression) @multi_line_indent_all
+(binding_set (binding) @prepend_spaced_softline @append_spaced_softline) @prepend_indent_start @append_indent_end
 
-(binding_set (binding) @prepend_spaced_softline @append_spaced_softline)
+(if_expression
+  condition: (_) @prepend_spaced_softline @append_spaced_softline
+  consequence: (_) @prepend_spaced_softline @append_spaced_softline
+  alternative: (_)
+)
+(if_expression
+  alternative: (_ !condition !consequence !alternative) @prepend_spaced_softline
+)
 
 (function_expression
   formals: (formals
-    formal: (formal) @prepend_spaced_softline
-    universal: (identifier)? @prepend_spaced_softline
-    ellipses: (ellipses)? @prepend_spaced_softline @append_spaced_softline @append_indent_end
-  ) @prepend_hardline @prepend_indent_start
-  ":" @append_hardline
-) @multi_line_indent_all
+    formal: (formal) @prepend_spaced_softline @prepend_indent_start @append_indent_end
+    ellipses: (ellipses)? @prepend_spaced_softline @append_spaced_softline
+  )
+)
+(function_expression
+  universal: (identifier) @prepend_spaced_softline
+  .
+  formals: (formals)
+  body: (_) @prepend_spaced_softline
+)
+(function_expression
+  formals: (formals)
+  .
+  universal: (identifier)?
+  body: (_) @prepend_spaced_softline
+)
