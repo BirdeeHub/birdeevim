@@ -1,4 +1,5 @@
 (string_fragment) @keep_whitespace
+(indented_string_expression) @multi_line_indent_all
 
 (with_expression
   "with" @append_space @prepend_space
