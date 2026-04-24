@@ -15,6 +15,13 @@
   .
 )
 
+"!" @prepend_space @append_antispace
+[
+  ","
+  ";"
+  ":"
+] @prepend_antispace @append_space
+
 (with_expression
   "with" @append_space @prepend_space
   body: (_) @prepend_input_softline
@@ -36,10 +43,12 @@
 
 (binary_expression left: (_) @append_space right: (_) @prepend_space)
 
+; attr.path
 (select_expression
   expression: (_) @append_antispace
   attrpath: (attrpath) @prepend_antispace
 )
+; attr.path or default
 (select_expression
   expression: (_)
   attrpath: (attrpath) @append_space
@@ -79,13 +88,6 @@
   (_)
   .
 )
-
-"!" @prepend_space @append_antispace
-[
-  ","
-  ";"
-  ":"
-] @prepend_antispace @append_space
 
 (let_attrset_expression
   .
@@ -158,6 +160,7 @@
   "else" @prepend_indent_end @append_space
   alternative: (_) @append_space
 )
+; control indenting of else based on what is there so that `if ... then\n...\nelse if ... then` and bindings return to normal and stuff
 (if_expression
   "else" @append_indent_start
   alternative: (_
@@ -205,7 +208,6 @@
 )
 
 ; adds an extra level of indent for the body of function if it is in a binding and is not also a function/binding set
-(function_expression body: (function_expression) @prepend_space)
 (binding
   (function_expression
     body: (_
@@ -215,6 +217,7 @@
   )
 )
 ; usually I want multi args on 1 line, but if they are both formals I want a newline
+(function_expression body: (function_expression) @prepend_space)
 (function_expression
   body: (function_expression
     formals: (formals)
