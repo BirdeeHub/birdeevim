@@ -1,5 +1,4 @@
-; TODO: still moves single line comments down inline in lists
-; And it is still kinda weird with string indentation
+; TODO: It is still weird with string indentation
 (indented_string_expression
   .
   "''" @append_indent_start
@@ -132,9 +131,13 @@
 )
 
 (list_expression
+  .
   "[" @append_indent_start
-  (_)* @prepend_spaced_softline
   "]" @prepend_indent_end
+  .
+)
+(list_expression
+  element: (_)? @prepend_spaced_softline
 )
 (list_expression
   (_) @append_spaced_softline
