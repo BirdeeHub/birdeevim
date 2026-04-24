@@ -24,16 +24,14 @@
   condition: (_) @append_indent_end
   body: (_) @prepend_spaced_softline
 )
-(formal
-  name: (_) @append_space
-  default: (_) @prepend_space
-)
 
+; { idk = 1; } ? idk
 (has_attr_expression
   expression: (_) @append_space
   attrpath: (attrpath) @prepend_space
 )
 
+; don't scrunch it
 (_) @allow_blank_line_before
 
 (binary_expression left: (_) @append_space right: (_) @prepend_space)
@@ -48,6 +46,7 @@
   default: (_) @prepend_space
 )
 
+; comments without them collapsing to 1 line or losing indentation
 (comment) @keep_whitespace @multi_line_indent_all @prepend_input_softline
 (
   (comment) @append_hardline
@@ -73,6 +72,7 @@
   (#multi_line_only!)
 )
 
+; calling functions
 (apply_expression
   function: (_) @append_space
   (_)* @append_spaced_softline
@@ -174,6 +174,7 @@
   alternative: (string_expression) @prepend_empty_softline @append_indent_end
 )
 
+; formal (attrset destructuring) args formatting (general)
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
 (function_expression
   formals: (formals
@@ -197,8 +198,14 @@
     .
   )
 )
-(function_expression body: (function_expression) @prepend_space)
+; { somearg ? default, ... }:
+(formal
+  name: (_) @append_space
+  default: (_) @prepend_space
+)
 
+; adds an extra level of indent for the body of function if it is in a binding and is not also a function/binding set
+(function_expression body: (function_expression) @prepend_space)
 (binding
   (function_expression
     body: (_
@@ -207,6 +214,7 @@
     ) @prepend_indent_start @append_indent_end @prepend_spaced_softline
   )
 )
+; usually I want multi args on 1 line, but if they are both formals I want a newline
 (function_expression
   body: (function_expression
     formals: (formals)
