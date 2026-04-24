@@ -31,7 +31,7 @@
   body: (_) @prepend_spaced_softline
 )
 
-; { idk = 1; } ? idk
+; attr ? idk
 (has_attr_expression
   expression: (_) @append_space
   attrpath: (attrpath) @prepend_space
@@ -130,6 +130,7 @@
   body: (_) @prepend_space
 )
 
+; lists without making comments be moved to the next line
 (list_expression
   .
   "[" @append_indent_start
