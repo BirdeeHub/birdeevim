@@ -7,6 +7,7 @@
 }: {
   imports = [ ./module.nix ];
   queryDir = ./queries;
+  # queryDir = "/home/birdee/.birdeevim/nix/topiary/queries";
   languages = {
     bash = {
       grammar = pkgs.tree-sitter-grammars.tree-sitter-bash;
