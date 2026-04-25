@@ -69,6 +69,9 @@
   (binding_set)
   (comment) @prepend_indent_start @append_indent_end
 )
+(let_attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
+(rec_attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
+(attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
 
 (parenthesized_expression
   "(" @append_antispace
@@ -119,7 +122,7 @@
 (binding_set (inherit_from) @prepend_spaced_softline @append_input_softline)
 (binding
   attrpath: (attrpath) @append_space
-  expression: (_) @prepend_space
+  "=" @append_space
 )
 
 (let_expression "let" @append_spaced_softline (binding_set)? @do_nothing)

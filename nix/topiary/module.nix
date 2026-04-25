@@ -26,7 +26,7 @@
     );
     default = {};
   };
-  config.package = pkgs.topiary;
+  config.package = lib.mkDefault pkgs.topiary;
   config.env.TOPIARY_LANGUAGE_DIR = config.queryDir;
   config.env.TOPIARY_CONFIG_FILE = config.constructFiles.languages.path;
   config.constructFiles.languages = {
