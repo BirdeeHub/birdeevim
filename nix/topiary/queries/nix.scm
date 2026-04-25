@@ -56,6 +56,7 @@
 
 ; comments without them collapsing to 1 line or losing indentation
 (comment) @keep_whitespace @multi_line_indent_all @leaf
+(comment) @prepend_input_softline
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
@@ -180,20 +181,25 @@
 
 ; formal (attrset destructuring) args formatting (general)
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
-; TODO handle comments + delimiter in these next 2 queries correctly
 (function_expression
   formals: (formals
-    (_)? @prepend_spaced_softline
+    formal: (_)? @prepend_spaced_softline
+    (comment)? @prepend_input_softline
+    ellipses: (ellipses)? @prepend_spaced_softline
   )
 )
 (function_expression
   formals: (formals
-    formal: (formal)*
     formal: (formal) @append_delimiter
     .
+    (comment)? @do_nothing
+    .
     ","? @do_nothing
+    .
+    (comment)? @do_nothing
     !ellipses
     (#delimiter! ",")
+    .
   )
 )
 (function_expression
