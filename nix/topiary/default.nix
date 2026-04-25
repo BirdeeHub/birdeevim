@@ -1,10 +1,13 @@
-{
+inputs: {
   config,
   wlib,
   lib,
   pkgs,
   ...
 }: {
+  _file = ./default.nix;
+  key = ./default.nix;
+  package = inputs.topiary.packages.${pkgs.stdenv.hostPlatform.system}.default;
   imports = [ ./module.nix ];
   queryDir = ./queries;
   # queryDir = "/home/birdee/.birdeevim/nix/topiary/queries";

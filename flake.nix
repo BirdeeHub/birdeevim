@@ -18,6 +18,7 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     # for stuff to follow
     flake-utils.url = "github:numtide/flake-utils";
+    topiary.url = "git+file:/home/birdee/Projects/topiary";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
@@ -140,7 +141,7 @@
             # disable roc for now because I haven't been using it# and it builds the lsp from source which is slow
             config.specs.roc = _: { enable = false; };
           };
-          topiary = ./nix/topiary;
+          topiary = import ./nix/topiary inputs;
           default = self.wrapperModules.neovim;
           treefmt = { pkgs, ... }: {
             imports = [ ./nix/treefmt.nix ];
