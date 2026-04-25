@@ -6,7 +6,7 @@
   .
 )
 (_ (string_fragment) @keep_whitespace .)
-(_ (string_fragment) @leaf)
+(_ (string_fragment) @leaf @multi_line_indent_all)
 (interpolation
   .
   "${" @append_antispace
@@ -55,7 +55,7 @@
 )
 
 ; comments without them collapsing to 1 line or losing indentation
-(comment) @keep_whitespace @multi_line_indent_all @prepend_input_softline
+(comment) @keep_whitespace @multi_line_indent_all @leaf
 (
   (comment) @append_hardline
   (#match? @append_hardline "^#")
@@ -89,7 +89,6 @@
 )
 
 (let_attrset_expression
-  .
   (_) @prepend_spaced_softline
 )
 (let_attrset_expression
@@ -99,7 +98,6 @@
 (let_attrset_expression "let" @append_space)
 (rec_attrset_expression "rec" @append_space)
 (rec_attrset_expression
-  .
   (_) @prepend_spaced_softline
 )
 (rec_attrset_expression
@@ -107,7 +105,6 @@
   .
 )
 (attrset_expression
-  .
   (_) @prepend_spaced_softline
 )
 (attrset_expression
@@ -183,6 +180,7 @@
 
 ; formal (attrset destructuring) args formatting (general)
 (function_expression "@" @prepend_antispace @append_antispace ":" @prepend_antispace)
+; TODO handle comments + delimiter in these next 2 queries correctly
 (function_expression
   formals: (formals
     (_)? @prepend_spaced_softline
