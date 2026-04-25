@@ -81,7 +81,9 @@
 )
 (parenthesized_expression
   "(" @append_empty_softline @append_indent_start
-  ")" @prepend_input_softline @prepend_indent_end @prepend_antispace
+  (_ (binding_set) @do_nothing)?
+  (list_expression)? @do_nothing
+  ")" @prepend_empty_softline @prepend_indent_end
   (#multi_line_only!)
 )
 
@@ -124,6 +126,8 @@
 (binding
   attrpath: (attrpath) @append_space
   "=" @append_space
+  ; (comment)? @append_space ; <- somehow this gets added to multi_line_indent_all
+  ; (_)* @prepend_space ; <- so would doing this and removing the "=" @append_space
 )
 
 (let_expression "let" @append_spaced_softline (binding_set)? @do_nothing)
@@ -192,6 +196,7 @@
     ellipses: (ellipses)? @prepend_spaced_softline
   )
 )
+; adds trailing , if no ... and no ,
 (function_expression
   formals: (formals
     formal: (formal) @append_delimiter
@@ -204,6 +209,26 @@
     !ellipses
     (#delimiter! ",")
     .
+  )
+)
+; , stdenv
+; # args below:
+; , lua_interpreter ? lua5_2
+; # into
+; stdenv,
+; # args below:
+; lua_interpreter ? lua5_2,
+; i.e. it moves the , around the comment
+(function_expression
+  formals: (formals
+    formal: (formal) @append_delimiter
+    .
+    ","? @do_nothing
+    .
+    (comment)
+    .
+    "," @delete
+    (#delimiter! ",")
   )
 )
 (function_expression
