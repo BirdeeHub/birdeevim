@@ -7,11 +7,22 @@ inputs: {
 }: {
   _file = ./default.nix;
   key = ./default.nix;
-  package = inputs.topiary.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  config.package = inputs.topiary.packages.${pkgs.stdenv.hostPlatform.system}.default;
   imports = [ ./module.nix ];
-  queryDir = ./queries;
-  # queryDir = "/home/birdee/.birdeevim/nix/topiary/queries";
-  languages = {
+  options.unwrappedQueryDir = lib.mkOption {
+    type = wlib.types.stringable;
+    default = "/home/birdee/.birdeevim/nix/topiary/queries";
+  };
+  options.wrappedQueryDir = lib.mkOption {
+    type = wlib.types.stringable;
+    default = ./queries;
+  };
+  options.testMode = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+  };
+  config.queryDir = if config.testMode then config.unwrappedQueryDir else config.wrappedQueryDir;
+  config.languages = {
     bash = {
       grammar = pkgs.tree-sitter-grammars.tree-sitter-bash;
     };
