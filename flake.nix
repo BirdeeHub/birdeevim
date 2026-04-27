@@ -18,7 +18,8 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     # for stuff to follow
     flake-utils.url = "github:numtide/flake-utils";
-    topiary.url = "git+file:/home/birdee/Projects/topiary";
+    # topiary.url = "git+file:/home/birdee/Projects/topiary";
+    topiary.url = "github:topiary/topiary";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
