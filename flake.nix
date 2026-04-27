@@ -166,6 +166,7 @@
             bundle = config.packages.neovim.wrap { settings.appimage = true; };
             bundle-dyn = config.packages.bundle.wrap { settings.test_mode = "dynamic"; };
             bundle-min = config.packages.bundle.wrap { settings.minimal = true; };
+            topiary-test = config.packages.topiary.wrap { testMode = true; };
           };
           # nix bundle --bundler .\#default .\#bundle
           # nix bundle --bundler .\#default .\#bundle-min
