@@ -1,3 +1,7 @@
 messing around with topiary
 
-I grabbed the default queries and put them here alongside the ones I am messing with for examples
+I want to auto format my nix config files the way I want to format my nix config files.
+
+I am close. I am mangling multiline strings with interpolations with multiline strings in them.
+
+I am unsure if it is my fault, but I intend to at least find out.
