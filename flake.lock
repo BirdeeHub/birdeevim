@@ -656,13 +656,13 @@
       "locked": {
         "lastModified": 1777308340,
         "narHash": "sha256-NYbUmOo6GURanT5Nw1Gde9tF4TTOxirmZoQBjluYUqE=",
-        "owner": "topiary",
+        "owner": "BirdeeHub",
         "repo": "topiary",
         "rev": "ca182b190f79fb528bdf0965b6a4c12ef69fc308",
         "type": "github"
       },
       "original": {
-        "owner": "topiary",
+        "owner": "BirdeeHub",
         "repo": "topiary",
         "type": "github"
       }
