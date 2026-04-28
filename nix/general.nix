@@ -1,4 +1,11 @@
 { config, inputs, wlib, lib, pkgs, ... }: {
+  config.specs.topiary = {
+    data = null;
+    wrappers.topiary = {
+      imports = [ inputs.self.wrapperModules.topiary ];
+    };
+  };
+
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     postpkgs = with pkgs; [
@@ -8,7 +15,6 @@
       ast-grep
       jq
       lazygit
-      (inputs.self.wrappers.topiary.wrap { inherit pkgs; })
     ];
     data = with pkgs.vimPlugins; [
       config.nvim-lib.neovimPlugins.lze

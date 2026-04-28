@@ -39,11 +39,12 @@ return {
       },
     }
 
+    local with_topiary = nixInfo(false, "settings", "cats", "topiary")
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        nix = { "topiary" },
-        bash = { "topiary" },
+        nix = { (with_topiary and "topiary" or "nixfmt") },
+        bash = with_topiary and { "topiary" } or nil,
         go = { "gofmt", "golint" },
         templ = { "templ" },
         -- Conform will run multiple formatters sequentially
