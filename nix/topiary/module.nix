@@ -1,7 +1,8 @@
 { config, wlib, lib, pkgs, ... }: {
   imports = [ wlib.modules.default ];
   options.queryDir = lib.mkOption {
-    type = wlib.types.stringable;
+    type = lib.types.nullOr wlib.types.stringable;
+    default = null;
   };
   options.languages = lib.mkOption {
     type = lib.types.attrsOf (
@@ -27,7 +28,7 @@
     default = {};
   };
   config.package = lib.mkDefault pkgs.topiary;
-  config.env.TOPIARY_LANGUAGE_DIR = config.queryDir;
+  config.env.TOPIARY_LANGUAGE_DIR = lib.mkIf (config.queryDir != null) config.queryDir;
   config.env.TOPIARY_CONFIG_FILE = config.constructFiles.languages.path;
   config.constructFiles.languages = {
     relPath = "${config.binName}-config/languages.ncl";
