@@ -654,16 +654,15 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1777379536,
-        "narHash": "sha256-sgJuDiTAUyIdSQhMTjzJLI6wH66Yn40YWqCPWJ8NTv0=",
-        "owner": "BirdeeHub",
+        "lastModified": 1777395988,
+        "narHash": "sha256-kSjLynTqInGsKnvjEnlKEzMgmKOUOKLZXfA4/I1DKzU=",
+        "owner": "topiary",
         "repo": "topiary",
-        "rev": "4e9e05d07a01daf973bd635ac7bdf2051aa82195",
+        "rev": "f4e357fce8dbee696581e43e8b79c1e63083b317",
         "type": "github"
       },
       "original": {
-        "owner": "BirdeeHub",
-        "ref": "append_empty_input_softline",
+        "owner": "topiary",
         "repo": "topiary",
         "type": "github"
       }

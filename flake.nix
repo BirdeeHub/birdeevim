@@ -19,8 +19,8 @@
     # for stuff to follow
     flake-utils.url = "github:numtide/flake-utils";
     # topiary.url = "git+file:/home/birdee/Projects/topiary";
-    # topiary.url = "github:topiary/topiary";
-    topiary.url = "github:BirdeeHub/topiary/append_empty_input_softline";
+    topiary.url = "github:topiary/topiary";
+    # topiary.url = "github:BirdeeHub/topiary/append_empty_input_softline";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";
       url = "github:BirdeeHub/tomlua";
