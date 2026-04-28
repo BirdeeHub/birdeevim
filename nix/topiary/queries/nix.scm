@@ -14,6 +14,8 @@
 )
 ; they REALLY should be leaves, but multi_line_indent_all bugs
 ; this still doesn't work perfectly but it works much better than the commented out
+; but the commented out seems like it would work perfectly if multi_line_indent_all worked as expected
+; i.e. kept the current indent level, but not random spaces
 ; (_ (string_fragment) @leaf @multi_line_indent_all)
 ; (_ (string_fragment) @keep_whitespace .)
 (_ (string_fragment) @append_empty_input_softline .)
