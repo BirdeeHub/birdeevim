@@ -262,5 +262,5 @@
 (function_expression
   body: (function_expression
     formals: (formals)
-  ) @prepend_hardline
+  ) @prepend_empty_input_softline
 )
