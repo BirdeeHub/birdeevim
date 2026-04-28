@@ -19,7 +19,7 @@
 ; (_ (string_fragment) @leaf @multi_line_indent_all)
 ; (_ (string_fragment) @keep_whitespace .)
 (_ (string_fragment) @append_empty_input_softline .)
-(string_expression) @leaf
+(string_expression (string_fragment) @leaf)
 
 "!" @prepend_space @append_antispace
 [
