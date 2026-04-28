@@ -67,16 +67,10 @@
   (#match? @append_hardline "^#")
 )
 (
-  (comment) @prepend_indent_start @append_indent_end
+  (comment)? @prepend_indent_start @append_indent_end
   (binding_set)
+  (comment)? @prepend_indent_start @append_indent_end
 )
-(
-  (binding_set)
-  (comment) @prepend_indent_start @append_indent_end
-)
-(let_attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
-(rec_attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
-(attrset_expression (comment) @prepend_indent_start @append_indent_end (binding_set)? @do_nothing)
 
 (parenthesized_expression
   "(" @append_antispace
