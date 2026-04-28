@@ -6,14 +6,17 @@
   "''" @prepend_indent_end
   .
 )
-(_ (string_fragment) @append_empty_input_softline .)
-; (_ (string_fragment) @leaf @multi_line_indent_all)
 (interpolation
   .
   "${" @append_antispace
   "}" @prepend_antispace
   .
 )
+; they REALLY should be leaves, but multi_line_indent_all bugs
+; this still doesn't work perfectly but it works much better than the commented out
+; (_ (string_fragment) @leaf @multi_line_indent_all)
+; (_ (string_fragment) @keep_whitespace .)
+(_ (string_fragment) @append_empty_input_softline .)
 (string_expression) @leaf
 
 "!" @prepend_space @append_antispace
