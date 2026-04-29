@@ -654,11 +654,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1777395988,
-        "narHash": "sha256-kSjLynTqInGsKnvjEnlKEzMgmKOUOKLZXfA4/I1DKzU=",
+        "lastModified": 1777428359,
+        "narHash": "sha256-+vg4ySTCwFygU3beDWxv2Yx2ivhDbY+iF1iQmrA6Olc=",
         "owner": "topiary",
         "repo": "topiary",
-        "rev": "f4e357fce8dbee696581e43e8b79c1e63083b317",
+        "rev": "e08817ed1cc90653a8a18e20bfcb842c4e23ba22",
         "type": "github"
       },
       "original": {
