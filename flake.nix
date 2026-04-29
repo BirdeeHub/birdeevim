@@ -143,10 +143,10 @@
             # disable roc for now because I haven't been using it# and it builds the lsp from source which is slow
             config.specs.roc = _: { enable = false; };
           };
-          topiary = import ./nix/topiary inputs;
+          topiary = import ./nix/format/topiary inputs;
           default = self.wrapperModules.neovim;
           treefmt = { pkgs, ... }: {
-            imports = [ ./nix/treefmt.nix ];
+            imports = [ ./nix/format/treefmt.nix ];
             extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
             settings.formatter.nix = {
               command = "topiary";
