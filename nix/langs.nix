@@ -142,34 +142,36 @@
     ];
   };
 
-  config.hosts.python3.withPackages = lib.mkIf config.specs.python.enable (py: [
-    (py.debugpy.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    (py.pylsp-mypy.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    (py.pyls-isort.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-    # py.python-lsp-server
-    # py.python-lsp-black
-    (py.pytest.overrideAttrs {
-      doCheck = false;
-      doInstallCheck = false;
-      pytestCheckPhase = "";
-      installCheckPhase = "";
-    })
-  ]);
+  config.hosts.python3.withPackages = lib.mkIf config.specs.python.enable (
+    py: [
+      (py.debugpy.overrideAttrs {
+        doCheck = false;
+        doInstallCheck = false;
+        pytestCheckPhase = "";
+        installCheckPhase = "";
+      })
+      (py.pylsp-mypy.overrideAttrs {
+        doCheck = false;
+        doInstallCheck = false;
+        pytestCheckPhase = "";
+        installCheckPhase = "";
+      })
+      (py.pyls-isort.overrideAttrs {
+        doCheck = false;
+        doInstallCheck = false;
+        pytestCheckPhase = "";
+        installCheckPhase = "";
+      })
+      # py.python-lsp-server
+      # py.python-lsp-black
+      (py.pytest.overrideAttrs {
+        doCheck = false;
+        doInstallCheck = false;
+        pytestCheckPhase = "";
+        installCheckPhase = "";
+      })
+    ]
+  );
   config.specs.python = {
     lazy = true;
     data = with pkgs.vimPlugins; [

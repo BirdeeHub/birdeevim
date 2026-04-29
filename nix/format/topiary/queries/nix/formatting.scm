@@ -18,7 +18,7 @@
 ; i.e. kept the current indent level, but not random spaces
 ; (_ (string_fragment) @leaf @multi_line_indent_all)
 ; (_ (string_fragment) @keep_whitespace .)
-(_ (string_fragment) @append_empty_input_softline .)
+(_ (string_fragment) @append_empty_input_softline)
 (string_expression (string_fragment) @leaf)
 
 "!" @prepend_space @append_antispace
@@ -77,12 +77,14 @@
 (parenthesized_expression
   "(" @append_antispace
   ")" @prepend_antispace
-  (#single_line_only!)
 )
 (parenthesized_expression
   "(" @append_empty_softline @append_indent_start
   (_ (binding_set) @do_nothing)?
   (list_expression)? @do_nothing
+  (parenthesized_expression)? @do_nothing
+  (apply_expression function: (_ !formals !universal) . argument: [ (_ (binding_set)) (indented_string_expression) (parenthesized_expression (function_expression)) ] . )? @do_nothing
+  (function_expression body: [ (_ (binding_set)) (indented_string_expression) ] . )? @do_nothing
   ")" @prepend_empty_softline @prepend_indent_end
   (#multi_line_only!)
 )
