@@ -174,7 +174,7 @@
           # nix bundle --bundler .\#default .\#bundle-dyn
           bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
           # this doesn't build...
-          # formatter = config.packages.treefmt;
+          # formatter = self.packages.${system}.treefmt;
         };
         # and yet this does?
         flake.formatter = nixpkgs.lib.genAttrs config.systems (system: self.packages.${system}.treefmt or null);
