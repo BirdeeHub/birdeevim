@@ -6,9 +6,17 @@
       description = "TOML value";
     };
     default = {};
+    example = lib.literalMD ''
+      ```nix
+      settings.formatter.lua = {
+        command = "''${pkgs.stylua}/bin/stylua";
+        options = [ ];
+        includes = [ "*.lua" ];
+      };
+      ```
+    '';
   };
   config.package = pkgs.treefmt;
-  config.wrapperImplementation = "binary";
   config.flags."--config-file" = config.constructFiles.configFile.path;
   config.constructFiles.configFile = {
     relPath = "${config.binName}-config.toml";
