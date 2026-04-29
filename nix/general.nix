@@ -202,7 +202,7 @@
       };
     };
     postpkgs = with pkgs; [
-      bitwarden-cli
+      # bitwarden-cli
     ];
   };
 }
