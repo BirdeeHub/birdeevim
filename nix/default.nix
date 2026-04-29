@@ -99,7 +99,7 @@ inputs: {
     ]
   );
 
-  install.modules.homeManager = { config, lib, ... }: let
+  config.install.modules.homeManager = { config, lib, ... }: let
     cfg = top.config.install.getWrapperConfig config;
   in {
     home.sessionVariables = lib.mkIf cfg.enable (let
