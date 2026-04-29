@@ -4,7 +4,7 @@ inputs: {
   lib,
   pkgs,
   ...
-}: {
+}@top: {
   _file = ./default.nix;
   key = ./default.nix;
   config._module.args.inputs = inputs;
@@ -65,9 +65,12 @@ inputs: {
     type = lib.types.bool;
     default = false;
   };
-  config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
-    config.enable = lib.mkOverride 1400 (parentSpec.enable or false); # 1400 is 100 higher than mkOptionDefault (1500)
-  });
+  config.specMods = lib.mkIf config.settings.minimal (
+    { parentSpec, ... }: {
+      config.enable = lib.mkOverride 1400 (parentSpec.enable or false);
+      # 1400 is 100 higher than mkOptionDefault (1500)
+    }
+  );
   config.hosts.python3.nvim-host.enable = config.specs.python.enable;
   config.hosts.node.nvim-host.enable = !config.settings.minimal;
   config.hosts.ruby.nvim-host.enable = !config.settings.minimal;
@@ -86,11 +89,24 @@ inputs: {
     default = false;
   };
   # the appimage needs extra stuff because its chroot shadows the store
-  config.extraPackages = lib.mkIf config.settings.appimage (with pkgs; [
-    git
-    nix
-    wl-clipboard
-    xclip
-    xsel
-  ]);
+  config.extraPackages = lib.mkIf config.settings.appimage (
+    with pkgs; [
+      git
+      nix
+      wl-clipboard
+      xclip
+      xsel
+    ]
+  );
+
+  install.modules.homeManager = { config, lib, ... }: let
+    cfg = top.config.install.getWrapperConfig config;
+  in {
+    home.sessionVariables = lib.mkIf cfg.enable (let
+      nvimpath = lib.getExe cfg.wrapper;
+    in {
+      EDITOR = nvimpath;
+      MANPAGER = "${nvimpath} +Man!";
+    });
+  };
 }
