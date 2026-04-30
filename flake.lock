@@ -654,15 +654,16 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1777428359,
-        "narHash": "sha256-+vg4ySTCwFygU3beDWxv2Yx2ivhDbY+iF1iQmrA6Olc=",
+        "lastModified": 1777515037,
+        "narHash": "sha256-fKlKX8bBkvoDn1ysvRsOZcmBt3WbABrnsrSi0SPz1oc=",
         "owner": "topiary",
         "repo": "topiary",
-        "rev": "e08817ed1cc90653a8a18e20bfcb842c4e23ba22",
+        "rev": "b8e3b85f82607606402fcf77eeca24d9cd024197",
         "type": "github"
       },
       "original": {
         "owner": "topiary",
+        "ref": "philipp/fix_multi_line_indent_all",
         "repo": "topiary",
         "type": "github"
       }

@@ -19,7 +19,9 @@
     # for stuff to follow
     flake-utils.url = "github:numtide/flake-utils";
     # topiary.url = "git+file:/home/birdee/Projects/topiary";
-    topiary.url = "github:topiary/topiary";
+    # topiary.url = "git+file:/home/birdee/temp/topiary";
+    # topiary.url = "github:topiary/topiary";
+    topiary.url = "github:topiary/topiary/philipp/fix_multi_line_indent_all";
     # topiary.url = "github:BirdeeHub/topiary/append_empty_input_softline";
     tomlua = {
       # url = "git+file:/home/birdee/Projects/tomlua";

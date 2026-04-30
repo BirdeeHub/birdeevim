@@ -11,7 +11,7 @@ inputs: {
   imports = [ ./module.nix ];
   options.unwrappedQueryDir = lib.mkOption {
     type = wlib.types.stringable;
-    default = "/home/birdee/.birdeevim/nix/topiary/queries";
+    default = "/home/birdee/.birdeevim/nix/format/topiary/queries";
   };
   options.wrappedQueryDir = lib.mkOption {
     type = wlib.types.stringable;

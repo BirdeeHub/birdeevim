@@ -16,10 +16,10 @@
 ; this still doesn't work perfectly but it works much better than the commented out
 ; but the commented out seems like it would work perfectly if multi_line_indent_all worked as expected
 ; i.e. kept the current indent level, but not random spaces
-; (_ (string_fragment) @leaf @multi_line_indent_all)
-; (_ (string_fragment) @keep_whitespace .)
-(_ (string_fragment) @append_empty_input_softline)
-(string_expression (string_fragment) @leaf)
+(_ (string_fragment) @leaf @multi_line_indent_all)
+(_ (string_fragment) @keep_whitespace .)
+; (_ (string_fragment) @append_empty_input_softline)
+; (string_expression (string_fragment) @leaf)
 
 "!" @prepend_space @append_antispace
 [
@@ -127,9 +127,9 @@
 (binding_set (inherit_from) @prepend_spaced_softline @append_input_softline)
 (binding
   attrpath: (attrpath) @append_space
-  "=" @append_space
+  ; "=" @append_space
   ; (comment)? @append_space ; <- somehow this gets added to multi_line_indent_all
-  ; (_)* @prepend_space ; <- so would doing this and removing the "=" @append_space
+  (_)* @prepend_space ; <- so would doing this and removing the "=" @append_space
 )
 
 (let_expression "let" @append_spaced_softline (binding_set)? @do_nothing)
