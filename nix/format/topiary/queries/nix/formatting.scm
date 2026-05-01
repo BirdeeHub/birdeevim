@@ -122,9 +122,7 @@
 (binding_set (inherit_from) @prepend_spaced_softline @append_input_softline)
 (binding
   attrpath: (attrpath) @append_space
-  ; "=" @append_space
-  ; (comment)? @append_space ; <- somehow this gets added to multi_line_indent_all
-  (_)* @prepend_space ; <- so would doing this and removing the "=" @append_space
+  (_)* @prepend_space
 )
 
 (let_expression "let" @append_spaced_softline (binding_set)? @do_nothing)

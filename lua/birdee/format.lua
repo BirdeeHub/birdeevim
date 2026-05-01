@@ -45,6 +45,7 @@ return {
         lua = { "stylua" },
         nix = { (with_topiary and "topiary" or "nixfmt") },
         bash = with_topiary and { "topiary" } or nil,
+        query = with_topiary and { "topiary" } or nil,
         go = { "gofmt", "golint" },
         templ = { "templ" },
         -- Conform will run multiple formatters sequentially
