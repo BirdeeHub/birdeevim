@@ -129,56 +129,54 @@
     };
   };
   outputs = { self, nixpkgs, wrappers, flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { config, ... }: {
-        imports = [
-          wrappers.flakeModules.wrappers
-          flake-parts.flakeModules.bundlers
-        ];
-        systems = nixpkgs.lib.platforms.all;
-        flake.overlays.neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
-        flake.wrappers = {
-          neovim = {
-            imports = [ (import ./nix inputs) ];
-            # I will deal with this next time I have to do python.# lsp and stuff breaks all the time, driving me nuts
-            config.specs.python = _: { enable = false; };
-            # disable roc for now because I haven't been using it# and it builds the lsp from source which is slow
-            config.specs.roc = _: { enable = false; };
-          };
-          topiary = import ./nix/format/topiary inputs;
-          default = self.wrapperModules.neovim;
-          treefmt = { pkgs, ... }: {
-            imports = [ ./nix/format/treefmt.nix ];
-            extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
-            settings.formatter.nix = {
-              command = "topiary";
-              options = [ "format" ];
-              includes = [ "*.nix" ];
-            };
+    flake-parts.lib.mkFlake { inherit inputs; } ({ config, ... }: {
+      imports = [
+        wrappers.flakeModules.wrappers
+        flake-parts.flakeModules.bundlers
+      ];
+      systems = nixpkgs.lib.platforms.all;
+      flake.overlays.neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
+      flake.wrappers = {
+        neovim = {
+          imports = [ (import ./nix inputs) ];
+          # I will deal with this next time I have to do python.# lsp and stuff breaks all the time, driving me nuts
+          config.specs.python = _: { enable = false; };
+          # disable roc for now because I haven't been using it# and it builds the lsp from source which is slow
+          config.specs.roc = _: { enable = false; };
+        };
+        topiary = import ./nix/format/topiary inputs;
+        default = self.wrapperModules.neovim;
+        treefmt = { pkgs, ... }: {
+          imports = [ ./nix/format/treefmt.nix ];
+          extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
+          settings.formatter.nix = {
+            command = "topiary";
+            options = [ "format" ];
+            includes = [ "*.nix" ];
           };
         };
-        perSystem = { system, config, ... }: {
-          _module.args.pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          packages = {
-            minimal = config.packages.neovim.wrap { settings.minimal = true; };
-            testing = config.packages.neovim.wrap { settings.test_mode = true; };
-            dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
-            bundle = config.packages.neovim.wrap { settings.appimage = true; };
-            bundle-dyn = config.packages.bundle.wrap { settings.test_mode = "dynamic"; };
-            bundle-min = config.packages.bundle.wrap { settings.minimal = true; };
-            topiary-test = config.packages.topiary.wrap { testMode = true; };
-          };
-          # nix bundle --bundler .\#default .\#bundle
-          # nix bundle --bundler .\#default .\#bundle-min
-          # nix bundle --bundler .\#default .\#bundle-dyn
-          bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
-          # this doesn't build... https://github.com/hercules-ci/flake-parts/issues/288
-          # formatter = config.packages.treefmt;
+      };
+      perSystem = { system, config, ... }: {
+        _module.args.pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
-        flake.formatter = nixpkgs.lib.genAttrs config.systems (system: self.packages.${system}.treefmt);
-      }
-    );
+        packages = {
+          minimal = config.packages.neovim.wrap { settings.minimal = true; };
+          testing = config.packages.neovim.wrap { settings.test_mode = true; };
+          dynamic = config.packages.neovim.wrap { settings.test_mode = "dynamic"; };
+          bundle = config.packages.neovim.wrap { settings.appimage = true; };
+          bundle-dyn = config.packages.bundle.wrap { settings.test_mode = "dynamic"; };
+          bundle-min = config.packages.bundle.wrap { settings.minimal = true; };
+          topiary-test = config.packages.topiary.wrap { testMode = true; };
+        };
+        # nix bundle --bundler .\#default .\#bundle
+        # nix bundle --bundler .\#default .\#bundle-min
+        # nix bundle --bundler .\#default .\#bundle-dyn
+        bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
+        # this doesn't build... https://github.com/hercules-ci/flake-parts/issues/288
+        # formatter = config.packages.treefmt;
+      };
+      flake.formatter = nixpkgs.lib.genAttrs config.systems (system: self.packages.${system}.treefmt);
+    });
 }
