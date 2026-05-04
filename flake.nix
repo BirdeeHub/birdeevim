@@ -174,9 +174,7 @@
         # nix bundle --bundler .\#default .\#bundle-min
         # nix bundle --bundler .\#default .\#bundle-dyn
         bundlers.default = inputs.nix-appimage.bundlers.${system}.default;
-        # this doesn't build... https://github.com/hercules-ci/flake-parts/issues/288
-        # formatter = config.packages.treefmt;
+        formatter = config.packages.treefmt;
       };
-      flake.formatter = nixpkgs.lib.genAttrs config.systems (system: self.packages.${system}.treefmt);
     });
 }

@@ -65,12 +65,10 @@ inputs: {
     type = lib.types.bool;
     default = false;
   };
-  config.specMods = lib.mkIf config.settings.minimal (
-    { parentSpec, ... }: {
-      config.enable = lib.mkOverride 1400 (parentSpec.enable or false);
-      # 1400 is 100 higher than mkOptionDefault (1500)
-    }
-  );
+  config.specMods = lib.mkIf config.settings.minimal ({ parentSpec, ... }: {
+    config.enable = lib.mkOverride 1400 (parentSpec.enable or false);
+    # 1400 is 100 higher than mkOptionDefault (1500)
+  });
   config.hosts.python3.nvim-host.enable = config.specs.python.enable;
   config.hosts.node.nvim-host.enable = !config.settings.minimal;
   config.hosts.ruby.nvim-host.enable = !config.settings.minimal;
