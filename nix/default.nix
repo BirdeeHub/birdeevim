@@ -18,7 +18,6 @@ inputs: {
     type = lib.types.raw;
     readOnly = true;
     default = config.nvim-lib.pluginsFromPrefix "plugins-" inputs // {
-      tomlua = inputs.tomlua.packages.${pkgs.stdenv.hostPlatform.system}.vimPlugins-tomlua;
       juan-logs = pkgs.rustPlatform.buildRustPackage {
         pname = "juan-logs";
         version = "main";
@@ -76,7 +75,7 @@ inputs: {
   config.hosts.neovide.nvim-host.enable = false;
 
   config.env.NVIM_APPNAME = "birdeevim";
-  config.settings.nvim_lua_env = lp: with lp; lib.optional config.specs.fennel.enable fennel;
+  config.settings.nvim_lua_env = lp: lib.optional config.specs.fennel.enable lp.fennel ++ lib.optional (lp ? tomlua) lp.tomlua;
   config.hosts.ruby.gemdir = ./ruby_provider;
   # config.settings.compile_generated_lua = false;
   # config.wrapperImplementation = "shell";

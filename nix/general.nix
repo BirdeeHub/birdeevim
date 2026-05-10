@@ -39,7 +39,6 @@
       }
       config.nvim-lib.neovimPlugins.argmark
       config.nvim-lib.neovimPlugins.tmux-navigate
-      config.nvim-lib.neovimPlugins.tomlua
       config.nvim-lib.neovimPlugins.shelua
       nvim-spectre
       luvit-meta

@@ -23,11 +23,11 @@
     # topiary.url = "github:topiary/topiary";
     topiary.url = "github:topiary/topiary/philipp/fix_multi_line_indent_all";
     # topiary.url = "github:BirdeeHub/topiary/append_empty_input_softline";
-    tomlua = {
-      # url = "git+file:/home/birdee/Projects/tomlua";
-      url = "github:BirdeeHub/tomlua";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # tomlua = {
+    #   # url = "git+file:/home/birdee/Projects/tomlua";
+    #   url = "github:BirdeeHub/tomlua";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     # neovim-src = { url = "github:BirdeeHub/neovim/pack_add_spec_passthru"; flake = false; };
     # neovim-src = { url = "github:neovim/neovim/nightly"; flake = false; };
     neovim-nightly-overlay = {
