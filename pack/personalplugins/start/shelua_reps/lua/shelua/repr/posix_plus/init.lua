@@ -107,7 +107,6 @@ return function(sh)
             __signal = result.signal,
         }
     end
-    sh_settings.repr.posix_plus.post_5_2_run = run_command
-    sh_settings.repr.posix_plus.pre_5_2_run = run_command
+    sh_settings.repr.posix_plus.run_cmd = run_command
     return sh
 end

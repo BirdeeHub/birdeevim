@@ -40,6 +40,7 @@
       config.nvim-lib.neovimPlugins.argmark
       config.nvim-lib.neovimPlugins.tmux-navigate
       config.nvim-lib.neovimPlugins.shelua
+      # "/home/birdee/Projects/shelua"
       nvim-spectre
       luvit-meta
     ];

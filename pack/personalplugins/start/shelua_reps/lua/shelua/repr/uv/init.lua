@@ -172,7 +172,6 @@ return function(sh)
       __cwd = result.cwd,
     }
   end
-  sh_settings.repr.uv.post_5_2_run = run_command
-  sh_settings.repr.uv.pre_5_2_run = run_command
+  sh_settings.repr.uv.run_cmd = run_command
   return sh
 end

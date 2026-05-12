@@ -418,11 +418,11 @@
     "plugins-shelua": {
       "flake": false,
       "locked": {
-        "lastModified": 1778015214,
-        "narHash": "sha256-e7GDa8ZQ5mSG0NhRLzCaxsmCCZTmKdIXNBxwhdsSbFM=",
+        "lastModified": 1778567226,
+        "narHash": "sha256-4Wt3mARGRT9zabE0ReoUk4+CeAqUBfnmD9yAmYt0vLM=",
         "owner": "BirdeeHub",
         "repo": "shelua",
-        "rev": "37771000e8bce2c36f51c6606b516850c3c604a6",
+        "rev": "57e71c9c861a6470159b4a217bee15aa6ab6e393",
         "type": "github"
       },
       "original": {
@@ -676,11 +676,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778370802,
-        "narHash": "sha256-SrzT5P5IAPivMz/QVypjrC6Oq2saXNnJ9iHnlHZ4u5c=",
+        "lastModified": 1778560014,
+        "narHash": "sha256-Hu9RMo7vJt/4dx/vAvyG+cE9RBwpaH1ouyunvruYaDI=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "a7b45d4fe22f83a0d4aa8bbd85f8eafdf3b265cf",
+        "rev": "e30aa99c9c7038e16efae3cad7916a47307a9e36",
         "type": "github"
       },
       "original": {
