@@ -1,4 +1,10 @@
 (import-macros {: -|> : -?|>} :birdee.utils)
+
+(local s "hi there")
+(print (-|> "hi there" (:upper) (:sub 3 8) (:reverse)))
+(print (: (: (: "hi there" :upper) :sub 3 8) :reverse))
+
+
 (local sh (doto
   ((. (require :shelua) :add_reprs) ((require :sh)) "uv")
   (tset :shell :uv)
@@ -13,10 +19,10 @@
   (:sed :s/Hello/Goodbye/g)
 ))
 (set res (.. res "\n"
-  (-?|> (sh.CD :/home)
+  (-|> (sh.CD :/home)
     (:ls :-la)
     (:cat
-      (-?|> (sh.CD :/home/birdee) (:pwd))
+      (-|> (sh.CD :/home/birdee) (:pwd))
       (sh.echo "Hello fennel")
     )
     (:sed :s/Hello/Goodbye/g)
