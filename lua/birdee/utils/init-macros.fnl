@@ -27,13 +27,13 @@ Same as -|> except will short-circuit with nil when it encounters a nil value."
         ;; try again, but with an eval-safe val
         (not (idempotent-expr? val))
         `(let [tmp# ,val]
-          (,NILCHAIN_SYMBOL tmp# ,?e ,...))
-
+          (,NILCHAIN_SYMBOL tmp# ,?e ,...)
+        )
         (let [call (if (list? ?e) ?e (list ?e))]
           (table.insert call 1 val)
           (table.insert call 1 (sym ":"))
-          `(if (not= nil ,val)
-               ,(MACRO_DEF call ...)))
+          `(if (not= nil ,val) ,(MACRO_DEF call ...))
+        )
       )
     )
   )
