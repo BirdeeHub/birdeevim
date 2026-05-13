@@ -1,4 +1,4 @@
-;; [chain-macros]
+;; fennel-ls: macro-file
 (fn -|> [val ...]
   "Lua index method chain val(\"a\"):val2(\"b\"):val3(\"c\")
 Like -> except it inserts the method as well.
