@@ -32,4 +32,4 @@ if vim.g.vscode == nil then
   require('birdee')
 end
 
--- print(require('birdee.fossil.testfnl'))
+print(require('birdee.fossil.testfnl'))
