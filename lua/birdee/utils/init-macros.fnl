@@ -15,10 +15,9 @@ The value of the second form is spliced into the first arg of the third, etc."
 (fn -?|> [val ?e ...]
   "Nil-safe index method chain macro.
 Same as -|> except will short-circuit with nil when it encounters a nil value."
-  (fn NILCHAIN [symbol]
+  (fn NILCHAIN [NILCHAIN_SYMBOL]
     (fn MACRO_DEF [val ?e ...]
       (let [
-        NILCHAIN_SYMBOL (sym symbol)
         idempotent-expr? (fn [x]
           "Checks if an object is an idempotent expression. Returns the object if it is."
           (let [t (type x)]
@@ -38,7 +37,7 @@ Same as -|> except will short-circuit with nil when it encounters a nil value."
       )
     )
   )
-  ((NILCHAIN "-?|>") val ?e ...)
+  ((NILCHAIN (sym "-?|>")) val ?e ...)
 )
 
 {: -|> : -?|>}
