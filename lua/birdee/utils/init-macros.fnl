@@ -17,13 +17,13 @@ The value of the second form is spliced into the first arg of the third, etc."
 Same as -|> except will short-circuit with nil when it encounters a nil value."
   (fn NILCHAIN [symbol]
     (fn MACRO_DEF [val ?e ...]
-    (let [
-      NILCHAIN_SYMBOL (sym symbol)
-      idempotent-expr? (fn [x]
-        "Checks if an object is an idempotent expression. Returns the object if it is."
-        (let [t (type x)]
-          (or (= t :string) (= t :number) (= t :boolean)
-              (and (sym? x) (not (multi-sym? x))))))
+      (let [
+        NILCHAIN_SYMBOL (sym symbol)
+        idempotent-expr? (fn [x]
+          "Checks if an object is an idempotent expression. Returns the object if it is."
+          (let [t (type x)]
+            (or (= t :string) (= t :number) (= t :boolean)
+                (and (sym? x) (not (multi-sym? x))))))
       ] (if (= nil ?e)
         val
         (not (idempotent-expr? val))
@@ -34,7 +34,11 @@ Same as -|> except will short-circuit with nil when it encounters a nil value."
           (table.insert call 1 val)
           (table.insert call 1 (sym ":"))
           `(if (not= nil ,val)
-               ,(MACRO_DEF call ...)))))))
-((NILCHAIN "-?|>") val ?e ...))
+               ,(MACRO_DEF call ...))))
+      )
+    )
+  )
+  ((NILCHAIN "-?|>") val ?e ...)
+)
 
 {: -|> : -?|>}
