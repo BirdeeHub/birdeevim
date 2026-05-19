@@ -28,7 +28,7 @@
       (builtins.filter (v: v.enable))
       (lib.partition (v: v.prefix))
       ({ right, wrong, }: let
-        wrapper-mapper = pre: map (v: { prefix = pre; data = v.wrapper; });
+        wrapper-mapper = pre: map (v: { prefix = pre; data = v.wrapper; name = v.binName; });
       in wrapper-mapper true right ++ wrapper-mapper false wrong)
     ];
     options.mainInfo = lib.mkOption {
