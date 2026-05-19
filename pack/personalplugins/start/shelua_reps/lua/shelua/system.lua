@@ -1,5 +1,7 @@
 local uv = vim and (vim.uv or vim.loop) or require("luv")
 
+--- vim.system modified slightly
+
 --- @class Shelua.SystemOpts
 --- @field stdin? string|string[]|true
 --- @field stdout? fun(err:string?, data: string?)|false
