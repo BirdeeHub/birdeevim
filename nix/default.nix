@@ -86,7 +86,7 @@ inputs: {
     default = false;
   };
   # the appimage needs extra stuff because its chroot shadows the store
-  config.extraPackages = lib.mkIf config.settings.appimage (
+  config.runtimePkgs = lib.mkIf config.settings.appimage (
     with pkgs; [
       git
       nix

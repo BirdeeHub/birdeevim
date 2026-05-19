@@ -148,7 +148,7 @@
         default = self.wrapperModules.neovim;
         treefmt = { pkgs, ... }: {
           imports = [ ./nix/format/treefmt.nix ];
-          extraPackages = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
+          runtimePkgs = [ (self.wrappers.topiary.wrap { inherit pkgs; }) ];
           settings.formatter.nix = {
             command = "topiary";
             options = [ "format" ];

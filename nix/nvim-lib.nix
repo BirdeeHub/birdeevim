@@ -1,5 +1,5 @@
 # adds some spec fields, and some other useful things
-{ config, lib, wlib, pkgs, ... }: {
+{ config, lib, wlib, pkgs, options, ... }: {
   options.settings.cats = lib.mkOption {
     readOnly = true;
     type = lib.types.attrsOf lib.types.raw;
@@ -26,22 +26,13 @@
       builtins.attrValues
       (builtins.filter (v: v.enable))
       (lib.partition (v: v.prefix))
-      ({ right, wrong, }: {
-        pre = map (v: v.wrapper) right;
-        post = map (v: v.wrapper) wrong;
-      })
+      ({ right, wrong, }: let
+        wrapper-mapper = pre: map (v: { prefix = pre; data = v.wrapper; });
+      in wrapper-mapper true right ++ wrapper-mapper false wrong)
     ];
   in {
-    options.prepkgs = lib.mkOption {
-      type = lib.types.listOf wlib.types.stringable;
-      description = "a prepkgs spec field to put packages to prefix to the PATH";
-    };
-    config.prepkgs = wrappers.pre;
-    options.postpkgs = lib.mkOption {
-      type = lib.types.listOf wlib.types.stringable;
-      description = "a postpkgs spec field to put packages to suffix to the PATH";
-    };
-    config.postpkgs = wrappers.post;
+    options.runtimePkgs = options.runtimePkgs;
+    config.runtimePkgs = wrappers;
     options.mainInfo = lib.mkOption {
       type = wlib.types.attrsRecursive;
       default = {};
@@ -69,24 +60,5 @@
     };
   };
   config.info = lib.mkMerge (config.specCollect (acc: v: acc ++ lib.optional (v.mainInfo or {} != {}) v.mainInfo) []);
-  config.prefixVar = let
-    autodeps = config.specCollect (acc: v: acc ++ (v.prepkgs or [])) [];
-  in lib.optional (autodeps != []) {
-    name = "PREPKGS_ADDITIONS";
-    data = [
-      "PATH"
-      ":"
-      "${lib.makeBinPath (lib.unique autodeps)}"
-    ];
-  };
-  config.suffixVar = let
-    autodeps = config.specCollect (acc: v: acc ++ (v.postpkgs or [])) [];
-  in lib.optional (autodeps != []) {
-    name = "POSTPKGS_ADDITIONS";
-    data = [
-      "PATH"
-      ":"
-      "${lib.makeBinPath (lib.unique autodeps)}"
-    ];
-  };
+  config.runtimePkgs = config.specCollect (acc: v: acc ++ (v.runtimePkgs or [])) [];
 }

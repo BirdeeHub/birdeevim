@@ -4,7 +4,7 @@
     data = with pkgs.vimPlugins; [
       typst-preview-nvim
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       typst
       typst-live
       tinymist
@@ -17,7 +17,7 @@
       render-markdown-nvim
       markdown-preview-nvim
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       marksman
       python311Packages.pylatexenc
       harper
@@ -32,7 +32,7 @@
     };
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
     data = null;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       nix-doc
       nil
       nixd
@@ -46,26 +46,26 @@
     data = with pkgs.vimPlugins; [
       lazydev-nvim
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       lua-language-server
       stylua
     ];
   };
   config.specs.bash = {
     data = null;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       bash-language-server
     ];
   };
   config.specs.elixir = {
     data = null;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       elixir-ls
     ];
   };
   config.specs.zig = {
     data = null;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       zls
       zig
       zig-shell-completions
@@ -88,14 +88,14 @@
         dependencies = [ conjure_nocheck ];
       })
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       fnlfmt
       fennel-ls
     ];
   };
   config.specs.roc = {
     data = null;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       inputs.roc.packages.${stdenv.hostPlatform.system}.lang-server
     ];
   };
@@ -103,7 +103,7 @@
     data = with pkgs.vimPlugins; [
       config.nvim-lib.neovimPlugins.rustaceanvim
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       (config.info.rust.toolchain or inputs.fenix.packages.${stdenv.hostPlatform.system}.latest.toolchain)
       rustup
       llvmPackages.bintools
@@ -116,7 +116,7 @@
       vim-cmake
       clangd_extensions-nvim
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       clang-tools
       valgrind
       cmake-language-server
@@ -130,7 +130,7 @@
   config.specs.web = {
     lazy = true;
     data = with pkgs.vimPlugins; [];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       htmx-lsp
       vscode-langservers-extracted
       eslint
@@ -177,7 +177,7 @@
     data = with pkgs.vimPlugins; [
       nvim-dap-python
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       (python311Packages.python-lsp-server.overrideAttrs {
         doCheck = false;
         doInstallCheck = false;
@@ -204,7 +204,7 @@
     data = with pkgs.vimPlugins; [
       nvim-dap-go
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       gopls
       delve
       golint
@@ -225,7 +225,7 @@
     data = with pkgs.vimPlugins; [
       nvim-jdtls
     ];
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       jdt-language-server
       kotlin-language-server
       ktlint

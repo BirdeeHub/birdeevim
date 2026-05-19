@@ -8,7 +8,7 @@
 
   config.specs.general = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       universal-ctags
       ripgrep
       fd
@@ -88,7 +88,7 @@
   };
   config.specs.tree-sitter = {
     enable = lib.mkIf config.settings.minimal (lib.mkDefault true);
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       tree-sitter
     ];
     data = with pkgs.vimPlugins; [
@@ -110,7 +110,7 @@
   config.specs.images = {
     lazy = true;
     data = pkgs.vimPlugins.image-nvim;
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       imagemagick
       ueberzugpp
     ];
@@ -201,7 +201,7 @@
         };
       };
     };
-    postpkgs = with pkgs; [
+    runtimePkgs = with pkgs; [
       # bitwarden-cli
     ];
   };
