@@ -21,8 +21,9 @@
       builtins.listToAttrs
     ];
   };
-  config.specMods = { config, ... }: let
-    wrappers = lib.pipe config.wrappers [
+  config.specMods = { config, ... }: {
+    options.runtimePkgs = options.runtimePkgs;
+    config.runtimePkgs = lib.pipe config.wrappers [
       builtins.attrValues
       (builtins.filter (v: v.enable))
       (lib.partition (v: v.prefix))
@@ -30,9 +31,6 @@
         wrapper-mapper = pre: map (v: { prefix = pre; data = v.wrapper; });
       in wrapper-mapper true right ++ wrapper-mapper false wrong)
     ];
-  in {
-    options.runtimePkgs = options.runtimePkgs;
-    config.runtimePkgs = wrappers;
     options.mainInfo = lib.mkOption {
       type = wlib.types.attrsRecursive;
       default = {};
