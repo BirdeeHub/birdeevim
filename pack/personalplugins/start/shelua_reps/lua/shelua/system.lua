@@ -125,7 +125,7 @@ local MAX_TIMEOUT = 2 ^ 31 - 1
 function SystemObj:wait(timeout)
   local state = self._state
 
-  local done = (vim.wait or wait_loop)(timeout or state.timeout or MAX_TIMEOUT, function()
+  local done = ((vim or {}).wait or wait_loop)(timeout or state.timeout or MAX_TIMEOUT, function()
     return state.result ~= nil
   end, nil, true)
 
