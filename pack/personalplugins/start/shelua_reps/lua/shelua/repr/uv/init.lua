@@ -36,20 +36,18 @@ How it works (proper_pipes=false):
   2. run_cmd spawns the process directly with the concatenated stdin.
 ]]
 
+local MP = ...
 --- @param sh Shelua
-return function(sh)
-  --- @type Shelua.Opts
-  local sh_settings = getmetatable(sh)
-  local sherun = require('shelua.system').run
-
+return function(sh, sherun)
   --╔══════════════════════╗
   --║  Repr method table   ║
   --╚══════════════════════╝
   --- @type Shelua.Repr
-  sh_settings.repr.uv = {
+  ---@diagnostic disable-next-line: missing-fields
+  local representation = {
     -- Identity escape: we pass argv directly via uv.spawn, so no shell
     -- escaping is ever needed. This is the whole point of the UV backend.
-    escape = function(s) return s end,
+    escape_args = false,
 
     -- Translate shelua's key-value argument DSL into flag strings.
     -- Same logic as posix — single char → "-k", multi char → "--key".
@@ -77,7 +75,7 @@ return function(sh)
     extra_cmd_results = { "__env", "__stderr", "__cwd" },
   }
 
-  local SPECIAL = require('shelua.repr.uv.specials')
+  local SPECIAL = require(MP .. '.specials')
 
   --╔══════════════════════════════════════════════════════════════════╗
   --║  concat_cmd — build pipeline closures                            ║
@@ -93,7 +91,7 @@ return function(sh)
   --║  Returns a FUNCTION (or a {function, special} pair).             ║
   --║  The function, when called, actually spawns the process.         ║
   --╚══════════════════════════════════════════════════════════════════╝
-  function sh_settings.repr.uv.concat_cmd(opts, cmd, input)
+  function representation.concat_cmd(opts, cmd, input)
     local special
 
     -- Check if cmd[1] names a Special (CD, AND, OR, &&, ||).
@@ -225,7 +223,7 @@ return function(sh)
   --║  Returns: cmd (the command table), and a msg table containing  ║
   --║  { env, towrite, cwd } passed to run_cmd.                      ║
   --╚════════════════════════════════════════════════════════════════╝
-  function sh_settings.repr.uv.single_stdin(opts, cmd, inputs, codes)
+  function representation.single_stdin(opts, cmd, inputs, codes)
     local special
     for k, def in pairs(SPECIAL) do
       if cmd[1] == k then
@@ -271,7 +269,7 @@ return function(sh)
   --║  Always returns the standardized table:                       ║
   --║    { __input, __stderr, __exitcode, __signal, __cwd }         ║
   --╚═══════════════════════════════════════════════════════════════╝
-  sh_settings.repr.uv.run_cmd = function (opts, cmd, msg)
+  representation.run_cmd = function (opts, cmd, msg)
     local result
     if opts.proper_pipes then
       -- proper_pipes mode: cmd is a function closure from concat_cmd
@@ -307,5 +305,5 @@ return function(sh)
     }
   end
 
-  return sh
+  return representation
 end

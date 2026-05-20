@@ -1,22 +1,20 @@
 -- Vibe commenting to remind me how this s*** works
 
 ---@param sh Shelua
-return function(sh)
-    ---@type Shelua.Opts
-    local sh_settings = getmetatable(sh)
-    local escapeShellArg = sh_settings.repr.posix.escape
-    local sherun = require('shelua.system').run
+return function(sh, sherun)
+    local escapeShellArg = getmetatable(sh).repr.posix.escape
 
     local function heredoc(s)
         local marker = "SHELUA_HEREDOC_EOF"
         while s:find(marker, 1, true) do
             marker = marker .. "_"
         end
-        return ("cat <<'%s'\n%s\n%s"):format(marker, s, marker)
+        return ("{\ncat <<'%s'\n%s\n%s\n}"):format(marker, s, marker)
     end
 
     ---@type Shelua.Repr
-    sh_settings.repr.posix_plus = {
+    ---@diagnostic disable-next-line: missing-fields
+    local posix_plus = {
         -- Reuse the base POSIX shell escaping (single-quote wrapping).
         escape = escapeShellArg,
 
@@ -34,9 +32,8 @@ return function(sh)
             return cmd .. " " .. table.concat(args, ' ')
         end,
 
-        -- TODO: support __cwd
         -- Track extra result fields that trigger pipe resolution.
-        extra_cmd_results = { "__stderr", "__cwd" },
+        extra_cmd_results = { "__stderr", },
     }
 
     --╔════════════════════════════════════════════════════════════╗
@@ -49,7 +46,7 @@ return function(sh)
     --║    - OR operator  → cmd1 || cmd2                           ║
     --║    - multiple inputs → { cmd1 ; cmd2 ; } | cmd             ║
     --╚════════════════════════════════════════════════════════════╝
-    function sh_settings.repr.posix_plus.concat_cmd(opts, cmd, input)
+    function posix_plus.concat_cmd(opts, cmd, input)
         -- Normalize a pipe input value into a shell expression string.
         -- v.c = prior command string (already a shell expression)
         -- v.s = prior stdout string (emit via heredoc)
@@ -93,6 +90,7 @@ return function(sh)
         -- Multiple inputs: group with {} and pipe combined output
         elseif #input > 1 then
             for i, v in ipairs(input) do
+                ---@diagnostic disable-next-line: assign-type-mismatch
                 input[i] = normalize_shell_expr(v)
             end
             return "{ " .. table.concat(input, " ; ") .. " ; } | " .. cmd
@@ -103,16 +101,17 @@ return function(sh)
         end
     end
 
+    posix_plus.proper_pipes = true
     -- TODO: support || (OR) and && (AND) without setting proper_pipes
-    function sh_settings.repr.posix_plus.single_stdin(opts, cmd, inputs, codes)
+    function posix_plus.single_stdin(opts, cmd, inputs, codes)
         if inputs and #inputs > 0 then
             cmd = heredoc(table.concat(inputs)) .. " | " .. cmd
         end
         return cmd, {}
     end
 
-    sh_settings.repr.posix_plus.run_cmd = function (opts, cmd, msg)
-        local result = sherun({ "bash" }, { env = opts.env or nil, stdin = cmd, text = true }):wait()
+    posix_plus.run_cmd = function (opts, cmd, msg)
+        local result = sherun({ "bash" }, { cwd = opts.cwd or nil, env = opts.env or nil, stdin = cmd, text = true }):wait()
         return {
             __input = result.stdout,
             __stderr = result.stderr,
@@ -120,5 +119,5 @@ return function(sh)
             __signal = result.signal,
         }
     end
-    return sh
+    return posix_plus
 end

@@ -89,7 +89,7 @@ function M.get_auths(entries)
   end
   local final = {}
   if next(to_fetch) ~= nil then
-    local sh = require('shelua').force_add_reprs(nil, "uv") { proper_pipes = false, escape_args = false, assert_zero = false, shell = "uv" }
+    local sh = require('shelua').add_reprs(nil, "uv") { proper_pipes = false, escape_args = false, assert_zero = false, shell = "uv" }
     local session, ok = M.authTerminal(sh)
     if session and ok then
       for name, entry in pairs(to_fetch) do
