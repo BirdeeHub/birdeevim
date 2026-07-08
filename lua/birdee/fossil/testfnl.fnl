@@ -2,6 +2,7 @@
 
 (local s "hi there")
 (print (-|> "hi there" (:upper) (:sub 3 8) (:reverse)))
+(print (-> "hi there" (: :upper) (: :sub 3 8) (: :reverse)))
 (print (: (: (: "hi there" :upper) :sub 3 8) :reverse))
 
 
