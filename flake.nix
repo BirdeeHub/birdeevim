@@ -57,7 +57,7 @@
     # scooter.inputs.nixpkgs.follows = "nixpkgs";
     # scooter.inputs.fenix.follows = "fenix";
     # scooter.inputs.flake-utils.follows = "flake-utils";
-    roc.url = "github:roc-lang/roc";
+    roc.url = "github:roc-lang/roc?dir=src";
     # roc.inputs.nixpkgs.follows = "nixpkgs";
     roc.inputs.flake-utils.follows = "flake-utils";
     fenix.url = "github:nix-community/fenix";
