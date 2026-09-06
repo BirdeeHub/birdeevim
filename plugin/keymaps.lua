@@ -90,3 +90,8 @@ vim.keymap.set({ "n", "v", "x" }, '<leader>p', '"+p', { noremap = true, silent =
 vim.keymap.set('i', '<C-p>', '<C-r><C-p>+',
   { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
 vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
+
+vim.keymap.set('n', '<C-2>', function()
+  local reg = vim.fn.reg_recorded()
+  return reg == '' and '' or ('@' .. reg)
+end, { expr = true })
