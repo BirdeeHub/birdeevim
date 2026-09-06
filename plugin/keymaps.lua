@@ -55,6 +55,12 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+-- replay last recorded register
+vim.keymap.set('n', '<C-2>', function()
+  local reg = vim.fn.reg_recorded()
+  return reg == '' and '' or ('@' .. reg)
+end, { expr = true })
+
 local current_virt_lines_value = false
 vim.diagnostic.config {
   virtual_text = not current_virt_lines_value,
@@ -90,8 +96,3 @@ vim.keymap.set({ "n", "v", "x" }, '<leader>p', '"+p', { noremap = true, silent =
 vim.keymap.set('i', '<C-p>', '<C-r><C-p>+',
   { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
 vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
-
-vim.keymap.set('n', '<C-2>', function()
-  local reg = vim.fn.reg_recorded()
-  return reg == '' and '' or ('@' .. reg)
-end, { expr = true })
