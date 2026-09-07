@@ -16,7 +16,7 @@ return {
         vim.treesitter.start(buf, language)
 
         -- enables treesitter based folds
-        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo.foldexpr = vim.treesitter.foldexpr
         vim.wo.foldmethod = "expr"
         -- ensure folds are open to begin with
         vim.o.foldlevel = 99
