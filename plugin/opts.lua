@@ -34,6 +34,8 @@ vim.opt.hlsearch = false
 -- vim.opt.hlsearch = true
 -- vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.o.autoread = true
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
