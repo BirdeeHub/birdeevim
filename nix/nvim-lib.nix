@@ -22,11 +22,18 @@
     ];
   };
   config.specMods = { config, ... }: {
-    options.runtimePkgs = options.runtimePkgs;
+    options.runtimePkgs = lib.mkOption {
+      inherit (options.runtimePkgs) type;
+      default = [];
+      description = ''
+        A runtimePkgs spec field to put packages on the PATH
+        If the spec is disabled, this value will not be included in the resulting neovim derivation
+      '';
+    };
     config.runtimePkgs = lib.pipe config.wrappers [
       builtins.attrValues
-      (builtins.filter (v: v.enable))
-      (lib.partition (v: v.prefix))
+      (builtins.filter (v: v.nvim-include.enable))
+      (lib.partition (v: v.nvim-include.prefix))
       ({ right, wrong, }: let
         wrapper-mapper = pre: map (v: { prefix = pre; data = v.wrapper; name = v.binName; });
       in wrapper-mapper true right ++ wrapper-mapper false wrong)
@@ -44,11 +51,11 @@
     options.wrappers = lib.mkOption {
       type = lib.types.attrsOf (wlib.types.subWrapperModule {
         config.pkgs = pkgs;
-        options.prefix = lib.mkOption {
+        options.nvim-include.prefix = lib.mkOption {
           type = lib.types.bool;
           default = false;
         };
-        options.enable = lib.mkOption {
+        options.nvim-include.enable = lib.mkOption {
           type = lib.types.bool;
           default = true;
         };
