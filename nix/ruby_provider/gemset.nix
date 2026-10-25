@@ -1,40 +1,40 @@
 {
   logger = {
-    groups = [ "default" ];
+    groups = ["default"];
     platforms = [];
     source = {
-      remotes = [ "https://rubygems.org" ];
-      sha256 = "0lwncq2rf8gm79g2rcnnyzs26ma1f4wnfjm6gs4zf2wlsdz5in9s";
+      remotes = ["https://rubygems.org"];
+      sha256 = "00q2zznygpbls8asz5knjvvj2brr3ghmqxgr83xnrdj4rk3xwvhr";
       type = "gem";
     };
-    version = "1.6.1";
+    version = "1.7.0";
   };
   msgpack = {
-    groups = [ "default" ];
+    groups = ["default"];
     platforms = [];
     source = {
-      remotes = [ "https://rubygems.org" ];
-      sha256 = "1a5fsgchkpcca4wf3pipbb2jbj523l7fbaq37j10cr0yymwlkc7z";
+      remotes = ["https://rubygems.org"];
+      sha256 = "1fhpfl9fznn6wi39xh05crswigywvyiw3rn0cbjf7prmgfm9whcp";
       type = "gem";
     };
-    version = "1.7.5";
+    version = "1.8.5";
   };
   multi_json = {
-    groups = [ "default" ];
+    groups = ["default"];
     platforms = [];
     source = {
-      remotes = [ "https://rubygems.org" ];
-      sha256 = "sha256-H9BBOLbkqQAX6NG4BMA5AxOZhm/z+6u3girqNnx4YV0=";
+      remotes = ["https://rubygems.org"];
+      sha256 = "13pabgwf4qd5qn4sl7ci15g5ql038n5z0psip9xabnsbypm32m94";
       type = "gem";
     };
-    version = "1.15.0";
+    version = "1.21.2";
   };
   neovim = {
-    dependencies = [ "msgpack" "multi_json" ];
-    groups = [ "default" ];
+    dependencies = ["msgpack" "multi_json"];
+    groups = ["default"];
     platforms = [];
     source = {
-      remotes = [ "https://rubygems.org" ];
+      remotes = ["https://rubygems.org"];
       sha256 = "0gl34rriwwmj6p1s6ms0b311wmqaqiyc510svq31283jk0kp0qcd";
       type = "gem";
     };
