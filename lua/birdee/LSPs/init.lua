@@ -1,4 +1,9 @@
 local MP = ...
+vim.g.rustaceanvim = {
+  server = {
+    on_attach = require(MP:relpath 'on_attach')
+  }
+}
 return {
   {
     "mason.nvim",
