@@ -177,11 +177,6 @@
     ];
     wrappers.opencode = {pkgs, lib, ...}: {
       imports = [ wlib.wrapperModules.opencode ];
-      package = pkgs.opencode.overrideAttrs {
-        node_modules = pkgs.opencode.node_modules.overrideAttrs {
-          outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
-        };
-      };
       settings = {
         "$schema" = "https://opencode.ai/config.json";
         provider = {
