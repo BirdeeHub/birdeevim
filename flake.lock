@@ -657,11 +657,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794104116,
-        "narHash": "sha256-3tIKU863tTidGXPsEasjvXVnw5iQ5TQ7SAKLlhHLOYk=",
+        "lastModified": 1794276898,
+        "narHash": "sha256-qZFj4NtE55eMxSu0qU8D1BDQmC7HIrb+pc/0XRgPNkM=",
         "owner": "nix-community",
         "repo": "nix-wrapper-modules",
-        "rev": "d14287bba66dbb7fd45ca47ec452cbaca7e29b5f",
+        "rev": "4b4c2a737b0717df0a9b03a83e0cde6d036c1ec9",
         "type": "github"
       },
       "original": {
