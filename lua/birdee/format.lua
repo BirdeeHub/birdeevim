@@ -1,7 +1,7 @@
 return {
   "conform.nvim",
   auto_enable = true,
-  -- cmd = { "" },
+  cmd = { "TopiaryFormat" },
   -- event = "",
   -- ft = "",
   keys = {
@@ -43,7 +43,7 @@ return {
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        nix = { (with_topiary and "topiary" or "nixfmt") },
+        nix = { "nixfmt" },
         bash = with_topiary and { "topiary" } or nil,
         query = with_topiary and { "topiary" } or nil,
         go = { "gofmt", "golint" },
@@ -69,6 +69,25 @@ return {
       })
     end, { desc = "[F]ormat [F]ile" })
 
+    vim.api.nvim_create_user_command("TopiaryFormat", function(args)
+      local range = nil
+      if args.count ~= -1 then
+        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        range = {
+          start = { args.line1, 0 },
+          ["end"] = { args.line2, end_line:len() },
+        }
+      end
+      require("conform").format({
+        formatters = { "topiary" }, -- Replace with your formatter
+        async = true,
+        timeout_ms = 1000,
+        range = range,
+      })
+    end, {
+      range = true,
+      desc = "Format buffer or selection with Topiary",
+    })
 
     -- vim.keymap.set("n", "<leader>Fm", "<cmd>Format<CR>", { noremap = true, desc = '[F]or[m]at (lsp)' })
   end,
